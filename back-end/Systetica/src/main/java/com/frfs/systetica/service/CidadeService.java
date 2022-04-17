@@ -5,5 +5,5 @@ import com.frfs.systetica.dto.response.ReturnData;
 
 public interface CidadeService {
 
-//    ReturnData<Object> salvarCidade(CidadeDTO cidadeDTO);
+    ReturnData<Object> salvarCidade(CidadeDTO cidadeDTO);
 }
