@@ -10,10 +10,8 @@ import org.mapstruct.ReportingPolicy;
 public interface EstadoMapper {
 
     // DTO
-    @Named(value = "toDto")
     EstadoDTO toDto(Estado entity);
 
     // ENTITY
-    @Named(value = "toEntity")
     Estado toEntity(EstadoDTO dto);
 }

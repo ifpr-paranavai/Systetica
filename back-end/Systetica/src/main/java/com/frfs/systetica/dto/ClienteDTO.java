@@ -25,7 +25,7 @@ public class ClienteDTO implements Serializable {
     private String cpf;
 
     @JsonProperty("data_nascimento")
-    private Date dataNascimento;
+    private String dataNascimento;
 
     @JsonProperty("telefone1")
     private String telefone1;
@@ -36,6 +36,9 @@ public class ClienteDTO implements Serializable {
     @JsonProperty("email")
     private String email;
 
+    @JsonProperty("password")
+    private String password;
+
     @JsonProperty("observacao")
     private String observacao;
 
@@ -45,6 +48,6 @@ public class ClienteDTO implements Serializable {
     @JsonProperty("status")
     private String status = String.valueOf('A');
 
-    @JsonProperty("cidade_DTO")
-    private CidadeDTO cidadeDTO;
+    @JsonProperty("cidade")
+    private CidadeDTO cidade;
 }

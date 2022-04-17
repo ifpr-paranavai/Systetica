@@ -1,5 +1,6 @@
 package com.frfs.systetica.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -33,7 +34,7 @@ public class Cliente implements Serializable {
 
     @NotNull
     @Column(name = "data_nascimento")
-    private Date dataNascimento;
+    private String dataNascimento;
 
     @NotNull
     @Column(name = "telefone1", length = 14)
@@ -45,6 +46,10 @@ public class Cliente implements Serializable {
     @NotNull
     @Column(name = "email", unique = true, length = 100)
     private String email;
+
+    @JsonProperty(value = "password", access = JsonProperty.Access.WRITE_ONLY)
+    @Column(name = "password", nullable = false, length = 100)
+    private String password;
 
     @Column(name = "observacao", length = 300)
     private String observacao;
@@ -60,5 +65,5 @@ public class Cliente implements Serializable {
     @NotNull
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_cidade")
-    private Cidade idCidade;
+    private Cidade cidade;
 }

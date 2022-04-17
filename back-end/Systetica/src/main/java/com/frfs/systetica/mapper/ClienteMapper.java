@@ -1,16 +1,16 @@
 package com.frfs.systetica.mapper;
 
-import com.frfs.systetica.dto.CidadeDTO;
-import com.frfs.systetica.entity.Cidade;
+import com.frfs.systetica.dto.ClienteDTO;
+import com.frfs.systetica.entity.Cliente;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, uses = EstadoMapper.class)
-public interface CidadeMapper {
+public interface ClienteMapper {
 
     // DTO
-    CidadeDTO toDto(Cidade entity);
+    ClienteDTO toDto(Cliente entity);
 
     // ENTITY
-    Cidade toEntity(CidadeDTO dto);
+    Cliente toEntity(ClienteDTO dto);
 }
