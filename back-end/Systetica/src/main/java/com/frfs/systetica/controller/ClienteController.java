@@ -1,6 +1,8 @@
 package com.frfs.systetica.controller;
 
 import com.frfs.systetica.dto.ClienteDTO;
+import com.frfs.systetica.dto.RoleDTO;
+import com.frfs.systetica.dto.RoleUserDTO;
 import com.frfs.systetica.dto.UserDTO;
 import com.frfs.systetica.dto.response.ReturnData;
 import com.frfs.systetica.service.ClienteService;
@@ -17,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("cliente")
 public class ClienteController {
 
-    private final  ClienteService clienteService;
+    private final ClienteService clienteService;
 
     @PostMapping("/salvar")
     @ResponseBody
@@ -27,11 +29,27 @@ public class ClienteController {
         return new ResponseEntity<>(result, result.getSuccess() ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @PostMapping("/login")
+    @PostMapping("/salvar/role")
     @ResponseBody
-    public ResponseEntity<Object> login(@ModelAttribute("user")UserDTO userDTO) {
-        ReturnData<Object> result = clienteService.login(userDTO);
+    public ResponseEntity<Object> salvarRole(@Validated @RequestBody RoleDTO roleDTO) {
+        ReturnData<Object> result = clienteService.salvarRole(roleDTO);
 
-        return new ResponseEntity<>(result.getSuccess() ? HttpStatus.OK : HttpStatus.UNAUTHORIZED);
+        return new ResponseEntity<>(result, result.getSuccess() ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
+    @PostMapping("/role/addtouser")
+    public ResponseEntity<?> addRoleToUser(@ModelAttribute("role") RoleUserDTO roleDTO) {
+        clienteService.addRoleToUser(roleDTO.getEmail(), roleDTO.getRoleName());
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/buscar")
+    @ResponseBody
+    public ResponseEntity<Object> buscarUsuario(@Validated @RequestBody ClienteDTO clienteDTO) {
+        ReturnData<Object> result = clienteService.buscarCLiente(clienteDTO);
+
+        return new ResponseEntity<>(result, result.getSuccess() ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+
 }

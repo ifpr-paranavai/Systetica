@@ -9,6 +9,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 
 @Data
@@ -66,4 +68,7 @@ public class Cliente implements Serializable {
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_cidade")
     private Cidade cidade;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Collection<Role> roles = new ArrayList<>();
 }

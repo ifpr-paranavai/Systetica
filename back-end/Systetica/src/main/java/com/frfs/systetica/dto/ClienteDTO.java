@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @Builder
@@ -50,4 +51,7 @@ public class ClienteDTO implements Serializable {
 
     @JsonProperty("cidade")
     private CidadeDTO cidade;
+
+    @JsonProperty("roles")
+    private List<RoleDTO> roles;
 }
