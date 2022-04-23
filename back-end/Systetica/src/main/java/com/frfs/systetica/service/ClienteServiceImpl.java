@@ -95,8 +95,8 @@ public class ClienteServiceImpl implements ClienteService, UserDetailsService {
     }
 
     @Override
-    public ReturnData<Object> buscarCLiente(ClienteDTO clienteDTO) {
-        return new ReturnData<>(true, "", clienteRepository.findByEmail(clienteDTO.getEmail()).get());
+    public ReturnData<Object> buscarCLiente(String email) {
+        return new ReturnData<>(true, "", clienteRepository.findByEmail(email).get());
     }
 
     @Override

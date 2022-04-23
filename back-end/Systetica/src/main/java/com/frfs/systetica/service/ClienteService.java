@@ -9,6 +9,6 @@ public interface ClienteService {
     ReturnData<Object> salvarCliente(ClienteDTO clienteDTO);
     ReturnData<Object> salvarRole(RoleDTO roleDTO);
     void addRoleToUser(String email, String roleName);
-    ReturnData<Object> buscarCLiente(ClienteDTO clienteDTO);
+    ReturnData<Object> buscarCLiente(String email);
     ReturnData<Object> login(UserDTO userDTO);
 }

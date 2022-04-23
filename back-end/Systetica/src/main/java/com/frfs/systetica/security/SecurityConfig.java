@@ -1,6 +1,7 @@
 package com.frfs.systetica.security;
 
 import com.frfs.systetica.filter.CustomAuthenticationFilter;
+import com.frfs.systetica.filter.CustomAuthorizationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,6 +13,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import static org.springframework.http.HttpMethod.*;
 
 @Configuration
 @EnableWebSecurity
@@ -27,15 +31,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        CustomAuthenticationFilter customAuthenticationFilter = new CustomAuthenticationFilter(authenticationManager());
+        customAuthenticationFilter.setFilterProcessesUrl("/api/login");//isso meio que sobrescreve o /login padrãod do spring
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http.authorizeRequests().anyRequest().permitAll();
-        http.addFilter(new CustomAuthenticationFilter(authenticationManager()));
+        //todo - confirmar
+        http.authorizeRequests().antMatchers("/api/login/**", "/cliente/token/refresh/**").permitAll(); //isso meio que sobrescreve o /login padrãod do spring
+        http.authorizeRequests().antMatchers(GET, "/cliente/**").hasAnyAuthority("ADMINISTRADOR");
+        http.authorizeRequests().antMatchers(PUT, "/cliente/**").hasAnyAuthority("ADMINISTRADOR");
+        http.authorizeRequests().antMatchers(POST, "/cliente/**").hasAnyAuthority("ADMINISTRADOR");
+        http.authorizeRequests().antMatchers(DELETE, "/cliente/**").hasAnyAuthority("ADMINISTRADOR");
+        http.authorizeRequests().anyRequest().authenticated();
+        http.addFilter(customAuthenticationFilter);
+        http.addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 
     @Bean
     @Override
-    public AuthenticationManager authenticationManager() throws Exception{
+    public AuthenticationManager authenticationManager() throws Exception {
         return super.authenticationManager();
     }
 
