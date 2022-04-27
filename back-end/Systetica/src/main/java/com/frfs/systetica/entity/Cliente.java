@@ -1,16 +1,14 @@
 package com.frfs.systetica.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.frfs.systetica.entity.enums.Role;
 import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 
 @Data
@@ -69,6 +67,8 @@ public class Cliente implements Serializable {
     @JoinColumn(name = "id_cidade")
     private Cidade cidade;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    private Collection<Role> roles = new ArrayList<>();
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role")
+    private Role role;
+
 }

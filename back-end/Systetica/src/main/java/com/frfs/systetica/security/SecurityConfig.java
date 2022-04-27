@@ -32,11 +32,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         CustomAuthenticationFilter customAuthenticationFilter = new CustomAuthenticationFilter(authenticationManager());
-        customAuthenticationFilter.setFilterProcessesUrl("/api/login");//isso meio que sobrescreve o /login padrãod do spring
+        customAuthenticationFilter.setFilterProcessesUrl("/api/login");//isso meio que sobrescreve o /login padrão do spring
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        //todo - confirmar
-        http.authorizeRequests().antMatchers("/api/login/**", "/cliente/token/refresh/**").permitAll(); //isso meio que sobrescreve o /login padrãod do spring
+        //TODO - todas as URLs que podem ser acessadas sem esta autenticado
+        http.authorizeRequests().antMatchers("/api/login/**", "/cliente/token/refresh/**", "/cliente/salvar/**").permitAll(); //isso meio que sobrescreve o /login padrãod do spring
         http.authorizeRequests().antMatchers(GET, "/cliente/**").hasAnyAuthority("ADMINISTRADOR");
         http.authorizeRequests().antMatchers(PUT, "/cliente/**").hasAnyAuthority("ADMINISTRADOR");
         http.authorizeRequests().antMatchers(POST, "/cliente/**").hasAnyAuthority("ADMINISTRADOR");

@@ -7,10 +7,8 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.frfs.systetica.dto.ClienteDTO;
 import com.frfs.systetica.dto.RoleDTO;
-import com.frfs.systetica.dto.RoleUserDTO;
 import com.frfs.systetica.dto.response.ReturnData;
 import com.frfs.systetica.entity.Cliente;
-import com.frfs.systetica.entity.Role;
 import com.frfs.systetica.service.ClienteService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -53,12 +51,6 @@ public class ClienteController {
         ReturnData<Object> result = clienteService.salvarRole(roleDTO);
 
         return new ResponseEntity<>(result, result.getSuccess() ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-
-    @PostMapping("/role/addtouser")
-    public ResponseEntity<?> addRoleToUser(@ModelAttribute("role") RoleUserDTO roleDTO) {
-        clienteService.addRoleToUser(roleDTO.getEmail(), roleDTO.getRoleName());
-        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/buscar")
