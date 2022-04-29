@@ -21,12 +21,6 @@ public class CidadeDTO implements Serializable {
     @JsonProperty("nome")
     private String nome;
 
-    @JsonProperty("data_cadastro")
-    private Date dataCadastro = new Date();
-
-    @JsonProperty("status")
-    private String status = String.valueOf('A');
-
     @JsonProperty("estado")
     private EstadoDTO estado;
 }

@@ -26,14 +26,6 @@ public class Cidade implements Serializable {
     private String nome;
 
     @NotNull
-    @Column(name = "data_cadastro")
-    private Date dataCadastro;
-
-    @NotNull
-    @Column(name = "status", length = 1)
-    private String status = String.valueOf('A');
-
-    @NotNull
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_estado")
     private Estado estado;

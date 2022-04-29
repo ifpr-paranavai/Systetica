@@ -29,14 +29,7 @@ public class Estado implements Serializable {
     private String nome;
 
     @NotNull
-    @Column(name = "sigla", length = 2)
-    private String sigla;
+    @Column(name = "uf", length = 2)
+    private String uf;
 
-    @NotNull
-    @Column(name = "data_cadastro")
-    private Date dataCadastro;
-
-    @NotNull
-    @Column(name = "status", length = 1)
-    private String status = String.valueOf('A');
 }

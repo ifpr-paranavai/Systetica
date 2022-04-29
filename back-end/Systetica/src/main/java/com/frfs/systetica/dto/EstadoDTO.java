@@ -21,12 +21,6 @@ public class EstadoDTO implements Serializable {
     @JsonProperty("nome")
     private String nome;
 
-    @JsonProperty("sigla")
-    private String sigla;
-
-    @JsonProperty("data_cadastro")
-    private Date dataCadastro;
-
-    @JsonProperty("status")
-    private String status = String.valueOf('A');
+    @JsonProperty("uf")
+    private String uf;
 }
