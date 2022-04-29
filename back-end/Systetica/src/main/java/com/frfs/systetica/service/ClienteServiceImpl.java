@@ -21,6 +21,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -58,6 +60,7 @@ public class ClienteServiceImpl implements ClienteService, UserDetailsService {
     public ReturnData<Object> salvarCliente(ClienteDTO clienteDTO) {
         try {
             clienteDTO.setPassword(passwordEncoder.encode(clienteDTO.getPassword()));
+            clienteDTO.setDataCadastro(new Date());
             clienteDTO = addRoleToUser(clienteDTO, "CLIENTE");
             var cliente = clienteRepository.save(clienteMapper.toEntity(clienteDTO));
 
@@ -86,7 +89,9 @@ public class ClienteServiceImpl implements ClienteService, UserDetailsService {
     @Override
     public ClienteDTO addRoleToUser(ClienteDTO clienteDTO, String roleName) {
         var roleDTO = roleMapper.toDto(roleRepository.findByName(roleName));
-        clienteDTO.setRole(roleDTO);
+        List<RoleDTO> listRoleDto = new ArrayList<>();
+        listRoleDto.add(roleDTO);
+        clienteDTO.setRoles(listRoleDto);
         return clienteDTO;
     }
 
@@ -105,10 +110,9 @@ public class ClienteServiceImpl implements ClienteService, UserDetailsService {
 
         Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
 
-        authorities.add(new SimpleGrantedAuthority(cliente.get().getRole().getName()));
-//        cliente.get().getRoles().forEach(role ->
-//                authorities.add(new SimpleGrantedAuthority(role.getName()))
-//        );
+        cliente.get().getRoles().forEach(role ->
+                authorities.add(new SimpleGrantedAuthority(role.getName()))
+        );
         return new User(cliente.get().getEmail(), cliente.get().getPassword(), authorities);
     }
 }

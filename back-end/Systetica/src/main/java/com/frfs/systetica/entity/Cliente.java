@@ -8,6 +8,8 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 
 @Data
@@ -66,7 +68,6 @@ public class Cliente implements Serializable {
     @JoinColumn(name = "id_cidade")
     private Cidade cidade;
 
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "role")
-    private Role role;
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Collection<Role> roles = new ArrayList<>();;
 }
