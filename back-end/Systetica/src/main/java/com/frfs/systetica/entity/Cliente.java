@@ -1,7 +1,6 @@
 package com.frfs.systetica.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.frfs.systetica.entity.enums.Role;
 import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -56,7 +55,7 @@ public class Cliente implements Serializable {
 
     @NotNull
     @Column(name = "data_cadastro")
-    private Date dataCadastro;
+    private Date dataCadastro = new Date();
 
     @NotNull
     @Column(name = "status", length = 1)
@@ -67,8 +66,7 @@ public class Cliente implements Serializable {
     @JoinColumn(name = "id_cidade")
     private Cidade cidade;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "role")
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "role")
     private Role role;
-
 }

@@ -9,6 +9,7 @@ import com.frfs.systetica.dto.ClienteDTO;
 import com.frfs.systetica.dto.RoleDTO;
 import com.frfs.systetica.dto.response.ReturnData;
 import com.frfs.systetica.entity.Cliente;
+import com.frfs.systetica.entity.Role;
 import com.frfs.systetica.service.ClienteService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -78,7 +79,7 @@ public class ClienteController {
                         .withSubject(cliente.getEmail())
                         .withExpiresAt(new Date(System.currentTimeMillis() + 10 * 60 * 1000))
                         .withIssuer(request.getRequestURL().toString())
-                        .withClaim("roles", cliente.getRoles().stream().map(Role::getName).collect(Collectors.toList()))
+                        .withClaim("role", cliente.getRole().getName())
                         .sign(algorithm);
 
                 Map<String, String> tokens = new HashMap<>();

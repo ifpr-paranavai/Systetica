@@ -52,6 +52,6 @@ public class ClienteDTO implements Serializable {
     @JsonProperty("cidade")
     private CidadeDTO cidade;
 
-    @JsonProperty("roles")
-    private List<RoleDTO> roles;
+    @JsonProperty("role")
+    private RoleDTO role;
 }

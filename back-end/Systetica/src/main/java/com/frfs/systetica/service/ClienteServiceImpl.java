@@ -4,7 +4,6 @@ import com.frfs.systetica.dto.ClienteDTO;
 import com.frfs.systetica.dto.RoleDTO;
 import com.frfs.systetica.dto.UserDTO;
 import com.frfs.systetica.dto.response.ReturnData;
-import com.frfs.systetica.entity.Cliente;
 import com.frfs.systetica.exception.BusinessException;
 import com.frfs.systetica.mapper.ClienteMapper;
 import com.frfs.systetica.mapper.RoleMapper;
@@ -19,14 +18,12 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
 @Service
 @RequiredArgsConstructor
-@Transactional
 @Slf4j
 public class ClienteServiceImpl implements ClienteService, UserDetailsService {
 
@@ -61,9 +58,10 @@ public class ClienteServiceImpl implements ClienteService, UserDetailsService {
     public ReturnData<Object> salvarCliente(ClienteDTO clienteDTO) {
         try {
             clienteDTO.setPassword(passwordEncoder.encode(clienteDTO.getPassword()));
+            clienteDTO = addRoleToUser(clienteDTO, "CLIENTE");
             var cliente = clienteRepository.save(clienteMapper.toEntity(clienteDTO));
-            var clienteSalvo = clienteMapper.toDto(cliente);
 
+            var clienteSalvo = clienteMapper.toDto(cliente);
             return new ReturnData<>(true, "Cliente salvo com sucesso.", clienteSalvo);
         } catch (BusinessException busEx) {
             return new ReturnData<>(false, "Ocorreu um erro ao salvar um cliente.", busEx.getMessage());
@@ -86,14 +84,10 @@ public class ClienteServiceImpl implements ClienteService, UserDetailsService {
     }
 
     @Override
-    public void adicionarRoleToUsuario(Cliente cliente) {
-//        var c = cliente.getRoles();
-//        c.forEach(role -> {
-//
-//        });
-//
-//        Role role = roleRepository.findByName(cliente.getRoles().get(0).get);
-//        cliente.get().getRoles().add(role);
+    public ClienteDTO addRoleToUser(ClienteDTO clienteDTO, String roleName) {
+        var roleDTO = roleMapper.toDto(roleRepository.findByName(roleName));
+        clienteDTO.setRole(roleDTO);
+        return clienteDTO;
     }
 
     @Override
@@ -110,9 +104,11 @@ public class ClienteServiceImpl implements ClienteService, UserDetailsService {
         }
 
         Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
-        cliente.get().getRoles().forEach(role ->
-                authorities.add(new SimpleGrantedAuthority(role.getName()))
-        );
+
+        authorities.add(new SimpleGrantedAuthority(cliente.get().getRole().getName()));
+//        cliente.get().getRoles().forEach(role ->
+//                authorities.add(new SimpleGrantedAuthority(role.getName()))
+//        );
         return new User(cliente.get().getEmail(), cliente.get().getPassword(), authorities);
     }
 }
