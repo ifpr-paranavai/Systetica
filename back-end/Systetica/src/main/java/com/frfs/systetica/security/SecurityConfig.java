@@ -32,15 +32,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         CustomAuthenticationFilter customAuthenticationFilter = new CustomAuthenticationFilter(authenticationManager());
-        customAuthenticationFilter.setFilterProcessesUrl("/api/login");//isso meio que sobrescreve o /login padrão do spring
+        customAuthenticationFilter.setFilterProcessesUrl("/login");
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         //TODO - todas as URLs que podem ser acessadas sem esta autenticado
-        http.authorizeRequests().antMatchers("/api/login/**", "/autenticacao/refresh-token/**", "/cliente/salvar/**").permitAll(); //isso meio que sobrescreve o /login padrão do spring
-        http.authorizeRequests().antMatchers(GET, "/cliente/**").hasAnyAuthority("ADMINISTRADOR");
-        http.authorizeRequests().antMatchers(PUT, "/cliente/**").hasAnyAuthority("ADMINISTRADOR");
-        http.authorizeRequests().antMatchers(POST, "/cliente/**").hasAnyAuthority("ADMINISTRADOR");
-        http.authorizeRequests().antMatchers(DELETE, "/cliente/**").hasAnyAuthority("ADMINISTRADOR");
+        http.authorizeRequests().antMatchers("/login/**", "/autenticacao/refresh-token/**", "/usuario/salvar/**").permitAll(); //isso meio que sobrescreve o /login padrão do spring
+        http.authorizeRequests().antMatchers(GET, "/usuario/**").hasAnyAuthority("ADMINISTRADOR");
+        http.authorizeRequests().antMatchers(PUT, "/usuario/**").hasAnyAuthority("ADMINISTRADOR");
+        http.authorizeRequests().antMatchers(POST, "/usuario/**").hasAnyAuthority("ADMINISTRADOR");
+        http.authorizeRequests().antMatchers(DELETE, "/usuario/**").hasAnyAuthority("ADMINISTRADOR");
         http.authorizeRequests().anyRequest().authenticated();
         http.addFilter(customAuthenticationFilter);
         http.addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);

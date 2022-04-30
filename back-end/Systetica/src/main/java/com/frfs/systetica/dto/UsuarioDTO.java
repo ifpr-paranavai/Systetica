@@ -14,7 +14,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ClienteDTO implements Serializable {
+public class UsuarioDTO implements Serializable {
 
     @JsonProperty("id")
     private Long id;

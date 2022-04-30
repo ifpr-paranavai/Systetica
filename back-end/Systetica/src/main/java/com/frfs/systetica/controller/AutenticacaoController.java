@@ -5,16 +5,11 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.frfs.systetica.dto.ClienteDTO;
-import com.frfs.systetica.dto.response.ReturnData;
-import com.frfs.systetica.entity.Cliente;
+import com.frfs.systetica.entity.Usuario;
 import com.frfs.systetica.entity.Role;
-import com.frfs.systetica.service.ClienteService;
+import com.frfs.systetica.service.UsuarioService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -35,7 +30,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RequestMapping("autenticacao")
 public class AutenticacaoController {
 
-    private final ClienteService clienteService;
+    private final UsuarioService usuarioService;
 
     @GetMapping("/refresh-token")
     public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -46,15 +41,14 @@ public class AutenticacaoController {
                 Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
                 JWTVerifier verifier = JWT.require(algorithm).build();
                 DecodedJWT decodedJWT = verifier.verify(refresh_token);
-                String email = decodedJWT.getSubject(); //username
-                Cliente cliente = (Cliente) clienteService.buscarCLiente(email).getResponse(); //TODO REVER ESSA PARADA
-
+                String email = decodedJWT.getSubject();
+                Usuario usuario = (Usuario) usuarioService.buscarUsuarioPorEmail(email).getResponse();
 
                 String access_token = JWT.create()
-                        .withSubject(cliente.getEmail())
+                        .withSubject(usuario.getEmail())
                         .withExpiresAt(new Date(System.currentTimeMillis() + 10 * 60 * 1000))
                         .withIssuer(request.getRequestURL().toString())
-                        .withClaim("roles", cliente.getRoles().stream().map(Role::getName).collect(Collectors.toList()))
+                        .withClaim("roles", usuario.getRoles().stream().map(Role::getName).collect(Collectors.toList()))
                         .sign(algorithm);
 
                 Map<String, String> tokens = new HashMap<>();

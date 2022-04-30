@@ -56,7 +56,7 @@ public class AgendarServico implements Serializable {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_cliente")
-    private Cliente idCliente;
+    private Usuario idUsuario;
 
     @NotNull
     @ManyToOne(fetch = FetchType.EAGER)

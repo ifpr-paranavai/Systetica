@@ -37,5 +37,5 @@ public class VendaDTO implements Serializable {
     private FuncionarioDTO funcionarioDTO;
 
     @JsonProperty("cliente_DTO")
-    private ClienteDTO clienteDTO;
+    private UsuarioDTO usuarioDTO;
 }

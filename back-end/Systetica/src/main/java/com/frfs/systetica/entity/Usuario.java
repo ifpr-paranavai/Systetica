@@ -18,7 +18,7 @@ import java.util.Date;
 @Entity
 @Table(name = "cliente")
 @EqualsAndHashCode
-public class Cliente implements Serializable {
+public class Usuario implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id

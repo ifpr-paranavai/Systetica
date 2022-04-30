@@ -45,7 +45,7 @@ public class AgendarServicoDTO implements Serializable {
     private String nomeCliente;
 
     @JsonProperty("cliente_DTO")
-    private ClienteDTO clienteDTO;
+    private UsuarioDTO usuarioDTO;
 
     @JsonProperty("funcionario_DTO")
     private FuncionarioDTO funcionarioDTO;

@@ -49,6 +49,6 @@ public class Venda implements Serializable {
     @NotNull
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_cliente")
-    private Cliente idCliente;
+    private Usuario idUsuario;
 
 }
