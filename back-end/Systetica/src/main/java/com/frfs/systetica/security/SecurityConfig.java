@@ -35,7 +35,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         customAuthenticationFilter.setFilterProcessesUrl("/login");
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        //TODO - todas as URLs que podem ser acessadas sem esta autenticado
         http.authorizeRequests().antMatchers("/login/**", "/autenticacao/refresh-token/**", "/usuario/salvar/**").permitAll(); //isso meio que sobrescreve o /login padrão do spring
         http.authorizeRequests().antMatchers(GET, "/usuario/**").hasAnyAuthority("ADMINISTRADOR");
         http.authorizeRequests().antMatchers(PUT, "/usuario/**").hasAnyAuthority("ADMINISTRADOR");

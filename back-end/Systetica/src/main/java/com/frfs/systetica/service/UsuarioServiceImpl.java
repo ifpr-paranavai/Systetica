@@ -73,7 +73,7 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
         if (usuario.isEmpty()) {
             return new ReturnData<>(false, "Usuário não encontrado.", "Não foi possível encontrar usuário pelo email informado");
         }
-        return new ReturnData<>(true, "", usuario);
+        return new ReturnData<>(true, "", usuario.get());
     }
 
     @Override
