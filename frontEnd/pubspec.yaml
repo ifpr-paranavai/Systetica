@@ -1,4 +1,4 @@
-name: untitled
+name: systetica
 description: A new Flutter project.
 
 publish_to: 'none'
@@ -12,11 +12,24 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.2
+  dio: ^4.0.4
+  http: ^0.13.4
+  url_launcher: ^6.0.17
+  flutter_localizations:
+    sdk: flutter
+  mask_text_input_formatter: ^2.0.0
+  email_validator: ^2.0.1
+  cpf_cnpj_validator: ^2.0.0
+  responsive_grid: ^2.0.0
+  intl: ^0.17.0
+  google_fonts: ^2.1.0
+
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^1.0.0
+  sqflite: ^2.0.0+4
 
 flutter:
   uses-material-design: true
