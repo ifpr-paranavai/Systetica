@@ -36,7 +36,7 @@ final ThemeData appThemeData = ThemeData.dark().copyWith(
     ),
   ),
   appBarTheme: const AppBarTheme(
-    backgroundColor: Colors.green,
+    backgroundColor: Colors.blueGrey,
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.vertical(
         bottom: Radius.circular(0),
@@ -45,7 +45,7 @@ final ThemeData appThemeData = ThemeData.dark().copyWith(
   ),
   colorScheme: ThemeData.dark().colorScheme.copyWith(
     onPrimary: Colors.white,
-    primary: Colors.amber.shade800,
+    primary: Colors.blueGrey,
     secondary: Colors.amber.shade800,
     onSecondary: Colors.white,
   ),

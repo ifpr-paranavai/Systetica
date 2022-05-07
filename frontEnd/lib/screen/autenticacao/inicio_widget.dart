@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:systetica/components/botao_acao.dart';
+import 'package:systetica/components/botoes/botao_acao.dart';
 import 'package:systetica/screen/autenticacao/cadastro/view/cadastro_page.dart';
 import 'package:systetica/screen/autenticacao/inicio_page.dart';
 import 'package:systetica/screen/autenticacao/login/view/login_page.dart';
