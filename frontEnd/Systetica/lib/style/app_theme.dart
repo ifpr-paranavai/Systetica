@@ -7,14 +7,14 @@ final ThemeData appThemeData = ThemeData.dark().copyWith(
       borderRadius: BorderRadius.circular(10.0),
     ),
   ),
-  toggleableActiveColor: Colors.amber[800],
-  buttonTheme: ButtonThemeData(
-    buttonColor: Colors.amber[800],
+  toggleableActiveColor: Colors.green,
+  buttonTheme: const ButtonThemeData(
+    buttonColor: Colors.pink,
   ),
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ButtonStyle(
       backgroundColor: MaterialStateProperty.all(
-        Colors.amber[800],
+        Colors.limeAccent,
       ),
       shape: MaterialStateProperty.all(
         RoundedRectangleBorder(
@@ -26,7 +26,7 @@ final ThemeData appThemeData = ThemeData.dark().copyWith(
   outlinedButtonTheme: OutlinedButtonThemeData(
     style: ButtonStyle(
       overlayColor: MaterialStateProperty.all(
-        Colors.amber[800]?.withOpacity(0.1),
+        Colors.blue,
       ),
       shape: MaterialStateProperty.all(
         RoundedRectangleBorder(
@@ -46,7 +46,7 @@ final ThemeData appThemeData = ThemeData.dark().copyWith(
   colorScheme: ThemeData.dark().colorScheme.copyWith(
     onPrimary: Colors.white,
     primary: Colors.blueGrey,
-    secondary: Colors.amber.shade800,
+    secondary: Colors.black,
     onSecondary: Colors.white,
   ),
 );

@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.frfs.systetica.untitled">
+    package="com.frfs.systetica">
    <application
-        android:label="untitled"
+        android:label="systetica"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

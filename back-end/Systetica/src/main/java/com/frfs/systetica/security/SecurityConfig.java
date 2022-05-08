@@ -15,8 +15,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import static org.springframework.http.HttpMethod.*;
-
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
@@ -35,11 +33,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         customAuthenticationFilter.setFilterProcessesUrl("/login");
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http.authorizeRequests().antMatchers("/login/**", "/autenticacao/refresh-token/**", "/usuario/salvar/**").permitAll(); //isso meio que sobrescreve o /login padrão do spring
-        http.authorizeRequests().antMatchers(GET, "/usuario/**").hasAnyAuthority("ADMINISTRADOR");
-        http.authorizeRequests().antMatchers(PUT, "/usuario/**").hasAnyAuthority("ADMINISTRADOR");
-        http.authorizeRequests().antMatchers(POST, "/usuario/**").hasAnyAuthority("ADMINISTRADOR");
-        http.authorizeRequests().antMatchers(DELETE, "/usuario/**").hasAnyAuthority("ADMINISTRADOR");
+        http.authorizeRequests().antMatchers(
+                "/login/**",
+                "/autenticacao/refresh-token/**",
+                "/usuario/salvar/**").permitAll();
+        http.authorizeRequests().antMatchers("*", "/usuario/**").hasAnyAuthority("ADMINISTRADOR");
         http.authorizeRequests().anyRequest().authenticated();
         http.addFilter(customAuthenticationFilter);
         http.addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);

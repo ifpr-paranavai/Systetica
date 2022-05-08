@@ -1,4 +1,4 @@
-package com.frfs.systetica.untitled
+package com.frfs.systetica
 
 import io.flutter.embedding.android.FlutterActivity
 
