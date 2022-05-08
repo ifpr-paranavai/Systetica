@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:systetica/components/botoes/botao_acao_widget.dart';
 import 'package:systetica/components/campos_texto/campo_texto_widget.dart';
+import 'package:systetica/screen/autenticacao/login/login_controller.dart';
 import 'package:systetica/screen/autenticacao/login/view/login_page.dart';
 
 class LoginWidget extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
+  LoginController controller = LoginController();
 
   @override
   Widget build(BuildContext context) {
@@ -39,12 +41,13 @@ class LoginWidget extends State<LoginPage> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
-                  children: const [
+                  children: [
                     CampoTextoWidget(
                       labelText: "E-mail",
                       paddingBottom: 0,
                       maxLength: 50,
                       paddingTop: 10,
+                      controller: controller.emailController,
                     ),
                     CampoTextoWidget(
                       labelText: "Senha",
@@ -52,8 +55,9 @@ class LoginWidget extends State<LoginPage> {
                       isPassword: true,
                       paddingBottom: 0,
                       paddingTop: 5,
+                      controller: controller.emailController,
                     ),
-                    BotaoAcaoWidget(
+                    const BotaoAcaoWidget(
                       paddingTop: 0,
                       paddingBottom: 0,
                       labelText: "LOGAR",
@@ -61,7 +65,7 @@ class LoginWidget extends State<LoginPage> {
                       corBotao: Colors.black,
                       corTexto: Colors.white,
                     ),
-                    BotaoAcaoWidget(
+                    const BotaoAcaoWidget(
                       paddingTop: 18,
                       paddingBottom: 0,
                       labelText: "ESQUECI SENHA",

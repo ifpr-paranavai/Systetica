@@ -46,7 +46,7 @@ class CadastroWidget extends State<CadastroPage> {
                         labelText: "Nome",
                         paddingBottom: 0,
                         maxLength: 100,
-                        paddingTop: 3,
+                        paddingTop: 18,
                       ),
                       CampoDataWidget(
                         controller: controller.dataNascimentoController,
@@ -94,7 +94,7 @@ class CadastroWidget extends State<CadastroPage> {
                         controller: controller.emailController,
                         labelText: "E-mail",
                         paddingBottom: 0,
-                        maxLength: 50,
+                        maxLength: 80,
                         paddingTop: 3,
                       ),
                       CampoTextoWidget(
@@ -113,13 +113,14 @@ class CadastroWidget extends State<CadastroPage> {
                         paddingBottom: 0,
                         paddingTop: 5,
                       ),
-                      const BotaoAcaoWidget(
+                      BotaoAcaoWidget(
                         paddingTop: 0,
-                        paddingBottom: 30,
+                        paddingBottom: 50,
                         labelText: "CADASTRAR",
                         largura: 190,
                         corBotao: Colors.black,
                         corTexto: Colors.white,
+                          onPressed: () => controller.cadastrarUsuario(context)
                       ),
                     ],
                   ),
