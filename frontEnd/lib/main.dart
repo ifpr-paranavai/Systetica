@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:systetica/screen/autenticacao/inicio_page.dart';
 import 'package:systetica/style/app_theme.dart';
 

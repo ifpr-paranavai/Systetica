@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:systetica/components/botoes/botao_acao.dart';
+import 'package:systetica/components/botoes/botao_acao_widget.dart';
 import 'package:systetica/components/campos_texto/campo_texto_widget.dart';
 import 'package:systetica/screen/autenticacao/login/view/login_page.dart';
 
@@ -10,27 +10,36 @@ class LoginWidget extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Center(
-        child: Form(
-          key: _formKey,
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Column(
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                padding: const EdgeInsets.only(top: 5),
+                child: IconButton(
+                  icon: const Icon(Icons.keyboard_arrow_left_outlined, size: 35),
+                  color: Colors.black,
+                  onPressed: () => Navigator.pop(context),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(bottom: 10, left: 35, top: MediaQuery.of(context).size.height / 5.5),
+                child: const Text(
+                  "Login",
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 35
+                  ),
+                ),
+              ),
+              Form(
+                key: _formKey,
+                child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: const [
-                    Padding(
-                      padding: EdgeInsets.only(right: 260, bottom: 18),
-                      child: Text(
-                        "Login",
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 35
-                        ),
-                      ),
-                    ),
                     CampoTextoWidget(
                       labelText: "E-mail",
                       paddingBottom: 0,
@@ -62,8 +71,8 @@ class LoginWidget extends State<LoginPage> {
                     ),
                   ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
