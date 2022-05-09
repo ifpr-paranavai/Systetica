@@ -5564,9 +5564,3 @@ VALUES (1, 'Afonso Cláudio', 8),
        (5562, 'Tupiratins', 27),
        (5563, 'Wanderlândia', 27),
        (5564, 'Xambioá', 27);
-
-INSERT INTO role (id, NAME)
-VALUES (1, 'CLIENTE'),
-       (2, 'FUNCIONARIO'),
-       (3, 'ADMINISTRADOR');
-

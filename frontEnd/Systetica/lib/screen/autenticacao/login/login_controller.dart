@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:systetica/components/texto_erro_widget.dart';
+import 'package:systetica/model/LoginDTO.dart';
 import 'package:systetica/request/dio_config.dart';
+import 'package:systetica/screen/autenticacao/login/login_service.dart';
 import 'package:systetica/utils/validacoes.dart';
 
 class LoginController {
@@ -20,7 +22,12 @@ class LoginController {
         ));
         return;
       }
-      try {} catch (e) {
+      try {
+        LoginDTO login = LoginDTO(email: emailController.text, password: senhaController.text);
+
+        var usuario = await LoginService.login(login);
+
+      } catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
             backgroundColor: Colors.blueGrey,
             content: TextoErroWidget(

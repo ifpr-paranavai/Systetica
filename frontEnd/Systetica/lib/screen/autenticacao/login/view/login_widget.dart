@@ -55,15 +55,17 @@ class LoginWidget extends State<LoginPage> {
                       isPassword: true,
                       paddingBottom: 0,
                       paddingTop: 5,
-                      controller: controller.emailController,
+                      controller: controller.senhaController,
                     ),
-                    const BotaoAcaoWidget(
+                    BotaoAcaoWidget(
                       paddingTop: 0,
                       paddingBottom: 0,
                       labelText: "LOGAR",
                       largura: 190,
                       corBotao: Colors.black,
                       corTexto: Colors.white,
+                      onPressed: () =>
+                          controller.login(context),
                     ),
                     const BotaoAcaoWidget(
                       paddingTop: 18,
