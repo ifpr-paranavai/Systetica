@@ -60,7 +60,7 @@ class LoginWidget extends State<LoginPage> {
                     BotaoAcaoWidget(
                       paddingTop: 0,
                       paddingBottom: 0,
-                      labelText: "LOGAR",
+                      labelText: "LOGIN",
                       largura: 190,
                       corBotao: Colors.black,
                       corTexto: Colors.white,

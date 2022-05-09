@@ -11,7 +11,11 @@ class CadastroService {
     try {
       var request = await dio.post("usuario/salvar", data: usuarioDTO.toJson());
 
-      usuarioDTO2 = UsuarioDTO.fromJson(request.data['response']);
+      if(request.statusCode == 200){
+        print("Sucesso");
+      } else {
+        print("Errou");
+      }
 
       return usuarioDTO2;
     } catch (e) {

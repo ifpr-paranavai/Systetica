@@ -77,6 +77,7 @@ class CadastroWidget extends State<CadastroPage> {
                       CampoTextoWidget(
                         controller: controller.telefone1,
                         labelText: "Telefone 1",
+                        keyboardType: TextInputType.number,
                         mask: "(##) #####-####",
                         paddingBottom: 0,
                         maxLength: 15,
@@ -85,6 +86,7 @@ class CadastroWidget extends State<CadastroPage> {
                       CampoTextoWidget(
                         controller: controller.telefone2,
                         labelText: "Telefone 2",
+                        keyboardType: TextInputType.number,
                         mask: "(##) #####-####",
                         paddingBottom: 0,
                         maxLength: 15,
