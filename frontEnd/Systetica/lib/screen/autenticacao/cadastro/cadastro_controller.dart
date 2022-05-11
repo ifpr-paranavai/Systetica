@@ -16,6 +16,7 @@ class CadastroController {
   final emailController = TextEditingController();
   final senhaController = TextEditingController();
   final confirmaSenhaController = TextEditingController();
+  final confirmaEstadoController = TextEditingController();
 
   cadastrarUsuario(BuildContext context) async {
     var connected = await ConnectionCheck.check();

@@ -47,6 +47,5 @@ final ThemeData appThemeData = ThemeData.dark().copyWith(
     onPrimary: Colors.white,
     primary: Colors.blueGrey,
     secondary: Colors.black,
-    onSecondary: Colors.white,
   ),
 );

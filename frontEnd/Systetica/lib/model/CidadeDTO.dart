@@ -17,6 +17,16 @@ class CidadeDTO {
     estado = EstadoDTO.fromJson(json['estado']);
   }
 
+  static List<CidadeDTO> fromJsonList(List<dynamic> json) {
+    var lista = <CidadeDTO>[];
+
+    for (var i = 0; i < json.length; i++) {
+      lista.add(CidadeDTO.fromJson(json[i]));
+    }
+
+    return lista;
+  }
+
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};
     _data['id'] = id;

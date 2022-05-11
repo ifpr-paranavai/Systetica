@@ -5,7 +5,7 @@ import 'package:systetica/utils/dio/dio_config_api.dart';
 
 class LoginService {
   static Future<void> login(LoginDTO loginDTO) async {
-    Dio dio = DioConfigApi.builderConfig();
+    Dio dio = DioConfigApi.builderConfigFormData();
 
     UsuarioDTO? usuarioDTO;
 

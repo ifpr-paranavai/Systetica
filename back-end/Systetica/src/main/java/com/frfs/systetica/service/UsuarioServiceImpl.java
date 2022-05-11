@@ -78,7 +78,7 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
 
     @Override
     public ReturnData<Object> buscarTodosUsuario() {
-        return new ReturnData<>(true, "", usuarioRepository.findAll());
+        return new ReturnData<>(true, "", usuarioMapper.toListDto(usuarioRepository.findAll()));
     }
 
     @Override

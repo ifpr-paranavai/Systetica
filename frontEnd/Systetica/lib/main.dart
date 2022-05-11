@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:systetica/screen/autenticacao/inicio_page.dart';
+import 'package:systetica/screen/autenticacao/view/inicio_page.dart';
 import 'package:systetica/style/app_theme.dart';
 
 class MyHttpOverrides extends HttpOverrides {
