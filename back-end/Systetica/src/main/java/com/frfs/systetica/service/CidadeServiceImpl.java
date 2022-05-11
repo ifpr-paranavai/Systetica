@@ -5,6 +5,7 @@ import com.frfs.systetica.mapper.CidadeMapper;
 import com.frfs.systetica.repository.CidadeRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -16,7 +17,12 @@ public class CidadeServiceImpl implements CidadeService {
     private final CidadeMapper cidadeMapper;
 
     @Override
-    public ReturnData<Object> buscarTodasCidades() {
-        return new ReturnData<>(true, "", cidadeMapper.toListDto(cidadeRepository.findAll()));
+    public ReturnData<Object> buscarTodasCidadesPaginado(String search, Pageable page) {
+        return new ReturnData<>(true, "", cidadeMapper.toListDto(cidadeRepository.findAllFields(search, page).getContent()));
+    }
+
+    @Override
+    public ReturnData<Object> buscarTodasCidades(Pageable page) {
+        return new ReturnData<>(true, "", cidadeMapper.toListDto(cidadeRepository.findAll(page).getContent()));
     }
 }
