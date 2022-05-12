@@ -1,30 +1,34 @@
-import 'dart:ffi';
-
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
-import 'package:searchfield/searchfield.dart';
 import 'package:systetica/components/botoes/botao_acao_widget.dart';
 import 'package:systetica/components/campos_texto/campo_data_widget.dart';
 import 'package:systetica/components/campos_texto/campo_texto_widget.dart';
 import 'package:systetica/model/CidadeDTO.dart';
+import 'package:systetica/model/Page_impl.dart';
 import 'package:systetica/screen/autenticacao/cadastro/cadastro_controller.dart';
+import 'package:systetica/screen/autenticacao/cadastro/cadastro_service.dart';
 import 'package:systetica/screen/autenticacao/cadastro/view/cadastro_page.dart';
 
 class CadastroWidget extends State<CadastroPage> {
-  CadastroWidget({required this.cidades});
-
   final _formKey = GlobalKey<FormState>();
+
   final CadastroController controller = CadastroController();
-  late List<CidadeDTO> cidades;
 
-  List<String> cidadesNome = [];
-  String? _selectedCountry;
+  List<CidadeDTO> cidades = [];
 
-  // @override
-  // void initState() {
-  //   cidadesNome.add(cidades.forEach((element) {return element.nome}));
-  //   super.initState();
-  // }
+  CidadeDTO? cidadeDTO;
+
+  /// Busca o cidades através do filtro
+  Future<List<CidadeDTO>> buscarCidade(String? nomeCidade) async {
+    try {
+      var service = CadastroService();
+      PageImpl page = await service.buscarCidade(nomeCidade: nomeCidade);
+      return page.content as List<CidadeDTO>;
+    } catch (e) {
+      debugPrint(e.toString());
+      return [];
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -85,27 +89,13 @@ class CadastroWidget extends State<CadastroPage> {
 
                       Container(
                         padding: const EdgeInsets.only(top: 5, bottom: 15, left: 35, right: 35,),
+                        child: DropdownSearch<CidadeDTO>(
 
-                        child: DropdownSearch<String>(
-
-                          mode: Mode.MENU,
-                          showSelectedItems: true,
-                          items: ["Brasil", 'Estado Unidos', 'Africa', 'Suécia'],
-                          dropdownSearchBaseStyle: TextStyle(
-                            color: Colors.red
-                          ),
                           popupBackgroundColor: Colors.grey,
-
                           dropdownSearchDecoration: const InputDecoration(
-                            labelText: "Estado",
-                            hintText: "Seleciona um estado",
-                            hoverColor: Colors.pink,
-                            focusColor: Colors.blue,
-                            fillColor: Colors.red,
-                            iconColor: Colors.green,
-                            prefixIconColor: Colors.orange,
-                            suffixIconColor: Colors.red,
-
+                            labelText: "Cidade",
+                            hintText: "Digite sua cidade",
+                            //Borda Principal
                             enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.all(
                                   Radius.circular(15),
@@ -122,6 +112,7 @@ class CadastroWidget extends State<CadastroPage> {
                                   color: Colors.black,
                                 )
                             ),
+
                             isDense: true,
                             hintStyle:TextStyle(
                                 color: Colors.black
@@ -134,22 +125,20 @@ class CadastroWidget extends State<CadastroPage> {
                                 color: Colors.black,
                             )
 
-
                           ),
-                          onChanged: (String? value) {
-                            setState(
-                                  () {
-                                if (value != null) {
-                                  controller.confirmaEstadoController.text = value;
-                                }
-                              },
-                            );
+
+                          mode: Mode.MENU,
+                          isFilteredOnline: true,
+                          showClearButton: true,
+                          showSearchBox: true,
+                          items: cidades,
+                          itemAsString: (elemento) => elemento!.nome,
+                          onFind: (String? cidade) => buscarCidade(cidade),
+                          onChanged: (value) {
+                            cidadeDTO = value;
                           },
                         ),
                       ),
-
-
-
 
                       CampoTextoWidget(
                         controller: controller.cpfController,
@@ -178,14 +167,6 @@ class CadastroWidget extends State<CadastroPage> {
                         maxLength: 15,
                         paddingTop: 3,
                       ),
-                      const CampoTextoWidget(
-                        // controller: cidades.first.nome,
-                        labelText: "Cidade",
-                        paddingBottom: 0,
-                        maxLength: 80,
-                        paddingTop: 3,
-                      ),
-
                       CampoTextoWidget(
                         controller: controller.emailController,
                         labelText: "E-mail",
@@ -217,7 +198,7 @@ class CadastroWidget extends State<CadastroPage> {
                           corBotao: Colors.black,
                           corTexto: Colors.white,
                           onPressed: () =>
-                              controller.cadastrarUsuario(context)),
+                              controller.cadastrarUsuario(context, cidadeDTO!)),
                     ],
                   ),
                 ),

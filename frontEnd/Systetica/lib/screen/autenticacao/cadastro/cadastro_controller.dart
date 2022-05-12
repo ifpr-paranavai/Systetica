@@ -2,10 +2,13 @@ import 'package:cpf_cnpj_validator/cpf_validator.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:systetica/components/texto_erro_widget.dart';
+import 'package:systetica/model/CidadeDTO.dart';
 import 'package:systetica/model/UsuarioDTO.dart';
 import 'package:systetica/request/dio_config.dart';
 import 'package:systetica/screen/autenticacao/cadastro/cadastro_service.dart';
 import 'package:systetica/utils/validacoes.dart';
+
+import '../view/inicio_page.dart';
 
 class CadastroController {
   final nomeController = TextEditingController();
@@ -18,7 +21,7 @@ class CadastroController {
   final confirmaSenhaController = TextEditingController();
   final confirmaEstadoController = TextEditingController();
 
-  cadastrarUsuario(BuildContext context) async {
+  cadastrarUsuario(BuildContext context, CidadeDTO cidadeDTO) async {
     var connected = await ConnectionCheck.check();
     if (connected) {
       if (Validacoes.isEmptOrNull(nomeController.text) ||
@@ -79,15 +82,22 @@ class CadastroController {
       }
       try {
         UsuarioDTO usuarioDTO = UsuarioDTO(
-            nome: nomeController.text,
-            dataNascimento: dataNascimentoController.text,
-            cpf: cpfController.text,
-            telefone1: telefone1.text,
-            telefone2: telefone2.text,
-            email: emailController.text,
-            password: senhaController.text);
+          nome: nomeController.text,
+          dataNascimento: dataNascimentoController.text,
+          cpf: cpfController.text,
+          telefone1: telefone1.text,
+          telefone2: telefone2.text,
+          email: emailController.text,
+          password: senhaController.text,
+          cidade: cidadeDTO,
+        );
 
         var usuario = await CadastroService.cadastro(usuarioDTO);
+
+        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+          builder: (context) => const InicioPage(),
+        ), (route) => false);
+
       } catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
             backgroundColor: Colors.blueGrey,
