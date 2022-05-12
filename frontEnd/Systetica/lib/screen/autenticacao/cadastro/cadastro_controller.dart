@@ -1,6 +1,7 @@
 import 'package:cpf_cnpj_validator/cpf_validator.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:systetica/components/loading/show_loading_widget.dart';
 import 'package:systetica/components/show_modal_sucesso_widget.dart';
 import 'package:systetica/components/texto_erro_widget.dart';
 import 'package:systetica/model/CidadeDTO.dart';
@@ -22,7 +23,7 @@ class CadastroController {
   final confirmaSenhaController = TextEditingController();
   final confirmaEstadoController = TextEditingController();
 
-  cadastrarUsuario(BuildContext context, CidadeDTO cidadeDTO) async {
+  cadastrarUsuario(BuildContext context, CidadeDTO? cidadeDTO) async {
     var connected = await ConnectionCheck.check();
     if (connected) {
       if (Validacoes.isEmptOrNull(nomeController.text) ||
@@ -31,7 +32,8 @@ class CadastroController {
           Validacoes.isEmptOrNull(telefone1.text) ||
           Validacoes.isEmptOrNull(emailController.text) ||
           Validacoes.isEmptOrNull(senhaController.text) ||
-          Validacoes.isEmptOrNull(confirmaSenhaController.text)) {
+          Validacoes.isEmptOrNull(confirmaSenhaController.text) ||
+          cidadeDTO == null) {
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           backgroundColor: Colors.blueGrey,
           padding: EdgeInsets.all(18),
@@ -93,13 +95,35 @@ class CadastroController {
           cidade: cidadeDTO,
         );
 
+        //Loading apresentado na tela
+        var contextLoading = context;
+        var loading =
+            ShowLoadingWidget.showLoadingLabel(contextLoading, "Aguarde...");
+
         var page = await CadastroService.cadastro(usuarioDTO);
 
+        // Finaliza o loading na tela
+        Navigator.pop(contextLoading, loading);
+
         var showModalOkWidget = ShowModalOkWidget();
-        if(page.success!){
-          showModalOkWidget.showModalOk(context, description: "Usuário cadastrado com sucesso", buttonText: "OK");
+        if (page.success!) {
+          showModalOkWidget.showModalOk(
+            context,
+            description: "Usuário cadastrado com sucesso",
+            buttonText: "OK",
+            onPressed: () => Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => InicioPage(),
+                ),
+                (route) => false),
+          );
         } else {
-          showModalOkWidget.showModalOk(context, title: "Erro", description: page.message!, buttonText: "OK");
+          showModalOkWidget.showModalOk(context,
+              title: "Erro",
+              description: page.message!,
+              buttonText: "OK",
+              onPressed: () => Navigator.pop(context));
         }
       } catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(

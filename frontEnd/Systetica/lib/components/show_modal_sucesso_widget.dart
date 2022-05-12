@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 
 class ShowModalOkWidget {
-  showModalOk(BuildContext context,
-      {String? title,
-      required String description,
-      required String buttonText,
-      double fontSizeDescription = 18}) async {
+  showModalOk(
+    BuildContext context, {
+    String? title,
+    required String description,
+    required String buttonText,
+    double fontSizeDescription = 18,
+    required VoidCallback? onPressed,
+  }) async {
     await showDialog(
       context: context,
       barrierDismissible: false,
@@ -36,12 +39,11 @@ class ShowModalOkWidget {
           ),
           actions: [
             TextButton(
-                onPressed: () => Navigator.of(context).pop(),
+                onPressed: onPressed,
                 child: Text(
                   buttonText,
                   style: const TextStyle(
-                      color: Colors.black,
-                      overflow: TextOverflow.ellipsis),
+                      color: Colors.black, overflow: TextOverflow.ellipsis),
                 )),
             // onPressed: => Navigator.of(context).pop(),
           ],

@@ -21,7 +21,7 @@ public class UsuarioController {
     @PostMapping("/salvar")
     @ResponseBody
     public ResponseEntity<Object> salvarUsuario(@Validated @RequestBody UsuarioDTO usuarioDTO) {
-        ReturnData<Object> result = usuarioService.salvarUsuario(usuarioDTO);
+        ReturnData<String> result = usuarioService.salvarUsuario(usuarioDTO);
 
         return new ResponseEntity<>(result, result.getSuccess() ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
     }

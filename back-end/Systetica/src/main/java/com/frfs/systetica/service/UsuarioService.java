@@ -4,7 +4,7 @@ import com.frfs.systetica.dto.UsuarioDTO;
 import com.frfs.systetica.dto.response.ReturnData;
 
 public interface UsuarioService {
-    ReturnData<Object> salvarUsuario(UsuarioDTO usuarioDTO);
+    ReturnData<String> salvarUsuario(UsuarioDTO usuarioDTO);
 
     ReturnData<Object> buscarUsuario(Long id);
 

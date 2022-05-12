@@ -31,7 +31,7 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
     private final RoleService roleService;
 
     @Override
-    public ReturnData<Object> salvarUsuario(UsuarioDTO usuarioDTO) {
+    public ReturnData<String> salvarUsuario(UsuarioDTO usuarioDTO) {
         try {
             if (!Validate.validateCpf(usuarioDTO.getCpf().replace(".", "").replace("-", ""))) {
                 return new ReturnData<>(false, "CPF inválido.", usuarioDTO.getCpf());
@@ -48,9 +48,9 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
 
             usuarioDTO = roleService.adicionarRoleUsuario(usuarioDTO, "CLIENTE");
 
-            var usuario = usuarioRepository.save(usuarioMapper.toEntity(usuarioDTO));
+            usuarioRepository.save(usuarioMapper.toEntity(usuarioDTO));
 
-            return new ReturnData<>(true, "Cliente salvo com sucesso.", usuarioMapper.toDto(usuario));
+            return new ReturnData<>(true, "Usuário salvo com sucesso.", "");
         } catch (BusinessException busEx) {
             return new ReturnData<>(false, "Ocorreu um erro ao salvar um cliente.", busEx.getMessage());
         } catch (Exception ex) {
