@@ -33,7 +33,7 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
     @Override
     public ReturnData<Object> salvarUsuario(UsuarioDTO usuarioDTO) {
         try {
-            if (!Validate.validateCpf(usuarioDTO.getCpf())) {
+            if (!Validate.validateCpf(usuarioDTO.getCpf().replace(".", "").replace("-", ""))) {
                 return new ReturnData<>(false, "CPF inválido.", usuarioDTO.getCpf());
             }
             if (usuarioRepository.findByCpf(usuarioDTO.getCpf()).isPresent()) {

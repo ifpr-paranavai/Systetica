@@ -1,6 +1,7 @@
 import 'package:cpf_cnpj_validator/cpf_validator.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:systetica/components/show_modal_sucesso_widget.dart';
 import 'package:systetica/components/texto_erro_widget.dart';
 import 'package:systetica/model/CidadeDTO.dart';
 import 'package:systetica/model/UsuarioDTO.dart';
@@ -92,12 +93,14 @@ class CadastroController {
           cidade: cidadeDTO,
         );
 
-        var usuario = await CadastroService.cadastro(usuarioDTO);
+        var page = await CadastroService.cadastro(usuarioDTO);
 
-        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
-          builder: (context) => const InicioPage(),
-        ), (route) => false);
-
+        var showModalOkWidget = ShowModalOkWidget();
+        if(page.success!){
+          showModalOkWidget.showModalOk(context, description: "Usuário cadastrado com sucesso", buttonText: "OK");
+        } else {
+          showModalOkWidget.showModalOk(context, title: "Erro", description: page.message!, buttonText: "OK");
+        }
       } catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
             backgroundColor: Colors.blueGrey,

@@ -16,7 +16,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "cliente")
+@Table(name = "usuario")
 @EqualsAndHashCode
 public class Usuario implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -38,10 +38,10 @@ public class Usuario implements Serializable {
     private String dataNascimento;
 
     @NotNull
-    @Column(name = "telefone1", length = 14)
+    @Column(name = "telefone1", length = 15)
     private String telefone1;
 
-    @Column(name = "telefone2", length = 14)
+    @Column(name = "telefone2", length = 15)
     private String telefone2;
 
     @NotNull

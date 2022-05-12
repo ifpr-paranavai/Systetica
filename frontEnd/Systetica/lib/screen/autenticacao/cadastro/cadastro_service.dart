@@ -1,21 +1,27 @@
 import 'package:dio/dio.dart';
 import 'package:systetica/model/CidadeDTO.dart';
+import 'package:systetica/model/Info.dart';
 import 'package:systetica/model/Page_impl.dart';
 import 'package:systetica/model/UsuarioDTO.dart';
 import 'package:systetica/utils/dio/dio_config_api.dart';
 
 class CadastroService {
-  static Future<UsuarioDTO?> cadastro(UsuarioDTO usuarioDTO) async {
+  static Future<Info> cadastro(UsuarioDTO usuarioDTO) async {
     try {
       Dio dio = DioConfigApi.builderConfigJson();
-      var response =
-          await dio.post("usuario/salvar", data: usuarioDTO.toJson());
-      return UsuarioDTO.fromJson(response.data['response']);
+
+      var response = await dio.post("usuario/salvar", data: usuarioDTO.toJson());
+     
+      return Info.fromJson(response.data);
     } on DioError catch (e) {
-      if (e.type == DioErrorType.connectTimeout) {
-        throw Exception("Conexão Perdida: $e.message");
+      try{
+        if (e.type == DioErrorType.connectTimeout) {
+          throw Exception("Conexão Perdida: $e.message");
+        }
+        return Info.fromJson(e.response!.data!);
+      } catch (e) {
+        throw Exception(e.runtimeType);
       }
-      throw Exception(e.message);
     } on Exception catch (ex) {
       rethrow;
     }
