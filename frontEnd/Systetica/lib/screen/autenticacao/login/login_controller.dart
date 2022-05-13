@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
 import 'package:systetica/components/loading/show_loading_widget.dart';
-import 'package:systetica/components/show_modal_sucesso_widget.dart';
 import 'package:systetica/components/texto_erro_widget.dart';
 import 'package:systetica/model/LoginDTO.dart';
 import 'package:systetica/request/dio_config.dart';
@@ -28,8 +26,10 @@ class LoginController {
       }
       //Loading apresentado na tela
       var contextLoading = context;
-      var loading =
-          ShowLoadingWidget.showLoadingLabel(contextLoading, "Aguarde...");
+      var loading = ShowLoadingWidget.showLoadingLabel(
+        contextLoading,
+        "Aguarde...",
+      );
       try {
         LoginDTO login = LoginDTO(
           email: emailController.text,
