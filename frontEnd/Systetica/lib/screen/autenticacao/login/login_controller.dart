@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:systetica/components/loading/show_loading_widget.dart';
 import 'package:systetica/components/texto_erro_widget.dart';
+import 'package:systetica/database/orm/token_orm.dart';
+import 'package:systetica/database/repository/token_repository.dart';
 import 'package:systetica/model/LoginDTO.dart';
 import 'package:systetica/request/dio_config.dart';
 import 'package:systetica/screen/autenticacao/login/login_service.dart';
@@ -35,7 +37,17 @@ class LoginController {
           email: emailController.text,
           password: senhaController.text,
         );
-        var resposta = await LoginService.login(login);
+        var tokenDto = await LoginService.login(login);
+
+        // Verificar se já existe alguma Usuario cadastrado no banco
+        TokenORM existeTokenORM = await TokenRepository.findToken();
+
+        if(Validacoes.isIntegerNull(existeTokenORM.id) && Validacoes.isEmptOrNull(existeTokenORM.accessToken) &&  Validacoes.isEmptOrNull(existeTokenORM.refreshToken)) {
+          TokenRepository.insertToken(tokenDto!);
+        } else {
+          existeTokenORM.id = existeTokenORM.id;
+          TokenRepository.updateToken(existeTokenORM);
+        }
 
         // Finaliza o loading na tela
         Navigator.pop(contextLoading, loading);
