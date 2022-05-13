@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
+import 'package:systetica/components/loading/show_loading_widget.dart';
+import 'package:systetica/components/show_modal_sucesso_widget.dart';
 import 'package:systetica/components/texto_erro_widget.dart';
 import 'package:systetica/model/LoginDTO.dart';
 import 'package:systetica/request/dio_config.dart';
 import 'package:systetica/screen/autenticacao/login/login_service.dart';
+import 'package:systetica/screen/home/view/home_page.dart';
 import 'package:systetica/utils/validacoes.dart';
 
 class LoginController {
@@ -22,16 +26,33 @@ class LoginController {
         ));
         return;
       }
+      //Loading apresentado na tela
+      var contextLoading = context;
+      var loading =
+          ShowLoadingWidget.showLoadingLabel(contextLoading, "Aguarde...");
       try {
-        LoginDTO login = LoginDTO(email: emailController.text, password: senhaController.text);
+        LoginDTO login = LoginDTO(
+          email: emailController.text,
+          password: senhaController.text,
+        );
+        var resposta = await LoginService.login(login);
 
-        var usuario = await LoginService.login(login);
+        // Finaliza o loading na tela
+        Navigator.pop(contextLoading, loading);
 
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const HomePage(),
+            ),
+            (route) => false);
       } catch (e) {
+        // Finaliza o loading na tela
+        Navigator.pop(contextLoading, loading);
+
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
             backgroundColor: Colors.blueGrey,
-            content: TextoErroWidget(
-                mensagem: "Ocorreu algum erro de comunicação com o servidor")));
+            content: TextoErroWidget(mensagem: "Usuário ou senha incorreto")));
       }
     } else {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(

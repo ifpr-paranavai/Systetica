@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:systetica/screen/autenticacao/view/inicio_widget.dart';
 
 class InicioPage extends StatefulWidget {

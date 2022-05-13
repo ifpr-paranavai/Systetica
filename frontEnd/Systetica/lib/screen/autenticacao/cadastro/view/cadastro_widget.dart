@@ -93,7 +93,7 @@ class CadastroWidget extends State<CadastroPage> {
 
                           popupBackgroundColor: Colors.grey,
                           dropdownSearchDecoration: const InputDecoration(
-                            labelText: "Cidade",
+                            labelText: "Cidade", //TODO ACRESCENTAR * PARA CAMPOS OBRIGATÓRIOS
                             hintText: "Digite sua cidade",
                             //Borda Principal
                             enabledBorder: OutlineInputBorder(

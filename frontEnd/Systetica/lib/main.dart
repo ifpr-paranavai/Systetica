@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:systetica/screen/autenticacao/view/inicio_page.dart';
 import 'package:systetica/style/app_theme.dart';
 
@@ -24,6 +25,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      localizationsDelegates:
+        GlobalMaterialLocalizations.delegates,
+      supportedLocales: const [
+        Locale('pt', ''),
+      ],
       title: 'Systetica',
       debugShowCheckedModeBanner: false,
       theme: appThemeData,
