@@ -19,6 +19,7 @@ class CampoTextoWidget extends StatefulWidget {
     this.controller,
     this.onPressedIcon,
     this.icon,
+    this.suffixTextBool = true
   }) : super(key: key);
 
   final String labelText;
@@ -35,6 +36,7 @@ class CampoTextoWidget extends StatefulWidget {
   final Color? colorCurso;
   final bool isDarkMode;
   final Widget? icon;
+  final bool suffixTextBool;
   final TextEditingController? controller;
 
   @override
@@ -110,6 +112,10 @@ class _CampoTextoWidget extends State<CampoTextoWidget> {
             borderSide: BorderSide(color: _corDaBorda),
           ),
           labelText: widget.labelText,
+          suffixText: widget.suffixTextBool == true ? "*" :'',
+          suffixStyle: const TextStyle(
+            color: Colors.black
+          ),
           labelStyle: TextStyle(
             color: widget.isDarkMode ? Colors.white : Colors.black,
             fontWeight: FontWeight.w400,
@@ -151,6 +157,7 @@ class _CampoTextoWidget extends State<CampoTextoWidget> {
               _corDaBorda = widget.color!;
             });
           }
+          return null;
         },
       ),
     );

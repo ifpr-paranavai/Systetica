@@ -159,6 +159,7 @@ class CadastroWidget extends State<CadastroPage> {
                         paddingBottom: 0,
                         maxLength: 15,
                         paddingTop: 3,
+                        suffixTextBool: false,
                       ),
                       CampoTextoWidget(
                         controller: controller.emailController,

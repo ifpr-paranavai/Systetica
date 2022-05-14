@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
+import 'package:systetica/model/Info.dart';
 import 'package:systetica/model/LoginDTO.dart';
 import 'package:systetica/model/TokenDTO.dart';
+import 'package:systetica/model/UsuarioDTO.dart';
 import 'package:systetica/utils/dio/dio_config_api.dart';
 
 class LoginService {
@@ -27,6 +29,48 @@ class LoginService {
         }
       } catch (e) {
         throw Exception(e);
+      }
+    } on Exception catch (ex) {
+      rethrow;
+    }
+  }
+
+  static Future<Info> gerarCodigoAlterarSenha(UsuarioDTO usuarioDTO) async {
+    try {
+      Dio dio = DioConfigApi.builderConfigJson();
+
+      var response = await dio.post("usuario/gerar-codigo-senha", data: usuarioDTO.toJson());
+
+      return Info.fromJson(response.data);
+    } on DioError catch (e) {
+      try{
+        if (e.type == DioErrorType.connectTimeout) {
+          throw Exception("Conexão Perdida: $e.message");
+        }
+        return Info.fromJson(e.response!.data!);
+      } catch (e) {
+        throw Exception(e.runtimeType);
+      }
+    } on Exception catch (ex) {
+      rethrow;
+    }
+  }
+
+  static Future<Info> alterarSenha(UsuarioDTO usuarioDTO) async {
+    try {
+      Dio dio = DioConfigApi.builderConfigJson();
+
+      var response = await dio.post("usuario/alterar-senha", data: usuarioDTO.toJson());
+
+      return Info.fromJson(response.data);
+    } on DioError catch (e) {
+      try{
+        if (e.type == DioErrorType.connectTimeout) {
+          throw Exception("Conexão Perdida: $e.message");
+        }
+        return Info.fromJson(e.response!.data!);
+      } catch (e) {
+        throw Exception(e.runtimeType);
       }
     } on Exception catch (ex) {
       rethrow;

@@ -93,7 +93,7 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
     public ReturnData<Object> ativarUsuario(UsuarioDTO usuarioDTO) {
         var usuario = usuarioRepository.findByEmailAndCodigoAleatorio(usuarioDTO.getEmail(), usuarioDTO.getCodigoAleatorio());
         if (usuario.isEmpty()) {
-            return new ReturnData<>(false, "Erro", "Email ou código informado é inváldio");
+            return new ReturnData<>(false, "Erro", "Email ou código informado é inválidio");
         } else {
 
             var tempoExpiracao = new Date().getTime() - usuario.get().getDataCadastro().getTime();
@@ -105,7 +105,7 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
                 usuarioRepository.save(usuario.get());
                 return new ReturnData<>(true, "Sucesso", "Usuário foi ativado com sucesso");
             } else {
-                return new ReturnData<>(false, "Erro", "Código foi expirado");
+                return new ReturnData<>(false, "Erro", "Código foi já expirado");
             }
         }
     }
