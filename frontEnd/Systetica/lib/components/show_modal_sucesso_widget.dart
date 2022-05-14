@@ -31,7 +31,7 @@ class ShowModalOkWidget {
           ),
           content: Text(
             description,
-            maxLines: 3,
+            maxLines: 5,
             style: TextStyle(
                 color: Colors.black,
                 fontSize: fontSizeDescription,

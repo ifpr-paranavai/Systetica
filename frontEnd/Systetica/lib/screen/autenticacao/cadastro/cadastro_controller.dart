@@ -8,9 +8,9 @@ import 'package:systetica/model/CidadeDTO.dart';
 import 'package:systetica/model/UsuarioDTO.dart';
 import 'package:systetica/request/dio_config.dart';
 import 'package:systetica/screen/autenticacao/cadastro/cadastro_service.dart';
+import 'package:systetica/screen/autenticacao/cadastro/view/ativar_usuario_page.dart';
+import 'package:systetica/screen/autenticacao/view/inicio_page.dart';
 import 'package:systetica/utils/validacoes.dart';
-
-import '../view/inicio_page.dart';
 
 class CadastroController {
   final nomeController = TextEditingController();
@@ -22,6 +22,7 @@ class CadastroController {
   final senhaController = TextEditingController();
   final confirmaSenhaController = TextEditingController();
   final confirmaEstadoController = TextEditingController();
+  final codicoController = TextEditingController();
 
   cadastrarUsuario(BuildContext context, CidadeDTO? cidadeDTO) async {
     var connected = await ConnectionCheck.check();
@@ -97,10 +98,63 @@ class CadastroController {
 
         //Loading apresentado na tela
         var contextLoading = context;
-        var loading =
-            ShowLoadingWidget.showLoadingLabel(contextLoading, "Aguarde...");
+        var loading = ShowLoadingWidget.showLoadingLabel(
+          contextLoading,
+          "Aguarde...",
+        );
 
-        var page = await CadastroService.cadastro(usuarioDTO);
+        var page = await CadastroService.cadastroUsuario(usuarioDTO);
+
+        // Finaliza o loading na tela
+        Navigator.pop(contextLoading, loading);
+
+        var showModalOkWidget = ShowModalOkWidget();
+        if (page.success!) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const AtivarUsuarioPage()),
+          );
+        } else {
+          Navigator.pop(contextLoading, loading);
+          showModalOkWidget.showModalOk(context,
+              title: "Erro",
+              description: page.message!,
+              buttonText: "OK",
+              onPressed: () => Navigator.pop(context));
+        }
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            backgroundColor: Colors.blueGrey,
+            content: TextoErroWidget(
+                mensagem: "Ocorreu algum erro de comunicação com o servidor")));
+      }
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        backgroundColor: Colors.blueGrey,
+        padding: EdgeInsets.all(12),
+        content: TextoErroWidget(
+            mensagem: "Por Favor, conecte-se a rede para cadastrar um usuário"),
+      ));
+    }
+  }
+
+  ativiarUsuario(BuildContext context) async {
+    var connected = await ConnectionCheck.check();
+    if (connected) {
+      try {
+        UsuarioDTO usuarioDTO = UsuarioDTO(
+          email: emailController.text,
+          codigoAleatorio: int.parse(codicoController.text),
+        );
+
+        //Loading apresentado na tela
+        var contextLoading = context;
+        var loading = ShowLoadingWidget.showLoadingLabel(
+          contextLoading,
+          "Aguarde...",
+        );
+
+        var page = await CadastroService.ativarUsuario(usuarioDTO);
 
         // Finaliza o loading na tela
         Navigator.pop(contextLoading, loading);
@@ -109,16 +163,18 @@ class CadastroController {
         if (page.success!) {
           showModalOkWidget.showModalOk(
             context,
-            description: "Usuário cadastrado com sucesso",
+            description:
+            "Usuário cadastrado ativado com sucesso",
             buttonText: "OK",
             onPressed: () => Navigator.pushAndRemoveUntil(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => InicioPage(),
+                  builder: (context) => const InicioPage(),
                 ),
-                (route) => false),
+                    (route) => false),
           );
         } else {
+          Navigator.pop(contextLoading, loading);
           showModalOkWidget.showModalOk(context,
               title: "Erro",
               description: page.message!,

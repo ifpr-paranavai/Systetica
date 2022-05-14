@@ -5,40 +5,29 @@ class UsuarioDTO {
 
   UsuarioDTO({
     this.id,
-    required this.nome,
-    required this.dataNascimento,
-    required this.cpf,
-    required this.telefone1,
+    this.nome,
+    this.dataNascimento,
+    this.cpf,
+    this.telefone1,
     this.telefone2,
-    required this.email,
-    required this.password,
+    this.email,
+    this.password,
+    this.codigoAleatorio,
     this.cidade,
     this.roles,
   });
 
   int? id;
-  late final String nome;
-  late final String dataNascimento;
-  late final String cpf;
-  late final String telefone1;
+  String? nome;
+  String? dataNascimento;
+  String? cpf;
+  String? telefone1;
   String? telefone2;
-  late final String email;
-  late final String password;
+  String? email;
+  String? password;
+  int? codigoAleatorio;
   CidadeDTO? cidade;
   List<RoleDTO>? roles;
-
-  // static UsuarioDTO fromDTO(UsuarioORM usuarioORM) {
-  //   return UsuarioDTO(
-  //     id: usuarioORM.id,
-  //     nome: usuarioORM.nome!,
-  //     dataNascimento: usuarioORM.dataNascimento!,
-  //     cpf: usuarioORM.cpf!,
-  //     telefone1: usuarioORM.telefone1!,
-  //     telefone2: usuarioORM.telefone2!,
-  //     email: usuarioORM.email!,
-  //     password: usuarioORM.password!,
-  //   );
-  // }
 
   UsuarioDTO.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -49,6 +38,7 @@ class UsuarioDTO {
     telefone2 = json['telefone2'];
     email = json['email'];
     password = json['password'];
+    codigoAleatorio = json['codigo_aleatorio'];
     cidade = CidadeDTO.fromJson(json['cidade']);
     roles = json['roles'] != null
         ? (json['roles']
