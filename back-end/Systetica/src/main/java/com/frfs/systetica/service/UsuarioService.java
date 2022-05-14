@@ -11,4 +11,10 @@ public interface UsuarioService {
     ReturnData<Object> buscarUsuarioPorEmail(String email);
 
     ReturnData<Object> buscarTodosUsuario();
+
+    ReturnData<Object> ativarUsuario(UsuarioDTO usuarioDTO);
+
+    ReturnData<Object> gerarCodigo(UsuarioDTO usuarioDTO);
+
+    ReturnData<Object> alterarSenhaUsuario(UsuarioDTO usuarioDTO);
 }

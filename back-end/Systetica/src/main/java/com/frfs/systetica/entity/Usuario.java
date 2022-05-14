@@ -52,12 +52,22 @@ public class Usuario implements Serializable {
     @Column(name = "password", nullable = false, length = 100)
     private String password;
 
+    @NotNull
+    @Column(name = "codigo_aleatorio")
+    private Integer codigoAleatorio;
+
+    @Column(name = "data_codigo")
+    private Date dataCodigo;
+
+    @Column(name = "usuario_ativo")
+    private Boolean usuarioAtivo;
+
     @Column(name = "observacao", length = 300)
     private String observacao;
 
     @NotNull
     @Column(name = "data_cadastro")
-    private Date dataCadastro = new Date();
+    private Date dataCadastro;
 
     @NotNull
     @Column(name = "status", length = 1)

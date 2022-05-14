@@ -41,4 +41,28 @@ public class UsuarioController {
 
         return new ResponseEntity<>(result, result.getSuccess() ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
+    @PostMapping(value = "/ativar-usuario")
+    @ResponseBody
+    public ResponseEntity<Object> ativarUsuario(@Validated @RequestBody UsuarioDTO usuarioDTO) {
+        ReturnData<Object> result = usuarioService.ativarUsuario(usuarioDTO);
+
+        return new ResponseEntity<>(result, result.getSuccess() ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @PostMapping(value = "/gerar-codigo-senha")
+    @ResponseBody
+    public ResponseEntity<Object> gerarCodigo(@Validated @RequestBody UsuarioDTO usuarioDTO) {
+        ReturnData<Object> result = usuarioService.gerarCodigo(usuarioDTO);
+
+        return new ResponseEntity<>(result, result.getSuccess() ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @PostMapping(value = "/alterar-senha")
+    @ResponseBody
+    public ResponseEntity<Object> alterarSenhaUsuario(@Validated @RequestBody UsuarioDTO usuarioDTO) {
+        ReturnData<Object> result = usuarioService.alterarSenhaUsuario(usuarioDTO);
+
+        return new ResponseEntity<>(result, result.getSuccess() ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 }

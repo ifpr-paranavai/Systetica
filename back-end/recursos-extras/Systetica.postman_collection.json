@@ -14,8 +14,8 @@
 						"method": "POST",
 						"header": [],
 						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
+							"mode": "formdata",
+							"formdata": [
 								{
 									"key": "email",
 									"value": "ruanvha15@gmail.com",
@@ -29,10 +29,13 @@
 							]
 						},
 						"url": {
-							"raw": "http://localhost:8090/login",
+							"raw": "http://192.168.1.100:8090/login",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"192",
+								"168",
+								"1",
+								"100"
 							],
 							"port": "8090",
 							"path": [
@@ -52,26 +55,13 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJydWFudmhhMTVAZ21haWwuY29tIiwicm9sZXMiOlsiQURNSU5JU1RSQURPUiJdLCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwOTAvbG9naW4iLCJleHAiOjE2NTEyODc1Mzl9.N1J2Kfb2gMBjg1bERrank1QV8ebuE5LG-ufkaYsFpfE",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJydWFudmhhMTVAZ21haWwuY29tIiwicm9sZXMiOlsiQURNSU5JU1RSQURPUiJdLCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwOTAvbG9naW4iLCJleHAiOjE2NTEyOTE3MTN9.FCOLo3ZUtr8i2pv8uXGij1Z16lcjW05hPRcTQd3Tz5w",
 								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "email",
-									"value": "ruanvha15@gmail.com",
-									"type": "text",
-									"disabled": true
-								},
-								{
-									"key": "password",
-									"value": "12345",
-									"type": "text",
-									"disabled": true
-								}
-							]
+							"urlencoded": []
 						},
 						"url": {
 							"raw": "http://localhost:8090/autenticacao/refresh-token",
@@ -83,6 +73,38 @@
 							"path": [
 								"autenticacao",
 								"refresh-token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Altear Senha",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"ruanvha15@gmail.com\",\r\n    \"codigo_aleatorio\": \"107176\",\r\n    \"password\": \"12345\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://192.168.1.100:8090/usuario/alterar-senha",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"1",
+								"100"
+							],
+							"port": "8090",
+							"path": [
+								"usuario",
+								"alterar-senha"
 							]
 						}
 					},
@@ -100,7 +122,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"nome\": \"Franciel \",\r\n    \"cpf\": \"04731628229\",\r\n    \"data_nascimento\": \"10-04-2000\",\r\n    \"telefone1\": \"(44)99124-4792\",\r\n    \"email\": \"ruanvha15@gmail.com\",\r\n    \"data_cadastro\": \"2022-04-30T03:29:45.418+00:00\",\r\n    \"password\": \"12345\",\r\n    \"cidade\": {\r\n        \"id\": 3040\r\n    }\r\n}",
+							"raw": "{\r\n    \"nome\": \"Franciel Ruam\",\r\n    \"cpf\": \"495.004.070-78\",\r\n    \"data_nascimento\": \"10-10-2000\",\r\n    \"telefone1\": \"(44)99124-4792\",\r\n    \"email\": \"ruanvha15@gmail.com\",\r\n    \"password\": \"1234\",\r\n    \"cidade\": {\r\n        \"id\": 1\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -108,15 +130,82 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8090/usuario/salvar",
+							"raw": "http://192.168.1.100:8090/usuario/salvar",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"192",
+								"168",
+								"1",
+								"100"
 							],
 							"port": "8090",
 							"path": [
 								"usuario",
 								"salvar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Ativar Usuario",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"ruanvha15@gmail.com\",\r\n    \"codigo_aleatorio\": \"129960\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://192.168.1.100:8090/usuario/ativar-usuario",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"1",
+								"100"
+							],
+							"port": "8090",
+							"path": [
+								"usuario",
+								"ativar-usuario"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Gerar Código Usuario",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"ruanvha15@gmail.com\",\r\n    \"cpf\": \"495.004.070-78\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://192.168.1.100:8090/usuario/gerar-codigo-senha",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"1",
+								"100"
+							],
+							"port": "8090",
+							"path": [
+								"usuario",
+								"gerar-codigo-senha"
 							]
 						}
 					},
@@ -132,7 +221,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJydWFudmhhMTVAZ21haWwuY29tIiwicm9sZXMiOlsiQURNSU5JU1RSQURPUiJdLCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwOTAvbG9naW4iLCJleHAiOjE2NTEyOTEyMTR9.5PzCn-rmeHyz3lPZJtaULJ9E5_KCHkYJub7a99KboH4",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjaW50aWFAZ21haWwuY29tIiwicm9sZXMiOlsiQ0xJRU5URSJdLCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwOTAvbG9naW4iLCJleHAiOjE2NTE2MjQ5MzR9.pzzdp2XMFe0mCzfYH0SvbSMtY23M0sZr8QR9AM7QH6Q",
 								"type": "text"
 							}
 						],
@@ -167,7 +256,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJydWFudmhhMTVAZ21haWwuY29tIiwicm9sZXMiOlsiQURNSU5JU1RSQURPUiJdLCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwOTAvbG9naW4iLCJleHAiOjE2NTEyOTEyMTR9.5PzCn-rmeHyz3lPZJtaULJ9E5_KCHkYJub7a99KboH4",
+								"value": "Bearer ",
 								"type": "text"
 							}
 						],
@@ -190,6 +279,44 @@
 							"path": [
 								"usuario",
 								"buscar-todos"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Cidade",
+			"item": [
+				{
+					"name": "Buscar Cidades Paginado",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://192.168.1.100:8090/cidade/buscar-todos?search=Vilhena&size=10",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"1",
+								"100"
+							],
+							"port": "8090",
+							"path": [
+								"cidade",
+								"buscar-todos"
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": "Vilhena"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								}
 							]
 						}
 					},

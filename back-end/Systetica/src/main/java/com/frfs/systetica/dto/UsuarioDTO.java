@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Column;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -40,11 +41,20 @@ public class UsuarioDTO implements Serializable {
     @JsonProperty("password")
     private String password;
 
+    @JsonProperty("codigo_aleatorio")
+    private Integer codigoAleatorio;
+
+    @JsonProperty("data_codigo")
+    private Date dataCodigo;
+
+    @JsonProperty("usuario_ativo")
+    private Boolean usuarioAtivo = false;
+
     @JsonProperty("observacao")
     private String observacao;
 
     @JsonProperty("data_cadastro")
-    private Date dataCadastro;
+    private Date dataCadastro = new Date();
 
     @JsonProperty("status")
     private String status = String.valueOf('A');

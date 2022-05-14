@@ -46,7 +46,7 @@ class DbSQLite {
     CREATE TABLE IF NOT EXISTS ${TokenORM.TABLE}(
     ${TokenORM.ID} $idType,
     ${TokenORM.ACCESS_TOKEN} $textType,
-    ${TokenORM.REFRESH_TOKEN} $intType
+    ${TokenORM.REFRESH_TOKEN} $textType
     )''');
   }
 }
