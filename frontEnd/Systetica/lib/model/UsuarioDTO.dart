@@ -56,6 +56,7 @@ class UsuarioDTO {
     _data['telefone2'] = telefone2;
     _data['email'] = email;
     _data['password'] = password;
+    _data['codigo_aleatorio'] = codigoAleatorio;
     _data['cidade'] = cidade?.toJson();
     _data['roles'] = roles != null ? roles!.map((e) => e.toString()).toList() : null;
     return _data;

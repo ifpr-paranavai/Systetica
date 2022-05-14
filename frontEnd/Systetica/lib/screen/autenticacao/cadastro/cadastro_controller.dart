@@ -8,7 +8,7 @@ import 'package:systetica/model/CidadeDTO.dart';
 import 'package:systetica/model/UsuarioDTO.dart';
 import 'package:systetica/request/dio_config.dart';
 import 'package:systetica/screen/autenticacao/cadastro/cadastro_service.dart';
-import 'package:systetica/screen/autenticacao/cadastro/view/ativar_usuario_page.dart';
+import 'package:systetica/screen/autenticacao/cadastro/view/ativar_usuario/ativar_usuario_page.dart';
 import 'package:systetica/screen/autenticacao/view/inicio_page.dart';
 import 'package:systetica/utils/validacoes.dart';
 
@@ -103,22 +103,24 @@ class CadastroController {
           "Aguarde...",
         );
 
-        var page = await CadastroService.cadastroUsuario(usuarioDTO);
+        var infoResponse = await CadastroService.cadastroUsuario(usuarioDTO);
 
         // Finaliza o loading na tela
         Navigator.pop(contextLoading, loading);
 
         var showModalOkWidget = ShowModalOkWidget();
-        if (page.success!) {
+        if (infoResponse.success!) {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => const AtivarUsuarioPage()),
+            MaterialPageRoute(
+              builder: (context) => const AtivarUsuarioPage(),
+            ),
           );
         } else {
           Navigator.pop(contextLoading, loading);
           showModalOkWidget.showModalOk(context,
               title: "Erro",
-              description: page.message!,
+              description: infoResponse.message!,
               buttonText: "OK",
               onPressed: () => Navigator.pop(context));
         }
@@ -154,30 +156,29 @@ class CadastroController {
           "Aguarde...",
         );
 
-        var page = await CadastroService.ativarUsuario(usuarioDTO);
+        var infoResponse = await CadastroService.ativarUsuario(usuarioDTO);
 
         // Finaliza o loading na tela
         Navigator.pop(contextLoading, loading);
 
         var showModalOkWidget = ShowModalOkWidget();
-        if (page.success!) {
+        if (infoResponse.success!) {
           showModalOkWidget.showModalOk(
             context,
-            description:
-            "Usuário cadastrado ativado com sucesso",
+            title: "Sucesso",
+            description: "Usuário foi ativiado com sucesso",
             buttonText: "OK",
             onPressed: () => Navigator.pushAndRemoveUntil(
                 context,
                 MaterialPageRoute(
                   builder: (context) => const InicioPage(),
                 ),
-                    (route) => false),
+                (route) => false),
           );
         } else {
-          Navigator.pop(contextLoading, loading);
           showModalOkWidget.showModalOk(context,
               title: "Erro",
-              description: page.message!,
+              description: infoResponse.message!,
               buttonText: "OK",
               onPressed: () => Navigator.pop(context));
         }

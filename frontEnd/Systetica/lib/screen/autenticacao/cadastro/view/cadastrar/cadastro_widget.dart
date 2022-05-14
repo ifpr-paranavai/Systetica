@@ -7,7 +7,7 @@ import 'package:systetica/model/CidadeDTO.dart';
 import 'package:systetica/model/Page_impl.dart';
 import 'package:systetica/screen/autenticacao/cadastro/cadastro_controller.dart';
 import 'package:systetica/screen/autenticacao/cadastro/cadastro_service.dart';
-import 'package:systetica/screen/autenticacao/cadastro/view/cadastro_page.dart';
+import 'package:systetica/screen/autenticacao/cadastro/view/cadastrar/cadastro_page.dart';
 
 class CadastroWidget extends State<CadastroPage> {
   final _formKey = GlobalKey<FormState>();
@@ -86,47 +86,41 @@ class CadastroWidget extends State<CadastroPage> {
                           );
                         },
                       ),
-
                       Container(
-                        padding: const EdgeInsets.only(top: 5, bottom: 15, left: 35, right: 35,),
+                        padding: const EdgeInsets.only(
+                          top: 5,
+                          bottom: 15,
+                          left: 35,
+                          right: 35,
+                        ),
                         child: DropdownSearch<CidadeDTO>(
-
                           popupBackgroundColor: Colors.grey,
                           dropdownSearchDecoration: const InputDecoration(
-                            labelText: "Cidade", //TODO ACRESCENTAR * PARA CAMPOS OBRIGATÓRIOS
-                            hintText: "Digite sua cidade",
-                            //Borda Principal
-                            enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(15),
-                                ),
-                                borderSide: BorderSide(
+                              labelText: "Cidade",
+                              //TODO ACRESCENTAR * PARA CAMPOS OBRIGATÓRIOS
+                              hintText: "Digite sua cidade",
+                              //Borda Principal
+                              enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(15),
+                                  ),
+                                  borderSide: BorderSide(
                                     color: Colors.blueGrey,
-                                )
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(15),
-                                ),
-                                borderSide: BorderSide(
-                                  color: Colors.black,
-                                )
-                            ),
-
-                            isDense: true,
-                            hintStyle:TextStyle(
-                                color: Colors.black
-                            ),
-                            labelStyle: TextStyle(
+                                  )),
+                              focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(15),
+                                  ),
+                                  borderSide: BorderSide(
+                                    color: Colors.black,
+                                  )),
+                              isDense: true,
+                              hintStyle: TextStyle(color: Colors.black),
+                              labelStyle:
+                                  TextStyle(color: Colors.black, fontSize: 17),
+                              floatingLabelStyle: TextStyle(
                                 color: Colors.black,
-                              fontSize: 17
-                            ),
-                            floatingLabelStyle: TextStyle(
-                                color: Colors.black,
-                            )
-
-                          ),
-
+                              )),
                           mode: Mode.MENU,
                           isFilteredOnline: true,
                           showClearButton: true,
@@ -139,7 +133,6 @@ class CadastroWidget extends State<CadastroPage> {
                           },
                         ),
                       ),
-
                       CampoTextoWidget(
                         controller: controller.cpfController,
                         labelText: "CPF",
@@ -177,7 +170,7 @@ class CadastroWidget extends State<CadastroPage> {
                       CampoTextoWidget(
                         controller: controller.senhaController,
                         labelText: "Senha",
-                        maxLength: 50,
+                        maxLength: 16,
                         isPassword: true,
                         paddingBottom: 0,
                         paddingTop: 5,
@@ -185,7 +178,7 @@ class CadastroWidget extends State<CadastroPage> {
                       CampoTextoWidget(
                         controller: controller.confirmaSenhaController,
                         labelText: "Confirmar Senha",
-                        maxLength: 50,
+                        maxLength: 16,
                         isPassword: true,
                         paddingBottom: 0,
                         paddingTop: 5,
@@ -197,8 +190,10 @@ class CadastroWidget extends State<CadastroPage> {
                           largura: 190,
                           corBotao: Colors.black,
                           corTexto: Colors.white,
-                          onPressed: () =>
-                              controller.cadastrarUsuario(context, cidadeDTO!)),
+                          onPressed: () => controller.cadastrarUsuario(
+                                context,
+                                cidadeDTO!,
+                              )),
                     ],
                   ),
                 ),

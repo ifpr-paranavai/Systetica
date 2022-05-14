@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:systetica/components/botoes/botao_acao_widget.dart';
-import 'package:systetica/screen/autenticacao/cadastro/view/ativar_usuario_page.dart';
-import 'package:systetica/screen/autenticacao/cadastro/view/cadastro_page.dart';
-import 'package:systetica/screen/autenticacao/view/inicio_page.dart';
+import 'package:systetica/screen/autenticacao/cadastro/view/cadastrar/cadastro_page.dart';
 import 'package:systetica/screen/autenticacao/login/view/login_page.dart';
+import 'package:systetica/screen/autenticacao/view/inicio_page.dart';
 
 class InicioWidget extends State<InicioPage> {
 
@@ -61,7 +60,7 @@ class InicioWidget extends State<InicioPage> {
                 corTexto: Colors.white,
                 onPressed: () => Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => CadastroPage()),
+                  MaterialPageRoute(builder: (context) => const CadastroPage()),
                 ),
               ),
             ],

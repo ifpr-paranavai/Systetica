@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:systetica/components/botoes/botao_acao_widget.dart';
 import 'package:systetica/components/campos_texto/campo_texto_widget.dart';
 import 'package:systetica/screen/autenticacao/cadastro/cadastro_controller.dart';
-import 'package:systetica/screen/autenticacao/cadastro/view/ativar_usuario_page.dart';
+import 'package:systetica/screen/autenticacao/cadastro/view/ativar_usuario/ativar_usuario_page.dart';
 
 class AtivarUsuarioWidget extends State<AtivarUsuarioPage> {
   final _formKey = GlobalKey<FormState>();

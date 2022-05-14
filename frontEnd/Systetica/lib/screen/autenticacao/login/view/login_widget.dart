@@ -51,7 +51,7 @@ class LoginWidget extends State<LoginPage> {
                     ),
                     CampoTextoWidget(
                       labelText: "Senha",
-                      maxLength: 50,
+                      maxLength: 16,
                       isPassword: true,
                       paddingBottom: 0,
                       paddingTop: 5,
