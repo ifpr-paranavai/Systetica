@@ -9,7 +9,7 @@ import 'package:systetica/model/UsuarioDTO.dart';
 import 'package:systetica/request/dio_config.dart';
 import 'package:systetica/screen/autenticacao/login/login_service.dart';
 import 'package:systetica/screen/autenticacao/login/view/alterar_senha/alterar_senha_page.dart';
-import 'package:systetica/screen/autenticacao/login/view/login/login_page.dart';
+import 'package:systetica/screen/autenticacao/view/inicio_page.dart';
 import 'package:systetica/screen/home/view/home_page.dart';
 import 'package:systetica/utils/validacoes.dart';
 
@@ -116,19 +116,24 @@ class LoginController {
         // Finaliza o loading na tela
         Navigator.pop(contextLoading, loading);
 
+        var contextShowModal = context;
         var showModalOkWidget = ShowModalOkWidget();
         if (infoResponse.success!) {
           showModalOkWidget.showModalOk(
             context,
             title: "Sucesso",
-            description: "Código gerado com sucesso",
+            description: "Código gerado e enviado em seu email com sucesso.",
             buttonText: "OK",
-            onPressed: () => Navigator.pushAndRemoveUntil(
+            onPressed: () {
+              Navigator.pop(contextShowModal, showModalOkWidget);
+
+              Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (context) => const AlterarSenhaPage(),
                 ),
-                (route) => false),
+              );
+            },
           );
         } else {
           showModalOkWidget.showModalOk(context,
@@ -194,19 +199,19 @@ class LoginController {
         var infoResponse = await LoginService.alterarSenha(usuarioDTO);
 
         // Finaliza o loading na tela
-        Navigator.pop(contextLoading, loading,);
+        Navigator.pop(contextLoading, loading);
 
         var showModalOkWidget = ShowModalOkWidget();
         if (infoResponse.success!) {
           showModalOkWidget.showModalOk(
             context,
             title: "Sucesso",
-            description: "Senha alterada com sucesso",
+            description: "Sua senha foi alterada com sucesso",
             buttonText: "OK",
             onPressed: () => Navigator.pushAndRemoveUntil(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const LoginPage(),
+                  builder: (context) => const InicioPage(),
                 ),
                 (route) => false),
           );

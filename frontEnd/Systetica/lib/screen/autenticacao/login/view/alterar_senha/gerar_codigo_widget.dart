@@ -49,6 +49,11 @@ class GerarCodigoWidget extends State<GerarCodigoPage> {
                       paddingBottom: 0,
                       maxLength: 50,
                       paddingTop: 10,
+                      isIconDate: true,
+                      icon: const Icon(
+                        Icons.email,
+                        color: Colors.black87,
+                      ),
                       controller: controller.emailController,
                     ),
                     CampoTextoWidget(
@@ -59,6 +64,11 @@ class GerarCodigoWidget extends State<GerarCodigoPage> {
                       paddingBottom: 0,
                       maxLength: 14,
                       paddingTop: 5,
+                      isIconDate: true,
+                      icon: const Icon(
+                        Icons.people,
+                        color: Colors.black87,
+                      ),
                     ),
                     BotaoAcaoWidget(
                       paddingTop: 0,
@@ -66,7 +76,7 @@ class GerarCodigoWidget extends State<GerarCodigoPage> {
                       labelText: "Gerar Codigo",
                       largura: 190,
                       corBotao: Colors.black,
-                      corTexto: Colors.white,
+                      corTexto: Colors.black87.withOpacity(0.9),
                       onPressed: () => controller.gerarCodigo(context),
                     ),
                   ],

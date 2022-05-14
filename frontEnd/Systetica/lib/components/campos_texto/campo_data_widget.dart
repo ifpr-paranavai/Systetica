@@ -75,7 +75,7 @@ class CampoDataWidget extends StatelessWidget {
             padding: EdgeInsets.only(right: 20),
             child: Icon(
               Icons.calendar_today,
-              color: Colors.grey,
+              color: Colors.black87,
             ),
           ),
         ),

@@ -48,6 +48,11 @@ class AlterarSenhaWidget extends State<AlterarSenhaPage> {
                       paddingBottom: 0,
                       maxLength: 50,
                       paddingTop: 10,
+                      isIconDate: true,
+                      icon: const Icon(
+                        Icons.email,
+                        color: Colors.black87,
+                      ),
                       controller: controller.emailController,
                     ),
                     CampoTextoWidget(
@@ -55,6 +60,11 @@ class AlterarSenhaWidget extends State<AlterarSenhaPage> {
                       paddingBottom: 0,
                       maxLength: 10,
                       paddingTop: 10,
+                      isIconDate: true,
+                      icon: const Icon(
+                        Icons.code,
+                        color: Colors.black87,
+                      ),
                       controller: controller.codicoController,
                     ),
                     CampoTextoWidget(
@@ -78,7 +88,7 @@ class AlterarSenhaWidget extends State<AlterarSenhaPage> {
                       paddingBottom: 0,
                       labelText: "Alterar Senha",
                       largura: 190,
-                      corBotao: Colors.black,
+                      corBotao: Colors.black87.withOpacity(0.9),
                       corTexto: Colors.white,
                       onPressed: () => controller.alterarSenha(context),
                     ),

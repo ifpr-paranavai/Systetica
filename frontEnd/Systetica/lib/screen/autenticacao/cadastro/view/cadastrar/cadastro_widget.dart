@@ -68,6 +68,11 @@ class CadastroWidget extends State<CadastroPage> {
                         paddingBottom: 0,
                         maxLength: 100,
                         paddingTop: 18,
+                        isIconDate: true,
+                        icon: const Icon(
+                          Icons.face_rounded,
+                          color: Colors.black87,
+                        ),
                       ),
                       CampoDataWidget(
                         controller: controller.dataNascimentoController,
@@ -141,6 +146,11 @@ class CadastroWidget extends State<CadastroPage> {
                         paddingBottom: 0,
                         maxLength: 14,
                         paddingTop: 5,
+                        isIconDate: true,
+                        icon: const Icon(
+                          Icons.people,
+                          color: Colors.black87,
+                        ),
                       ),
                       CampoTextoWidget(
                         controller: controller.telefone1,
@@ -150,6 +160,11 @@ class CadastroWidget extends State<CadastroPage> {
                         paddingBottom: 0,
                         maxLength: 15,
                         paddingTop: 3,
+                        isIconDate: true,
+                        icon: const Icon(
+                          Icons.phone,
+                          color: Colors.black87,
+                        ),
                       ),
                       CampoTextoWidget(
                         controller: controller.telefone2,
@@ -160,6 +175,11 @@ class CadastroWidget extends State<CadastroPage> {
                         maxLength: 15,
                         paddingTop: 3,
                         suffixTextBool: false,
+                        isIconDate: true,
+                        icon: const Icon(
+                          Icons.phone,
+                          color: Colors.black87,
+                        ),
                       ),
                       CampoTextoWidget(
                         controller: controller.emailController,
@@ -167,6 +187,11 @@ class CadastroWidget extends State<CadastroPage> {
                         paddingBottom: 0,
                         maxLength: 80,
                         paddingTop: 3,
+                        isIconDate: true,
+                        icon: const Icon(
+                          Icons.email,
+                          color: Colors.black87,
+                        ),
                       ),
                       CampoTextoWidget(
                         controller: controller.senhaController,
@@ -189,7 +214,7 @@ class CadastroWidget extends State<CadastroPage> {
                           paddingBottom: 50,
                           labelText: "CADASTRAR",
                           largura: 190,
-                          corBotao: Colors.black,
+                          corBotao: Colors.black87.withOpacity(0.9),
                           corTexto: Colors.white,
                           onPressed: () => controller.cadastrarUsuario(
                                 context,

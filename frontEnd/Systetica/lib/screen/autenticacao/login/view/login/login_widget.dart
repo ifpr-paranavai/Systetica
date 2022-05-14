@@ -23,19 +23,20 @@ class LoginWidget extends State<LoginPage> {
               Container(
                 padding: const EdgeInsets.only(top: 5),
                 child: IconButton(
-                  icon: const Icon(Icons.keyboard_arrow_left_outlined, size: 35),
+                  icon:
+                      const Icon(Icons.keyboard_arrow_left_outlined, size: 35),
                   color: Colors.black,
                   onPressed: () => Navigator.pop(context),
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(bottom: 10, left: 35, top: MediaQuery.of(context).size.height / 5.5),
+                padding: EdgeInsets.only(
+                    bottom: 10,
+                    left: 35,
+                    top: MediaQuery.of(context).size.height / 5.5),
                 child: const Text(
                   "Login",
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 35
-                  ),
+                  style: TextStyle(color: Colors.black, fontSize: 35),
                 ),
               ),
               Form(
@@ -49,6 +50,11 @@ class LoginWidget extends State<LoginPage> {
                       paddingBottom: 0,
                       maxLength: 50,
                       paddingTop: 10,
+                      isIconDate: true,
+                      icon: const Icon(
+                        Icons.email,
+                        color: Colors.black87,
+                      ),
                       controller: controller.emailController,
                     ),
                     CampoTextoWidget(
@@ -64,21 +70,21 @@ class LoginWidget extends State<LoginPage> {
                       paddingBottom: 0,
                       labelText: "LOGIN",
                       largura: 190,
-                      corBotao: Colors.black,
+                      corBotao: Colors.black87.withOpacity(0.9),
                       corTexto: Colors.white,
-                      onPressed: () =>
-                          controller.login(context),
+                      onPressed: () => controller.login(context),
                     ),
                     BotaoAcaoWidget(
                       paddingTop: 18,
                       paddingBottom: 0,
                       labelText: "ESQUECI SENHA",
                       largura: 190,
-                      corBotao: Colors.black,
+                      corBotao: Colors.black87.withOpacity(0.9),
                       corTexto: Colors.white,
                       onPressed: () => Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => const GerarCodigoPage()),
+                        MaterialPageRoute(
+                            builder: (context) => const GerarCodigoPage()),
                       ),
                     ),
                   ],
@@ -90,5 +96,4 @@ class LoginWidget extends State<LoginPage> {
       ),
     );
   }
-
 }

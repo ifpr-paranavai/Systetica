@@ -52,7 +52,7 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
 
             var codigoAleatorio = GerarCodigoAleatorio.gerarCodigo();
 
-            emailService.enviarEmail(usuarioDTO.getEmail(), codigoAleatorio);
+            emailService.enviarEmail(true, usuarioDTO.getEmail(), codigoAleatorio);
 
             usuarioDTO.setDataCodigo(new Date());
             usuarioDTO.setCodigoAleatorio(codigoAleatorio);
@@ -79,7 +79,7 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
     public ReturnData<Object> buscarUsuarioPorEmail(String email) {
         var usuario = usuarioRepository.findByEmail(email);
         if (usuario.isEmpty()) {
-            return new ReturnData<>(false, "Usuário não encontrado.", "Não foi possível encontrar usuário pelo email informado");
+            return new ReturnData<>(false, "Não foi possível encontrar usuário pelo email informado", "Usuário não encontrado");
         }
         return new ReturnData<>(true, "", usuario.get());
     }
@@ -93,7 +93,7 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
     public ReturnData<Object> ativarUsuario(UsuarioDTO usuarioDTO) {
         var usuario = usuarioRepository.findByEmailAndCodigoAleatorio(usuarioDTO.getEmail(), usuarioDTO.getCodigoAleatorio());
         if (usuario.isEmpty()) {
-            return new ReturnData<>(false, "Erro", "Email ou código informado é inválidio");
+            return new ReturnData<>(false, "Email ou código informado é inválidio", "Erro");
         } else {
 
             var tempoExpiracao = new Date().getTime() - usuario.get().getDataCadastro().getTime();
@@ -103,9 +103,9 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
                 usuario.get().setDataCodigo(null);
                 usuario.get().setUsuarioAtivo(true);
                 usuarioRepository.save(usuario.get());
-                return new ReturnData<>(true, "Sucesso", "Usuário foi ativado com sucesso");
+                return new ReturnData<>(true, "Usuário foi ativado com sucesso", "Sucesso");
             } else {
-                return new ReturnData<>(false, "Erro", "Código foi já expirado");
+                return new ReturnData<>(false, "Código foi já expirado", "Erro");
             }
         }
     }
@@ -115,18 +115,18 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
         try {
             var usuario = usuarioRepository.findByEmailAndCpf(usuarioDTO.getEmail(), usuarioDTO.getCpf());
             if (usuario.isEmpty()) {
-                return new ReturnData<>(false, "Erro", "Usuário não encontrado");
+                return new ReturnData<>(false, "Usuário não encontrado, por favor verifique os dados informados", "Erro");
             } else {
                 var codigoAleatorio = GerarCodigoAleatorio.gerarCodigo();
 
-                emailService.enviarEmail(usuarioDTO.getEmail(), codigoAleatorio);
+                emailService.enviarEmail(false, usuarioDTO.getEmail(), codigoAleatorio);
 
                 usuario.get().setCodigoAleatorio(codigoAleatorio);
                 usuario.get().setDataCodigo(new Date());
 
                 usuarioRepository.save(usuario.get());
 
-                return new ReturnData<>(true, "Sucesso", "Código para alterar senha enviado");
+                return new ReturnData<>(true, "Código para alterar senha enviado", "Sucess");
             }
         } catch (Exception ex) {
             return new ReturnData<>(false, "Ocorreu um erro ao enviar email", ex.getMessage() + "\nMotivo: " + ex.getCause());
@@ -137,7 +137,7 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
     public ReturnData<Object> alterarSenhaUsuario(UsuarioDTO usuarioDTO) {
         var usuario = usuarioRepository.findByEmailAndCodigoAleatorio(usuarioDTO.getEmail(), usuarioDTO.getCodigoAleatorio());
         if (usuario.isEmpty()) {
-            return new ReturnData<>(false, "Erro", "Email ou código informado é inváldio");
+            return new ReturnData<>(false, "Email ou código informado são inválidos", "Erro");
         } else {
 
             usuario.get().setCodigoAleatorio(null);
@@ -145,7 +145,7 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
             usuario.get().setPassword(passwordEncoder.encode(usuarioDTO.getPassword()));
 
             usuarioRepository.save(usuario.get());
-            return new ReturnData<>(true, "Sucesso", "Senhar alterada com sucesso");
+            return new ReturnData<>(true, "Senhar alterada com sucesso", "Sucesso");
         }
     }
 

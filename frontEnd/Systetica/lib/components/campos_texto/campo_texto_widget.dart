@@ -2,25 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class CampoTextoWidget extends StatefulWidget {
-  const CampoTextoWidget({
-    Key? key,
-    required this.labelText,
-    this.onChanged,
-    this.isPassword = false,
-    this.isIconDate = false,
-    this.keyboardType,
-    required this.paddingBottom,
-    this.maxLength,
-    this.paddingTop = 0,
-    this.mask,
-    this.color = Colors.blueGrey,
-    this.colorCurso = Colors.black,
-    this.isDarkMode = false,
-    this.controller,
-    this.onPressedIcon,
-    this.icon,
-    this.suffixTextBool = true
-  }) : super(key: key);
+  const CampoTextoWidget(
+      {Key? key,
+      required this.labelText,
+      this.onChanged,
+      this.isPassword = false,
+      this.isIconDate = false,
+      this.keyboardType,
+      required this.paddingBottom,
+      this.maxLength,
+      this.paddingTop = 0,
+      this.mask,
+      this.color = Colors.blueGrey,
+      this.colorCurso = Colors.black,
+      this.isDarkMode = false,
+      this.controller,
+      this.onPressedIcon,
+      this.icon,
+      this.suffixTextBool = true})
+      : super(key: key);
 
   final String labelText;
   final ValueChanged<String>? onChanged;
@@ -122,20 +122,23 @@ class _CampoTextoWidget extends State<CampoTextoWidget> {
             fontSize: 17,
           ),
           suffixIcon: widget.isPassword == true
-              ? GestureDetector(
-                  //Ícone para ocultar ou não a senha na tela
-                  child: Icon(
-                    _esconderTextSenha
-                        ? Icons.visibility
-                        : Icons.visibility_off,
-                    color: widget.isDarkMode ? Colors.white : Colors.black,
+              ? Padding(
+                padding: const EdgeInsets.only(right: 20),
+                child: GestureDetector(
+                    //Ícone para ocultar ou não a senha na tela
+                    child: Icon(
+                      _esconderTextSenha
+                          ? Icons.visibility
+                          : Icons.visibility_off,
+                      color: widget.isDarkMode ? Colors.white : Colors.black,
+                    ),
+                    onTap: () {
+                      setState(() {
+                        _esconderTextSenha = !_esconderTextSenha;
+                      });
+                    },
                   ),
-                  onTap: () {
-                    setState(() {
-                      _esconderTextSenha = !_esconderTextSenha;
-                    });
-                  },
-                )
+              )
               : widget.isIconDate == true
                   ? IconButton(
                       padding: const EdgeInsets.only(

@@ -56,7 +56,7 @@ class InicioWidget extends State<InicioPage> {
                 paddingBottom: 30,
                 labelText: "REGISTRAR",
                 largura: 190,
-                corBotao: Colors.black,
+                corBotao: Colors.black87.withOpacity(0.9),
                 corTexto: Colors.white,
                 onPressed: () => Navigator.push(
                   context,
