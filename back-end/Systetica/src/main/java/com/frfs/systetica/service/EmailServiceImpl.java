@@ -15,14 +15,19 @@ public class EmailServiceImpl implements EmailService {
 
     private final JavaMailSender javaMailSender;
 
+    private static final String MENSAGEM_ATIVACAO_TITULO = "Código para criação de usuário Systetica";
+    private static final String MENSAGEM_ATIVACAO = "Código para finalização de cadastro no aplicativo Systetica";
+    private static final String MENSAGEM_ALTERAR_SENHA_TITULO = "Código para alterar senha do usuário Systetica";
+    private static final String MENSAGEM_ALTERAR_SENHA = "Código para alteração de senha no aplicativo Systetica";
+
     @Override
-    public ReturnData<String> enviarEmail(String email, Integer codigo) {
+    public ReturnData<String> enviarEmail(boolean ativaUsuario, String email, Integer codigo) {
         try {
             SimpleMailMessage message = new SimpleMailMessage();
             message.setFrom("projetoTeste45@gmail.com");
             message.setTo(email);
-            message.setSubject("Código para criação de usuário Systetica");
-            message.setText("Código para finalização de cadastro no aplicativo Systetica.\n\nCódigo válido por 10 minutos.\nCódigo: " + codigo);
+            message.setSubject(ativaUsuario ? MENSAGEM_ATIVACAO_TITULO : MENSAGEM_ALTERAR_SENHA_TITULO);
+            message.setText(ativaUsuario ? MENSAGEM_ATIVACAO : MENSAGEM_ALTERAR_SENHA + "\n\nCódigo válido por 10 minutos.\nCódigo: " + codigo);
 
             javaMailSender.send(message);
             return new ReturnData<>(true, "", "Senha enviado com sucesso!");
