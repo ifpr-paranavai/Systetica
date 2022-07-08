@@ -42,6 +42,7 @@ class _CampoPesquisaWidget extends State<CampoPesquisaWidget> {
             bottomRight: Radius.circular(15),
           ),
         ),
+        validator: (value) => value == null ? 'Campo obrigatório' : null,
 
         // Pesonalização do Field de pesquisa abaixo
         searchFieldProps: TextFieldProps(
@@ -53,14 +54,7 @@ class _CampoPesquisaWidget extends State<CampoPesquisaWidget> {
               left: 8,
             ),
             labelText: widget.labelSeachText,
-            border: const OutlineInputBorder(
-              borderSide: BorderSide(
-                color: Colors.red,
-              ),
-              borderRadius: BorderRadius.all(
-                Radius.circular(15),
-              ),
-            ),
+
             enabledBorder: const OutlineInputBorder(
               borderSide: BorderSide(
                 color: Colors.blueGrey,
@@ -72,6 +66,39 @@ class _CampoPesquisaWidget extends State<CampoPesquisaWidget> {
             focusedBorder: const OutlineInputBorder(
               borderSide: BorderSide(
                 color: Colors.black,
+              ),
+              borderRadius: BorderRadius.all(
+                Radius.circular(15),
+              ),
+            ),
+
+            border: const OutlineInputBorder(
+              borderSide: BorderSide(
+                color: Colors.red,
+              ),
+              borderRadius: BorderRadius.all(
+                Radius.circular(15),
+              ),
+            ),
+            errorBorder: const OutlineInputBorder(
+              borderSide: BorderSide(
+                color: Colors.blue,
+              ),
+              borderRadius: BorderRadius.all(
+                Radius.circular(15),
+              ),
+            ),
+            focusedErrorBorder: const OutlineInputBorder(
+              borderSide: BorderSide(
+                color: Colors.green,
+              ),
+              borderRadius: BorderRadius.all(
+                Radius.circular(15),
+              ),
+            ),
+            disabledBorder: const OutlineInputBorder(
+              borderSide: BorderSide(
+                color: Colors.pink,
               ),
               borderRadius: BorderRadius.all(
                 Radius.circular(15),

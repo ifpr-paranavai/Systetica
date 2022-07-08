@@ -9,6 +9,7 @@ class CampoDataWidget extends StatelessWidget {
     required this.paddingBottom,
     required this.onChanged,
     required this.controller,
+    this.validator,
   }) : super(key: key);
 
   final double paddingBottom;
@@ -16,6 +17,7 @@ class CampoDataWidget extends StatelessWidget {
   final String hintText;
   final void Function(String) onChanged;
   final TextEditingController controller;
+  final String? Function(String?)? validator;
 
   @override
   Widget build(BuildContext context) {
@@ -95,6 +97,7 @@ class CampoDataWidget extends StatelessWidget {
             onChanged(formattedDate);
           }
         },
+        validator: validator,
       ),
     );
   }

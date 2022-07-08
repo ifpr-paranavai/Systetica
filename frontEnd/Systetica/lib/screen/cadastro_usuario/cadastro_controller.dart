@@ -1,6 +1,5 @@
-import 'package:cpf_cnpj_validator/cpf_validator.dart';
-import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:form_field_validator/form_field_validator.dart';
 import 'package:systetica/components/loading/show_loading_widget.dart';
 import 'package:systetica/components/page_transition.dart';
 import 'package:systetica/components/show_modal_sucesso_widget.dart';
@@ -11,7 +10,6 @@ import 'package:systetica/request/dio_config.dart';
 import 'package:systetica/screen/cadastro_usuario/cadastro_service.dart';
 import 'package:systetica/screen/cadastro_usuario/view/ativar_usuario/ativar_usuario_page.dart';
 import 'package:systetica/screen/inicio/view/inicio_page.dart';
-import 'package:systetica/utils/validacoes.dart';
 
 class CadastroController {
   final nomeController = TextEditingController();
@@ -25,72 +23,81 @@ class CadastroController {
   final confirmaEstadoController = TextEditingController();
   final codicoController = TextEditingController();
   var myPageTransition = MyPageTransition();
+  final formKey = GlobalKey<FormState>();
 
-  cadastrarUsuario(BuildContext context, CidadeDTO? cidadeDTO, Widget widget) async {
+  MultiValidator get nomeValidator {
+    return MultiValidator([
+      RequiredValidator(errorText: 'Campo obrigatório'),
+    ]);
+  }
+
+  MultiValidator get dataValidator {
+    return MultiValidator([
+      RequiredValidator(errorText: 'Campo obrigatório'),
+    ]);
+  }
+
+  MultiValidator get cpfValidator {
+    return MultiValidator([
+      RequiredValidator(errorText: 'Campo obrigatório'),
+      MinLengthValidator(
+        11,
+        errorText: 'Campo deve possuir no menos 11 caracteres',
+      ),
+    ]);
+  }
+
+  MultiValidator get telefoneValidator {
+    return MultiValidator([
+      RequiredValidator(errorText: 'Campo obrigatório'),
+    ]);
+  }
+
+  MultiValidator get emailValidator {
+    return MultiValidator([
+      RequiredValidator(errorText: 'Campo obrigatório'),
+      EmailValidator(errorText: 'E-mail inválido'),
+    ]);
+  }
+
+  MultiValidator get senhaValidator {
+    return MultiValidator([
+      RequiredValidator(errorText: 'Campo obrigatório'),
+      MinLengthValidator(
+        6,
+        errorText: 'Campo deve ter ao menos 6 dígitos',
+      ),
+    ]);
+  }
+
+  MultiValidator get confirmaSenhaValidator {
+    return MultiValidator([
+      RequiredValidator(errorText: 'Campo obrigatório'),
+      MinLengthValidator(
+        6,
+        errorText: 'Campo deve ter ao menos 6 caracteres',
+      ),
+    ]);
+  }
+
+  MultiValidator get codigoValidator {
+    return MultiValidator([
+      RequiredValidator(errorText: 'Campo obrigatório'),
+      MinLengthValidator(
+        6,
+        errorText:
+            'Campo deve possuir no menos 6 caracteres', //todo validar no back
+      ),
+    ]);
+  }
+
+  Future<void> cadastrarUsuario(
+    BuildContext context,
+    CidadeDTO? cidadeDTO,
+    Widget widget,
+  ) async {
     var connected = await ConnectionCheck.check();
     if (connected) {
-      if (Validacoes.isEmptOrNull(nomeController.text) ||
-          Validacoes.isEmptOrNull(dataNascimentoController.text) ||
-          Validacoes.isEmptOrNull(cpfController.text) ||
-          Validacoes.isEmptOrNull(telefone1.text) ||
-          Validacoes.isEmptOrNull(emailController.text) ||
-          Validacoes.isEmptOrNull(senhaController.text) ||
-          Validacoes.isEmptOrNull(confirmaSenhaController.text) ||
-          cidadeDTO == null) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            backgroundColor: Colors.blueGrey,
-            padding: EdgeInsets.all(18),
-            content: TextoErroWidget(
-              mensagem: "Por Favor, preencha todos os campos",
-            ),
-          ),
-        );
-        return;
-      }
-
-      // Validar CPF
-      if (CPFValidator.isValid(cpfController.text) == false) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            backgroundColor: Colors.blueGrey,
-            padding: EdgeInsets.all(18),
-            content: TextoErroWidget(
-              mensagem: "CPF digitado não é válido",
-            ),
-          ),
-        );
-        return;
-      }
-
-      // Validar Email
-      if (!EmailValidator.validate(emailController.text)) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            backgroundColor: Colors.blueGrey,
-            padding: EdgeInsets.all(18),
-            content: TextoErroWidget(
-              mensagem: "E-mail digitado não é válido",
-            ),
-          ),
-        );
-        return;
-      }
-
-      // Verificar Tamanho da senha
-      if (senhaController.text.length < 6) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            backgroundColor: Colors.blueGrey,
-            padding: EdgeInsets.all(18),
-            content: TextoErroWidget(
-              mensagem: "Senha deve possúir ao menos 6 caracteres",
-            ),
-          ),
-        );
-        return;
-      }
-
       // Verificar se senha e confirma senha são idênticos
       if (senhaController.text != confirmaSenhaController.text) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -104,55 +111,60 @@ class CadastroController {
         );
         return;
       }
-      try {
-        UsuarioDTO usuarioDTO = UsuarioDTO(
-          nome: nomeController.text,
-          dataNascimento: dataNascimentoController.text,
-          cpf: cpfController.text,
-          telefone1: telefone1.text,
-          telefone2: telefone2.text,
-          email: emailController.text,
-          password: senhaController.text,
-          cidade: cidadeDTO,
-        );
+      if (formKey.currentState != null) {
+        if (formKey.currentState?.validate() ?? true) {
+          try {
+            UsuarioDTO usuarioDTO = UsuarioDTO(
+              nome: nomeController.text,
+              dataNascimento: dataNascimentoController.text,
+              cpf: cpfController.text,
+              telefone1: telefone1.text,
+              telefone2: telefone2.text,
+              email: emailController.text,
+              password: senhaController.text,
+              cidade: cidadeDTO,
+            );
 
-        //Loading apresentado na tela
-        var contextLoading = context;
-        var loading = ShowLoadingWidget.showLoadingLabel(
-          contextLoading,
-          "Aguarde...",
-        );
+            //Loading apresentado na tela
+            var contextLoading = context;
+            var loading = ShowLoadingWidget.showLoadingLabel(
+              contextLoading,
+              "Aguarde...",
+            );
 
-        var infoResponse = await CadastroService.cadastroUsuario(usuarioDTO);
+            var infoResponse =
+                await CadastroService.cadastroUsuario(usuarioDTO);
 
-        // Finaliza o loading na tela
-        Navigator.pop(contextLoading, loading);
+            // Finaliza o loading na tela
+            Navigator.pop(contextLoading, loading);
 
-        var showModalOkWidget = ShowModalOkWidget();
-        if (infoResponse.success!) {
-          Navigator.of(context).push(
-            myPageTransition.pageTransition(
-              child: const AtivarUsuarioPage(),
-              childCurrent: widget,
-            ),
-          );
-        } else {
-          Navigator.pop(contextLoading, loading);
-          showModalOkWidget.showModalOk(context,
-              title: "Erro",
-              description: infoResponse.message!,
-              buttonText: "OK",
-              onPressed: () => Navigator.pop(context));
+            var showModalOkWidget = ShowModalOkWidget();
+            if (infoResponse.success!) {
+              Navigator.of(context).push(
+                myPageTransition.pageTransition(
+                  child: const AtivarUsuarioPage(),
+                  childCurrent: widget,
+                ),
+              );
+            } else {
+              Navigator.pop(contextLoading, loading);
+              showModalOkWidget.showModalOk(context,
+                  title: "Erro",
+                  description: infoResponse.message!,
+                  buttonText: "OK",
+                  onPressed: () => Navigator.pop(context));
+            }
+          } catch (e) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                backgroundColor: Colors.blueGrey,
+                content: TextoErroWidget(
+                  mensagem: "Ocorreu algum erro de comunicação com o servidor",
+                ),
+              ),
+            );
+          }
         }
-      } catch (e) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            backgroundColor: Colors.blueGrey,
-            content: TextoErroWidget(
-              mensagem: "Ocorreu algum erro de comunicação com o servidor",
-            ),
-          ),
-        );
       }
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
