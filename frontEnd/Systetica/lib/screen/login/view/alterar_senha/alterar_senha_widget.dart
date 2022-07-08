@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:systetica/components/botoes/botao_acao_widget.dart';
 import 'package:systetica/components/campos_texto/campo_texto_widget.dart';
+import 'package:systetica/components/icon_arrow_widget.dart';
+import 'package:systetica/components/imagens_widget.dart';
+import 'package:systetica/components/text_autenticacoes_widget.dart';
 import 'package:systetica/screen/login/login_controller.dart';
 import 'package:systetica/screen/login/view/alterar_senha/alterar_senha_page.dart';
 
@@ -15,27 +18,19 @@ class AlterarSenhaWidget extends State<AlterarSenhaPage> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                padding: const EdgeInsets.only(top: 5),
-                child: IconButton(
-                  icon:
-                      const Icon(Icons.keyboard_arrow_left_outlined, size: 35),
-                  color: Colors.black,
-                  onPressed: () => Navigator.pop(context),
-                ),
+              IconArrowWidget(
+                onPressed: () => Navigator.pop(context),
               ),
-              Padding(
-                padding: EdgeInsets.only(
-                    bottom: 10,
-                    left: 35,
-                    top: MediaQuery.of(context).size.height / 5.5),
-                child: const Text(
-                  "Alterar senha",
-                  style: TextStyle(color: Colors.black, fontSize: 35),
-                ),
+              ImagensWidget(
+                paddingLeft: 10,
+                image: "alterar-senha.png",
+                widthImagem: 300,
+              ),
+              TextAutenticacoesWidget(
+                paddingTop: 10,
+                paddingBottom: 2,
+                text: "Alterar Senha",
               ),
               Form(
                 key: _formKey,

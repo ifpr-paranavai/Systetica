@@ -3,6 +3,8 @@ import 'package:systetica/components/botoes/botao_acao_widget.dart';
 import 'package:systetica/components/campos_texto/campo_data_widget.dart';
 import 'package:systetica/components/campos_texto/campo_pesquisa_edget.dart';
 import 'package:systetica/components/campos_texto/campo_texto_widget.dart';
+import 'package:systetica/components/icon_arrow_widget.dart';
+import 'package:systetica/components/text_autenticacoes_widget.dart';
 import 'package:systetica/model/CidadeDTO.dart';
 import 'package:systetica/model/Page_impl.dart';
 import 'package:systetica/screen/cadastro_usuario/cadastro_controller.dart';
@@ -39,30 +41,13 @@ class CadastroWidget extends State<CadastroPage> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              padding: const EdgeInsets.only(
-                top: 5,
-              ),
-              child: IconButton(
-                icon: const Icon(
-                  Icons.keyboard_arrow_left_outlined,
-                  size: 35,
-                ),
-                color: Colors.black,
-                onPressed: () => Navigator.pop(context),
-              ),
+            IconArrowWidget(
+              paddingTop: 5,
+              paddingBotton: 5,
+              onPressed: () => Navigator.pop(context),
             ),
-            const Padding(
-              padding: EdgeInsets.only(
-                bottom: 10,
-                left: 35,
-              ),
-              child: Text(
-                "Registrar-se",
-                style: TextStyle(
-                  fontSize: 35,
-                ),
-              ),
+            TextAutenticacoesWidget(
+              text: "Registrar-se",
             ),
             Expanded(
               child: SingleChildScrollView(

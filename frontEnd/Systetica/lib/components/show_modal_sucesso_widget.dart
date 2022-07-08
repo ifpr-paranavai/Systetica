@@ -18,15 +18,21 @@ class ShowModalOkWidget {
           child: AlertDialog(
             backgroundColor: Colors.white,
             title: title != null
-                ? Text(title,
+                ? Text(
+                    title,
                     style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                        overflow: TextOverflow.ellipsis))
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  )
                 : null,
             shape: const RoundedRectangleBorder(
-              side: BorderSide(color: Colors.black, width: 2),
+              side: BorderSide(
+                color: Colors.black,
+                width: 2,
+              ),
               borderRadius: BorderRadius.all(
                 Radius.circular(15),
               ),
@@ -35,19 +41,22 @@ class ShowModalOkWidget {
               description,
               maxLines: 5,
               style: TextStyle(
-                  color: Colors.black,
-                  fontSize: fontSizeDescription,
-                  overflow: TextOverflow.ellipsis),
+                color: Colors.black,
+                fontSize: fontSizeDescription,
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
             actions: [
               TextButton(
-                  onPressed: onPressed,
-                  child: Text(
-                    buttonText,
-                    style: const TextStyle(
-                        color: Colors.black, overflow: TextOverflow.ellipsis),
-                  )),
-              // onPressed: => Navigator.of(context).pop(),
+                onPressed: onPressed,
+                child: Text(
+                  buttonText,
+                  style: const TextStyle(
+                    color: Colors.black,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+              ),
             ],
           ),
         ),

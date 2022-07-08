@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:systetica/components/botoes/botao_acao_widget.dart';
 import 'package:systetica/components/campos_texto/campo_texto_widget.dart';
+import 'package:systetica/components/icon_arrow_widget.dart';
+import 'package:systetica/components/imagens_widget.dart';
+import 'package:systetica/components/text_autenticacoes_widget.dart';
 import 'package:systetica/screen/login/login_controller.dart';
+import 'package:systetica/screen/login/view/alterar_senha/alterar_senha_page.dart';
 import 'package:systetica/screen/login/view/gerar_codigo/gerar_codigo_page.dart';
 
 class GerarCodigoWidget extends State<GerarCodigoPage> {
@@ -15,37 +19,21 @@ class GerarCodigoWidget extends State<GerarCodigoPage> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                padding: const EdgeInsets.only(top: 5),
-                child: IconButton(
-                  icon:
-                  const Icon(Icons.keyboard_arrow_left_outlined, size: 35),
-                  color: Colors.black,
-                  onPressed: () => Navigator.pop(context),
-                ),
+              IconArrowWidget(
+                onPressed: () => Navigator.pop(context),
               ),
-              Padding(
-                padding: const EdgeInsets.only(left: 70),
-                child: Image.network(
-                  'https://ouch-cdn2.icons8.com/i8QlhCZepdjYRpi0bHZYEOQirRki53QQf_4N5OTnBxY/rs:fit:456:456/czM6Ly9pY29uczgu/b3VjaC1wcm9kLmFz/c2V0cy9zdmcvODUy/LzQyNzdiOGEzLTJm/N2YtNDg1My1hNzhh/LTcyNzI3NmQ1YzNk/Yi5zdmc.png',
-                  fit: BoxFit.cover,
-                  width: 210,
-                ),
+
+              ImagensWidget(
+                paddingLeft: 10,
+                image: "gerar-codigo.png",
+                widthImagem: 300,
               ),
-              const Padding(
-                padding: EdgeInsets.only(
-                  bottom: 10,
-                  left: 35,
-                  top: 0,
-                ),
-                child: Text(
-                  "Gerar Código",
-                  style: TextStyle(fontSize: 32),
-                ),
+
+              TextAutenticacoesWidget(
+                text: "Gerar Código",
               ),
+
               Form(
                 key: _formKey,
                 child: Column(

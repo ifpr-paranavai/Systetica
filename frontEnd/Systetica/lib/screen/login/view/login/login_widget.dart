@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:systetica/components/botoes/botao_acao_widget.dart';
 import 'package:systetica/components/campos_texto/campo_texto_widget.dart';
+import 'package:systetica/components/icon_arrow_widget.dart';
+import 'package:systetica/components/imagens_widget.dart';
+import 'package:systetica/components/text_autenticacoes_widget.dart';
 import 'package:systetica/screen/login/login_controller.dart';
 import 'package:systetica/screen/login/view/gerar_codigo/gerar_codigo_page.dart';
 import 'package:systetica/screen/login/view/login/login_page.dart';
@@ -16,40 +19,17 @@ class LoginWidget extends State<LoginPage> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Todo Criar um componente
-              Container(
-                padding: const EdgeInsets.only(top: 5),
-                child: IconButton(
-                  icon: const Icon(
-                    Icons.keyboard_arrow_left_outlined,
-                    size: 35,
-                  ),
-                  color: Colors.black,
-                  onPressed: () => Navigator.pop(context),
-                ),
+              IconArrowWidget(
+                onPressed: () => Navigator.pop(context),
               ),
-              Padding(
-                padding: const EdgeInsets.only(left: 70),
-                child: Image.network(
-                  'https://ouch-cdn2.icons8.com/NTYRBz_YXFC9P7c65dq8pLHbsE2elQlA4WJzscQhYWA/rs:fit:380:456/czM6Ly9pY29uczgu/b3VjaC1wcm9kLmFz/c2V0cy9zdmcvNDUy/L2U0ZGMyYjRkLWE2/N2ItNDg5Ni1iODNj/LWYzNzA5MjRmMzMw/OC5zdmc.png',
-                  fit: BoxFit.cover,
-                  width: 220,
-                ),
+              ImagensWidget(
+                paddingLeft: 10,
+                image: "login.png",
+                widthImagem: 280,
               ),
-              Padding(
-                padding: const EdgeInsets.only(
-                  bottom: 10,
-                  left: 35,
-                  top: 0,
-                ),
-                child: Text(
-                  "Login",
-                  style: TextStyle(
-                      color: Colors.black87.withOpacity(0.9), fontSize: 35),
-                ),
+              TextAutenticacoesWidget(
+                text: "Login",
               ),
               Form(
                 key: _formKey,

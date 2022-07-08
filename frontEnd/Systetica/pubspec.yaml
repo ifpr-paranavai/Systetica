@@ -36,3 +36,6 @@ flutter:
   uses-material-design: true
   assets:
     - assets/img/cabelereiro-inicio.png
+    - assets/img/alterar-senha.png
+    - assets/img/gerar-codigo.png
+    - assets/img/login.png

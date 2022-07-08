@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:systetica/components/botoes/botao_acao_widget.dart';
+import 'package:systetica/components/imagens_widget.dart';
 import 'package:systetica/screen/cadastro_usuario/view/cadastro/cadastro_page.dart';
 import 'package:systetica/screen/inicio/view/inicio_page.dart';
 import 'package:systetica/screen/login/view/login/login_page.dart';
@@ -27,7 +28,7 @@ class InicioWidget extends State<InicioPage> {
             children: [
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.only(top: 50),
+                  padding: const EdgeInsets.only(top: 40),
                   child: Center(
                     child: Text(
                       'Systetica',
@@ -40,10 +41,11 @@ class InicioWidget extends State<InicioPage> {
                   ),
                 ),
               ),
-              Image.asset(
-                'assets/img/cabelereiro-inicio.png',
-                fit: BoxFit.cover,
-                width: 320,
+              ImagensWidget(
+                paddingLeft: 10,
+                image: "cabelereiro-inicio.png",
+                widthImagem: 320,
+                paddingBottom: 20,
               ),
               BotaoAcaoWidget(
                 paddingTop: 35,
