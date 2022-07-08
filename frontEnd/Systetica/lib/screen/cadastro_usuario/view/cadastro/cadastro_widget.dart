@@ -10,6 +10,7 @@ import 'package:systetica/model/CidadeDTO.dart';
 import 'package:systetica/model/Page_impl.dart';
 import 'package:systetica/screen/cadastro_usuario/cadastro_controller.dart';
 import 'package:systetica/screen/cadastro_usuario/cadastro_service.dart';
+import 'package:systetica/screen/cadastro_usuario/view/ativar_usuario/ativar_usuario_page.dart';
 import 'package:systetica/screen/cadastro_usuario/view/cadastro/cadastro_page.dart';
 
 class CadastroWidget extends State<CadastroPage> {
@@ -47,8 +48,6 @@ class CadastroWidget extends State<CadastroPage> {
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   key: controller.formKey,
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       ImagensWidget(
                         paddingLeft: 20,
@@ -90,7 +89,7 @@ class CadastroWidget extends State<CadastroPage> {
                         controller: controller.dataNascimentoController,
                         validator: controller.dataValidator,
                       ),
-                      CampoPesquisaWidget( //todo corrigir
+                      CampoPesquisaWidget(
                         labelText: "Cidade",
                         labelSeachText: "Digite nome da cidade",
                         icon: const Icon(Icons.location_city),

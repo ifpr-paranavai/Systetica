@@ -82,7 +82,7 @@ class _CampoPesquisaWidget extends State<CampoPesquisaWidget> {
             ),
             errorBorder: const OutlineInputBorder(
               borderSide: BorderSide(
-                color: Colors.blue,
+                color: Colors.red,
               ),
               borderRadius: BorderRadius.all(
                 Radius.circular(15),
@@ -90,15 +90,7 @@ class _CampoPesquisaWidget extends State<CampoPesquisaWidget> {
             ),
             focusedErrorBorder: const OutlineInputBorder(
               borderSide: BorderSide(
-                color: Colors.green,
-              ),
-              borderRadius: BorderRadius.all(
-                Radius.circular(15),
-              ),
-            ),
-            disabledBorder: const OutlineInputBorder(
-              borderSide: BorderSide(
-                color: Colors.pink,
+                color: Colors.red,
               ),
               borderRadius: BorderRadius.all(
                 Radius.circular(15),
@@ -126,6 +118,23 @@ class _CampoPesquisaWidget extends State<CampoPesquisaWidget> {
             ),
             borderSide: BorderSide(
               color: Colors.black,
+            ),
+          ),
+          errorBorder: const OutlineInputBorder(
+            borderSide: BorderSide(
+              color: Colors.red,
+            ),
+            borderRadius: BorderRadius.all(
+              Radius.circular(15),
+            ),
+          ),
+          focusedErrorBorder: const OutlineInputBorder(
+            borderSide: BorderSide(
+              color: Colors.red,
+              width: 1.5,
+            ),
+            borderRadius: BorderRadius.all(
+              Radius.circular(15),
             ),
           ),
           isDense: true,

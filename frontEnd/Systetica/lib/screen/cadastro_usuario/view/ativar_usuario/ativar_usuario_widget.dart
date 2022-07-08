@@ -16,66 +16,71 @@ class AtivarUsuarioWidget extends State<AtivarUsuarioPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              IconArrowWidget(
-                onPressed: () => Navigator.pop(context),
-              ),
-              ImagensWidget(
-                paddingLeft: 10,
-                image: "ativar-usuario.png",
-                widthImagem: 220,
-              ),
-              TextAutenticacoesWidget(
-                paddingTop: 10,
-                paddingBottom: 2,
-                text: "Ativar Usuário",
-              ),
-              Form(
-                key: _formKey,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    CampoTextoWidget(
-                      labelText: "E-mail",
-                      paddingBottom: 0,
-                      maxLength: 50,
-                      paddingTop: 10,
-                      isIconDate: true,
-                      icon: const Icon(
-                        Icons.email,
-                        color: Colors.black87,
+        child: Column(
+          children: [
+            IconArrowWidget(
+              paddingTop: 5,
+              paddingBotton: 5,
+              onPressed: () => Navigator.pop(context),
+            ),
+            Expanded(
+              child: SingleChildScrollView(
+                child: Form(
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  key: controller.formKey,
+                  child: Column(
+                    children: [
+                      ImagensWidget(
+                        paddingLeft: 10,
+                        image: "ativar-usuario.png",
+                        widthImagem: 220,
                       ),
-                      controller: controller.emailController,
-                    ),
-                    CampoTextoWidget(
-                      labelText: "Códico",
-                      paddingBottom: 0,
-                      maxLength: 10,
-                      paddingTop: 10,
-                      isIconDate: true,
-                      icon: const Icon(
-                        Icons.code,
-                        color: Colors.black87,
+                      TextAutenticacoesWidget(
+                        paddingTop: 10,
+                        paddingBottom: 2,
+                        text: "Ativar Usuário",
                       ),
-                      controller: controller.codicoController,
-                    ),
-                    BotaoAcaoWidget(
-                      paddingTop: 18,
-                      paddingBottom: 0,
-                      labelText: "Ativar Usuário",
-                      largura: 190,
-                      corBotao: Colors.black87.withOpacity(0.9),
-                      corTexto: Colors.white,
-                      onPressed: () => controller.ativiarUsuario(context),
-                    ),
-                  ],
+                      CampoTextoWidget(
+                        labelText: "E-mail",
+                        paddingBottom: 0,
+                        maxLength: 50,
+                        paddingTop: 10,
+                        isIconDate: true,
+                        icon: const Icon(
+                          Icons.email,
+                          color: Colors.black87,
+                        ),
+                        controller: controller.emailController,
+                        validator: controller.emailValidator,
+                      ),
+                      CampoTextoWidget(
+                        labelText: "Códico",
+                        paddingBottom: 0,
+                        maxLength: 10,
+                        paddingTop: 10,
+                        isIconDate: true,
+                        icon: const Icon(
+                          Icons.code,
+                          color: Colors.black87,
+                        ),
+                        controller: controller.codicoController,
+                        validator: controller.codigoValidator,
+                      ),
+                      BotaoAcaoWidget(
+                        paddingTop: 18,
+                        paddingBottom: 0,
+                        labelText: "Ativar Usuário",
+                        largura: 190,
+                        corBotao: Colors.black87.withOpacity(0.9),
+                        corTexto: Colors.white,
+                        onPressed: () => controller.ativiarUsuario(context),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
