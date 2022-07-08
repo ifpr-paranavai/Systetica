@@ -3,6 +3,7 @@ import 'package:systetica/components/botoes/botao_acao_widget.dart';
 import 'package:systetica/components/campos_texto/campo_texto_widget.dart';
 import 'package:systetica/components/icon_arrow_widget.dart';
 import 'package:systetica/components/imagens_widget.dart';
+import 'package:systetica/components/page_transition.dart';
 import 'package:systetica/components/text_autenticacoes_widget.dart';
 import 'package:systetica/screen/login/login_controller.dart';
 import 'package:systetica/screen/login/view/gerar_codigo/gerar_codigo_page.dart';
@@ -11,6 +12,7 @@ import 'package:systetica/screen/login/view/login/login_page.dart';
 class LoginWidget extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   LoginController controller = LoginController();
+  var myPageTransition = MyPageTransition();
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +66,10 @@ class LoginWidget extends State<LoginPage> {
                       largura: 190,
                       corBotao: Colors.black87.withOpacity(0.9),
                       corTexto: Colors.white,
-                      onPressed: () => controller.login(context),
+                      onPressed: () => controller.login(
+                        context,
+                        widget,
+                      ),
                     ),
                     BotaoAcaoWidget(
                       paddingTop: 18,
@@ -73,10 +78,11 @@ class LoginWidget extends State<LoginPage> {
                       largura: 190,
                       corBotao: Colors.black87.withOpacity(0.9),
                       corTexto: Colors.white,
-                      onPressed: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const GerarCodigoPage()),
+                      onPressed: () => Navigator.of(context).push(
+                        myPageTransition.pageTransition(
+                          child: const GerarCodigoPage(),
+                          childCurrent: widget,
+                        ),
                       ),
                     ),
                   ],

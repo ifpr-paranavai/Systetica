@@ -5,7 +5,6 @@ import 'package:systetica/components/icon_arrow_widget.dart';
 import 'package:systetica/components/imagens_widget.dart';
 import 'package:systetica/components/text_autenticacoes_widget.dart';
 import 'package:systetica/screen/login/login_controller.dart';
-import 'package:systetica/screen/login/view/alterar_senha/alterar_senha_page.dart';
 import 'package:systetica/screen/login/view/gerar_codigo/gerar_codigo_page.dart';
 
 class GerarCodigoWidget extends State<GerarCodigoPage> {
@@ -23,17 +22,14 @@ class GerarCodigoWidget extends State<GerarCodigoPage> {
               IconArrowWidget(
                 onPressed: () => Navigator.pop(context),
               ),
-
               ImagensWidget(
                 paddingLeft: 10,
                 image: "gerar-codigo.png",
                 widthImagem: 300,
               ),
-
               TextAutenticacoesWidget(
                 text: "Gerar Código",
               ),
-
               Form(
                 key: _formKey,
                 child: Column(
@@ -73,7 +69,10 @@ class GerarCodigoWidget extends State<GerarCodigoPage> {
                       largura: 190,
                       corBotao: Colors.black87.withOpacity(0.9),
                       corTexto: Colors.white,
-                      onPressed: () => controller.gerarCodigo(context),
+                      onPressed: () => controller.gerarCodigo(
+                        context,
+                        widget,
+                      ),
                     ),
                   ],
                 ),

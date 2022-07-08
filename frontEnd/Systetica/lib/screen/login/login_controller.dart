@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:systetica/components/loading/show_loading_widget.dart';
+import 'package:systetica/components/page_transition.dart';
 import 'package:systetica/components/show_modal_sucesso_widget.dart';
 import 'package:systetica/components/texto_erro_widget.dart';
 import 'package:systetica/database/orm/token_orm.dart';
@@ -19,8 +20,9 @@ class LoginController {
   final cpfController = TextEditingController();
   final codicoController = TextEditingController();
   final confirmaSenhaController = TextEditingController();
+  var myPageTransition = MyPageTransition();
 
-  login(BuildContext context) async {
+  login(BuildContext context, Widget widget) async {
     var connected = await ConnectionCheck.check();
     if (connected) {
       if (Validacoes.isEmptOrNull(emailController.text) ||
@@ -65,11 +67,13 @@ class LoginController {
         Navigator.pop(contextLoading, loading);
 
         Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const HomePage(),
-            ),
-            (route) => false);
+          context,
+          myPageTransition.pageTransition(
+            child: const HomePage(),
+            childCurrent: widget,
+          ),
+          (route) => false,
+        );
       } catch (e) {
         // Finaliza o loading na tela
         Navigator.pop(contextLoading, loading);
@@ -96,7 +100,7 @@ class LoginController {
     }
   }
 
-  gerarCodigo(BuildContext context) async {
+  gerarCodigo(BuildContext context, Widget widget) async {
     var connected = await ConnectionCheck.check();
     if (connected) {
       if (Validacoes.isEmptOrNull(emailController.text) ||
@@ -143,11 +147,10 @@ class LoginController {
                 contextShowModal,
                 showModalOkWidget,
               );
-
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const AlterarSenhaPage(),
+              Navigator.of(context).push(
+                myPageTransition.pageTransition(
+                  child: const AlterarSenhaPage(),
+                  childCurrent: widget,
                 ),
               );
             },
@@ -182,7 +185,7 @@ class LoginController {
     }
   }
 
-  alterarSenha(BuildContext context) async {
+  alterarSenha(BuildContext context, Widget widget) async {
     var connected = await ConnectionCheck.check();
     if (connected) {
       if (Validacoes.isEmptOrNull(emailController.text) ||
@@ -241,8 +244,9 @@ class LoginController {
             buttonText: "OK",
             onPressed: () => Navigator.pushAndRemoveUntil(
                 context,
-                MaterialPageRoute(
-                  builder: (context) => const InicioPage(),
+                myPageTransition.pageTransition(
+                  child: const InicioPage(),
+                  childCurrent: widget,
                 ),
                 (route) => false),
           );

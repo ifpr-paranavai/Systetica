@@ -2,6 +2,7 @@ import 'package:cpf_cnpj_validator/cpf_validator.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:systetica/components/loading/show_loading_widget.dart';
+import 'package:systetica/components/page_transition.dart';
 import 'package:systetica/components/show_modal_sucesso_widget.dart';
 import 'package:systetica/components/texto_erro_widget.dart';
 import 'package:systetica/model/CidadeDTO.dart';
@@ -23,8 +24,9 @@ class CadastroController {
   final confirmaSenhaController = TextEditingController();
   final confirmaEstadoController = TextEditingController();
   final codicoController = TextEditingController();
+  var myPageTransition = MyPageTransition();
 
-  cadastrarUsuario(BuildContext context, CidadeDTO? cidadeDTO) async {
+  cadastrarUsuario(BuildContext context, CidadeDTO? cidadeDTO, Widget widget) async {
     var connected = await ConnectionCheck.check();
     if (connected) {
       if (Validacoes.isEmptOrNull(nomeController.text) ||
@@ -128,10 +130,10 @@ class CadastroController {
 
         var showModalOkWidget = ShowModalOkWidget();
         if (infoResponse.success!) {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const AtivarUsuarioPage(),
+          Navigator.of(context).push(
+            myPageTransition.pageTransition(
+              child: const AtivarUsuarioPage(),
+              childCurrent: widget,
             ),
           );
         } else {

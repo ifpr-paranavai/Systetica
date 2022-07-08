@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:systetica/components/botoes/botao_acao_widget.dart';
 import 'package:systetica/components/imagens_widget.dart';
+import 'package:systetica/components/page_transition.dart';
 import 'package:systetica/screen/cadastro_usuario/view/cadastro/cadastro_page.dart';
 import 'package:systetica/screen/inicio/view/inicio_page.dart';
 import 'package:systetica/screen/login/view/login/login_page.dart';
 
 class InicioWidget extends State<InicioPage> {
+  var myPageTransition = MyPageTransition();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,9 +57,11 @@ class InicioWidget extends State<InicioPage> {
                 largura: 190,
                 corBotao: Colors.white,
                 corTexto: Colors.black,
-                onPressed: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const LoginPage()),
+                onPressed: () => Navigator.of(context).push(
+                  myPageTransition.pageTransition(
+                    child: const LoginPage(),
+                    childCurrent: widget,
+                  ),
                 ),
               ),
               BotaoAcaoWidget(
@@ -66,9 +71,11 @@ class InicioWidget extends State<InicioPage> {
                 largura: 190,
                 corBotao: Colors.black87.withOpacity(0.9),
                 corTexto: Colors.white,
-                onPressed: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const CadastroPage()),
+                onPressed: () => Navigator.of(context).push(
+                  myPageTransition.pageTransition(
+                    child: const CadastroPage(),
+                    childCurrent: widget,
+                  ),
                 ),
               ),
             ],

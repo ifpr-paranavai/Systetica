@@ -85,7 +85,10 @@ class AlterarSenhaWidget extends State<AlterarSenhaPage> {
                       largura: 190,
                       corBotao: Colors.black87.withOpacity(0.9),
                       corTexto: Colors.white,
-                      onPressed: () => controller.alterarSenha(context),
+                      onPressed: () => controller.alterarSenha(
+                        context,
+                        widget,
+                      ),
                     ),
                   ],
                 ),

@@ -4,6 +4,7 @@ import 'package:systetica/components/campos_texto/campo_data_widget.dart';
 import 'package:systetica/components/campos_texto/campo_pesquisa_edget.dart';
 import 'package:systetica/components/campos_texto/campo_texto_widget.dart';
 import 'package:systetica/components/icon_arrow_widget.dart';
+import 'package:systetica/components/imagens_widget.dart';
 import 'package:systetica/components/text_autenticacoes_widget.dart';
 import 'package:systetica/model/CidadeDTO.dart';
 import 'package:systetica/model/Page_impl.dart';
@@ -38,15 +39,20 @@ class CadastroWidget extends State<CadastroPage> {
       backgroundColor: Colors.white,
       body: SafeArea(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             IconArrowWidget(
               paddingTop: 5,
               paddingBotton: 5,
               onPressed: () => Navigator.pop(context),
             ),
+            ImagensWidget(
+              paddingLeft: 20,
+              image: "registro.png",
+              widthImagem: 200,
+            ),
             TextAutenticacoesWidget(
+              paddingBottom: 10,
+              paddingTop: 2,
               text: "Registrar-se",
             ),
             Expanded(
@@ -76,7 +82,7 @@ class CadastroWidget extends State<CadastroPage> {
                         paddingTop: 3,
                         onChanged: (String? value) {
                           setState(
-                                () {
+                            () {
                               if (value != null) {
                                 controller.dataNascimentoController.text =
                                     value;
@@ -169,7 +175,7 @@ class CadastroWidget extends State<CadastroPage> {
                       ),
                       BotaoAcaoWidget(
                         paddingTop: 0,
-                        paddingBottom: 50,
+                        paddingBottom: 40,
                         labelText: "CADASTRAR",
                         largura: 190,
                         corBotao: Colors.black87.withOpacity(0.9),
@@ -177,6 +183,7 @@ class CadastroWidget extends State<CadastroPage> {
                         onPressed: () => controller.cadastrarUsuario(
                           context,
                           cidadeDTO!,
+                          widget,
                         ),
                       ),
                     ],

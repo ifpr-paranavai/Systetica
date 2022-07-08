@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:systetica/components/botoes/botao_acao_widget.dart';
 import 'package:systetica/components/campos_texto/campo_texto_widget.dart';
+import 'package:systetica/components/icon_arrow_widget.dart';
+import 'package:systetica/components/imagens_widget.dart';
+import 'package:systetica/components/text_autenticacoes_widget.dart';
 import 'package:systetica/screen/cadastro_usuario/cadastro_controller.dart';
 import 'package:systetica/screen/cadastro_usuario/view/ativar_usuario/ativar_usuario_page.dart';
 
@@ -15,26 +18,19 @@ class AtivarUsuarioWidget extends State<AtivarUsuarioPage> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                padding: const EdgeInsets.only(top: 5),
-                child: IconButton(
-                  icon: const Icon(Icons.keyboard_arrow_left_outlined, size: 35),
-                  color: Colors.black,
-                  onPressed: () => Navigator.pop(context),
-                ),
+              IconArrowWidget(
+                onPressed: () => Navigator.pop(context),
               ),
-              Padding(
-                padding: EdgeInsets.only(bottom: 10, left: 35, top: MediaQuery.of(context).size.height / 5.5),
-                child: const Text(
-                  "Ativar Usuário",
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 35
-                  ),
-                ),
+              ImagensWidget(
+                paddingLeft: 10,
+                image: "ativar-usuario.png",
+                widthImagem: 220,
+              ),
+              TextAutenticacoesWidget(
+                paddingTop: 10,
+                paddingBottom: 2,
+                text: "Ativar Usuário",
               ),
               Form(
                 key: _formKey,
@@ -84,5 +80,4 @@ class AtivarUsuarioWidget extends State<AtivarUsuarioPage> {
       ),
     );
   }
-
 }
