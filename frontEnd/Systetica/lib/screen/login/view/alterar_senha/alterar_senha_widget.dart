@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:systetica/components/botoes/botao_acao_widget.dart';
 import 'package:systetica/components/campos_texto/campo_texto_widget.dart';
-import 'package:systetica/screen/autenticacao/cadastro/cadastro_controller.dart';
-import 'package:systetica/screen/autenticacao/cadastro/view/ativar_usuario/ativar_usuario_page.dart';
+import 'package:systetica/screen/login/login_controller.dart';
+import 'package:systetica/screen/login/view/alterar_senha/alterar_senha_page.dart';
 
-class AtivarUsuarioWidget extends State<AtivarUsuarioPage> {
+class AlterarSenhaWidget extends State<AlterarSenhaPage> {
   final _formKey = GlobalKey<FormState>();
-  CadastroController controller = CadastroController();
+  LoginController controller = LoginController();
 
   @override
   Widget build(BuildContext context) {
@@ -21,19 +21,20 @@ class AtivarUsuarioWidget extends State<AtivarUsuarioPage> {
               Container(
                 padding: const EdgeInsets.only(top: 5),
                 child: IconButton(
-                  icon: const Icon(Icons.keyboard_arrow_left_outlined, size: 35),
+                  icon:
+                      const Icon(Icons.keyboard_arrow_left_outlined, size: 35),
                   color: Colors.black,
                   onPressed: () => Navigator.pop(context),
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(bottom: 10, left: 35, top: MediaQuery.of(context).size.height / 5.5),
+                padding: EdgeInsets.only(
+                    bottom: 10,
+                    left: 35,
+                    top: MediaQuery.of(context).size.height / 5.5),
                 child: const Text(
-                  "Ativar Usuário",
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 35
-                  ),
+                  "Alterar senha",
+                  style: TextStyle(color: Colors.black, fontSize: 35),
                 ),
               ),
               Form(
@@ -66,14 +67,30 @@ class AtivarUsuarioWidget extends State<AtivarUsuarioPage> {
                       ),
                       controller: controller.codicoController,
                     ),
-                    BotaoAcaoWidget(
-                      paddingTop: 18,
+                    CampoTextoWidget(
+                      controller: controller.senhaController,
+                      labelText: "Nova senha",
+                      maxLength: 16,
+                      isPassword: true,
                       paddingBottom: 0,
-                      labelText: "Ativar Usuário",
+                      paddingTop: 5,
+                    ),
+                    CampoTextoWidget(
+                      controller: controller.confirmaSenhaController,
+                      labelText: "Confirmar senha",
+                      maxLength: 16,
+                      isPassword: true,
+                      paddingBottom: 0,
+                      paddingTop: 5,
+                    ),
+                    BotaoAcaoWidget(
+                      paddingTop: 0,
+                      paddingBottom: 0,
+                      labelText: "Alterar Senha",
                       largura: 190,
                       corBotao: Colors.black87.withOpacity(0.9),
                       corTexto: Colors.white,
-                      onPressed: () => controller.ativiarUsuario(context),
+                      onPressed: () => controller.alterarSenha(context),
                     ),
                   ],
                 ),
@@ -84,5 +101,4 @@ class AtivarUsuarioWidget extends State<AtivarUsuarioPage> {
       ),
     );
   }
-
 }

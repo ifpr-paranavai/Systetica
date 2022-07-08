@@ -1,9 +1,9 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:systetica/screen/autenticacao/view/inicio_page.dart';
+import 'package:systetica/screen/inicio/view/inicio_page.dart';
 import 'package:systetica/style/app_theme.dart';
+import 'package:flutter/services.dart' ;
 
 class MyHttpOverrides extends HttpOverrides {
   @override
@@ -15,6 +15,10 @@ class MyHttpOverrides extends HttpOverrides {
 }
 
 void main() {
+  SystemChrome. setSystemUIOverlayStyle ( const SystemUiOverlayStyle (
+    systemNavigationBarColor: Colors.transparent , // cor da barra de navegação
+    statusBarColor: Colors.transparent , // cor da barra de status
+  ));
   HttpOverrides.global = MyHttpOverrides();
   runApp(const MyApp());
 }
@@ -24,6 +28,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // FlutterStatusbarcolo.setStatusBarColor(Colors.white);
     return MaterialApp(
       localizationsDelegates:
         GlobalMaterialLocalizations.delegates,

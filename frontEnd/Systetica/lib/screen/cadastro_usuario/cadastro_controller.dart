@@ -7,9 +7,9 @@ import 'package:systetica/components/texto_erro_widget.dart';
 import 'package:systetica/model/CidadeDTO.dart';
 import 'package:systetica/model/UsuarioDTO.dart';
 import 'package:systetica/request/dio_config.dart';
-import 'package:systetica/screen/autenticacao/cadastro/cadastro_service.dart';
-import 'package:systetica/screen/autenticacao/cadastro/view/ativar_usuario/ativar_usuario_page.dart';
-import 'package:systetica/screen/autenticacao/view/inicio_page.dart';
+import 'package:systetica/screen/cadastro_usuario/cadastro_service.dart';
+import 'package:systetica/screen/cadastro_usuario/view/ativar_usuario/ativar_usuario_page.dart';
+import 'package:systetica/screen/inicio/view/inicio_page.dart';
 import 'package:systetica/utils/validacoes.dart';
 
 class CadastroController {
@@ -35,53 +35,71 @@ class CadastroController {
           Validacoes.isEmptOrNull(senhaController.text) ||
           Validacoes.isEmptOrNull(confirmaSenhaController.text) ||
           cidadeDTO == null) {
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          backgroundColor: Colors.blueGrey,
-          padding: EdgeInsets.all(18),
-          content:
-              TextoErroWidget(mensagem: "Por Favor, preencha todos os campos"),
-        ));
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            backgroundColor: Colors.blueGrey,
+            padding: EdgeInsets.all(18),
+            content: TextoErroWidget(
+              mensagem: "Por Favor, preencha todos os campos",
+            ),
+          ),
+        );
         return;
       }
 
       // Validar CPF
       if (CPFValidator.isValid(cpfController.text) == false) {
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          backgroundColor: Colors.blueGrey,
-          padding: EdgeInsets.all(18),
-          content: TextoErroWidget(mensagem: "CPF digitado não é válido"),
-        ));
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            backgroundColor: Colors.blueGrey,
+            padding: EdgeInsets.all(18),
+            content: TextoErroWidget(
+              mensagem: "CPF digitado não é válido",
+            ),
+          ),
+        );
         return;
       }
 
       // Validar Email
       if (!EmailValidator.validate(emailController.text)) {
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          backgroundColor: Colors.blueGrey,
-          padding: EdgeInsets.all(18),
-          content: TextoErroWidget(mensagem: "E-mail digitado não é válido"),
-        ));
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            backgroundColor: Colors.blueGrey,
+            padding: EdgeInsets.all(18),
+            content: TextoErroWidget(
+              mensagem: "E-mail digitado não é válido",
+            ),
+          ),
+        );
         return;
       }
 
       // Verificar Tamanho da senha
       if (senhaController.text.length < 6) {
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          backgroundColor: Colors.blueGrey,
-          padding: EdgeInsets.all(18),
-          content: TextoErroWidget(
-              mensagem: "Senha deve possúir ao menos 6 caracteres"),
-        ));
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            backgroundColor: Colors.blueGrey,
+            padding: EdgeInsets.all(18),
+            content: TextoErroWidget(
+              mensagem: "Senha deve possúir ao menos 6 caracteres",
+            ),
+          ),
+        );
         return;
       }
 
       // Verificar se senha e confirma senha são idênticos
       if (senhaController.text != confirmaSenhaController.text) {
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
             backgroundColor: Colors.blueGrey,
             padding: EdgeInsets.all(18),
             content: TextoErroWidget(
-                mensagem: "Senha e confirma senha devem ser iguais")));
+              mensagem: "Senha e confirma senha devem ser iguais",
+            ),
+          ),
+        );
         return;
       }
       try {
@@ -125,18 +143,25 @@ class CadastroController {
               onPressed: () => Navigator.pop(context));
         }
       } catch (e) {
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
             backgroundColor: Colors.blueGrey,
             content: TextoErroWidget(
-                mensagem: "Ocorreu algum erro de comunicação com o servidor")));
+              mensagem: "Ocorreu algum erro de comunicação com o servidor",
+            ),
+          ),
+        );
       }
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        backgroundColor: Colors.blueGrey,
-        padding: EdgeInsets.all(12),
-        content: TextoErroWidget(
-            mensagem: "Por Favor, conecte-se a rede para cadastrar um usuário"),
-      ));
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          backgroundColor: Colors.blueGrey,
+          padding: EdgeInsets.all(12),
+          content: TextoErroWidget(
+            mensagem: "Por Favor, conecte-se a rede para cadastrar um usuário",
+          ),
+        ),
+      );
     }
   }
 
@@ -183,18 +208,25 @@ class CadastroController {
               onPressed: () => Navigator.pop(context));
         }
       } catch (e) {
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
             backgroundColor: Colors.blueGrey,
             content: TextoErroWidget(
-                mensagem: "Ocorreu algum erro de comunicação com o servidor")));
+              mensagem: "Ocorreu algum erro de comunicação com o servidor",
+            ),
+          ),
+        );
       }
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        backgroundColor: Colors.blueGrey,
-        padding: EdgeInsets.all(12),
-        content: TextoErroWidget(
-            mensagem: "Por Favor, conecte-se a rede para cadastrar um usuário"),
-      ));
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          backgroundColor: Colors.blueGrey,
+          padding: EdgeInsets.all(12),
+          content: TextoErroWidget(
+            mensagem: "Por Favor, conecte-se a rede para cadastrar um usuário",
+          ),
+        ),
+      );
     }
   }
 }

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:systetica/components/botoes/botao_acao_widget.dart';
 import 'package:systetica/components/campos_texto/campo_texto_widget.dart';
-import 'package:systetica/screen/autenticacao/login/login_controller.dart';
-import 'package:systetica/screen/autenticacao/login/view/alterar_senha/gerar_codigo_page.dart';
-import 'package:systetica/screen/autenticacao/login/view/login/login_page.dart';
+import 'package:systetica/screen/login/login_controller.dart';
+import 'package:systetica/screen/login/view/gerar_codigo/gerar_codigo_page.dart';
+import 'package:systetica/screen/login/view/login/login_page.dart';
 
 class LoginWidget extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();

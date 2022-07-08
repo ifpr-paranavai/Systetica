@@ -5,9 +5,9 @@ import 'package:systetica/components/campos_texto/campo_pesquisa_edget.dart';
 import 'package:systetica/components/campos_texto/campo_texto_widget.dart';
 import 'package:systetica/model/CidadeDTO.dart';
 import 'package:systetica/model/Page_impl.dart';
-import 'package:systetica/screen/autenticacao/cadastro/cadastro_controller.dart';
-import 'package:systetica/screen/autenticacao/cadastro/cadastro_service.dart';
-import 'package:systetica/screen/autenticacao/cadastro/view/cadastrar/cadastro_page.dart';
+import 'package:systetica/screen/cadastro_usuario/cadastro_controller.dart';
+import 'package:systetica/screen/cadastro_usuario/cadastro_service.dart';
+import 'package:systetica/screen/cadastro_usuario/view/cadastro/cadastro_page.dart';
 
 class CadastroWidget extends State<CadastroPage> {
   final _formKey = GlobalKey<FormState>();
