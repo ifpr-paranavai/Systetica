@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:systetica/components/botoes/botao_acao_widget.dart';
 import 'package:systetica/components/campos_texto/campo_texto_widget.dart';
-import 'package:systetica/screen/autenticacao/cadastro/view/cadastrar/cadastro_page.dart';
 import 'package:systetica/screen/autenticacao/login/login_controller.dart';
 import 'package:systetica/screen/autenticacao/login/view/alterar_senha/gerar_codigo_page.dart';
 import 'package:systetica/screen/autenticacao/login/view/login/login_page.dart';
@@ -20,23 +19,36 @@ class LoginWidget extends State<LoginPage> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // Todo Criar um componente
               Container(
                 padding: const EdgeInsets.only(top: 5),
                 child: IconButton(
-                  icon:
-                      const Icon(Icons.keyboard_arrow_left_outlined, size: 35),
+                  icon: const Icon(
+                    Icons.keyboard_arrow_left_outlined,
+                    size: 35,
+                  ),
                   color: Colors.black,
                   onPressed: () => Navigator.pop(context),
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(
-                    bottom: 10,
-                    left: 35,
-                    top: MediaQuery.of(context).size.height / 5.5),
-                child: const Text(
+                padding: const EdgeInsets.only(left: 70),
+                child: Image.network(
+                  'https://ouch-cdn2.icons8.com/NTYRBz_YXFC9P7c65dq8pLHbsE2elQlA4WJzscQhYWA/rs:fit:380:456/czM6Ly9pY29uczgu/b3VjaC1wcm9kLmFz/c2V0cy9zdmcvNDUy/L2U0ZGMyYjRkLWE2/N2ItNDg5Ni1iODNj/LWYzNzA5MjRmMzMw/OC5zdmc.png',
+                  fit: BoxFit.cover,
+                  width: 220,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(
+                  bottom: 10,
+                  left: 35,
+                  top: 0,
+                ),
+                child: Text(
                   "Login",
-                  style: TextStyle(color: Colors.black, fontSize: 35),
+                  style: TextStyle(
+                      color: Colors.black87.withOpacity(0.9), fontSize: 35),
                 ),
               ),
               Form(

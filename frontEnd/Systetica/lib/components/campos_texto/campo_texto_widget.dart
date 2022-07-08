@@ -160,8 +160,9 @@ class _CampoTextoWidget extends State<CampoTextoWidget> {
               _corDaBorda = widget.color!;
             });
           }
-          return null;
+          return "truco";
         },
+        autovalidateMode: AutovalidateMode.onUserInteraction,
       ),
     );
   }

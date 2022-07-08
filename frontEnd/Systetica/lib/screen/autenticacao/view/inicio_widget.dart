@@ -1,37 +1,38 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:systetica/components/botoes/botao_acao_widget.dart';
 import 'package:systetica/screen/autenticacao/cadastro/view/cadastrar/cadastro_page.dart';
 import 'package:systetica/screen/autenticacao/login/view/login/login_page.dart';
 import 'package:systetica/screen/autenticacao/view/inicio_page.dart';
 
 class InicioWidget extends State<InicioPage> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
         child: Container(
           decoration: const BoxDecoration(
-              gradient: LinearGradient(
-            begin: Alignment.topRight,
-            end: Alignment.bottomLeft,
-            colors: [
-              Colors.blue,
-              Colors.red,
-            ],
-          )),
+            gradient: LinearGradient(
+              begin: Alignment.topRight,
+              end: Alignment.bottomLeft,
+              colors: [
+                Colors.black87,
+                Colors.blue,
+              ],
+            ),
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Expanded(
+              Expanded(
                 child: Padding(
-                  padding: EdgeInsets.only(top: 80),
+                  padding: const EdgeInsets.only(top: 50),
                   child: Center(
                     child: Text(
                       'Systetica',
-                      style: TextStyle(
-                        fontSize: 48.0,
+                      style: GoogleFonts.amaticSc(
+                        fontSize: 100,
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
                       ),
@@ -39,8 +40,13 @@ class InicioWidget extends State<InicioPage> {
                   ),
                 ),
               ),
+              Image.asset(
+                'assets/img/cabelereiro-inicio.png',
+                fit: BoxFit.cover,
+                width: 320,
+              ),
               BotaoAcaoWidget(
-                paddingTop: 20,
+                paddingTop: 35,
                 paddingBottom: 18,
                 labelText: "LOGIN",
                 largura: 190,

@@ -22,20 +22,28 @@ class GerarCodigoWidget extends State<GerarCodigoPage> {
                 padding: const EdgeInsets.only(top: 5),
                 child: IconButton(
                   icon:
-                      const Icon(Icons.keyboard_arrow_left_outlined, size: 35),
+                  const Icon(Icons.keyboard_arrow_left_outlined, size: 35),
                   color: Colors.black,
                   onPressed: () => Navigator.pop(context),
                 ),
               ),
               Padding(
+                padding: const EdgeInsets.only(left: 70),
+                child: Image.network(
+                  'https://ouch-cdn2.icons8.com/i8QlhCZepdjYRpi0bHZYEOQirRki53QQf_4N5OTnBxY/rs:fit:456:456/czM6Ly9pY29uczgu/b3VjaC1wcm9kLmFz/c2V0cy9zdmcvODUy/LzQyNzdiOGEzLTJm/N2YtNDg1My1hNzhh/LTcyNzI3NmQ1YzNk/Yi5zdmc.png',
+                  fit: BoxFit.cover,
+                  width: 210,
+                ),
+              ),
+              const Padding(
                 padding: EdgeInsets.only(
                   bottom: 10,
                   left: 35,
-                  top: MediaQuery.of(context).size.height / 5.5,
+                  top: 0,
                 ),
-                child: const Text(
+                child: Text(
                   "Gerar Código",
-                  style: TextStyle(color: Colors.black, fontSize: 32),
+                  style: TextStyle(fontSize: 32),
                 ),
               ),
               Form(
@@ -75,8 +83,8 @@ class GerarCodigoWidget extends State<GerarCodigoPage> {
                       paddingBottom: 0,
                       labelText: "Gerar Codigo",
                       largura: 190,
-                      corBotao: Colors.black,
-                      corTexto: Colors.black87.withOpacity(0.9),
+                      corBotao: Colors.black87.withOpacity(0.9),
+                      corTexto: Colors.white,
                       onPressed: () => controller.gerarCodigo(context),
                     ),
                   ],

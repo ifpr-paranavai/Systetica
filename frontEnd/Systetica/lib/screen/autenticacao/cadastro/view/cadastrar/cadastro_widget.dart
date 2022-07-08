@@ -1,7 +1,7 @@
-import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:systetica/components/botoes/botao_acao_widget.dart';
 import 'package:systetica/components/campos_texto/campo_data_widget.dart';
+import 'package:systetica/components/campos_texto/campo_pesquisa_edget.dart';
 import 'package:systetica/components/campos_texto/campo_texto_widget.dart';
 import 'package:systetica/model/CidadeDTO.dart';
 import 'package:systetica/model/Page_impl.dart';
@@ -40,18 +40,28 @@ class CadastroWidget extends State<CadastroPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              padding: const EdgeInsets.only(top: 5),
+              padding: const EdgeInsets.only(
+                top: 5,
+              ),
               child: IconButton(
-                icon: const Icon(Icons.keyboard_arrow_left_outlined, size: 35),
+                icon: const Icon(
+                  Icons.keyboard_arrow_left_outlined,
+                  size: 35,
+                ),
                 color: Colors.black,
                 onPressed: () => Navigator.pop(context),
               ),
             ),
             const Padding(
-              padding: EdgeInsets.only(bottom: 10, left: 35),
+              padding: EdgeInsets.only(
+                bottom: 10,
+                left: 35,
+              ),
               child: Text(
                 "Registrar-se",
-                style: TextStyle(color: Colors.black, fontSize: 35),
+                style: TextStyle(
+                  fontSize: 35,
+                ),
               ),
             ),
             Expanded(
@@ -76,13 +86,12 @@ class CadastroWidget extends State<CadastroPage> {
                       ),
                       CampoDataWidget(
                         controller: controller.dataNascimentoController,
-                        isDarkMode: false,
                         hintText: 'Nascimento',
                         paddingBottom: 0,
                         paddingTop: 3,
                         onChanged: (String? value) {
                           setState(
-                            () {
+                                () {
                               if (value != null) {
                                 controller.dataNascimentoController.text =
                                     value;
@@ -91,52 +100,16 @@ class CadastroWidget extends State<CadastroPage> {
                           );
                         },
                       ),
-                      Container(
-                        padding: const EdgeInsets.only(
-                          top: 5,
-                          bottom: 15,
-                          left: 35,
-                          right: 35,
-                        ),
-                        child: DropdownSearch<CidadeDTO>(
-                          popupBackgroundColor: Colors.grey,
-                          dropdownSearchDecoration: const InputDecoration(
-                              labelText: "Cidade",
-                              //TODO ACRESCENTAR * PARA CAMPOS OBRIGATÓRIOS
-                              hintText: "Digite sua cidade",
-                              //Borda Principal
-                              enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(15),
-                                  ),
-                                  borderSide: BorderSide(
-                                    color: Colors.blueGrey,
-                                  )),
-                              focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(15),
-                                  ),
-                                  borderSide: BorderSide(
-                                    color: Colors.black,
-                                  )),
-                              isDense: true,
-                              hintStyle: TextStyle(color: Colors.black),
-                              labelStyle:
-                                  TextStyle(color: Colors.black, fontSize: 17),
-                              floatingLabelStyle: TextStyle(
-                                color: Colors.black,
-                              )),
-                          mode: Mode.MENU,
-                          isFilteredOnline: true,
-                          showClearButton: true,
-                          showSearchBox: true,
-                          items: cidades,
-                          itemAsString: (elemento) => elemento!.nome,
-                          onFind: (String? cidade) => buscarCidade(cidade),
-                          onChanged: (value) {
-                            cidadeDTO = value;
-                          },
-                        ),
+                      CampoPesquisaWidget(
+                        labelText: "Cidade",
+                        labelSeachText: "Digite nome da cidade",
+                        icon: const Icon(Icons.location_city),
+                        objects: cidades,
+                        objectAsString: (cidade) => cidade!.nome,
+                        objectOnFind: (String? cidade) => buscarCidade(cidade),
+                        onChanged: (value) {
+                          cidadeDTO = value;
+                        },
                       ),
                       CampoTextoWidget(
                         controller: controller.cpfController,
@@ -210,16 +183,17 @@ class CadastroWidget extends State<CadastroPage> {
                         paddingTop: 5,
                       ),
                       BotaoAcaoWidget(
-                          paddingTop: 0,
-                          paddingBottom: 50,
-                          labelText: "CADASTRAR",
-                          largura: 190,
-                          corBotao: Colors.black87.withOpacity(0.9),
-                          corTexto: Colors.white,
-                          onPressed: () => controller.cadastrarUsuario(
-                                context,
-                                cidadeDTO!,
-                              )),
+                        paddingTop: 0,
+                        paddingBottom: 50,
+                        labelText: "CADASTRAR",
+                        largura: 190,
+                        corBotao: Colors.black87.withOpacity(0.9),
+                        corTexto: Colors.white,
+                        onPressed: () => controller.cadastrarUsuario(
+                          context,
+                          cidadeDTO!,
+                        ),
+                      ),
                     ],
                   ),
                 ),

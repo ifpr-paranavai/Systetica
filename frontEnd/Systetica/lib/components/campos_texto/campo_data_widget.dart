@@ -9,12 +9,10 @@ class CampoDataWidget extends StatelessWidget {
     required this.paddingBottom,
     required this.onChanged,
     required this.controller,
-    this.isDarkMode = true,
   }) : super(key: key);
 
   final double paddingBottom;
   final double? paddingTop;
-  final bool isDarkMode;
   final String hintText;
   final void Function(String) onChanged;
   final TextEditingController controller;
@@ -29,8 +27,8 @@ class CampoDataWidget extends StatelessWidget {
         right: 35,
       ),
       child: TextFormField(
-        style: TextStyle(
-          color: isDarkMode ? Colors.white : Colors.black,
+        style: const TextStyle(
+          color: Colors.black,
         ),
         controller: controller,
         maxLength: 10,
@@ -45,15 +43,17 @@ class CampoDataWidget extends StatelessWidget {
               Radius.circular(15),
             ),
           ),
-          focusedBorder: OutlineInputBorder(
-            borderSide: isDarkMode
-                ? const BorderSide(
-                    color: Colors.white,
-                  )
-                : const BorderSide(
-                    color: Colors.black,
-                  ),
-            borderRadius: const BorderRadius.all(
+          focusedBorder: const OutlineInputBorder(
+            borderSide:
+            // isDarkMode
+            // ? const BorderSide(
+            //     color: Colors.white,
+            //   )
+            // :
+            BorderSide(
+              color: Colors.black,
+            ),
+            borderRadius: BorderRadius.all(
               Radius.circular(15),
             ),
           ),
@@ -66,8 +66,8 @@ class CampoDataWidget extends StatelessWidget {
             ),
           ),
           labelText: hintText,
-          labelStyle: TextStyle(
-            color: isDarkMode ? Colors.white : Colors.black,
+          labelStyle: const TextStyle(
+            color: Colors.black,
             fontWeight: FontWeight.w400,
             fontSize: 17,
           ),

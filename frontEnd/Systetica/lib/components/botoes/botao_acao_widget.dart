@@ -28,8 +28,10 @@ class _BotaoAcaoWidget extends State<BotaoAcaoWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding:
-          EdgeInsets.only(top: widget.paddingTop, bottom: widget.paddingBottom),
+      padding: EdgeInsets.only(
+        top: widget.paddingTop,
+        bottom: widget.paddingBottom,
+      ),
       child: Container(
         width: widget.largura,
         height: 47,
@@ -40,10 +42,6 @@ class _BotaoAcaoWidget extends State<BotaoAcaoWidget> {
           right: 14,
         ),
         decoration: BoxDecoration(
-          border: Border.all(
-            color: Colors.black,
-            width: 2,
-          ),
           color: widget.corBotao,
           borderRadius: const BorderRadius.all(Radius.circular(12)),
         ),
