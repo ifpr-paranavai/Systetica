@@ -2,25 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class CampoTextoWidget extends StatefulWidget {
-  const CampoTextoWidget(
-      {Key? key,
-      required this.labelText,
-      this.onChanged,
-      this.isPassword = false,
-      this.isIconDate = false,
-      this.keyboardType,
-      required this.paddingBottom,
-      this.maxLength,
-      this.paddingTop = 0,
-      this.mask,
-      this.color = Colors.blueGrey,
-      this.colorCurso = Colors.black,
-      this.isDarkMode = false,
-      this.controller,
-      this.onPressedIcon,
-      this.icon,
-      this.suffixTextBool = true})
-      : super(key: key);
+  const CampoTextoWidget({
+    Key? key,
+    required this.labelText,
+    this.onChanged,
+    this.isPassword = false,
+    this.isIconDate = false,
+    this.keyboardType,
+    required this.paddingBottom,
+    this.maxLength,
+    this.paddingTop = 0,
+    this.mask,
+    this.color = Colors.blueGrey,
+    this.colorCurso = Colors.black,
+    this.isDarkMode = false,
+    this.controller,
+    this.onPressedIcon,
+    this.icon,
+    this.validator,
+  }) : super(key: key);
 
   final String labelText;
   final ValueChanged<String>? onChanged;
@@ -36,8 +36,8 @@ class CampoTextoWidget extends StatefulWidget {
   final Color? colorCurso;
   final bool isDarkMode;
   final Widget? icon;
-  final bool suffixTextBool;
   final TextEditingController? controller;
+  final String? Function(String?)? validator;
 
   @override
   _CampoTextoWidget createState() => _CampoTextoWidget();
@@ -91,7 +91,6 @@ class _CampoTextoWidget extends State<CampoTextoWidget> {
               Radius.circular(15),
             ),
           ),
-
           focusedBorder: OutlineInputBorder(
             //Cor de quando clicar no campo
             borderSide: widget.isDarkMode
@@ -112,10 +111,7 @@ class _CampoTextoWidget extends State<CampoTextoWidget> {
             borderSide: BorderSide(color: _corDaBorda),
           ),
           labelText: widget.labelText,
-          suffixText: widget.suffixTextBool == true ? "*" :'',
-          suffixStyle: const TextStyle(
-            color: Colors.black
-          ),
+          suffixStyle: const TextStyle(color: Colors.black),
           labelStyle: TextStyle(
             color: widget.isDarkMode ? Colors.white : Colors.black,
             fontWeight: FontWeight.w400,
@@ -123,8 +119,8 @@ class _CampoTextoWidget extends State<CampoTextoWidget> {
           ),
           suffixIcon: widget.isPassword == true
               ? Padding(
-                padding: const EdgeInsets.only(right: 20),
-                child: GestureDetector(
+                  padding: const EdgeInsets.only(right: 20),
+                  child: GestureDetector(
                     //Ícone para ocultar ou não a senha na tela
                     child: Icon(
                       _esconderTextSenha
@@ -138,7 +134,7 @@ class _CampoTextoWidget extends State<CampoTextoWidget> {
                       });
                     },
                   ),
-              )
+                )
               : widget.isIconDate == true
                   ? IconButton(
                       padding: const EdgeInsets.only(
@@ -149,20 +145,7 @@ class _CampoTextoWidget extends State<CampoTextoWidget> {
                     )
                   : null,
         ),
-        //Trocar de cor os campos caso sejam deixados nulos
-        validator: (value) {
-          if (value == null || value.isEmpty) {
-            setState(() {
-              _corDaBorda = Colors.red;
-            });
-          } else {
-            setState(() {
-              _corDaBorda = widget.color!;
-            });
-          }
-          return "truco";
-        },
-        autovalidateMode: AutovalidateMode.onUserInteraction,
+        validator: widget.validator,
       ),
     );
   }

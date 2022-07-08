@@ -1,5 +1,4 @@
 class Validacoes {
-
   static bool isEmptOrNull(String? obj) {
     if (obj == null || obj.isEmpty) {
       return true;
@@ -8,7 +7,6 @@ class Validacoes {
     }
   }
 
-
   static bool isIntegerNull(int? obj) {
     if (obj == null) {
       return true;
@@ -16,4 +14,5 @@ class Validacoes {
       return false;
     }
   }
+  //todo remover
 }

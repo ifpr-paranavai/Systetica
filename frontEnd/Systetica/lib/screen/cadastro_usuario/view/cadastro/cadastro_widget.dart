@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:systetica/components/botoes/botao_acao_widget.dart';
-import 'package:systetica/components/campos_texto/campo_data_widget.dart';
-import 'package:systetica/components/campos_texto/campo_pesquisa_edget.dart';
-import 'package:systetica/components/campos_texto/campo_texto_widget.dart';
+import 'package:systetica/components/input/campo_data_widget.dart';
+import 'package:systetica/components/input/campo_pesquisa_edget.dart';
+import 'package:systetica/components/input/campo_texto_widget.dart';
 import 'package:systetica/components/icon_arrow_widget.dart';
 import 'package:systetica/components/imagens_widget.dart';
 import 'package:systetica/components/text_autenticacoes_widget.dart';
@@ -51,7 +51,7 @@ class CadastroWidget extends State<CadastroPage> {
               widthImagem: 200,
             ),
             TextAutenticacoesWidget(
-              paddingBottom: 10,
+              paddingBottom: 2,
               paddingTop: 2,
               text: "Registrar-se",
             ),
@@ -138,7 +138,6 @@ class CadastroWidget extends State<CadastroPage> {
                         paddingBottom: 0,
                         maxLength: 15,
                         paddingTop: 3,
-                        suffixTextBool: false,
                         isIconDate: true,
                         icon: const Icon(
                           Icons.phone,

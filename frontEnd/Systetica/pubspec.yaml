@@ -13,7 +13,6 @@ dependencies:
     sdk: flutter
   cupertino_icons: ^1.0.2
   google_fonts: ^3.0.1
-  page_transition: ^2.0.9
 
 dev_dependencies:
   flutter_test:
@@ -32,6 +31,8 @@ dev_dependencies:
   intl: ^0.17.0
   dropdown_search: ^3.0.1
   flutter_animator: ^3.2.2
+  page_transition: ^2.0.9
+  form_field_validator: ^1.1.0
 
 flutter:
   uses-material-design: true
