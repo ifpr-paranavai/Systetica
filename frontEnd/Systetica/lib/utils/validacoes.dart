@@ -14,5 +14,4 @@ class Validacoes {
       return false;
     }
   }
-  //todo remover
 }

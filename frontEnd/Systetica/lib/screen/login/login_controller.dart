@@ -67,7 +67,7 @@ class LoginController {
       MinLengthValidator(
         6,
         errorText:
-            'Campo deve possuir no menos 6 caracteres', //todo validar no back
+            'Campo deve possuir no menos 6 caracteres',
       ),
     ]);
   }

@@ -86,7 +86,7 @@ class CadastroController {
       MinLengthValidator(
         6,
         errorText:
-            'Campo deve possuir no menos 6 caracteres', //todo validar no back
+            'Campo deve possuir no menos 6 caracteres',
       ),
     ]);
   }
@@ -147,7 +147,6 @@ class CadastroController {
                 ),
               );
             } else {
-              Navigator.pop(contextLoading, loading);
               showModalOkWidget.showModalOk(context,
                   title: "Erro",
                   description: infoResponse.message!,
