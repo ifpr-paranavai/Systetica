@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:systetica/components/botoes/botao_acao_widget.dart';
@@ -7,22 +8,57 @@ import 'package:systetica/screen/cadastro_usuario/view/cadastro/cadastro_page.da
 import 'package:systetica/screen/inicio/view/inicio_page.dart';
 import 'package:systetica/screen/login/view/login/login_page.dart';
 
-class InicioWidget extends State<InicioPage> {
+class InicioWidget extends State<InicioPage> with TickerProviderStateMixin {
   var myPageTransition = MyPageTransition();
+  List<Color> colorList = [
+    const Color(0xff0752d0),
+    const Color(0xff0743aa),
+    const Color(0xff05347f),
+    const Color(0xff05347f),
+    const Color(0xff031431),
+  ];
+  List<Alignment> alignmentList = [Alignment.topCenter, Alignment.bottomCenter];
+  int index = 0;
+  Color bottomColor = const Color(0xff0743aa);
+  Color topColor = const Color(0xff031431);
+  Alignment begin = Alignment.bottomCenter;
+  Alignment end = Alignment.topCenter;
+
+  @override
+  void initState() {
+    super.initState();
+    Timer(
+      const Duration(microseconds: 0),
+      () {
+        setState(
+          () {
+            bottomColor = const Color(0xff031431);
+          },
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: Container(
-          decoration: const BoxDecoration(
+        body: AnimatedContainer(
+          duration: const Duration(seconds: 2),
+          onEnd: () {
+            setState(
+              () {
+                index = index + 1;
+                bottomColor = colorList[index % colorList.length];
+                topColor = colorList[(index + 1) % colorList.length];
+              },
+            );
+          },
+          decoration: BoxDecoration(
             gradient: LinearGradient(
-              begin: Alignment.topRight,
-              end: Alignment.bottomLeft,
-              colors: [
-                Colors.black87,
-                Colors.blue,
-              ],
+              begin: begin,
+              end: end,
+              colors: [bottomColor, topColor],
             ),
           ),
           child: Center(

@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:systetica/screen/inicio/view/inicio_page.dart';
@@ -23,19 +24,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // FlutterStatusbarcolo.setStatusBarColor(Colors.white);
     return MaterialApp(
-      localizationsDelegates:
-        GlobalMaterialLocalizations.delegates,
+      localizationsDelegates: GlobalMaterialLocalizations.delegates,
       supportedLocales: const [
         Locale('pt', ''),
       ],
       title: 'Systetica',
       debugShowCheckedModeBanner: false,
       theme: appThemeData,
-      home: const SafeArea(
-        child: InicioPage(),
-      ),
+      home: const InicioPage(),
     );
   }
 }
