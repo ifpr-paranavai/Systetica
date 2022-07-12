@@ -11,16 +11,16 @@ import 'package:systetica/screen/login/view/login/login_page.dart';
 class InicioWidget extends State<InicioPage> with TickerProviderStateMixin {
   var myPageTransition = MyPageTransition();
   List<Color> colorList = [
-    const Color(0xff0752d0),
-    const Color(0xff0743aa),
-    const Color(0xff05347f),
-    const Color(0xff05347f),
-    const Color(0xff031431),
+    const Color(0xff095eee),
+    const Color(0xff0750c7),
+    const Color(0xff053e95),
+    const Color(0xff043078),
+    const Color(0xff032050),
   ];
   List<Alignment> alignmentList = [Alignment.topCenter, Alignment.bottomCenter];
   int index = 0;
-  Color bottomColor = const Color(0xff0743aa);
-  Color topColor = const Color(0xff031431);
+  Color bottomColor = const Color(0xff095eee);
+  Color topColor = const Color(0xff032050);
   Alignment begin = Alignment.bottomCenter;
   Alignment end = Alignment.topCenter;
 
@@ -56,8 +56,8 @@ class InicioWidget extends State<InicioPage> with TickerProviderStateMixin {
           },
           decoration: BoxDecoration(
             gradient: LinearGradient(
-              begin: begin,
-              end: end,
+              begin: Alignment.topRight,
+              end: Alignment.bottomLeft,
               colors: [bottomColor, topColor],
             ),
           ),
