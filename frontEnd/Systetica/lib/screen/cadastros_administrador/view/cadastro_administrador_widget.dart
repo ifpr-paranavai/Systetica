@@ -6,6 +6,7 @@ class CadastroAdministradorWidget extends State<CadastroAdministradorPage> {
   Widget build(BuildContext context) {
     return const SafeArea(
       child: Scaffold(
+        backgroundColor: Colors.pink,
         body: Text("Cadastro Administrador"),
       ),
     );

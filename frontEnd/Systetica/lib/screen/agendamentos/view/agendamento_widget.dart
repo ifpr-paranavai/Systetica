@@ -6,6 +6,7 @@ class AgendamentolWidget extends State<AgendamentoPage> {
   Widget build(BuildContext context) {
     return const SafeArea(
       child: Scaffold(
+        backgroundColor: Colors.blue,
         body: Text("Realizar agendamento"),
       ),
     );

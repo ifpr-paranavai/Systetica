@@ -6,6 +6,7 @@ class PagamentoWidget extends State<PagamentoPage> {
   Widget build(BuildContext context) {
     return const SafeArea(
       child: Scaffold(
+        backgroundColor: Colors.red,
         body: Text("Pagamentos"),
       ),
     );

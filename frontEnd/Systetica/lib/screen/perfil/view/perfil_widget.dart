@@ -6,6 +6,7 @@ class PerfilWidget extends State<PerfilPage> {
   Widget build(BuildContext context) {
     return const SafeArea(
       child: Scaffold(
+        backgroundColor: Colors.orange,
         body: Text("Perfil"),
       ),
     );
