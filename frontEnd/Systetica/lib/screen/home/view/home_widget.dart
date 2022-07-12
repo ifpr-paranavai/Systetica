@@ -6,6 +6,7 @@ import 'package:systetica/screen/cadastros_administrador/view/cadastro_administr
 import 'package:systetica/screen/home/view/home_page.dart';
 import 'package:systetica/screen/pagamentos/view/pagamento_page.dart';
 import 'package:systetica/screen/perfil/view/perfil_page.dart';
+import 'package:systetica/style/app_colors..dart';
 
 class HomeWidget extends State<HomePage> {
   int _selectedIndex = 0;
@@ -70,8 +71,8 @@ class HomeWidget extends State<HomePage> {
             borderRadius: BorderRadius.circular(50),
             child: BottomNavigationBar(
               iconSize: 28,
-              selectedItemColor: const Color(0xFFa2190a),
-              unselectedItemColor: const Color(0xff053e95),
+              selectedItemColor: AppColors.redPrincipal,
+              unselectedItemColor: AppColors.bluePrincipal,
               showSelectedLabels: false,
               showUnselectedLabels: false,
               currentIndex: _selectedIndex,

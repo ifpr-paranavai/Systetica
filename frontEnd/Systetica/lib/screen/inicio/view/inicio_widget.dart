@@ -7,20 +7,21 @@ import 'package:systetica/components/page_transition.dart';
 import 'package:systetica/screen/cadastro_usuario/view/cadastro/cadastro_page.dart';
 import 'package:systetica/screen/inicio/view/inicio_page.dart';
 import 'package:systetica/screen/login/view/login/login_page.dart';
+import 'package:systetica/style/app_colors..dart';
 
 class InicioWidget extends State<InicioPage> with TickerProviderStateMixin {
   var myPageTransition = MyPageTransition();
   List<Color> colorList = [
-    const Color(0xff095eee),
-    const Color(0xff0750c7),
-    const Color(0xff053e95),
-    const Color(0xff043078),
-    const Color(0xff032050),
+    AppColors.blue1,
+    AppColors.blue2,
+    AppColors.blue3,
+    AppColors.blue4,
+    AppColors.blue5,
   ];
   List<Alignment> alignmentList = [Alignment.topCenter, Alignment.bottomCenter];
   int index = 0;
-  Color bottomColor = const Color(0xff095eee);
-  Color topColor = const Color(0xff032050);
+  Color bottomColor = AppColors.blue1;
+  Color topColor = AppColors.blue5;
   Alignment begin = Alignment.bottomCenter;
   Alignment end = Alignment.topCenter;
 
@@ -32,7 +33,7 @@ class InicioWidget extends State<InicioPage> with TickerProviderStateMixin {
       () {
         setState(
           () {
-            bottomColor = const Color(0xff031431);
+            bottomColor = AppColors.blue5;
           },
         );
       },
