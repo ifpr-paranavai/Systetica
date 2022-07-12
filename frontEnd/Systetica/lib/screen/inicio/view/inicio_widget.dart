@@ -66,57 +66,73 @@ class InicioWidget extends State<InicioPage> with TickerProviderStateMixin {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 40),
-                    child: Center(
-                      child: Text(
-                        'Systetica',
-                        style: GoogleFonts.amaticSc(
-                          fontSize: 100,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ),
-                  ImagensWidget(
-                    paddingLeft: 10,
-                    image: "cabelereiro-inicio.png",
-                    widthImagem: 320,
-                    paddingBottom: 20,
-                  ),
-                  BotaoAcaoWidget(
-                    paddingTop: 35,
-                    paddingBottom: 18,
-                    labelText: "LOGIN",
-                    largura: 190,
-                    corBotao: Colors.white,
-                    corTexto: Colors.black,
-                    onPressed: () => Navigator.of(context).push(
-                      myPageTransition.pageTransition(
-                        child: const LoginPage(),
-                        childCurrent: widget,
-                      ),
-                    ),
-                  ),
-                  BotaoAcaoWidget(
-                    paddingTop: 0,
-                    paddingBottom: 30,
-                    labelText: "REGISTRAR",
-                    largura: 190,
-                    corBotao: Colors.black87.withOpacity(0.9),
-                    corTexto: Colors.white,
-                    onPressed: () => Navigator.of(context).push(
-                      myPageTransition.pageTransition(
-                        child: const CadastroPage(),
-                        childCurrent: widget,
-                      ),
-                    ),
-                  ),
+                  tituloSystetica(),
+                  imagemSalao(),
+                  botaoLogin(),
+                  botaoRegistrar(),
                 ],
               ),
             ),
           ),
+        ),
+      ),
+    );
+  }
+
+  Padding tituloSystetica() {
+    return Padding(
+      padding: const EdgeInsets.only(top: 40),
+      child: Center(
+        child: Text(
+          'Systetica',
+          style: GoogleFonts.amaticSc(
+            fontSize: 100,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
+        ),
+      ),
+    );
+  }
+
+  ImagensWidget imagemSalao() {
+    return ImagensWidget(
+      paddingLeft: 10,
+      image: "cabelereiro-inicio.png",
+      widthImagem: 320,
+      paddingBottom: 20,
+    );
+  }
+
+  BotaoAcaoWidget botaoLogin() {
+    return BotaoAcaoWidget(
+      paddingTop: 35,
+      paddingBottom: 18,
+      labelText: "LOGIN",
+      largura: 190,
+      corBotao: Colors.white,
+      corTexto: Colors.black,
+      onPressed: () => Navigator.of(context).push(
+        myPageTransition.pageTransition(
+          child: const LoginPage(),
+          childCurrent: widget,
+        ),
+      ),
+    );
+  }
+
+  BotaoAcaoWidget botaoRegistrar() {
+    return BotaoAcaoWidget(
+      paddingTop: 0,
+      paddingBottom: 30,
+      labelText: "REGISTRAR",
+      largura: 190,
+      corBotao: Colors.black87.withOpacity(0.9),
+      corTexto: Colors.white,
+      onPressed: () => Navigator.of(context).push(
+        myPageTransition.pageTransition(
+          child: const CadastroPage(),
+          childCurrent: widget,
         ),
       ),
     );
