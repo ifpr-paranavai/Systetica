@@ -120,7 +120,7 @@ class AlterarSenhaWidget extends State<AlterarSenhaPage> {
   BotaoAcaoWidget botaoAlterarSenha() {
     return BotaoAcaoWidget(
       paddingTop: 18,
-      paddingBottom: 0,
+      paddingBottom: 30,
       labelText: "Alterar Senha",
       largura: 190,
       corBotao: Colors.black87.withOpacity(0.9),

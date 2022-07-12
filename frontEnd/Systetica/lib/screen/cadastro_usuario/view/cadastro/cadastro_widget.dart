@@ -231,7 +231,7 @@ class CadastroWidget extends State<CadastroPage> {
   BotaoAcaoWidget botaoCadastrar() {
     return BotaoAcaoWidget(
       paddingTop: 20,
-      paddingBottom: 40,
+      paddingBottom: 30,
       labelText: "CADASTRAR",
       largura: 190,
       corBotao: Colors.black87.withOpacity(0.9),

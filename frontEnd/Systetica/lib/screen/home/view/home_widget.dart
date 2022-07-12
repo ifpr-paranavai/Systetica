@@ -54,8 +54,8 @@ class HomeWidget extends State<HomePage> {
           child: widgetOpcoes.elementAt(_selectedIndex),
         ),
         bottomNavigationBar: Container(
-          margin: const EdgeInsets.all(12),
-          height: screenWidth * .155,
+          margin: const EdgeInsets.all(10),
+          height: screenWidth * .159,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(50),
             color: Colors.white,
@@ -70,11 +70,12 @@ class HomeWidget extends State<HomePage> {
           child: ClipRRect(
             borderRadius: BorderRadius.circular(50),
             child: BottomNavigationBar(
-              iconSize: 28,
+              iconSize: 27,
               selectedItemColor: AppColors.redPrincipal,
               unselectedItemColor: AppColors.bluePrincipal,
               showSelectedLabels: false,
               showUnselectedLabels: false,
+              enableFeedback: false,
               currentIndex: _selectedIndex,
               items: bottomNavigations,
               onTap: _onItemTapped,

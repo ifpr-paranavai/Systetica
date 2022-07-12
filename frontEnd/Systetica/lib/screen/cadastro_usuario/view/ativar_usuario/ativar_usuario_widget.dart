@@ -96,7 +96,7 @@ class AtivarUsuarioWidget extends State<AtivarUsuarioPage> {
   BotaoAcaoWidget botaoAtivaUsuario() {
     return BotaoAcaoWidget(
       paddingTop: 18,
-      paddingBottom: 0,
+      paddingBottom: 30,
       labelText: "Ativar Usuário",
       largura: 190,
       corBotao: Colors.black87.withOpacity(0.9),
