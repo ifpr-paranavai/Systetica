@@ -23,11 +23,22 @@ public class EmailServiceImpl implements EmailService {
     @Override
     public ReturnData<String> enviarEmail(boolean ativaUsuario, String email, Integer codigo) {
         try {
+            String mensagemSubject;
+            String mensagemText;
+
+            if (ativaUsuario) {
+                mensagemSubject = MENSAGEM_ATIVACAO_TITULO;
+                mensagemText = MENSAGEM_ATIVACAO + "\n\nCódigo válido por 10 minutos.\nCódigo: " + codigo;
+            } else {
+                mensagemSubject = MENSAGEM_ALTERAR_SENHA_TITULO + "\n\nCódigo válido por 10 minutos.\nCódigo: " + codigo;
+                mensagemText = MENSAGEM_ALTERAR_SENHA + "\n\nCódigo válido por 10 minutos.\nCódigo: " + codigo;
+            }
+
             SimpleMailMessage message = new SimpleMailMessage();
-            message.setFrom("projetoTeste45@gmail.com");
+            message.setFrom("sistemas-tcc@tecnoif.com.br");
             message.setTo(email);
-            message.setSubject(ativaUsuario ? MENSAGEM_ATIVACAO_TITULO : MENSAGEM_ALTERAR_SENHA_TITULO);
-            message.setText(ativaUsuario ? MENSAGEM_ATIVACAO : MENSAGEM_ALTERAR_SENHA + "\n\nCódigo válido por 10 minutos.\nCódigo: " + codigo);
+            message.setSubject(mensagemSubject);
+            message.setText(mensagemText);
 
             javaMailSender.send(message);
             return new ReturnData<>(true, "", "Senha enviado com sucesso!");
