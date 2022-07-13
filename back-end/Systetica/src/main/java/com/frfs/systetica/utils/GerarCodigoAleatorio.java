@@ -5,6 +5,6 @@ import java.util.Random;
 public class GerarCodigoAleatorio {
     public static int gerarCodigo() {
         Random gerador = new Random();
-        return  gerador.nextInt(100000) + 100000;
+        return gerador.nextInt(100000) + 100000;
     }
 }

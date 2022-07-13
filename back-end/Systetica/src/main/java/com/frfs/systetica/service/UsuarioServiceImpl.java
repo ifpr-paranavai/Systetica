@@ -52,13 +52,16 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
 
             var codigoAleatorio = GerarCodigoAleatorio.gerarCodigo();
 
-            emailService.enviarEmail(true, usuarioDTO.getEmail(), codigoAleatorio);
+            var returnDataEmailEnviado = emailService.enviarEmail(true, usuarioDTO.getEmail(), codigoAleatorio);
 
-            usuarioDTO.setDataCodigo(new Date());
-            usuarioDTO.setCodigoAleatorio(codigoAleatorio);
+           if (returnDataEmailEnviado.getSuccess()) {
+                usuarioDTO.setDataCodigo(new Date());
+                usuarioDTO.setCodigoAleatorio(codigoAleatorio);
 
-            usuarioRepository.save(usuarioMapper.toEntity(usuarioDTO));
-            return new ReturnData<>(true, "Usuário salvo com sucesso", "");
+                usuarioRepository.save(usuarioMapper.toEntity(usuarioDTO));
+                return new ReturnData<>(true, "Usuário salvo com sucesso", "");
+            }
+           return returnDataEmailEnviado;
         } catch (BusinessException busEx) {
             return new ReturnData<>(false, "Ocorreu um erro ao salvar um cliente", busEx.getMessage());
         } catch (Exception ex) {
