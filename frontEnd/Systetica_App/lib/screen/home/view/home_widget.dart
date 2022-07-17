@@ -117,71 +117,67 @@ class HomeWidget extends State<HomePage> {
   }
 
   List<BottomNavigationBarItem> get bottomNavigationCliente {
-    List<BottomNavigationBarItem> bottomNavigatrion =
-        const <BottomNavigationBarItem>[
-      BottomNavigationBarItem(
-        icon: Icon(Icons.schedule),
-        label: 'Agedar',
-      ),
-      BottomNavigationBarItem(
-        icon: Icon(Icons.calendar_month),
-        label: 'Agendamentos',
-      ),
-      BottomNavigationBarItem(
-        icon: Icon(Icons.person_rounded),
-        label: 'Perfil',
-      ),
+    List<BottomNavigationBarItem> bottomNavigatrion = <BottomNavigationBarItem>[
+      bottomAgendar(),
+      bottomAgendamentos(),
+      bottomPerfil(),
     ];
     return bottomNavigatrion;
   }
 
   List<BottomNavigationBarItem> get bottomNavigationFuncionario {
-    List<BottomNavigationBarItem> bottomNavigatrion =
-        const <BottomNavigationBarItem>[
-      BottomNavigationBarItem(
-        icon: Icon(Icons.schedule),
-        label: 'Agedar',
-      ),
-      BottomNavigationBarItem(
-        icon: Icon(Icons.monetization_on),
-        label: 'Pagamento',
-      ),
-      BottomNavigationBarItem(
-        icon: Icon(Icons.calendar_month),
-        label: 'Agendamentos',
-      ),
-      BottomNavigationBarItem(
-        icon: Icon(Icons.person_rounded),
-        label: 'Perfil',
-      ),
+    List<BottomNavigationBarItem> bottomNavigatrion = <BottomNavigationBarItem>[
+      bottomAgendar(),
+      bottomPagamentos(),
+      bottomAgendamentos(),
+      bottomPerfil(),
     ];
     return bottomNavigatrion;
   }
 
   List<BottomNavigationBarItem> get bottomNavigationAdministrador {
-    List<BottomNavigationBarItem> bottomNavigatrion =
-        const <BottomNavigationBarItem>[
-      BottomNavigationBarItem(
-        icon: Icon(Icons.schedule),
-        label: 'Agedar',
-      ),
-      BottomNavigationBarItem(
-        icon: Icon(Icons.monetization_on),
-        label: 'Pagamento',
-      ),
-      BottomNavigationBarItem(
-        icon: Icon(Icons.calendar_month),
-        label: 'Agendamentos',
-      ),
-      BottomNavigationBarItem(
-        icon: Icon(Icons.create_new_folder),
-        label: 'Cadastros',
-      ),
-      BottomNavigationBarItem(
-        icon: Icon(Icons.person_rounded),
-        label: 'Perfil',
-      ),
+    List<BottomNavigationBarItem> bottomNavigatrion = <BottomNavigationBarItem>[
+      bottomAgendar(),
+      bottomPagamentos(),
+      bottomAgendamentos(),
+      bottomCadastros(),
+      bottomPerfil(),
     ];
     return bottomNavigatrion;
+  }
+
+  BottomNavigationBarItem bottomAgendar() {
+    return const BottomNavigationBarItem(
+      icon: Icon(Icons.schedule),
+      label: 'Agedar',
+    );
+  }
+
+  BottomNavigationBarItem bottomPagamentos() {
+    return const BottomNavigationBarItem(
+      icon: Icon(Icons.monetization_on),
+      label: 'Pagamento',
+    );
+  }
+
+  BottomNavigationBarItem bottomAgendamentos() {
+    return const BottomNavigationBarItem(
+      icon: Icon(Icons.calendar_month),
+      label: 'Agendamentos',
+    );
+  }
+
+  BottomNavigationBarItem bottomCadastros() {
+    return const BottomNavigationBarItem(
+      icon: Icon(Icons.create_new_folder),
+      label: 'Cadastros',
+    );
+  }
+
+  BottomNavigationBarItem bottomPerfil() {
+    return const BottomNavigationBarItem(
+      icon: Icon(Icons.schedule),
+      label: 'Agedar',
+    );
   }
 }

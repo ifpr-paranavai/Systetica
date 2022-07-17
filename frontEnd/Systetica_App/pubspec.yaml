@@ -34,6 +34,7 @@ dev_dependencies:
   flutter_animator: ^3.2.2
   page_transition: ^2.0.9
   form_field_validator: ^1.1.0
+  animated_text_kit:
 
 flutter:
   uses-material-design: true
