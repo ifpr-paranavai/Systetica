@@ -2,6 +2,8 @@ import 'package:dio/dio.dart';
 
 class DioConfigApi {
   static const urlLocal = "http://192.168.1.100:8090/";
+  static const urlLocalTunnel = "http://192.168.1.100:8090/";
+
   static const timeOut = 120000;
 
   static Dio builderConfig() {

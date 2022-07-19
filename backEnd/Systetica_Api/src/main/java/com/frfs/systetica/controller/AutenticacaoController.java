@@ -42,7 +42,7 @@ public class AutenticacaoController {
                 JWTVerifier verifier = JWT.require(algorithm).build();
                 DecodedJWT decodedJWT = verifier.verify(refresh_token);
                 String email = decodedJWT.getSubject();
-                Usuario usuario = (Usuario) usuarioService.buscarUsuarioPorEmail(email).getResponse();
+                Usuario usuario = (Usuario) usuarioService.buscarPorEmail(email).getResponse();
 
                 String access_token = JWT.create()
                         .withSubject(usuario.getEmail())

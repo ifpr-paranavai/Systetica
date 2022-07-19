@@ -2,7 +2,8 @@
 	"info": {
 		"_postman_id": "e4ee49c9-e485-4a1a-91cf-47c5b8184d1c",
 		"name": "Systetica",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14089486"
 	},
 	"item": [
 		{
@@ -23,7 +24,7 @@
 								},
 								{
 									"key": "password",
-									"value": "12345",
+									"value": "santos123",
 									"type": "text"
 								}
 							]
@@ -77,38 +78,6 @@
 						}
 					},
 					"response": []
-				},
-				{
-					"name": "Altear Senha",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"email\": \"ruanvha15@gmail.com\",\r\n    \"codigo_aleatorio\": \"107176\",\r\n    \"password\": \"12345\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://192.168.1.100:8090/usuario/alterar-senha",
-							"protocol": "http",
-							"host": [
-								"192",
-								"168",
-								"1",
-								"100"
-							],
-							"port": "8090",
-							"path": [
-								"usuario",
-								"alterar-senha"
-							]
-						}
-					},
-					"response": []
 				}
 			]
 		},
@@ -150,11 +119,11 @@
 				{
 					"name": "Ativar Usuario",
 					"request": {
-						"method": "POST",
+						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\": \"ruanvha15@gmail.com\",\r\n    \"codigo_aleatorio\": \"129960\"\r\n}",
+							"raw": "{\r\n    \"email\": \"ruanvha15@gmail.com\",\r\n    \"codigo_aleatorio\": \"185608\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -182,7 +151,7 @@
 				{
 					"name": "Gerar Código Usuario",
 					"request": {
-						"method": "POST",
+						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
@@ -206,6 +175,38 @@
 							"path": [
 								"usuario",
 								"gerar-codigo-senha"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Alterar Senha",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"ruanvha15@gmail.com\",\r\n    \"codigo_aleatorio\": \"121786\",\r\n    \"password\": \"12345\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://192.168.1.100:8090/usuario/alterar-senha",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"1",
+								"100"
+							],
+							"port": "8090",
+							"path": [
+								"usuario",
+								"alterar-senha"
 							]
 						}
 					},

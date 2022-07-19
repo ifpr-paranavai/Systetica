@@ -39,7 +39,7 @@ class LoginService {
     try {
       Dio dio = DioConfigApi.builderConfigJson();
 
-      var response = await dio.post("usuario/gerar-codigo-senha", data: usuarioDTO.toJson());
+      var response = await dio.put("usuario/gerar-codigo-senha", data: usuarioDTO.toJson());
 
       return Info.fromJson(response.data);
     } on DioError catch (e) {
@@ -60,7 +60,7 @@ class LoginService {
     try {
       Dio dio = DioConfigApi.builderConfigJson();
 
-      var response = await dio.post("usuario/alterar-senha", data: usuarioDTO.toJson());
+      var response = await dio.put("usuario/alterar-senha", data: usuarioDTO.toJson());
 
       return Info.fromJson(response.data);
     } on DioError catch (e) {

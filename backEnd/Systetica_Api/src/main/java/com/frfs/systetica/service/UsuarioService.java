@@ -4,17 +4,17 @@ import com.frfs.systetica.dto.UsuarioDTO;
 import com.frfs.systetica.dto.response.ReturnData;
 
 public interface UsuarioService {
-    ReturnData<String> salvarUsuario(UsuarioDTO usuarioDTO);
+    ReturnData<String> salvar(UsuarioDTO usuarioDTO);
 
-    ReturnData<Object> buscarUsuario(Long id);
+    ReturnData<Object> buscarPorId(Long id);
 
-    ReturnData<Object> buscarUsuarioPorEmail(String email);
+    ReturnData<Object> buscarPorEmail(String email);
 
-    ReturnData<Object> buscarTodosUsuario();
+    ReturnData<Object> buscarTodos();
 
-    ReturnData<Object> ativarUsuario(UsuarioDTO usuarioDTO);
+    ReturnData<String> ativarUsuario(UsuarioDTO usuarioDTO);
 
-    ReturnData<Object> gerarCodigo(UsuarioDTO usuarioDTO);
+    ReturnData<String> gerarCodigo(UsuarioDTO usuarioDTO);
 
-    ReturnData<Object> alterarSenhaUsuario(UsuarioDTO usuarioDTO);
+    ReturnData<String> alterarSenha(UsuarioDTO usuarioDTO);
 }

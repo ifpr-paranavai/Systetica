@@ -18,6 +18,10 @@ target/
 *.iws
 *.iml
 *.ipr
+.mvn
+frfs.iml
+mvnw
+mvnw.cmd
 
 ### NetBeans ###
 /nbproject/private/
@@ -32,4 +36,41 @@ build/
 ### VS Code ###
 .vscode/
 
-frfs.iml
+# Miscellaneous
+*.java.hsp
+*.sonarj
+*.sw*
+.DS_Store
+build.sh
+integration-repo
+ivy-cache
+argfile*
+activemq-data/
+classes/
+
+# Log files
+jxl.log
+jmx.log
+derby.log
+
+# Gradle artifacts
+.gradle
+.gradletasknamecache
+/build
+buildSrc/build
+/spring-*/build
+/spring-core/graalvm/build
+/spring-core/kotlin-coroutines/build
+/framework-bom/build
+/integration-tests/build
+/src/asciidoc/build
+spring-test/test-output/
+
+# Eclipse artifacts, including WTP generated manifests
+bin
+spring-*/src/main/java/META-INF/MANIFEST.MF
+
+# IDEA artifacts and output dirs
+out
+test-output
+atlassian-ide-plugin.xml

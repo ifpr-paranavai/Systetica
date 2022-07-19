@@ -9,10 +9,6 @@ public class Validate {
     public static boolean validateCpf(String cpf) {
         List<ValidationMessage> erros = new CPFValidator().invalidMessagesFor(cpf);
 
-        if (erros.size() > 0) {
-            return false;
-        } else {
-            return true;
-        }
+        return erros.size() <= 0;
     }
 }

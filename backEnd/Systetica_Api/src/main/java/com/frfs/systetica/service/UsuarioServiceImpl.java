@@ -35,33 +35,37 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
     private final EmailService emailService;
 
     @Override
-    public ReturnData<String> salvarUsuario(UsuarioDTO usuarioDTO) {
+    public ReturnData<String> salvar(UsuarioDTO usuarioDTO) {
         try {
-            if (!Validate.validateCpf(usuarioDTO.getCpf().replace(".", "").replace("-", ""))) {
-                return new ReturnData<>(false, "CPF inválido.", usuarioDTO.getCpf());
+            if (!Validate.validateCpf(usuarioDTO.getCpf()
+                    .replace(".", "")
+                    .replace("-", ""))
+            ) {
+                return new ReturnData<>(false, "CPF inválido.");
             }
             if (usuarioRepository.findByCpf(usuarioDTO.getCpf()).isPresent()) {
-                return new ReturnData<>(false, "CPF já esta sendo utilizado.", "CPF " + usuarioDTO.getCpf() + " duplicado");
+                return new ReturnData<>(false, "CPF já esta sendo utilizado.");
             }
             if (usuarioRepository.findByEmail(usuarioDTO.getEmail()).isPresent()) {
-                return new ReturnData<>(false, "Email já esta sendo utilizado.", "Email " + usuarioDTO.getEmail() + " já esta em uso");
+                return new ReturnData<>(false, "Email já esta sendo utilizado.");
             }
+
             usuarioDTO.setPassword(passwordEncoder.encode(usuarioDTO.getPassword()));
 
             usuarioDTO = roleService.adicionarRoleUsuario(usuarioDTO, "CLIENTE");
 
             var codigoAleatorio = GerarCodigoAleatorio.gerarCodigo();
 
-            var returnDataEmailEnviado = emailService.enviarEmail(true, usuarioDTO.getEmail(), codigoAleatorio);
+            var returnDataEmail = emailService.enviarEmail(true, usuarioDTO.getEmail(), codigoAleatorio, usuarioDTO.getNome());
 
-           if (returnDataEmailEnviado.getSuccess()) {
+            if (returnDataEmail.getSuccess()) {
                 usuarioDTO.setDataCodigo(new Date());
                 usuarioDTO.setCodigoAleatorio(codigoAleatorio);
 
-                usuarioRepository.save(usuarioMapper.toEntity(usuarioDTO));
+                usuarioRepository.saveAndFlush(usuarioMapper.toEntity(usuarioDTO));
                 return new ReturnData<>(true, "Usuário salvo com sucesso", "");
             }
-           return returnDataEmailEnviado;
+            return returnDataEmail;
         } catch (BusinessException busEx) {
             return new ReturnData<>(false, "Ocorreu um erro ao salvar um cliente", busEx.getMessage());
         } catch (Exception ex) {
@@ -70,7 +74,7 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
     }
 
     @Override
-    public ReturnData<Object> buscarUsuario(Long id) {
+    public ReturnData<Object> buscarPorId(Long id) {
         var usuario = usuarioRepository.findById(id);
         if (usuario.isEmpty()) {
             return new ReturnData<>(false, "Usuário não encontrado.", "Não foi possível encontrar usuário pelo id " + id);
@@ -78,8 +82,8 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
         return new ReturnData<>(true, "", usuario);
     }
 
-    @Override //todo verificar necessidade deste método
-    public ReturnData<Object> buscarUsuarioPorEmail(String email) {
+    @Override
+    public ReturnData<Object> buscarPorEmail(String email) {
         var usuario = usuarioRepository.findByEmail(email);
         if (usuario.isEmpty()) {
             return new ReturnData<>(false, "Não foi possível encontrar usuário pelo email informado", "Usuário não encontrado");
@@ -88,48 +92,50 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
     }
 
     @Override
-    public ReturnData<Object> buscarTodosUsuario() {
+    public ReturnData<Object> buscarTodos() {
         return new ReturnData<>(true, "", usuarioMapper.toListDto(usuarioRepository.findAll()));
     }
 
     @Override
-    public ReturnData<Object> ativarUsuario(UsuarioDTO usuarioDTO) {
+    public ReturnData<String> ativarUsuario(UsuarioDTO usuarioDTO) {
         var usuario = usuarioRepository.findByEmailAndCodigoAleatorio(usuarioDTO.getEmail(), usuarioDTO.getCodigoAleatorio());
         if (usuario.isEmpty()) {
-            return new ReturnData<>(false, "Email ou código informado é inválidio", "Erro");
+            return new ReturnData<>(false, "Email ou código informado é inválidio");
         } else {
-
             var tempoExpiracao = new Date().getTime() - usuario.get().getDataCadastro().getTime();
 
             if (tempoExpiracao < DEZ_MINUTOS_MILLISECUNDOS) {
                 usuario.get().setCodigoAleatorio(null);
                 usuario.get().setDataCodigo(null);
                 usuario.get().setUsuarioAtivo(true);
-                usuarioRepository.save(usuario.get());
-                return new ReturnData<>(true, "Usuário foi ativado com sucesso", "Sucesso");
+                usuarioRepository.saveAndFlush(usuario.get());
+                return new ReturnData<>(true, "Usuário ativado com sucesso");
             } else {
-                return new ReturnData<>(false, "Código foi já expirado", "Erro");
+                return new ReturnData<>(false, "Código expirado");
             }
         }
     }
 
     @Override
-    public ReturnData<Object> gerarCodigo(UsuarioDTO usuarioDTO) {
+    public ReturnData<String> gerarCodigo(UsuarioDTO usuarioDTO) {
         try {
             var usuario = usuarioRepository.findByEmailAndCpf(usuarioDTO.getEmail(), usuarioDTO.getCpf());
             if (usuario.isEmpty()) {
-                return new ReturnData<>(false, "Usuário não encontrado, por favor verifique os dados informados", "Erro");
+                return new ReturnData<>(false, "Usuário não encontrado, por favor verifique os dados informados");
             } else {
                 var codigoAleatorio = GerarCodigoAleatorio.gerarCodigo();
 
-                emailService.enviarEmail(false, usuarioDTO.getEmail(), codigoAleatorio);
+                var returnDataEmail = emailService.enviarEmail(false, usuarioDTO.getEmail(), codigoAleatorio, usuarioDTO.getNome());
 
-                usuario.get().setCodigoAleatorio(codigoAleatorio);
-                usuario.get().setDataCodigo(new Date());
+                if (returnDataEmail.getSuccess()) {
+                    usuario.get().setCodigoAleatorio(codigoAleatorio);
+                    usuario.get().setDataCodigo(new Date());
 
-                usuarioRepository.save(usuario.get());
+                    usuarioRepository.saveAndFlush(usuario.get());
 
-                return new ReturnData<>(true, "Código para alterar senha enviado", "Sucess");
+                    return new ReturnData<>(true, "Código para alterar senha enviado");
+                }
+                return returnDataEmail;
             }
         } catch (Exception ex) {
             return new ReturnData<>(false, "Ocorreu um erro ao enviar email", ex.getMessage() + "\nMotivo: " + ex.getCause());
@@ -137,18 +143,21 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
     }
 
     @Override
-    public ReturnData<Object> alterarSenhaUsuario(UsuarioDTO usuarioDTO) {
-        var usuario = usuarioRepository.findByEmailAndCodigoAleatorio(usuarioDTO.getEmail(), usuarioDTO.getCodigoAleatorio());
-        if (usuario.isEmpty()) {
-            return new ReturnData<>(false, "Email ou código informado são inválidos", "Erro");
-        } else {
+    public ReturnData<String> alterarSenha(UsuarioDTO usuarioDTO) {
+        try {
+            var usuario = usuarioRepository.findByEmailAndCodigoAleatorio(usuarioDTO.getEmail(), usuarioDTO.getCodigoAleatorio());
+            if (usuario.isEmpty()) {
+                return new ReturnData<>(false, "Email ou código são inválidos");
+            } else {
+                usuario.get().setCodigoAleatorio(null);
+                usuario.get().setDataCodigo(null);
+                usuario.get().setPassword(passwordEncoder.encode(usuarioDTO.getPassword()));
 
-            usuario.get().setCodigoAleatorio(null);
-            usuario.get().setDataCodigo(null);
-            usuario.get().setPassword(passwordEncoder.encode(usuarioDTO.getPassword()));
-
-            usuarioRepository.save(usuario.get());
-            return new ReturnData<>(true, "Senhar alterada com sucesso", "Sucesso");
+                usuarioRepository.saveAndFlush(usuario.get());
+                return new ReturnData<>(true, "Senhar alterada com sucesso");
+            }
+        } catch (Exception ex) {
+            return new ReturnData<>(false, "Ocorreu um erro ao alterar senha", ex.getMessage() + "\nMotivo: " + ex.getCause());
         }
     }
 
@@ -160,7 +169,6 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
             throw new UsernameNotFoundException("Usuário não encontrado");
         }
 
-        // Todo
         if (!usuario.get().getUsuarioAtivo()) {
             throw new UsernameNotFoundException("Usuário não esta ativado");
         }

@@ -27,6 +27,7 @@ class CadastroService {
     }
   }
 
+  // Todo - Remover deste service
   Future<PageImpl> buscarCidade({
     int? pageNumber,
     int? size = 10,
@@ -49,7 +50,7 @@ class CadastroService {
     try {
       Dio dio = DioConfigApi.builderConfigJson();
 
-      var response = await dio.post("usuario/ativar-usuario", data: usuarioDTO.toJson());
+      var response = await dio.put("usuario/ativar-usuario", data: usuarioDTO.toJson());
 
       return Info.fromJson(response.data);
     } on DioError catch (e) {

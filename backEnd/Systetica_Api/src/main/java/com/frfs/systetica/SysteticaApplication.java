@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import javax.annotation.PostConstruct;
 import java.util.TimeZone;
@@ -16,6 +17,7 @@ import java.util.TimeZone;
 @Slf4j
 @RequiredArgsConstructor
 @EnableScheduling
+@EnableWebMvc
 public class SysteticaApplication {
 
     public static void main(String[] args) {
@@ -28,7 +30,7 @@ public class SysteticaApplication {
     }
 
     @PostConstruct
-    public void init(){
+    public void init() {
         TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
     }
 }
