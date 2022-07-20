@@ -49,7 +49,7 @@ public class EmailServiceImpl implements EmailService {
 
         if (ativarUsuario) {
             emailDTO.setMensagemSubject(MENSAGEM_TITULO_ATIVACAO);
-            emailDTO.setMensagemText("Olá " + nome + "!\n\n" + MENSAGEM_BODY_ATIVACAO + MENSAGEM_VALIDADE_CODIGO + codigo + "\n\n\n Obrigado! \nSystetica");
+            emailDTO.setMensagemText("Olá " + nome + "!\n\n" + MENSAGEM_BODY_ATIVACAO + MENSAGEM_VALIDADE_CODIGO + codigo + "\n\nObrigado! \nSystetica");
         } else {
             emailDTO.setMensagemSubject(MENSAGEM_TITULO_ALTERAR);
             emailDTO.setMensagemText("Olá " + nome + "!\n\n" + MENSAGEM_BODY_ALTERAR_SENHA + MENSAGEM_VALIDADE_CODIGO + codigo + "\n\nObrigado! \nSystetica");

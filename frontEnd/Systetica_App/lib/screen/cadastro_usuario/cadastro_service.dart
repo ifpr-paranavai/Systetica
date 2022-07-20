@@ -50,7 +50,7 @@ class CadastroService {
     try {
       Dio dio = DioConfigApi.builderConfigJson();
 
-      var response = await dio.put("usuario/ativar-usuario", data: usuarioDTO.toJson());
+      var response = await dio.put("usuario/ativar", data: usuarioDTO.toJson());
 
       return Info.fromJson(response.data);
     } on DioError catch (e) {

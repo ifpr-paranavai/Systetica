@@ -1,20 +1,20 @@
 package com.frfs.systetica.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.Column;
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL) // todo adicionar em outros DTOS
 public class UsuarioDTO implements Serializable {
 
     @JsonProperty("id")
@@ -63,5 +63,5 @@ public class UsuarioDTO implements Serializable {
     private CidadeDTO cidade;
 
     @JsonProperty("roles")
-    private List<RoleDTO> roles;
+    private Collection<RoleDTO> roles;
 }

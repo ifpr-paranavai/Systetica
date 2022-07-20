@@ -62,9 +62,6 @@ public class Usuario implements Serializable {
     @Column(name = "usuario_ativo")
     private Boolean usuarioAtivo;
 
-    @Column(name = "observacao", length = 300)
-    private String observacao;
-
     @NotNull
     @Column(name = "data_cadastro")
     private Date dataCadastro;

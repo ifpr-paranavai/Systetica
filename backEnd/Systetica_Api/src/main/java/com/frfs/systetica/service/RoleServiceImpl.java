@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Service
@@ -21,7 +22,7 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public UsuarioDTO adicionarRoleUsuario(UsuarioDTO usuarioDTO, String roleName) {
-        List<RoleDTO> listRoleDto = new ArrayList<>();
+        Collection<RoleDTO> listRoleDto = new ArrayList<>();
 
         var roleDTO = roleMapper.toDto(roleRepository.findByName(roleName));
 

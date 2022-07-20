@@ -7,7 +7,9 @@ import java.util.List;
 
 public class Validate {
     public static boolean validateCpf(String cpf) {
-        List<ValidationMessage> erros = new CPFValidator().invalidMessagesFor(cpf);
+        List<ValidationMessage> erros = new CPFValidator().invalidMessagesFor(cpf
+                .replace(".", "")
+                .replace("-", ""));
 
         return erros.size() <= 0;
     }

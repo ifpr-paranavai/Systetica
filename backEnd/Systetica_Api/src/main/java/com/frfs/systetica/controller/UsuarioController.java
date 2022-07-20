@@ -20,15 +20,23 @@ public class UsuarioController {
 
     @PostMapping("/salvar")
     @ResponseBody
-    public ResponseEntity<Object> salvarUsuario(@Validated @RequestBody UsuarioDTO usuarioDTO) {
+    public ResponseEntity<Object> salvar(@Validated @RequestBody UsuarioDTO usuarioDTO) {
         ReturnData<String> result = usuarioService.salvar(usuarioDTO);
+
+        return new ResponseEntity<>(result, result.getSuccess() ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @PutMapping(value = "/atualizar")
+    @ResponseBody
+    public ResponseEntity<Object> atualizar(@Validated @RequestBody UsuarioDTO usuarioDTO) {
+        ReturnData<String> result = usuarioService.atualizar(usuarioDTO);
 
         return new ResponseEntity<>(result, result.getSuccess() ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @GetMapping(value = "/{id}")
     @ResponseBody
-    public ResponseEntity<Object> buscarUsuario(@PathVariable long id) {
+    public ResponseEntity<Object> buscarPorId(@PathVariable long id) {
         ReturnData<Object> result = usuarioService.buscarPorId(id);
 
         return new ResponseEntity<>(result, result.getSuccess() ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
@@ -36,21 +44,21 @@ public class UsuarioController {
 
     @PostMapping("/buscar-todos")
     @ResponseBody
-    public ResponseEntity<Object> buscarTodosUsuario(){
+    public ResponseEntity<Object> buscarTodos() {
         ReturnData<Object> result = usuarioService.buscarTodos();
 
         return new ResponseEntity<>(result, result.getSuccess() ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @PutMapping(value = "/ativar-usuario")
+    @PutMapping(value = "/ativar")
     @ResponseBody
-    public ResponseEntity<Object> ativarUsuario(@Validated @RequestBody UsuarioDTO usuarioDTO) {
-        ReturnData<String> result = usuarioService.ativarUsuario(usuarioDTO);
+    public ResponseEntity<Object> ativar(@Validated @RequestBody UsuarioDTO usuarioDTO) {
+        ReturnData<String> result = usuarioService.ativar(usuarioDTO);
 
         return new ResponseEntity<>(result, result.getSuccess() ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @PutMapping("/gerar-codigo-senha")
+    @PutMapping("/gerar-codigo")
     @ResponseBody
     public ResponseEntity<Object> gerarCodigo(@Validated @RequestBody UsuarioDTO usuarioDTO) {
         ReturnData<String> result = usuarioService.gerarCodigo(usuarioDTO);
@@ -60,7 +68,7 @@ public class UsuarioController {
 
     @PutMapping(value = "/alterar-senha")
     @ResponseBody
-    public ResponseEntity<Object> alterarSenhaUsuario(@Validated @RequestBody UsuarioDTO usuarioDTO) {
+    public ResponseEntity<Object> alterarSenha(@Validated @RequestBody UsuarioDTO usuarioDTO) {
         ReturnData<String> result = usuarioService.alterarSenha(usuarioDTO);
 
         return new ResponseEntity<>(result, result.getSuccess() ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);

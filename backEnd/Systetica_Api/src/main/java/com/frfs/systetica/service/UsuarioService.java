@@ -12,9 +12,11 @@ public interface UsuarioService {
 
     ReturnData<Object> buscarTodos();
 
-    ReturnData<String> ativarUsuario(UsuarioDTO usuarioDTO);
+    ReturnData<String> ativar(UsuarioDTO usuarioDTO);
 
     ReturnData<String> gerarCodigo(UsuarioDTO usuarioDTO);
 
     ReturnData<String> alterarSenha(UsuarioDTO usuarioDTO);
+
+    ReturnData<String> atualizar(UsuarioDTO usuarioDTO);
 }
