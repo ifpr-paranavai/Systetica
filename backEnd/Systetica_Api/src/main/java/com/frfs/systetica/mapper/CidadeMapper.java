@@ -10,8 +10,9 @@ import java.util.List;
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, uses = EstadoMapper.class)
 public interface CidadeMapper {
 
-    // DTO
     CidadeDTO toDto(Cidade entity);
 
     List<CidadeDTO> toListDto(List<Cidade> cidades);
+
+    Cidade toEntity(CidadeDTO cidadeDTO);
 }

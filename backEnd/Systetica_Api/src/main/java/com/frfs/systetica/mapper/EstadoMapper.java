@@ -9,9 +9,7 @@ import org.mapstruct.ReportingPolicy;
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface EstadoMapper {
 
-    // DTO
     EstadoDTO toDto(Estado entity);
 
-    // ENTITY
     Estado toEntity(EstadoDTO dto);
 }

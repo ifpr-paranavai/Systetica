@@ -39,7 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 "/autenticacao/refresh-token/**",
                 "/usuario/salvar/**",
                 "/usuario/ativar/**",
-                "/usuario/gerar-codigo-senha/**",
+                "/usuario/gerar-codigo/**",
                 "/usuario/alterar-senha/**",
                 "/cidade/**").permitAll();
         http.authorizeRequests().antMatchers("*", "/usuario/**").hasAnyAuthority("ADMINISTRADOR, FUNCIONARIO, CLIENTE");

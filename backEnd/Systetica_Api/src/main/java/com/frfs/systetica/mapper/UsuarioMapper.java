@@ -14,11 +14,19 @@ public interface UsuarioMapper {
 
     @Mappings({
             @Mapping(target = "password", ignore = true),
+            @Mapping(target = "dataCadastro", ignore = true),
+            @Mapping(target = "usuarioAtivo", ignore = true),
+            @Mapping(target = "status", ignore = true),
+            @Mapping(target = "roles", ignore = true),
     })
     UsuarioDTO toDto(Usuario entity);
 
     @Mappings({
             @Mapping(target = "password", ignore = true),
+            @Mapping(target = "dataCadastro", ignore = true),
+            @Mapping(target = "usuarioAtivo", ignore = true),
+            @Mapping(target = "status", ignore = true),
+            @Mapping(target = "roles", ignore = true),
     })
     List<UsuarioDTO> toListDto(List<Usuario> usuarios);
 

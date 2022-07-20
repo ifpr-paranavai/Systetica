@@ -1,7 +1,6 @@
 package com.frfs.systetica.service;
 
 import com.frfs.systetica.dto.RoleDTO;
-import com.frfs.systetica.dto.UsuarioDTO;
 import com.frfs.systetica.mapper.RoleMapper;
 import com.frfs.systetica.repository.RoleRepository;
 import lombok.RequiredArgsConstructor;
@@ -10,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -21,13 +19,12 @@ public class RoleServiceImpl implements RoleService {
     private final RoleMapper roleMapper;
 
     @Override
-    public UsuarioDTO adicionarRoleUsuario(UsuarioDTO usuarioDTO, String roleName) {
+    public Collection<RoleDTO> buscaRolePorNome(String roleName) {
         Collection<RoleDTO> listRoleDto = new ArrayList<>();
 
         var roleDTO = roleMapper.toDto(roleRepository.findByName(roleName));
 
         listRoleDto.add(roleDTO);
-        usuarioDTO.setRoles(listRoleDto);
-        return usuarioDTO;
+        return listRoleDto;
     }
 }

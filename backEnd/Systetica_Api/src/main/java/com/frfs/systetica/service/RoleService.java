@@ -1,7 +1,8 @@
 package com.frfs.systetica.service;
 
-import com.frfs.systetica.dto.UsuarioDTO;
+import com.frfs.systetica.dto.RoleDTO;
+import java.util.Collection;
 
 public interface RoleService {
-    UsuarioDTO adicionarRoleUsuario(UsuarioDTO usuarioDTO, String roleName);
+    Collection<RoleDTO> buscaRolePorNome(String roleName);
 }
