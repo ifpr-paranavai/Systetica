@@ -15,6 +15,7 @@ class UsuarioDTO {
     this.codigoAleatorio,
     this.cidade,
     this.roles,
+    this.imagem,
   });
 
   int? id;
@@ -28,6 +29,7 @@ class UsuarioDTO {
   int? codigoAleatorio;
   CidadeDTO? cidade;
   List<RoleDTO>? roles;
+  String? imagem;
 
   UsuarioDTO.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -44,6 +46,7 @@ class UsuarioDTO {
         ? (json['roles']
         .map<RoleDTO>((e) => RoleDTO.fromJson(e))).toList()
         : [];
+    imagem = json['imagem'];
   }
 
   Map<String, dynamic> toJson() {
