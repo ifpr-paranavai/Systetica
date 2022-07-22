@@ -66,8 +66,7 @@ class LoginController {
       RequiredValidator(errorText: 'Campo obrigatório'),
       MinLengthValidator(
         6,
-        errorText:
-            'Campo deve possuir no menos 6 caracteres',
+        errorText: 'Campo deve possuir no menos 6 caracteres',
       ),
     ]);
   }

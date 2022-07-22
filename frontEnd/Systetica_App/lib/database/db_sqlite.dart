@@ -22,14 +22,6 @@ class DbSQLite {
     return await openDatabase(path, version: 1, onCreate: _createDB);
   }
 
-  static Future dropTables() async {
-    Database db = await instance.database;
-  }
-
-  static Future truncateTables() async {
-    Database db = await instance.database;
-  }
-
   Future _createDB(Database db, int version) async {
     final idType = 'INTEGER PRIMARY KEY AUTOINCREMENT';
     final intType = 'INTEGER NOT NULL';
@@ -46,7 +38,8 @@ class DbSQLite {
     CREATE TABLE IF NOT EXISTS ${TokenORM.TABLE}(
     ${TokenORM.ID} $idType,
     ${TokenORM.ACCESS_TOKEN} $textType,
-    ${TokenORM.REFRESH_TOKEN} $textType
+    ${TokenORM.REFRESH_TOKEN} $textType,
+    ${TokenORM.DATE_TIME_TOKEN} $textType
     )''');
   }
 }

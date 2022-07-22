@@ -17,8 +17,8 @@ class LoginService {
     try {
       var response = await dio.post("login", data: formData);
 
-      var a = TokenDTO.fromJson(response.data);
-      return a;
+      var token = TokenDTO.fromJson(response.data);
+      return token;
     } on DioError catch (e) {
       try{
         if (e.type == DioErrorType.connectTimeout) {

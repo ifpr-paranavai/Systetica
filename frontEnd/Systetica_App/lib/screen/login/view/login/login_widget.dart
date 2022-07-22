@@ -98,13 +98,8 @@ class LoginWidget extends State<LoginPage> {
       largura: 190,
       corBotao: Colors.black87.withOpacity(0.9),
       corTexto: Colors.white,
-      // onPressed: () async {
-      //   await controller.login(context, widget);
-      // },
-      onPressed: () => {
-        Navigator.push(context, MaterialPageRoute(
-          builder: (context) => const HomePage(),
-        ),)
+      onPressed: () async {
+        await controller.login(context, widget);
       },
     );
   }

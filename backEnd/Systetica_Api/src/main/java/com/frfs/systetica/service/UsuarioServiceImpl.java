@@ -11,6 +11,7 @@ import com.frfs.systetica.utils.GerarCodigoAleatorio;
 import com.frfs.systetica.utils.Validate;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -29,7 +30,8 @@ import java.util.Optional;
 @Slf4j
 public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
 
-    private static final long VINTE_MINUTOS_MILLISECUNDOS = 1200000;
+    private static final long OITO_HORAS_MILLISEGUNDOS = 28800000;
+    private static final long DEZ_MB = 10024000L;
 
     private final UsuarioRepository usuarioRepository;
     private final UsuarioMapper usuarioMapper;
@@ -56,16 +58,24 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
             var returnDataEmail = emailService.enviarEmail(true, usuarioDTO.getEmail(),
                     codigoAleatorio, usuarioDTO.getNome());
 
-            if (returnDataEmail.getSuccess()) {
-                usuarioDTO.setPassword(passwordEncoder.encode(usuarioDTO.getPassword()));
-                usuarioDTO.setRoles(roleService.buscaRolePorNome("CLIENTE"));
-                usuarioDTO.setDataCodigo(new Date());
-                usuarioDTO.setCodigoAleatorio(codigoAleatorio);
-
-                usuarioRepository.saveAndFlush(usuarioMapper.toEntity(usuarioDTO));
-                return new ReturnData<>(true, "Usuário salvo com sucesso", "");
+            if (!returnDataEmail.getSuccess()) {
+                return returnDataEmail;
             }
-            return returnDataEmail;
+
+            var returnDataConverteBase64 = converteFileBase64(usuarioDTO.getImagemBase64());
+
+            if (!returnDataConverteBase64.getSuccess()) {
+                return returnDataConverteBase64;
+            }
+
+            usuarioDTO.setPassword(passwordEncoder.encode(usuarioDTO.getPassword()));
+            usuarioDTO.setRoles(roleService.buscaRolePorNome("CLIENTE"));
+            usuarioDTO.setDataCodigo(new Date());
+            usuarioDTO.setCodigoAleatorio(codigoAleatorio);
+            usuarioDTO.setImagemBase64(returnDataConverteBase64.getMessage());
+
+            usuarioRepository.saveAndFlush(usuarioMapper.toEntity(usuarioDTO));
+            return new ReturnData<>(true, "Usuário salvo com sucesso", "");
         } catch (BusinessException busEx) {
             return new ReturnData<>(false, "Ocorreu um erro ao salvar um cliente", busEx.getMessage());
         } catch (Exception ex) {
@@ -109,7 +119,7 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
         } else {
             var tempoExpiracao = new Date().getTime() - usuario.get().getDataCadastro().getTime();
 
-            if (tempoExpiracao < VINTE_MINUTOS_MILLISECUNDOS) {
+            if (tempoExpiracao < OITO_HORAS_MILLISEGUNDOS) {
                 usuario.get().setCodigoAleatorio(null);
                 usuario.get().setDataCodigo(null);
                 usuario.get().setUsuarioAtivo(true);
@@ -192,6 +202,18 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
             return new ReturnData<>(false, "Ocorreu um erro ao atualizar dados",
                     ex.getMessage() + "\nMotivo: " + ex.getCause());
         }
+    }
+
+    @Override
+    public ReturnData<String> converteFileBase64(String imagemBase64) {
+
+        byte[] bytesEncoded = Base64.encodeBase64(imagemBase64.getBytes());
+
+        if (bytesEncoded.length > DEZ_MB) {
+            return new ReturnData<>(true, "Imagem deve possuir menos de 10mb.");
+        }
+
+        return new ReturnData<>(true, imagemBase64);
     }
 
     @Override

@@ -73,4 +73,5 @@ public class UsuarioController {
 
         return new ResponseEntity<>(result, result.getSuccess() ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
 }
