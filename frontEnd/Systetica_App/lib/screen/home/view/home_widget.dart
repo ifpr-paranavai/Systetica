@@ -39,7 +39,7 @@ class HomeWidget extends State<HomePage> {
 
   void _onItemTapped(int index) {
     setState(
-      () {
+          () {
         _selectedIndex = index;
       },
     );
@@ -176,8 +176,8 @@ class HomeWidget extends State<HomePage> {
 
   BottomNavigationBarItem bottomPerfil() {
     return const BottomNavigationBarItem(
-      icon: Icon(Icons.schedule),
-      label: 'Agedar',
+      icon: Icon(Icons.people),
+      label: 'Perfil',
     );
   }
 }

@@ -1,11 +1,15 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:systetica/components/item_list.dart';
+import 'package:systetica/components/page_transition.dart';
 import 'package:systetica/model/UsuarioDTO.dart';
 import 'package:systetica/screen/perfil/view/data.dart';
+import 'package:systetica/screen/perfil/view/editar_perfil/editar_perfil_page.dart';
 import 'package:systetica/screen/perfil/view/perfil_page.dart';
 
 class PerfilWidget extends State<PerfilPage> {
+  var myPageTransition = MyPageTransition();
   UsuarioDTO data = getUsuarioData();
 
   @override
@@ -13,82 +17,119 @@ class PerfilWidget extends State<PerfilPage> {
     return SafeArea(
       child: Scaffold(
         body: SingleChildScrollView(
-          child: Column(
-            children: [
-              sizedBox(),
-              SizedBox(
-                width: 200,
-                height: 200,
-                child: Container(
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    boxShadow: [
-                      BoxShadow(
-                        blurRadius: 13,
-                        color: Colors.black.withOpacity(0.8),
-                        spreadRadius: 5,
-                      )
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: const Alignment(0.2, 0.05),
+                colors: [Colors.grey.withOpacity(0.19), Colors.white],
+              ),
+            ),
+            child: Column(
+              children: [
+                sizedBox(),
+                SizedBox(
+                  width: 180,
+                  height: 180,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      boxShadow: [
+                        BoxShadow(
+                          blurRadius: 5,
+                          color: Colors.black.withOpacity(0.6),
+                          spreadRadius: 2,
+                        )
+                      ],
+                    ),
+                    child: imgPerfil(),
+                  ),
+                ),
+                Column(
+                  children: [
+                    sizedBox(height: 10),
+                    textNome(),
+                    sizedBox(height: 8),
+                    textTelefonePrincipal(),
+                  ],
+                ),
+                sizedBox(height: 20),
+                Card(
+                  color: Colors.white,
+                  child: Column(
+                    children: [
+                      sizedBox(height: 5),
+                      itemEmail(),
+                      itemCpf(),
+                      itemDataNascimento(),
+                      itemTelefone2(),
+                      itemCidade(),
+                      itemEstado(),
                     ],
                   ),
-                  child: imgPerfil(),
                 ),
-              ),
-              Column(
-                children: [
-                  sizedBox(height: 10),
-                  textNome(),
-                  sizedBox(height: 8),
-                  textTelefonePrincipal(),
-                ],
-              ),
-              sizedBox(height: 20),
-              Column(
-                children: [
-                  ItemLista(
-                    titulo: "E-mail",
-                    descricao: data.email!,
-                  ),
-                  ItemLista(
-                    titulo: "CPF",
-                    descricao: data.cpf!,
-                  ),
-                  ItemLista(
-                    titulo: "Data de Nascimento",
-                    descricao: data.dataNascimento!,
-                  ),
-                  ItemLista(
-                    titulo: "Telefone 2",
-                    descricao: data.telefone2 ?? "Nenhum",
-                  ),
-                  ItemLista(
-                    titulo: "Cidade",
-                    descricao: data.cidade!.nome,
-                  ),
-                  ItemLista(
-                    titulo: "Estado",
-                    descricao: data.cidade!.estado!.nome +
-                        " - " +
-                        data.cidade!.estado!.uf,
-                  ),
-                ],
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
     );
   }
 
+  ItemLista itemEmail() {
+    return ItemLista(
+      titulo: "E-mail",
+      descricao: data.email!,
+    );
+  }
+
+  ItemLista itemCpf() {
+    return ItemLista(
+      titulo: "CPF",
+      descricao: data.cpf!,
+    );
+  }
+
+  ItemLista itemDataNascimento() {
+    return ItemLista(
+      titulo: "Data de Nascimento",
+      descricao: data.dataNascimento!,
+    );
+  }
+
+  ItemLista itemTelefone2() {
+    return ItemLista(
+      titulo: "Telefone 2",
+      descricao: data.telefone2 ?? "Nenhum",
+    );
+  }
+
+  ItemLista itemCidade() {
+    return ItemLista(
+      titulo: "Cidade",
+      descricao: data.cidade!.nome,
+    );
+  }
+
+  ItemLista itemEstado() {
+    return ItemLista(
+      titulo: "Estado",
+      descricao: data.cidade!.estado!.nome + " - " + data.cidade!.estado!.uf,
+    );
+  }
+
   CircleAvatar imgPerfil() {
     return CircleAvatar(
+      backgroundColor: Colors.black,
       backgroundImage: NetworkImage(
-        data.imagem!,
+        "https://saobras.al.gov.br/cpl/img/login.png",
       ),
       child: Padding(
-        padding: const EdgeInsets.only(top: 113, left: 113),
+        padding: const EdgeInsets.only(top: 98, left: 98),
         child: SizedBox(
-          width: 40,
-          height: 40,
+          width: 42,
+          height: 42,
           child: CircleAvatar(
             radius: 20,
             backgroundColor: Colors.white,
@@ -100,7 +141,17 @@ class PerfilWidget extends State<PerfilPage> {
               icon: const Icon(
                 Icons.edit,
               ),
-              onPressed: () {},
+              onPressed: () => Navigator.of(context)
+                  .push(
+                    myPageTransition.pageTransition(
+                      child: const EditarPerfilPage(),
+                      childCurrent: widget,
+                      buttoToTop: true,
+                    ),
+                  )
+                  .then(
+                    (value) => setState(() {}),
+                  ),
             ),
           ),
         ),
@@ -135,9 +186,10 @@ class PerfilWidget extends State<PerfilPage> {
     );
   }
 
-  SizedBox sizedBox({double? height = 40}) {
+  SizedBox sizedBox({double? height = 40, double? width = 0}) {
     return SizedBox(
       height: height,
+      width: width,
     );
   }
 }

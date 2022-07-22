@@ -7,7 +7,9 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
+import java.io.File;
 import java.io.Serializable;
+import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -77,4 +79,9 @@ public class Usuario implements Serializable {
 
     @ManyToMany(fetch = FetchType.EAGER)
     private Collection<Role> roles = new ArrayList<>();;
+
+    @NotNull
+    @Column(name = "imagemBase64")
+    @Lob
+    private String imagemBase64;
 }

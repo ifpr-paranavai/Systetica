@@ -1,4 +1,8 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:systetica/components/botoes/botao_acao_widget.dart';
 import 'package:systetica/components/icon_arrow_widget.dart';
 import 'package:systetica/components/imagens_widget.dart';
@@ -25,6 +29,21 @@ class CadastroWidget extends State<CadastroPage> {
     } catch (e) {
       debugPrint(e.toString());
       return [];
+    }
+  }
+
+  final _picker = ImagePicker();
+
+  Future<void> _adicionarImagem() async {
+    PickedFile? pickedImagem =
+        await _picker.getImage(source: ImageSource.gallery);
+    if (pickedImagem != null) {
+      setState(
+        () {
+          File imagem = File(pickedImagem.path);
+          controller.imagemBase64 = base64Encode(imagem.readAsBytesSync());
+        },
+      );
     }
   }
 
@@ -58,6 +77,7 @@ class CadastroWidget extends State<CadastroPage> {
                       inputEmail(),
                       inputSenha(),
                       inputConfirmaSenha(),
+                      botaoFoto(),
                       botaoCadastrar(),
                     ],
                   ),
@@ -225,6 +245,22 @@ class CadastroWidget extends State<CadastroPage> {
       paddingTop: 5,
       controller: controller.confirmaSenhaController,
       validator: controller.confirmaSenhaValidator,
+    );
+  }
+
+  BotaoAcaoWidget botaoFoto() {
+    return BotaoAcaoWidget(
+      paddingTop: 5,
+      paddingBottom: 0,
+      paddingRight: 120,
+      labelText: "Foto de Perfil *",
+      largura: 340,
+      fontSize: 18,
+      corBotao: Colors.white,
+      corTexto: Colors.black,
+      corBorda: Colors.blueGrey,
+      fontWeight: FontWeight.normal,
+      onPressed: () => _adicionarImagem(),
     );
   }
 

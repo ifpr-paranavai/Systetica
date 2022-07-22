@@ -2,7 +2,6 @@ import 'package:systetica/model/CidadeDTO.dart';
 import 'package:systetica/model/RoleDTO.dart';
 
 class UsuarioDTO {
-
   UsuarioDTO({
     this.id,
     this.nome,
@@ -15,7 +14,7 @@ class UsuarioDTO {
     this.codigoAleatorio,
     this.cidade,
     this.roles,
-    this.imagem,
+    this.imagemBase64,
   });
 
   int? id;
@@ -29,7 +28,7 @@ class UsuarioDTO {
   int? codigoAleatorio;
   CidadeDTO? cidade;
   List<RoleDTO>? roles;
-  String? imagem;
+  String? imagemBase64;
 
   UsuarioDTO.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -43,10 +42,9 @@ class UsuarioDTO {
     codigoAleatorio = json['codigo_aleatorio'];
     cidade = CidadeDTO.fromJson(json['cidade']);
     roles = json['roles'] != null
-        ? (json['roles']
-        .map<RoleDTO>((e) => RoleDTO.fromJson(e))).toList()
+        ? (json['roles'].map<RoleDTO>((e) => RoleDTO.fromJson(e))).toList()
         : [];
-    imagem = json['imagem'];
+    imagemBase64 = json['imagemBase64'];
   }
 
   Map<String, dynamic> toJson() {
@@ -59,9 +57,12 @@ class UsuarioDTO {
     _data['telefone2'] = telefone2;
     _data['email'] = email;
     _data['password'] = password;
+    _data['password'] = password;
     _data['codigo_aleatorio'] = codigoAleatorio;
     _data['cidade'] = cidade?.toJson();
-    _data['roles'] = roles != null ? roles!.map((e) => e.toString()).toList() : null;
+    _data['roles'] =
+        roles != null ? roles!.map((e) => e.toString()).toList() : null;
+    _data['imagemBase64'] = imagemBase64;
     return _data;
   }
 }

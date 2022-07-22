@@ -9,8 +9,6 @@ UsuarioDTO getUsuarioData() {
       cpf: "123.456.789-10",
       dataNascimento: '10/04/2000',
       email: "ruanvha15@gmail.com",
-      imagem:
-          "https://futebolizando.com.br/wp-content/uploads/2021/02/cris-753x570.jpg",
       telefone1: "(44) 99988-7744",
       cidade: CidadeDTO(
         id: 1,

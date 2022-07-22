@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:systetica/components/loading/show_loading_widget.dart';
@@ -22,6 +24,7 @@ class CadastroController {
   final confirmaSenhaController = TextEditingController();
   final confirmaEstadoController = TextEditingController();
   final codicoController = TextEditingController();
+  String imagemBase64 = "";
   var myPageTransition = MyPageTransition();
   final formKey = GlobalKey<FormState>();
 
@@ -85,8 +88,7 @@ class CadastroController {
       RequiredValidator(errorText: 'Campo obrigatório'),
       MinLengthValidator(
         6,
-        errorText:
-            'Campo deve possuir no menos 6 caracteres',
+        errorText: 'Campo deve possuir no menos 6 caracteres',
       ),
     ]);
   }
@@ -111,6 +113,19 @@ class CadastroController {
         );
         return;
       }
+
+      if (imagemBase64.isEmpty) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            backgroundColor: Colors.blueGrey,
+            padding: EdgeInsets.all(18),
+            content: TextoErroWidget(
+              mensagem: "Por favor, adicione uma foto de perfil",
+            ),
+          ),
+        );
+        return;
+      }
       if (formKey.currentState != null) {
         if (formKey.currentState?.validate() ?? true) {
           try {
@@ -123,6 +138,7 @@ class CadastroController {
               email: emailController.text,
               password: senhaController.text,
               cidade: cidadeDTO,
+              imagemBase64: imagemBase64,
             );
 
             //Loading apresentado na tela

@@ -10,6 +10,10 @@ class BotaoAcaoWidget extends StatefulWidget {
     required this.paddingBottom,
     required this.corBotao,
     required this.corTexto,
+    this.corBorda = Colors.transparent,
+    this.paddingRight = 0,
+    this.fontSize = 14,
+    this.fontWeight = FontWeight.bold,
   }) : super(key: key);
 
   final String labelText;
@@ -17,8 +21,12 @@ class BotaoAcaoWidget extends StatefulWidget {
   final double? largura;
   final Color corBotao;
   final Color corTexto;
+  final Color corBorda;
   final double paddingTop;
   final double paddingBottom;
+  final double paddingRight;
+  final double fontSize;
+  final FontWeight? fontWeight;
 
   @override
   _BotaoAcaoWidget createState() => _BotaoAcaoWidget();
@@ -35,22 +43,25 @@ class _BotaoAcaoWidget extends State<BotaoAcaoWidget> {
       child: Container(
         width: widget.largura,
         height: 47,
-        padding: const EdgeInsets.only(
-          bottom: 0,
-          top: 0,
-          left: 14,
-          right: 14,
-        ),
         decoration: BoxDecoration(
           color: widget.corBotao,
-          borderRadius: const BorderRadius.all(Radius.circular(12)),
+          borderRadius: const BorderRadius.all(
+            Radius.circular(
+              12,
+            ),
+          ),
+          border: Border.all(
+            color: widget.corBorda,
+            width: 1,
+          ),
         ),
         child: TextButton(
           child: Text(
             widget.labelText,
             style: TextStyle(
               color: widget.corTexto,
-              fontWeight: FontWeight.bold,
+              fontWeight: widget.fontWeight,
+              fontSize: widget.fontSize,
             ),
           ),
           onPressed: widget.onPressed,

@@ -6,7 +6,11 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
 import java.io.Serializable;
+import java.sql.Blob;
 import java.util.Collection;
 import java.util.Date;
 
@@ -64,4 +68,7 @@ public class UsuarioDTO implements Serializable {
 
     @JsonProperty("roles")
     private Collection<RoleDTO> roles;
+
+    @JsonProperty("imagemBase64")
+    private String imagemBase64;
 }
