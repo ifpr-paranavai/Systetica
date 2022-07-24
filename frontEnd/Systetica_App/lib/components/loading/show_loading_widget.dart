@@ -1,7 +1,5 @@
-
 import 'package:flutter/material.dart';
 
-///Class para criar Animação de carregamento na telas
 class ShowLoadingWidget  {
 
   //Passa-se um texto para apresentar junto com o loading

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class BotaoAcaoWidget extends StatefulWidget {
-  const BotaoAcaoWidget({
+class BotaoWidget extends StatefulWidget {
+  const BotaoWidget({
     Key? key,
     required this.labelText,
     this.onPressed,
@@ -29,10 +29,10 @@ class BotaoAcaoWidget extends StatefulWidget {
   final FontWeight? fontWeight;
 
   @override
-  _BotaoAcaoWidget createState() => _BotaoAcaoWidget();
+  _BotaoWidget createState() => _BotaoWidget();
 }
 
-class _BotaoAcaoWidget extends State<BotaoAcaoWidget> {
+class _BotaoWidget extends State<BotaoWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -55,18 +55,22 @@ class _BotaoAcaoWidget extends State<BotaoAcaoWidget> {
             width: 1,
           ),
         ),
-        child: TextButton(
-          child: Text(
-            widget.labelText,
-            style: TextStyle(
-              color: widget.corTexto,
-              fontWeight: widget.fontWeight,
-              fontSize: widget.fontSize,
-            ),
-          ),
-          onPressed: widget.onPressed,
+        child: _textButton(),
+      ),
+    );
+  }
+
+  TextButton _textButton() {
+    return TextButton(
+      child: Text(
+        widget.labelText,
+        style: TextStyle(
+          color: widget.corTexto,
+          fontWeight: widget.fontWeight,
+          fontSize: widget.fontSize,
         ),
       ),
+      onPressed: widget.onPressed,
     );
   }
 }

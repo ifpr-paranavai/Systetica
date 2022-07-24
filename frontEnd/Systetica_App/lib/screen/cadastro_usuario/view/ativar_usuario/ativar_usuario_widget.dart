@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:systetica/components/botoes/botao_acao_widget.dart';
+import 'package:systetica/components/botoes/botao_widget.dart';
 import 'package:systetica/components/icon_arrow_widget.dart';
 import 'package:systetica/components/imagens_widget.dart';
 import 'package:systetica/components/input/campo_texto_widget.dart';
@@ -93,8 +93,8 @@ class AtivarUsuarioWidget extends State<AtivarUsuarioPage> {
     );
   }
 
-  BotaoAcaoWidget botaoAtivaUsuario() {
-    return BotaoAcaoWidget(
+  BotaoWidget botaoAtivaUsuario() {
+    return BotaoWidget(
       paddingTop: 18,
       paddingBottom: 30,
       labelText: "Ativar Usuário",

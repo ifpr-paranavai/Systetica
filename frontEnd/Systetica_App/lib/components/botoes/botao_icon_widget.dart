@@ -39,6 +39,8 @@ class _BotaoIconWidget extends State<BotaoIconWidget> {
       padding: EdgeInsets.only(
         top: widget.paddingTop,
         bottom: widget.paddingBottom,
+        left: 35,
+        right: 35,
       ),
       child: Container(
         width: widget.largura,
@@ -57,13 +59,13 @@ class _BotaoIconWidget extends State<BotaoIconWidget> {
         ),
         child: Directionality(
           textDirection: TextDirection.rtl,
-          child: buttonIcon(),
+          child: _buttonIcon(),
         ),
       ),
     );
   }
 
-  TextButton buttonIcon() {
+  TextButton _buttonIcon() {
     return TextButton.icon(
       label: Align(
         alignment: Alignment.centerLeft,
@@ -83,6 +85,9 @@ class _BotaoIconWidget extends State<BotaoIconWidget> {
       icon: const Padding(
         padding: EdgeInsets.only(right: 10),
         child: Icon(Icons.image),
+      ),
+      style: ButtonStyle(
+        overlayColor: MaterialStateProperty.all(Colors.transparent),
       ),
     );
   }

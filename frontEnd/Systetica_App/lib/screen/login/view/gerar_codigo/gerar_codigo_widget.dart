@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:systetica/components/botoes/botao_acao_widget.dart';
+import 'package:systetica/components/botoes/botao_widget.dart';
 import 'package:systetica/components/icon_arrow_widget.dart';
 import 'package:systetica/components/imagens_widget.dart';
 import 'package:systetica/components/input/campo_texto_widget.dart';
@@ -92,8 +92,8 @@ class GerarCodigoWidget extends State<GerarCodigoPage> {
     );
   }
 
-  BotaoAcaoWidget botaoGerarCodigo() {
-    return BotaoAcaoWidget(
+  BotaoWidget botaoGerarCodigo() {
+    return BotaoWidget(
       paddingTop: 18,
       paddingBottom: 30,
       labelText: "Gerar Codigo",

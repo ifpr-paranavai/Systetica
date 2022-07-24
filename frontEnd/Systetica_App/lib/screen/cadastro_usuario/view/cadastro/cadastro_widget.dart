@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:systetica/components/botoes/botao_acao_widget.dart';
+import 'package:systetica/components/botoes/botao_widget.dart';
 import 'package:systetica/components/botoes/botao_icon_widget.dart';
 import 'package:systetica/components/icon_arrow_widget.dart';
 import 'package:systetica/components/imagens_widget.dart';
@@ -72,12 +72,12 @@ class CadastroWidget extends State<CadastroPage> {
                       imageRegistro(),
                       textoAutenticacao(),
                       inputNome(),
+                      inputCidade(),
                       inputEmail(),
                       inputCpf(),
                       inputDataNascimento(),
                       inputTelefone(),
                       inputTelefone2(),
-                      inputCidade(),
                       inputSenha(),
                       inputConfirmaSenha(),
                       botaoFoto(),
@@ -268,8 +268,8 @@ class CadastroWidget extends State<CadastroPage> {
     );
   }
 
-  BotaoAcaoWidget botaoCadastrar() {
-    return BotaoAcaoWidget(
+  BotaoWidget botaoCadastrar() {
+    return BotaoWidget(
       paddingTop: 20,
       paddingBottom: 30,
       labelText: "CADASTRAR",

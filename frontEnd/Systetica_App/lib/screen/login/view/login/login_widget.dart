@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:systetica/components/botoes/botao_acao_widget.dart';
+import 'package:systetica/components/botoes/botao_widget.dart';
 import 'package:systetica/components/icon_arrow_widget.dart';
 import 'package:systetica/components/imagens_widget.dart';
 import 'package:systetica/components/input/campo_texto_widget.dart';
 import 'package:systetica/components/page_transition.dart';
 import 'package:systetica/components/text_autenticacoes_widget.dart';
-import 'package:systetica/screen/home/view/home_page.dart';
 import 'package:systetica/screen/login/login_controller.dart';
 import 'package:systetica/screen/login/view/gerar_codigo/gerar_codigo_page.dart';
 import 'package:systetica/screen/login/view/login/login_page.dart';
@@ -90,8 +89,8 @@ class LoginWidget extends State<LoginPage> {
     );
   }
 
-  BotaoAcaoWidget botaoLogin() {
-    return BotaoAcaoWidget(
+  BotaoWidget botaoLogin() {
+    return BotaoWidget(
       paddingTop: 10,
       paddingBottom: 0,
       labelText: "LOGIN",
@@ -104,8 +103,8 @@ class LoginWidget extends State<LoginPage> {
     );
   }
 
-  BotaoAcaoWidget botaoEsqueciSenha() {
-    return BotaoAcaoWidget(
+  BotaoWidget botaoEsqueciSenha() {
+    return BotaoWidget(
       paddingTop: 18,
       paddingBottom: 30,
       labelText: "ESQUECI SENHA",

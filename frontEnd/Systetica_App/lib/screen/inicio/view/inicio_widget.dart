@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:systetica/components/botoes/botao_acao_widget.dart';
+import 'package:systetica/components/botoes/botao_widget.dart';
 import 'package:systetica/components/imagens_widget.dart';
 import 'package:systetica/components/page_transition.dart';
 import 'package:systetica/screen/cadastro_usuario/view/cadastro/cadastro_page.dart';
@@ -105,8 +105,8 @@ class InicioWidget extends State<InicioPage> with TickerProviderStateMixin {
     );
   }
 
-  BotaoAcaoWidget botaoLogin() {
-    return BotaoAcaoWidget(
+  BotaoWidget botaoLogin() {
+    return BotaoWidget(
       paddingTop: 35,
       paddingBottom: 18,
       labelText: "LOGIN",
@@ -122,8 +122,8 @@ class InicioWidget extends State<InicioPage> with TickerProviderStateMixin {
     );
   }
 
-  BotaoAcaoWidget botaoRegistrar() {
-    return BotaoAcaoWidget(
+  BotaoWidget botaoRegistrar() {
+    return BotaoWidget(
       paddingTop: 0,
       paddingBottom: 30,
       labelText: "REGISTRAR",
