@@ -4,13 +4,31 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:systetica/components/item_list.dart';
 import 'package:systetica/components/page_transition.dart';
 import 'package:systetica/model/UsuarioDTO.dart';
+import 'package:systetica/screen/perfil/perfil_controller.dart';
 import 'package:systetica/screen/perfil/view/data.dart';
-import 'package:systetica/screen/perfil/view/editar_perfil/editar_perfil_page.dart';
 import 'package:systetica/screen/perfil/view/perfil_page.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:convert';
 
 class PerfilWidget extends State<PerfilPage> {
   var myPageTransition = MyPageTransition();
+  final PerfilController _controller = PerfilController();
   UsuarioDTO data = getUsuarioData();
+  final _picker = ImagePicker();
+
+
+  Future<void> _adicionarImagem() async {
+    PickedFile? pickedImagem =
+    await _picker.getImage(source: ImageSource.gallery);
+    if (pickedImagem != null) {
+      setState(
+            () {
+          File imagem = File(pickedImagem.path);
+          _controller.imagemBase64 = base64Encode(imagem.readAsBytesSync());
+        },
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -77,6 +95,68 @@ class PerfilWidget extends State<PerfilPage> {
     );
   }
 
+  CircleAvatar imgPerfil() {
+    return CircleAvatar(
+      backgroundColor: Colors.black,
+      backgroundImage: const NetworkImage(
+        "https://saobras.al.gov.br/cpl/img/login.png",
+      ),
+      child: Padding(
+        padding: const EdgeInsets.only(top: 98, left: 98),
+        child: SizedBox(
+          width: 40,
+          height: 40,
+          child: CircleAvatar(
+            radius: 20,
+            backgroundColor: Colors.white,
+            child: IconButton(
+              splashColor: Colors.transparent,
+              highlightColor: Colors.transparent,
+              iconSize: 20,
+              color: Colors.black,
+              icon: const Icon(
+                Icons.edit,
+              ),
+              onPressed: () => _adicionarImagem().then(
+                (value) => setState(() {}),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Text textNome() {
+    return textNomeTelefone(
+      text: data.nome!,
+      fonrSize: 23,
+    );
+  }
+
+  Text textTelefonePrincipal() {
+    return textNomeTelefone(
+      text: data.telefone1!,
+      fonrSize: 18,
+    );
+  }
+
+  Text textNomeTelefone({
+    required String text,
+    required double fonrSize,
+  }) {
+    return Text(
+      text,
+      style: GoogleFonts.lora(
+        fontSize: fonrSize,
+        color: Colors.black,
+      ),
+      maxLines: 1,
+      overflow: TextOverflow.ellipsis,
+      textAlign: TextAlign.center,
+    );
+  }
+
   ItemLista itemEmail() {
     return ItemLista(
       titulo: "E-mail",
@@ -116,73 +196,6 @@ class PerfilWidget extends State<PerfilPage> {
     return ItemLista(
       titulo: "Estado",
       descricao: data.cidade!.estado!.nome + " - " + data.cidade!.estado!.uf,
-    );
-  }
-
-  CircleAvatar imgPerfil() {
-    return CircleAvatar(
-      backgroundColor: Colors.black,
-      backgroundImage: NetworkImage(
-        "https://saobras.al.gov.br/cpl/img/login.png",
-      ),
-      child: Padding(
-        padding: const EdgeInsets.only(top: 98, left: 98),
-        child: SizedBox(
-          width: 42,
-          height: 42,
-          child: CircleAvatar(
-            radius: 20,
-            backgroundColor: Colors.white,
-            child: IconButton(
-              splashColor: Colors.transparent,
-              highlightColor: Colors.transparent,
-              iconSize: 20,
-              color: Colors.black,
-              icon: const Icon(
-                Icons.edit,
-              ),
-              onPressed: () => Navigator.of(context)
-                  .push(
-                    myPageTransition.pageTransition(
-                      child: const EditarPerfilPage(),
-                      childCurrent: widget,
-                      buttoToTop: true,
-                    ),
-                  )
-                  .then(
-                    (value) => setState(() {}),
-                  ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Text textNome() {
-    return textTitulo(
-      text: data.nome!,
-      fonrSize: 23,
-    );
-  }
-
-  Text textTelefonePrincipal() {
-    return textTitulo(
-      text: data.telefone1!,
-      fonrSize: 18,
-    );
-  }
-
-  Text textTitulo({
-    required String text,
-    required double fonrSize,
-  }) {
-    return Text(
-      text,
-      style: GoogleFonts.lora(
-        fontSize: fonrSize,
-        color: Colors.black,
-      ),
     );
   }
 

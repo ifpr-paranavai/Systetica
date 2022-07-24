@@ -16,7 +16,7 @@ import 'package:systetica/screen/cadastro_usuario/cadastro_controller.dart';
 import 'package:systetica/screen/cadastro_usuario/view/cadastro/cadastro_page.dart';
 
 class CadastroWidget extends State<CadastroPage> {
-  final CadastroController controller = CadastroController();
+  final CadastroController _controller = CadastroController();
   late ScrollController _scrollController;
   late ScrollController _scrollControllerDropDown;
   final List<CidadeDTO> _topColor = [];
@@ -43,7 +43,7 @@ class CadastroWidget extends State<CadastroPage> {
       setState(
         () {
           File imagem = File(pickedImagem.path);
-          controller.imagemBase64 = base64Encode(imagem.readAsBytesSync());
+          _controller.imagemBase64 = base64Encode(imagem.readAsBytesSync());
         },
       );
     }
@@ -66,7 +66,7 @@ class CadastroWidget extends State<CadastroPage> {
                 controller: _scrollController,
                 child: Form(
                   autovalidateMode: AutovalidateMode.onUserInteraction,
-                  key: controller.formKey,
+                  key: _controller.formKey,
                   child: Column(
                     children: [
                       imageRegistro(),
@@ -120,8 +120,8 @@ class CadastroWidget extends State<CadastroPage> {
         Icons.face_rounded,
         color: Colors.black87,
       ),
-      controller: controller.nomeController,
-      validator: controller.nomeValidator,
+      controller: _controller.nomeController,
+      validator: _controller.nomeValidator,
     );
   }
 
@@ -134,13 +134,13 @@ class CadastroWidget extends State<CadastroPage> {
         setState(
           () {
             if (value != null) {
-              controller.dataNascimentoController.text = value;
+              _controller.dataNascimentoController.text = value;
             }
           },
         );
       },
-      controller: controller.dataNascimentoController,
-      validator: controller.dataValidator,
+      controller: _controller.dataNascimentoController,
+      validator: _controller.dataValidator,
     );
   }
 
@@ -151,10 +151,10 @@ class CadastroWidget extends State<CadastroPage> {
       icon: const Icon(Icons.location_city),
       objects: _topColor,
       objectAsString: (cidade) => cidade!.nome,
-      objectOnFind: (String? cidade) => controller.buscarCidadeFiltro(cidade),
+      objectOnFind: (String? cidade) => _controller.buscarCidadeFiltro(cidade),
       scrollController: _scrollControllerDropDown,
       onChanged: (value) {
-        controller.cidadeDTO = value;
+        _controller.cidadeDTO = value;
       },
     );
   }
@@ -172,8 +172,8 @@ class CadastroWidget extends State<CadastroPage> {
         Icons.people,
         color: Colors.black87,
       ),
-      controller: controller.cpfController,
-      validator: controller.cpfValidator,
+      controller: _controller.cpfController,
+      validator: _controller.cpfValidator,
     );
   }
 
@@ -190,14 +190,14 @@ class CadastroWidget extends State<CadastroPage> {
         Icons.phone,
         color: Colors.black87,
       ),
-      controller: controller.telefone1,
-      validator: controller.telefoneValidator,
+      controller: _controller.telefone1,
+      validator: _controller.telefoneValidator,
     );
   }
 
   CampoTextoWidget inputTelefone2() {
     return CampoTextoWidget(
-      controller: controller.telefone2,
+      controller: _controller.telefone2,
       labelText: "Telefone 2",
       keyboardType: TextInputType.number,
       mask: "(##) #####-####",
@@ -223,8 +223,8 @@ class CadastroWidget extends State<CadastroPage> {
         Icons.email,
         color: Colors.black87,
       ),
-      controller: controller.emailController,
-      validator: controller.emailValidator,
+      controller: _controller.emailController,
+      validator: _controller.emailValidator,
     );
   }
 
@@ -235,8 +235,8 @@ class CadastroWidget extends State<CadastroPage> {
       isPassword: true,
       paddingBottom: 0,
       paddingTop: 5,
-      controller: controller.senhaController,
-      validator: controller.senhaValidator,
+      controller: _controller.senhaController,
+      validator: _controller.senhaValidator,
     );
   }
 
@@ -247,8 +247,8 @@ class CadastroWidget extends State<CadastroPage> {
       isPassword: true,
       paddingBottom: 0,
       paddingTop: 5,
-      controller: controller.confirmaSenhaController,
-      validator: controller.confirmaSenhaValidator,
+      controller: _controller.confirmaSenhaController,
+      validator: _controller.confirmaSenhaValidator,
     );
   }
 
@@ -277,7 +277,7 @@ class CadastroWidget extends State<CadastroPage> {
       corBotao: Colors.black87.withOpacity(0.9),
       corTexto: Colors.white,
       onPressed: () async {
-        await controller.cadastrarUsuario(
+        await _controller.cadastrarUsuario(
           context,
           widget,
         );

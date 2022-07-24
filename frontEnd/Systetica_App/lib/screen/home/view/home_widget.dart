@@ -50,6 +50,7 @@ class HomeWidget extends State<HomePage> {
     double screenWidth = MediaQuery.of(context).size.width;
     return SafeArea(
       child: Scaffold(
+        backgroundColor: Colors.white,
         body: Center(
           child: widgetOpcoes.elementAt(_selectedIndex),
         ),
