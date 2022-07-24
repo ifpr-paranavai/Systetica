@@ -1,33 +1,41 @@
+import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:systetica/components/item_list.dart';
 import 'package:systetica/components/page_transition.dart';
 import 'package:systetica/model/UsuarioDTO.dart';
 import 'package:systetica/screen/perfil/perfil_controller.dart';
 import 'package:systetica/screen/perfil/view/data.dart';
 import 'package:systetica/screen/perfil/view/perfil_page.dart';
-import 'package:image_picker/image_picker.dart';
-import 'dart:convert';
 
 class PerfilWidget extends State<PerfilPage> {
   var myPageTransition = MyPageTransition();
   final PerfilController _controller = PerfilController();
   UsuarioDTO data = getUsuarioData();
   final _picker = ImagePicker();
-
+  dynamic _image;
 
   Future<void> _adicionarImagem() async {
     PickedFile? pickedImagem =
-    await _picker.getImage(source: ImageSource.gallery);
+        await _picker.getImage(source: ImageSource.gallery);
     if (pickedImagem != null) {
       setState(
-            () {
+        () {
           File imagem = File(pickedImagem.path);
           _controller.imagemBase64 = base64Encode(imagem.readAsBytesSync());
         },
       );
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _image = base64Decode(data.imagemBase64!);
   }
 
   @override
@@ -96,11 +104,17 @@ class PerfilWidget extends State<PerfilPage> {
   }
 
   CircleAvatar imgPerfil() {
+    if (_image is Uint8List) {
+      return circleAvatar(backgroundImage: MemoryImage(_image));
+    } else {
+      return circleAvatar(backgroundImage: FileImage(_image));
+    }
+  }
+
+  CircleAvatar circleAvatar({required ImageProvider backgroundImage}) {
     return CircleAvatar(
       backgroundColor: Colors.black,
-      backgroundImage: const NetworkImage(
-        "https://saobras.al.gov.br/cpl/img/login.png",
-      ),
+      backgroundImage: backgroundImage,
       child: Padding(
         padding: const EdgeInsets.only(top: 98, left: 98),
         child: SizedBox(

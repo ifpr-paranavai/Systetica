@@ -50,7 +50,7 @@ class _CampoPesquisaWidget extends State<CampoPesquisaWidget> {
           bottomRight: Radius.circular(15),
         ),
       ),
-
+      validator: (value) => value == null ? 'Campo obrigatório' : null,
 
       // Pesonalização do Field de pesquisa abaixo
       searchFieldProps: TextFieldProps(
