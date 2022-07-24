@@ -1,5 +1,5 @@
-import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
+import 'package:dropdown_search/dropdown_search.dart';
 
 class CampoPesquisaWidget extends StatefulWidget {
   CampoPesquisaWidget({Key? key,
@@ -10,6 +10,7 @@ class CampoPesquisaWidget extends StatefulWidget {
     required this.labelText,
     required this.labelSeachText,
     required this.icon,
+    required this.scrollController,
   }) : super(key: key);
 
   List<dynamic>? objects;
@@ -19,6 +20,7 @@ class CampoPesquisaWidget extends StatefulWidget {
   String? labelText;
   String? labelSeachText;
   Widget icon;
+  ScrollController scrollController;
 
   @override
   _CampoPesquisaWidget createState() => _CampoPesquisaWidget();
@@ -35,14 +37,15 @@ class _CampoPesquisaWidget extends State<CampoPesquisaWidget> {
         right: 35,
       ),
       child: DropdownSearch<dynamic>(
-        popupBackgroundColor: Colors.grey.shade50,
+
+        // popupBackgroundColor: Colors.grey.shade50,
         popupShape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
             bottomLeft: Radius.circular(15),
             bottomRight: Radius.circular(15),
           ),
         ),
-        validator: (value) => value == null ? 'Campo obrigatório' : null,
+
 
         // Pesonalização do Field de pesquisa abaixo
         searchFieldProps: TextFieldProps(
@@ -167,14 +170,15 @@ class _CampoPesquisaWidget extends State<CampoPesquisaWidget> {
           enableFeedback: false,
         ),
 
+        scrollbarProps: ScrollbarProps(
+          controller: widget.scrollController,
+        ),
         mode: Mode.MENU,
         isFilteredOnline: true,
-        showClearButton: true,
+        showClearButton: false,
         showSearchBox: true,
-        items: widget.objects,
-        itemAsString: widget.objectAsString,
         onFind: widget.objectOnFind,
-        onChanged: widget.onChanged,
+
       ),
     );
   }

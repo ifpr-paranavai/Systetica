@@ -11,7 +11,7 @@ import 'package:systetica/style/app_colors..dart';
 
 class InicioWidget extends State<InicioPage> with TickerProviderStateMixin {
   var myPageTransition = MyPageTransition();
-  List<Color> colorList = [
+  final List<Color> _colorList = [
     AppColors.blue1,
     AppColors.blue2,
     AppColors.blue3,
@@ -20,8 +20,8 @@ class InicioWidget extends State<InicioPage> with TickerProviderStateMixin {
   ];
   List<Alignment> alignmentList = [Alignment.topCenter, Alignment.bottomCenter];
   int index = 0;
-  Color bottomColor = AppColors.blue1;
-  Color topColor = AppColors.blue5;
+  Color _bottomColor = AppColors.blue1;
+  Color _topColor = AppColors.blue5;
   Alignment begin = Alignment.bottomCenter;
   Alignment end = Alignment.topCenter;
 
@@ -33,7 +33,7 @@ class InicioWidget extends State<InicioPage> with TickerProviderStateMixin {
       () {
         setState(
           () {
-            bottomColor = AppColors.blue5;
+            _bottomColor = AppColors.blue5;
           },
         );
       },
@@ -50,8 +50,8 @@ class InicioWidget extends State<InicioPage> with TickerProviderStateMixin {
             setState(
               () {
                 index = index + 1;
-                bottomColor = colorList[index % colorList.length];
-                topColor = colorList[(index + 1) % colorList.length];
+                _bottomColor = _colorList[index % _colorList.length];
+                _topColor = _colorList[(index + 1) % _colorList.length];
               },
             );
           },
@@ -59,7 +59,7 @@ class InicioWidget extends State<InicioPage> with TickerProviderStateMixin {
             gradient: LinearGradient(
               begin: Alignment.topRight,
               end: Alignment.bottomLeft,
-              colors: [bottomColor, topColor],
+              colors: [_bottomColor, _topColor],
             ),
           ),
           child: Center(

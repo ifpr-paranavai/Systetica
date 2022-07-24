@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:systetica/components/botoes/botao_acao_widget.dart';
+import 'package:systetica/components/botoes/botao_icon_widget.dart';
 import 'package:systetica/components/icon_arrow_widget.dart';
 import 'package:systetica/components/imagens_widget.dart';
 import 'package:systetica/components/input/campo_data_widget.dart';
@@ -11,28 +12,29 @@ import 'package:systetica/components/input/campo_pesquisa_widget.dart';
 import 'package:systetica/components/input/campo_texto_widget.dart';
 import 'package:systetica/components/text_autenticacoes_widget.dart';
 import 'package:systetica/model/CidadeDTO.dart';
-import 'package:systetica/model/Page_impl.dart';
 import 'package:systetica/screen/cadastro_usuario/cadastro_controller.dart';
-import 'package:systetica/screen/cadastro_usuario/cadastro_service.dart';
 import 'package:systetica/screen/cadastro_usuario/view/cadastro/cadastro_page.dart';
 
 class CadastroWidget extends State<CadastroPage> {
   final CadastroController controller = CadastroController();
-  List<CidadeDTO> cidades = [];
-  CidadeDTO? cidadeDTO;
+  late ScrollController _scrollController;
+  late ScrollController _scrollControllerDropDown;
+  final List<CidadeDTO> _topColor = [];
+  final _picker = ImagePicker();
 
-  Future<List<CidadeDTO>> buscarCidadeFiltro(String? nomeCidade) async {
-    try {
-      var service = CadastroService();
-      PageImpl page = await service.buscarCidade(nomeCidade: nomeCidade);
-      return page.content as List<CidadeDTO>;
-    } catch (e) {
-      debugPrint(e.toString());
-      return [];
-    }
+  @override
+  void initState() {
+    super.initState();
+    _scrollController = ScrollController();
+    _scrollControllerDropDown = ScrollController();
   }
 
-  final _picker = ImagePicker();
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    _scrollControllerDropDown.dispose();
+    super.dispose();
+  }
 
   Future<void> _adicionarImagem() async {
     PickedFile? pickedImagem =
@@ -61,6 +63,7 @@ class CadastroWidget extends State<CadastroPage> {
             ),
             Expanded(
               child: SingleChildScrollView(
+                controller: _scrollController,
                 child: Form(
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   key: controller.formKey,
@@ -69,12 +72,12 @@ class CadastroWidget extends State<CadastroPage> {
                       imageRegistro(),
                       textoAutenticacao(),
                       inputNome(),
-                      inputIdade(),
-                      inputCidade(),
+                      inputEmail(),
                       inputCpf(),
+                      inputDataNascimento(),
                       inputTelefone(),
                       inputTelefone2(),
-                      inputEmail(),
+                      inputCidade(),
                       inputSenha(),
                       inputConfirmaSenha(),
                       botaoFoto(),
@@ -122,9 +125,9 @@ class CadastroWidget extends State<CadastroPage> {
     );
   }
 
-  CampoDataWidget inputIdade() {
+  CampoDataWidget inputDataNascimento() {
     return CampoDataWidget(
-      hintText: 'Nascimento',
+      hintText: 'Data de Nascimento',
       paddingBottom: 0,
       paddingTop: 5,
       onChanged: (String? value) {
@@ -146,11 +149,12 @@ class CadastroWidget extends State<CadastroPage> {
       labelText: "Cidade",
       labelSeachText: "Digite nome da cidade",
       icon: const Icon(Icons.location_city),
-      objects: cidades,
+      objects: _topColor,
       objectAsString: (cidade) => cidade!.nome,
-      objectOnFind: (String? cidade) => buscarCidadeFiltro(cidade),
+      objectOnFind: (String? cidade) => controller.buscarCidadeFiltro(cidade),
+      scrollController: _scrollControllerDropDown,
       onChanged: (value) {
-        cidadeDTO = value;
+        controller.cidadeDTO = value;
       },
     );
   }
@@ -248,12 +252,12 @@ class CadastroWidget extends State<CadastroPage> {
     );
   }
 
-  BotaoAcaoWidget botaoFoto() {
-    return BotaoAcaoWidget(
+  BotaoIconWidget botaoFoto() {
+    return BotaoIconWidget(
       paddingTop: 5,
       paddingBottom: 0,
       paddingRight: 120,
-      labelText: "Foto de Perfil *",
+      labelText: "Foto de Perfil",
       largura: 340,
       fontSize: 18,
       corBotao: Colors.white,
@@ -275,7 +279,6 @@ class CadastroWidget extends State<CadastroPage> {
       onPressed: () async {
         await controller.cadastrarUsuario(
           context,
-          cidadeDTO!,
           widget,
         );
       },

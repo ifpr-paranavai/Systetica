@@ -7,6 +7,7 @@ import 'package:systetica/components/page_transition.dart';
 import 'package:systetica/components/show_modal_sucesso_widget.dart';
 import 'package:systetica/components/texto_erro_widget.dart';
 import 'package:systetica/model/CidadeDTO.dart';
+import 'package:systetica/model/Page_impl.dart';
 import 'package:systetica/model/UsuarioDTO.dart';
 import 'package:systetica/request/dio_config.dart';
 import 'package:systetica/screen/cadastro_usuario/cadastro_service.dart';
@@ -24,9 +25,11 @@ class CadastroController {
   final confirmaSenhaController = TextEditingController();
   final confirmaEstadoController = TextEditingController();
   final codicoController = TextEditingController();
+  final formKey = GlobalKey<FormState>();
+
+  CidadeDTO? cidadeDTO;
   String imagemBase64 = "";
   var myPageTransition = MyPageTransition();
-  final formKey = GlobalKey<FormState>();
 
   MultiValidator get nomeValidator {
     return MultiValidator([
@@ -93,13 +96,24 @@ class CadastroController {
     ]);
   }
 
+  Future<List<CidadeDTO>> buscarCidadeFiltro(String? nomeCidade) async {
+    try {
+      var service = CadastroService();
+      PageImpl page = await service.buscarCidade(nomeCidade: nomeCidade);
+      return page.content as List<CidadeDTO>;
+    } catch (e) {
+      debugPrint(e.toString());
+      return [];
+    }
+  }
+
   Future<void> cadastrarUsuario(
     BuildContext context,
-    CidadeDTO? cidadeDTO,
     Widget widget,
   ) async {
     var connected = await ConnectionCheck.check();
     if (connected) {
+
       // Verificar se senha e confirma senha são idênticos
       if (senhaController.text != confirmaSenhaController.text) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -126,6 +140,7 @@ class CadastroController {
         );
         return;
       }
+
       if (formKey.currentState != null) {
         if (formKey.currentState?.validate() ?? true) {
           try {
@@ -194,7 +209,7 @@ class CadastroController {
     }
   }
 
-  ativiarUsuario(BuildContext context) async {
+  Future<void> ativiarUsuario(BuildContext context) async {
     var connected = await ConnectionCheck.check();
     if (connected) {
       try {
