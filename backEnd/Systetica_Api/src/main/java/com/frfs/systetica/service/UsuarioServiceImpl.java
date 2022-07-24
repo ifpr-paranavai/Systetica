@@ -186,12 +186,18 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
     @Override
     public ReturnData<String> atualizar(UsuarioDTO usuarioDTO) {
         try {
+            var returnDataConverteBase64 = converteFileBase64(usuarioDTO.getImagemBase64());
+            if (!returnDataConverteBase64.getSuccess()) {
+                return returnDataConverteBase64;
+            }
+
             Optional<Usuario> usuarioBanco = usuarioRepository.findById(usuarioDTO.getId());
 
             usuarioBanco.get().setNome(usuarioDTO.getNome());
             usuarioBanco.get().setTelefone1(usuarioDTO.getTelefone1());
             usuarioBanco.get().setTelefone2(usuarioDTO.getTelefone2());
             usuarioBanco.get().setCidade(cidadeMapper.toEntity(usuarioDTO.getCidade()));
+            usuarioBanco.get().setImagemBase64(returnDataConverteBase64.getMessage());
 
             usuarioRepository.saveAndFlush(usuarioBanco.get());
 
