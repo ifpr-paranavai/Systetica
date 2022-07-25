@@ -10,7 +10,6 @@ class CampoPesquisaWidget extends StatefulWidget {
     required this.labelText,
     required this.labelSeachText,
     required this.icon,
-    required this.scrollController,
   }) : super(key: key);
 
   List<dynamic>? objects;
@@ -20,7 +19,6 @@ class CampoPesquisaWidget extends StatefulWidget {
   String? labelText;
   String? labelSeachText;
   Widget icon;
-  ScrollController scrollController;
 
   @override
   _CampoPesquisaWidget createState() => _CampoPesquisaWidget();
@@ -175,15 +173,11 @@ class _CampoPesquisaWidget extends State<CampoPesquisaWidget> {
         enableFeedback: false,
       ),
 
-      scrollbarProps: ScrollbarProps(
-        controller: widget.scrollController,
-      ),
       mode: Mode.MENU,
       isFilteredOnline: true,
       showClearButton: false,
       showSearchBox: true,
       onFind: widget.objectOnFind,
-
     );
   }
 }

@@ -2,9 +2,10 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:systetica/components/botoes/botao_widget.dart';
 import 'package:systetica/components/botoes/botao_icon_widget.dart';
+import 'package:systetica/components/botoes/botao_widget.dart';
 import 'package:systetica/components/icon_arrow_widget.dart';
 import 'package:systetica/components/imagens_widget.dart';
 import 'package:systetica/components/input/campo_data_widget.dart';
@@ -14,6 +15,7 @@ import 'package:systetica/components/text_autenticacoes_widget.dart';
 import 'package:systetica/model/CidadeDTO.dart';
 import 'package:systetica/screen/cadastro_usuario/cadastro_controller.dart';
 import 'package:systetica/screen/cadastro_usuario/view/cadastro/cadastro_page.dart';
+import 'package:systetica/style/app_colors..dart';
 
 class CadastroWidget extends State<CadastroPage> {
   final CadastroController _controller = CadastroController();
@@ -21,6 +23,45 @@ class CadastroWidget extends State<CadastroPage> {
   late ScrollController _scrollControllerDropDown;
   final List<CidadeDTO> _topColor = [];
   final _picker = ImagePicker();
+
+  Future<void> _adicionarImagem() async {
+    PickedFile? pickedImagem =
+        await _picker.getImage(source: ImageSource.gallery);
+    if (pickedImagem != null) {
+      CroppedFile _croppedFile = await _funcaoCroppedFile(pickedImagem);
+      setState(
+        () {
+          File imagem = File(_croppedFile.path);
+          _controller.imagemBase64 = base64Encode(imagem.readAsBytesSync());
+        },
+      );
+    }
+  }
+
+  Future<CroppedFile> _funcaoCroppedFile(PickedFile pickedImagem) async {
+    CroppedFile? _croppedFile = await ImageCropper().cropImage(
+      sourcePath: pickedImagem.path,
+      aspectRatioPresets: [
+        CropAspectRatioPreset.original,
+      ],
+      cropStyle: CropStyle.circle,
+      uiSettings: [
+        AndroidUiSettings(
+          toolbarTitle: 'Recortar',
+          toolbarColor: AppColors.bluePrincipal,
+          toolbarWidgetColor: Colors.white,
+          initAspectRatio: CropAspectRatioPreset.original,
+          lockAspectRatio: false,
+          backgroundColor: Colors.white,
+          activeControlsWidgetColor: AppColors.redPrincipal,
+        ),
+        IOSUiSettings(
+          title: 'Recortar',
+        ),
+      ],
+    );
+    return _croppedFile!;
+  }
 
   @override
   void initState() {
@@ -34,19 +75,6 @@ class CadastroWidget extends State<CadastroPage> {
     _scrollController.dispose();
     _scrollControllerDropDown.dispose();
     super.dispose();
-  }
-
-  Future<void> _adicionarImagem() async {
-    PickedFile? pickedImagem =
-        await _picker.getImage(source: ImageSource.gallery);
-    if (pickedImagem != null) {
-      setState(
-        () {
-          File imagem = File(pickedImagem.path);
-          _controller.imagemBase64 = base64Encode(imagem.readAsBytesSync());
-        },
-      );
-    }
   }
 
   @override
@@ -152,7 +180,6 @@ class CadastroWidget extends State<CadastroPage> {
       objects: _topColor,
       objectAsString: (cidade) => cidade!.nome,
       objectOnFind: (String? cidade) => _controller.buscarCidadeFiltro(cidade),
-      scrollController: _scrollControllerDropDown,
       onChanged: (value) {
         _controller.cidadeDTO = value;
       },
