@@ -1,7 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:systetica/model/CidadeDTO.dart';
 import 'package:systetica/model/Info.dart';
-import 'package:systetica/model/Page_impl.dart';
 import 'package:systetica/model/UsuarioDTO.dart';
 import 'package:systetica/utils/dio/dio_config_api.dart';
 
@@ -27,24 +25,6 @@ class CadastroService {
     }
   }
 
-  // Todo - Remover deste service
-  Future<PageImpl> buscarCidade({
-    int? pageNumber,
-    int? size = 10,
-    String? nomeCidade,
-  }) async {
-    String path = "cidade/buscar-todos?search=$nomeCidade&size=$size";
-
-    Dio dio = DioConfigApi.builderConfig();
-
-    var response = await dio.post(path);
-
-    PageImpl page = PageImpl();
-
-    page.content = CidadeDTO.fromJsonList(response.data['response']);
-
-    return page;
-  }
 
   static Future<Info> ativarUsuario(UsuarioDTO usuarioDTO) async {
     try {

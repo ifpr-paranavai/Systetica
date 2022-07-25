@@ -47,9 +47,8 @@ class AlterarSenhaWidget extends State<AlterarSenhaPage> {
 
   ImagensWidget imagemAlterarSenha() {
     return ImagensWidget(
-      paddingLeft: 10,
       image: "alterar-senha.png",
-      widthImagem: 300,
+      widthImagem: 275,
     );
   }
 

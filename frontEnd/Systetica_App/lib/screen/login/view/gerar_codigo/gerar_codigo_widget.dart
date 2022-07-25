@@ -45,16 +45,15 @@ class GerarCodigoWidget extends State<GerarCodigoPage> {
 
   ImagensWidget imagemGerarCodigo() {
     return ImagensWidget(
-      paddingLeft: 10,
+      paddingLeft: 5,
       image: "gerar-codigo.png",
-      widthImagem: 300,
+      widthImagem: 260,
     );
   }
 
   TextAutenticacoesWidget textoGerarCodigo() {
     return TextAutenticacoesWidget(
       text: "Gerar Código",
-      fontSize: 42,
     );
   }
 

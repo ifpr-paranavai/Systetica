@@ -8,11 +8,8 @@ import 'package:systetica/components/botoes/botao_icon_widget.dart';
 import 'package:systetica/components/botoes/botao_widget.dart';
 import 'package:systetica/components/icon_arrow_widget.dart';
 import 'package:systetica/components/imagens_widget.dart';
-import 'package:systetica/components/input/campo_data_widget.dart';
-import 'package:systetica/components/input/campo_pesquisa_widget.dart';
 import 'package:systetica/components/input/campo_texto_widget.dart';
 import 'package:systetica/components/text_autenticacoes_widget.dart';
-import 'package:systetica/model/CidadeDTO.dart';
 import 'package:systetica/screen/cadastro_usuario/cadastro_controller.dart';
 import 'package:systetica/screen/cadastro_usuario/view/cadastro/cadastro_page.dart';
 import 'package:systetica/style/app_colors..dart';
@@ -21,7 +18,6 @@ class CadastroWidget extends State<CadastroPage> {
   final CadastroController _controller = CadastroController();
   late ScrollController _scrollController;
   late ScrollController _scrollControllerDropDown;
-  final List<CidadeDTO> _topColor = [];
   final _picker = ImagePicker();
 
   Future<void> _adicionarImagem() async {
@@ -85,8 +81,6 @@ class CadastroWidget extends State<CadastroPage> {
         child: Column(
           children: [
             IconArrowWidget(
-              paddingTop: 5,
-              paddingBotton: 5,
               onPressed: () => Navigator.pop(context),
             ),
             Expanded(
@@ -100,15 +94,11 @@ class CadastroWidget extends State<CadastroPage> {
                       imageRegistro(),
                       textoAutenticacao(),
                       inputNome(),
-                      inputCidade(),
-                      inputEmail(),
-                      inputCpf(),
-                      inputDataNascimento(),
                       inputTelefone(),
-                      inputTelefone2(),
+                      inputEmail(),
                       inputSenha(),
                       inputConfirmaSenha(),
-                      botaoFoto(),
+                      // botaoFoto(),
                       botaoCadastrar(),
                     ],
                   ),
@@ -123,26 +113,23 @@ class CadastroWidget extends State<CadastroPage> {
 
   ImagensWidget imageRegistro() {
     return ImagensWidget(
-      paddingLeft: 20,
       image: "registro.png",
-      widthImagem: 200,
+      widthImagem: 180,
     );
   }
 
   TextAutenticacoesWidget textoAutenticacao() {
     return TextAutenticacoesWidget(
-      paddingBottom: 2,
-      paddingTop: 2,
       text: "Registrar-se",
     );
   }
 
   CampoTextoWidget inputNome() {
     return CampoTextoWidget(
-      labelText: "Nome",
+      labelText: "Nome completo",
       paddingBottom: 0,
       maxLength: 100,
-      paddingTop: 18,
+      paddingTop: 14,
       isIconDate: true,
       icon: const Icon(
         Icons.face_rounded,
@@ -150,92 +137,6 @@ class CadastroWidget extends State<CadastroPage> {
       ),
       controller: _controller.nomeController,
       validator: _controller.nomeValidator,
-    );
-  }
-
-  CampoDataWidget inputDataNascimento() {
-    return CampoDataWidget(
-      hintText: 'Data de Nascimento',
-      paddingBottom: 0,
-      paddingTop: 5,
-      onChanged: (String? value) {
-        setState(
-          () {
-            if (value != null) {
-              _controller.dataNascimentoController.text = value;
-            }
-          },
-        );
-      },
-      controller: _controller.dataNascimentoController,
-      validator: _controller.dataValidator,
-    );
-  }
-
-  CampoPesquisaWidget inputCidade() {
-    return CampoPesquisaWidget(
-      labelText: "Cidade",
-      labelSeachText: "Digite nome da cidade",
-      icon: const Icon(Icons.location_city),
-      objects: _topColor,
-      objectAsString: (cidade) => cidade!.nome,
-      objectOnFind: (String? cidade) => _controller.buscarCidadeFiltro(cidade),
-      onChanged: (value) {
-        _controller.cidadeDTO = value;
-      },
-    );
-  }
-
-  CampoTextoWidget inputCpf() {
-    return CampoTextoWidget(
-      labelText: "CPF",
-      keyboardType: TextInputType.number,
-      mask: "###.###.###-##",
-      paddingBottom: 0,
-      maxLength: 14,
-      paddingTop: 5,
-      isIconDate: true,
-      icon: const Icon(
-        Icons.people,
-        color: Colors.black87,
-      ),
-      controller: _controller.cpfController,
-      validator: _controller.cpfValidator,
-    );
-  }
-
-  CampoTextoWidget inputTelefone() {
-    return CampoTextoWidget(
-      labelText: "Telefone 1",
-      keyboardType: TextInputType.number,
-      mask: "(##) #####-####",
-      paddingBottom: 0,
-      maxLength: 15,
-      paddingTop: 5,
-      isIconDate: true,
-      icon: const Icon(
-        Icons.phone,
-        color: Colors.black87,
-      ),
-      controller: _controller.telefone1,
-      validator: _controller.telefoneValidator,
-    );
-  }
-
-  CampoTextoWidget inputTelefone2() {
-    return CampoTextoWidget(
-      controller: _controller.telefone2,
-      labelText: "Telefone 2",
-      keyboardType: TextInputType.number,
-      mask: "(##) #####-####",
-      paddingBottom: 0,
-      maxLength: 15,
-      paddingTop: 5,
-      isIconDate: true,
-      icon: const Icon(
-        Icons.phone,
-        color: Colors.black87,
-      ),
     );
   }
 
@@ -255,6 +156,24 @@ class CadastroWidget extends State<CadastroPage> {
     );
   }
 
+  CampoTextoWidget inputTelefone() {
+    return CampoTextoWidget(
+      labelText: "Telefone",
+      keyboardType: TextInputType.number,
+      mask: "(##) #####-####",
+      paddingBottom: 0,
+      maxLength: 15,
+      paddingTop: 5,
+      isIconDate: true,
+      icon: const Icon(
+        Icons.phone,
+        color: Colors.black87,
+      ),
+      controller: _controller.telefone1,
+      validator: _controller.telefoneValidator,
+    );
+  }
+
   CampoTextoWidget inputSenha() {
     return CampoTextoWidget(
       labelText: "Senha",
@@ -269,7 +188,7 @@ class CadastroWidget extends State<CadastroPage> {
 
   CampoTextoWidget inputConfirmaSenha() {
     return CampoTextoWidget(
-      labelText: "Confirmar Senha",
+      labelText: "Confirmar senha",
       maxLength: 16,
       isPassword: true,
       paddingBottom: 0,
@@ -297,8 +216,8 @@ class CadastroWidget extends State<CadastroPage> {
 
   BotaoWidget botaoCadastrar() {
     return BotaoWidget(
-      paddingTop: 20,
-      paddingBottom: 30,
+      paddingTop: 10,
+      paddingBottom: 25,
       labelText: "CADASTRAR",
       largura: 190,
       corBotao: Colors.black87.withOpacity(0.9),

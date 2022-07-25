@@ -7,7 +7,7 @@ class TextAutenticacoesWidget extends StatefulWidget {
     required this.text,
     this.paddingTop = 0,
     this.paddingBottom = 0,
-    this.fontSize = 45,
+    this.fontSize = 37,
   }) : super(key: key);
 
   String text;

@@ -1,10 +1,8 @@
 import 'dart:convert';
-import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:systetica/components/item_list.dart';
 import 'package:systetica/components/page_transition.dart';
 import 'package:systetica/model/UsuarioDTO.dart';
@@ -16,21 +14,7 @@ class PerfilWidget extends State<PerfilPage> {
   var myPageTransition = MyPageTransition();
   final PerfilController _controller = PerfilController();
   UsuarioDTO data = getUsuarioData();
-  final _picker = ImagePicker();
   dynamic _image;
-
-  Future<void> _adicionarImagem() async {
-    PickedFile? pickedImagem =
-        await _picker.getImage(source: ImageSource.gallery);
-    if (pickedImagem != null) {
-      setState(
-        () {
-          File imagem = File(pickedImagem.path);
-          _controller.imagemBase64 = base64Encode(imagem.readAsBytesSync());
-        },
-      );
-    }
-  }
 
   @override
   void initState() {
@@ -42,22 +26,33 @@ class PerfilWidget extends State<PerfilPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
+        floatingActionButton: const Padding(
+          padding: EdgeInsets.only(top: 15),
+          child: Icon(
+            Icons.more_horiz,
+            size: 25,
+            color: Colors.black,
+          ),
+        ),
         body: SingleChildScrollView(
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
-                end: const Alignment(0.2, 0.05),
-                colors: [Colors.grey.withOpacity(0.19), Colors.white],
+                end: const Alignment(0.1, 0.05),
+                colors: [Colors.grey.withOpacity(0.4), Colors.white],
               ),
             ),
             child: Column(
               children: [
-                sizedBox(),
+                sizedBox(
+                  height: 35,
+                ),
                 SizedBox(
-                  width: 180,
-                  height: 180,
+                  width: 190,
+                  height: 190,
                   child: Container(
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
@@ -72,26 +67,22 @@ class PerfilWidget extends State<PerfilPage> {
                     child: imgPerfil(),
                   ),
                 ),
-                Column(
-                  children: [
-                    sizedBox(height: 10),
-                    textNome(),
-                    sizedBox(height: 8),
-                    textTelefonePrincipal(),
-                  ],
-                ),
-                sizedBox(height: 20),
+                sizedBox(height: 50),
                 Card(
-                  color: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    side: const BorderSide(
+                      color: Colors.black,
+                      width: 0.1,
+                    ),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
                   child: Column(
                     children: [
                       sizedBox(height: 5),
+                      itemNome(),
+                      itemTelefone(),
                       itemEmail(),
                       itemCpf(),
-                      itemDataNascimento(),
-                      itemTelefone2(),
-                      itemCidade(),
-                      itemEstado(),
                     ],
                   ),
                 ),
@@ -115,29 +106,6 @@ class PerfilWidget extends State<PerfilPage> {
     return CircleAvatar(
       backgroundColor: Colors.black,
       backgroundImage: backgroundImage,
-      child: Padding(
-        padding: const EdgeInsets.only(top: 98, left: 98),
-        child: SizedBox(
-          width: 40,
-          height: 40,
-          child: CircleAvatar(
-            radius: 20,
-            backgroundColor: Colors.white,
-            child: IconButton(
-              splashColor: Colors.transparent,
-              highlightColor: Colors.transparent,
-              iconSize: 20,
-              color: Colors.black,
-              icon: const Icon(
-                Icons.edit,
-              ),
-              onPressed: () => _adicionarImagem().then(
-                (value) => setState(() {}),
-              ),
-            ),
-          ),
-        ),
-      ),
     );
   }
 
@@ -150,7 +118,7 @@ class PerfilWidget extends State<PerfilPage> {
 
   Text textTelefonePrincipal() {
     return textNomeTelefone(
-      text: data.telefone1!,
+      text: data.telefone!,
       fonrSize: 18,
     );
   }
@@ -171,6 +139,20 @@ class PerfilWidget extends State<PerfilPage> {
     );
   }
 
+  ItemLista itemNome() {
+    return ItemLista(
+      titulo: "Nome completo",
+      descricao: data.nome!,
+    );
+  }
+
+  ItemLista itemTelefone() {
+    return ItemLista(
+      titulo: "Telefone",
+      descricao: data.telefone!,
+    );
+  }
+
   ItemLista itemEmail() {
     return ItemLista(
       titulo: "E-mail",
@@ -182,34 +164,6 @@ class PerfilWidget extends State<PerfilPage> {
     return ItemLista(
       titulo: "CPF",
       descricao: data.cpf!,
-    );
-  }
-
-  ItemLista itemDataNascimento() {
-    return ItemLista(
-      titulo: "Data de Nascimento",
-      descricao: data.dataNascimento!,
-    );
-  }
-
-  ItemLista itemTelefone2() {
-    return ItemLista(
-      titulo: "Telefone 2",
-      descricao: data.telefone2 ?? "Nenhum",
-    );
-  }
-
-  ItemLista itemCidade() {
-    return ItemLista(
-      titulo: "Cidade",
-      descricao: data.cidade!.nome,
-    );
-  }
-
-  ItemLista itemEstado() {
-    return ItemLista(
-      titulo: "Estado",
-      descricao: data.cidade!.estado!.nome + " - " + data.cidade!.estado!.uf,
     );
   }
 

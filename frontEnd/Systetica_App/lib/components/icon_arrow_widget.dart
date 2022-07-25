@@ -27,6 +27,8 @@ class _IconArrowWidget extends State<IconArrowWidget> {
       child: Align(
         alignment: Alignment.topLeft,
         child: IconButton(
+          splashRadius: 22,
+        padding: const EdgeInsets.all(0),
           icon: const Icon(
             Icons.keyboard_arrow_left_outlined,
             size: 35,

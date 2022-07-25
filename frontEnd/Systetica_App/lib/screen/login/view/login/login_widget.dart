@@ -50,9 +50,9 @@ class LoginWidget extends State<LoginPage> {
 
   ImagensWidget imagemLogin() {
     return ImagensWidget(
-      paddingLeft: 10,
+      paddingLeft: 0,
       image: "login.png",
-      widthImagem: 280,
+      widthImagem: 260,
     );
   }
 

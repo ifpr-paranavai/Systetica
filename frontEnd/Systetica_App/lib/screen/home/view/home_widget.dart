@@ -39,7 +39,7 @@ class HomeWidget extends State<HomePage> {
 
   void _onItemTapped(int index) {
     setState(
-          () {
+      () {
         _selectedIndex = index;
       },
     );
@@ -50,7 +50,6 @@ class HomeWidget extends State<HomePage> {
     double screenWidth = MediaQuery.of(context).size.width;
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.white,
         body: Center(
           child: widgetOpcoes.elementAt(_selectedIndex),
         ),
@@ -59,6 +58,10 @@ class HomeWidget extends State<HomePage> {
           height: screenWidth * .159,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(50),
+            border: Border.all(
+              color: Colors.black,
+              width: 0.15,
+            ),
             color: Colors.white,
             boxShadow: [
               BoxShadow(
@@ -71,7 +74,7 @@ class HomeWidget extends State<HomePage> {
           child: ClipRRect(
             borderRadius: BorderRadius.circular(50),
             child: BottomNavigationBar(
-              iconSize: 27,
+              iconSize: 26,
               selectedItemColor: AppColors.redPrincipal,
               unselectedItemColor: AppColors.bluePrincipal,
               showSelectedLabels: false,
