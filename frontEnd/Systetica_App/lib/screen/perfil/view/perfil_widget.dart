@@ -82,12 +82,35 @@ class PerfilWidget extends State<PerfilPage> {
     );
   }
 
-  CircleAvatar imgPerfil() {
+  Widget imgPerfil() {
+    if (_image == null) {
+      return iconErroFoto();
+    }
     if (_image is Uint8List) {
       return circleAvatar(backgroundImage: MemoryImage(_image));
     } else {
       return circleAvatar(backgroundImage: FileImage(_image));
     }
+  }
+
+  Container iconErroFoto() {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        shape: BoxShape.circle,
+        boxShadow: [
+          BoxShadow(
+            blurRadius: 5,
+            color: Colors.black.withOpacity(0.6),
+            spreadRadius: 2,
+          )
+        ],
+      ),
+      child: const Icon(
+        Icons.people,
+        size: 100,
+      ),
+    );
   }
 
   CircleAvatar circleAvatar({required ImageProvider backgroundImage}) {
@@ -125,7 +148,7 @@ class PerfilWidget extends State<PerfilPage> {
     );
   }
 
-  Text textTelefonePrincipal() {
+  Text textTelefone() {
     return textNomeTelefone(
       text: data.telefone!,
       fonrSize: 18,
