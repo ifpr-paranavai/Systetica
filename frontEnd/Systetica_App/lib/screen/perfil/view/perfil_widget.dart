@@ -35,61 +35,49 @@ class PerfilWidget extends State<PerfilPage> {
             color: Colors.black,
           ),
         ),
-        body: SingleChildScrollView(
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: const Alignment(0.1, 0.05),
-                colors: [Colors.grey.withOpacity(0.4), Colors.white],
-              ),
+        body: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: const Alignment(0.1, 0.05),
+              colors: [Colors.grey.withOpacity(0.4), Colors.white],
             ),
-            child: Column(
-              children: [
-                sizedBox(
-                  height: 35,
-                ),
-                SizedBox(
-                  width: 190,
-                  height: 190,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      boxShadow: [
-                        BoxShadow(
-                          blurRadius: 5,
-                          color: Colors.black.withOpacity(0.6),
-                          spreadRadius: 2,
-                        )
-                      ],
-                    ),
-                    child: imgPerfil(),
-                  ),
-                ),
-                sizedBox(height: 50),
-                Card(
-                  shape: RoundedRectangleBorder(
-                    side: const BorderSide(
-                      color: Colors.black,
-                      width: 0.1,
-                    ),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Column(
-                    children: [
-                      sizedBox(height: 5),
-                      itemNome(),
-                      itemTelefone(),
-                      itemEmail(),
-                      itemCpf(),
-                    ],
-                  ),
-                ),
-              ],
+          ),
+          child: Center(
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  boxFoto(),
+                  sizedBox(height: 50),
+                  cardInfoUsuario(),
+                ],
+              ),
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  SizedBox boxFoto() {
+    return SizedBox(
+      width: 190,
+      height: 190,
+      child: Container(
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          boxShadow: [
+            BoxShadow(
+              blurRadius: 5,
+              color: Colors.black.withOpacity(0.6),
+              spreadRadius: 2,
+            )
+          ],
+        ),
+        child: imgPerfil(),
       ),
     );
   }
@@ -106,6 +94,27 @@ class PerfilWidget extends State<PerfilPage> {
     return CircleAvatar(
       backgroundColor: Colors.black,
       backgroundImage: backgroundImage,
+    );
+  }
+
+  Card cardInfoUsuario() {
+    return Card(
+      shape: RoundedRectangleBorder(
+        side: const BorderSide(
+          color: Colors.black,
+          width: 0.1,
+        ),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Column(
+        children: [
+          sizedBox(height: 5),
+          itemNome(),
+          itemTelefone(),
+          itemEmail(),
+          itemCpf(),
+        ],
+      ),
     );
   }
 

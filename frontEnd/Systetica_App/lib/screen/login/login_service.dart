@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:systetica/model/Info.dart';
 import 'package:systetica/model/LoginDTO.dart';
@@ -20,11 +22,10 @@ class LoginService {
       var token = TokenDTO.fromJson(response.data);
       return token;
     } on DioError catch (e) {
-      try{
+      try {
         if (e.type == DioErrorType.connectTimeout) {
           throw Exception("Conexão Perdida: $e.message");
-        }
-        else if (e.response?.statusCode == 403) {
+        } else if (e.response?.statusCode == 403) {
           throw Exception("Usuário ou senha incorreto");
         }
       } catch (e) {
@@ -35,15 +36,20 @@ class LoginService {
     }
   }
 
-  static Future<Info> gerarCodigoAlterarSenha(UsuarioDTO usuarioDTO) async {
+  static Future<Info> gerarCodigoAlterarSenha(String email) async {
     try {
       Dio dio = DioConfigApi.builderConfigJson();
 
-      var response = await dio.put("usuario/gerar-codigo", data: usuarioDTO.toJson());
+      var response = await dio.put(
+        "usuario/gerar-codigo",
+        queryParameters: {
+          'email': email,
+        }
+      );
 
       return Info.fromJson(response.data);
     } on DioError catch (e) {
-      try{
+      try {
         if (e.type == DioErrorType.connectTimeout) {
           throw Exception("Conexão Perdida: $e.message");
         }
@@ -60,11 +66,12 @@ class LoginService {
     try {
       Dio dio = DioConfigApi.builderConfigJson();
 
-      var response = await dio.put("usuario/alterar-senha", data: usuarioDTO.toJson());
+      var response =
+          await dio.put("usuario/alterar-senha", data: usuarioDTO.toJson());
 
       return Info.fromJson(response.data);
     } on DioError catch (e) {
-      try{
+      try {
         if (e.type == DioErrorType.connectTimeout) {
           throw Exception("Conexão Perdida: $e.message");
         }

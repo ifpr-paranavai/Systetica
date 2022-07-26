@@ -6,10 +6,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
-import java.io.File;
 import java.io.Serializable;
-import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -36,15 +35,8 @@ public class Usuario implements Serializable {
     private String cpf;
 
     @NotNull
-    @Column(name = "data_nascimento")
-    private String dataNascimento;
-
-    @NotNull
-    @Column(name = "telefone1", length = 15)
-    private String telefone1;
-
-    @Column(name = "telefone2", length = 15)
-    private String telefone2;
+    @Column(name = "telefone", length = 15)
+    private String telefone;
 
     @NotNull
     @Column(name = "email", unique = true, length = 100)
@@ -72,16 +64,10 @@ public class Usuario implements Serializable {
     @Column(name = "status", length = 1)
     private String status = String.valueOf('A');
 
-    @NotNull
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_cidade")
-    private Cidade cidade;
-
     @ManyToMany(fetch = FetchType.EAGER)
     private Collection<Role> roles = new ArrayList<>();;
 
-    @NotNull
-    @Column(name = "imagemBase64")
+    @Column(name = "imagem_base64")
     @Lob
     private String imagemBase64;
 }

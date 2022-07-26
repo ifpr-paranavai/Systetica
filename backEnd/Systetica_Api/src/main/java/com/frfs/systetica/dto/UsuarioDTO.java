@@ -6,11 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.Serializable;
-import java.sql.Blob;
 import java.util.Collection;
 import java.util.Date;
 
@@ -30,14 +27,8 @@ public class UsuarioDTO implements Serializable {
     @JsonProperty("cpf")
     private String cpf;
 
-    @JsonProperty("data_nascimento")
-    private String dataNascimento;
-
-    @JsonProperty("telefone1")
-    private String telefone1;
-
-    @JsonProperty("telefone2")
-    private String telefone2;
+    @JsonProperty("telefone")
+    private String telefone;
 
     @JsonProperty("email")
     private String email;
@@ -54,17 +45,11 @@ public class UsuarioDTO implements Serializable {
     @JsonProperty("usuario_ativo")
     private Boolean usuarioAtivo = false;
 
-    @JsonProperty("observacao")
-    private String observacao;
-
     @JsonProperty("data_cadastro")
     private Date dataCadastro = new Date();
 
     @JsonProperty("status")
     private String status = String.valueOf('A');
-
-    @JsonProperty("cidade")
-    private CidadeDTO cidade;
 
     @JsonProperty("roles")
     private Collection<RoleDTO> roles;

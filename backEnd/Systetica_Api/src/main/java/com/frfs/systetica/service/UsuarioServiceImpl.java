@@ -38,17 +38,14 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
     private final PasswordEncoder passwordEncoder;
     private final RoleService roleService;
     private final EmailService emailService;
-    private final CidadeMapper cidadeMapper;
 
     @Override
     public ReturnData<String> salvar(UsuarioDTO usuarioDTO) {
         try {
-            if (!Validate.validateCpf(usuarioDTO.getCpf())) {
-                return new ReturnData<>(false, "CPF inválido.");
-            }
-            if (usuarioRepository.findByCpf(usuarioDTO.getCpf()).isPresent()) {
+            if (usuarioDTO.getCpf() != null && usuarioRepository.findByCpf(usuarioDTO.getCpf()).isPresent()) {
                 return new ReturnData<>(false, "CPF já esta sendo utilizado.");
             }
+
             if (usuarioRepository.findByEmail(usuarioDTO.getEmail()).isPresent()) {
                 return new ReturnData<>(false, "Email já esta sendo utilizado.");
             }
@@ -62,17 +59,10 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
                 return returnDataEmail;
             }
 
-            var returnDataConverteBase64 = converteFileBase64(usuarioDTO.getImagemBase64());
-
-            if (!returnDataConverteBase64.getSuccess()) {
-                return returnDataConverteBase64;
-            }
-
             usuarioDTO.setPassword(passwordEncoder.encode(usuarioDTO.getPassword()));
             usuarioDTO.setRoles(roleService.buscaRolePorNome("CLIENTE"));
             usuarioDTO.setDataCodigo(new Date());
             usuarioDTO.setCodigoAleatorio(codigoAleatorio);
-            usuarioDTO.setImagemBase64(returnDataConverteBase64.getMessage());
 
             usuarioRepository.saveAndFlush(usuarioMapper.toEntity(usuarioDTO));
             return new ReturnData<>(true, "Usuário salvo com sucesso", "");
@@ -115,7 +105,7 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
                 usuarioDTO.getCodigoAleatorio());
 
         if (usuario.isEmpty()) {
-            return new ReturnData<>(false, "Email ou código informado é inválidio");
+            return new ReturnData<>(false, "Email ou código informado inválido");
         } else {
             var tempoExpiracao = new Date().getTime() - usuario.get().getDataCadastro().getTime();
 
@@ -132,17 +122,17 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
     }
 
     @Override
-    public ReturnData<String> gerarCodigo(UsuarioDTO usuarioDTO) {
+    public ReturnData<String> gerarCodigoAlterarSenha(String email) {
         try {
-            var usuario = usuarioRepository.findByEmailAndCpf(usuarioDTO.getEmail(), usuarioDTO.getCpf());
+            var usuario = usuarioRepository.findByEmail(email);
 
             if (usuario.isEmpty()) {
                 return new ReturnData<>(false,
-                        "Usuário não encontrado, por favor verifique os dados informados");
+                        "Usuário não encontrado, por favor verifique email informado");
             } else {
                 var codigoAleatorio = GerarCodigoAleatorio.gerarCodigo();
 
-                var returnDataEmail = emailService.enviarEmail(false, usuarioDTO.getEmail(),
+                var returnDataEmail = emailService.enviarEmail(false, email,
                         codigoAleatorio, usuario.get().getNome());
 
                 if (returnDataEmail.getSuccess()) {
@@ -194,9 +184,7 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
             Optional<Usuario> usuarioBanco = usuarioRepository.findById(usuarioDTO.getId());
 
             usuarioBanco.get().setNome(usuarioDTO.getNome());
-            usuarioBanco.get().setTelefone1(usuarioDTO.getTelefone1());
-            usuarioBanco.get().setTelefone2(usuarioDTO.getTelefone2());
-            usuarioBanco.get().setCidade(cidadeMapper.toEntity(usuarioDTO.getCidade()));
+            usuarioBanco.get().setTelefone(usuarioDTO.getTelefone());
             usuarioBanco.get().setImagemBase64(returnDataConverteBase64.getMessage());
 
             usuarioRepository.saveAndFlush(usuarioBanco.get());

@@ -152,13 +152,9 @@ class LoginController {
             "Aguarde...",
           );
           try {
-            UsuarioDTO usuarioDTO = UsuarioDTO(
-              email: emailController.text,
-              cpf: cpfController.text,
+            var infoResponse = await LoginService.gerarCodigoAlterarSenha(
+              emailController.text,
             );
-
-            var infoResponse =
-                await LoginService.gerarCodigoAlterarSenha(usuarioDTO);
 
             // Finaliza o loading na tela
             Navigator.pop(contextLoading, loading);
@@ -170,7 +166,7 @@ class LoginController {
                 context,
                 title: "Sucesso",
                 description:
-                    "Código gerado e enviado em seu email com sucesso.",
+                    "Código para alterar senha enviado para o email:\n${emailController.text}.",
                 buttonText: "OK",
                 onPressed: () {
                   Navigator.pop(

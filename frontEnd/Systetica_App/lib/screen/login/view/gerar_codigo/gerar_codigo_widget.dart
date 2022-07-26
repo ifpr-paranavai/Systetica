@@ -30,7 +30,6 @@ class GerarCodigoWidget extends State<GerarCodigoPage> {
                       imagemGerarCodigo(),
                       textoGerarCodigo(),
                       inputEmail(),
-                      inputCpf(),
                       botaoGerarCodigo(),
                     ],
                   ),
@@ -73,27 +72,10 @@ class GerarCodigoWidget extends State<GerarCodigoPage> {
     );
   }
 
-  CampoTextoWidget inputCpf() {
-    return CampoTextoWidget(
-      labelText: "CPF",
-      keyboardType: TextInputType.number,
-      mask: "###.###.###-##",
-      paddingBottom: 0,
-      maxLength: 14,
-      paddingTop: 5,
-      isIconDate: true,
-      icon: const Icon(
-        Icons.people,
-        color: Colors.black87,
-      ),
-      controller: controller.cpfController,
-      validator: controller.cpfValidator,
-    );
-  }
 
   BotaoWidget botaoGerarCodigo() {
     return BotaoWidget(
-      paddingTop: 18,
+      paddingTop: 70,
       paddingBottom: 30,
       labelText: "Gerar Codigo",
       largura: 190,

@@ -16,7 +16,7 @@ public interface UsuarioService {
 
     ReturnData<String> ativar(UsuarioDTO usuarioDTO);
 
-    ReturnData<String> gerarCodigo(UsuarioDTO usuarioDTO);
+    ReturnData<String> gerarCodigoAlterarSenha(String email);
 
     ReturnData<String> alterarSenha(UsuarioDTO usuarioDTO);
 

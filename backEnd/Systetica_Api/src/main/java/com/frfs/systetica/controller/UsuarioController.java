@@ -18,7 +18,7 @@ public class UsuarioController {
 
     private final UsuarioService usuarioService;
 
-    @PostMapping("/salvar")
+    @PostMapping(value = "/salvar")
     @ResponseBody
     public ResponseEntity<Object> salvar(@Validated @RequestBody UsuarioDTO usuarioDTO) {
         ReturnData<String> result = usuarioService.salvar(usuarioDTO);
@@ -58,10 +58,10 @@ public class UsuarioController {
         return new ResponseEntity<>(result, result.getSuccess() ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @PutMapping("/gerar-codigo")
+    @PutMapping(value = "/gerar-codigo")
     @ResponseBody
-    public ResponseEntity<Object> gerarCodigo(@Validated @RequestBody UsuarioDTO usuarioDTO) {
-        ReturnData<String> result = usuarioService.gerarCodigo(usuarioDTO);
+    public ResponseEntity<Object> gerarCodigo(@RequestParam String email) {
+        ReturnData<String> result = usuarioService.gerarCodigoAlterarSenha(email);
 
         return new ResponseEntity<>(result, result.getSuccess() ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
     }

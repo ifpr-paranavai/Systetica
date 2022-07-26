@@ -4,7 +4,6 @@ import 'package:systetica/components/loading/show_loading_widget.dart';
 import 'package:systetica/components/page_transition.dart';
 import 'package:systetica/components/show_modal_sucesso_widget.dart';
 import 'package:systetica/components/texto_erro_widget.dart';
-import 'package:systetica/model/CidadeDTO.dart';
 import 'package:systetica/model/UsuarioDTO.dart';
 import 'package:systetica/request/dio_config.dart';
 import 'package:systetica/screen/cadastro_usuario/cadastro_service.dart';
@@ -21,8 +20,6 @@ class CadastroController {
   final codicoController = TextEditingController();
   final formKey = GlobalKey<FormState>();
 
-  CidadeDTO? cidadeDTO;
-  String imagemBase64 = "";
   var myPageTransition = MyPageTransition();
 
   MultiValidator get nomeValidator {
@@ -94,19 +91,6 @@ class CadastroController {
         return;
       }
 
-      if (imagemBase64.isEmpty) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            backgroundColor: Colors.blueGrey,
-            padding: EdgeInsets.all(18),
-            content: TextoErroWidget(
-              mensagem: "Por favor, adicione uma foto de perfil",
-            ),
-          ),
-        );
-        return;
-      }
-
       if (formKey.currentState != null) {
         if (formKey.currentState?.validate() ?? true) {
           try {
@@ -115,7 +99,6 @@ class CadastroController {
               telefone: telefone1.text,
               email: emailController.text,
               password: senhaController.text,
-              imagemBase64: imagemBase64,
             );
 
             //Loading apresentado na tela
@@ -197,7 +180,7 @@ class CadastroController {
           showModalOkWidget.showModalOk(
             context,
             title: "Sucesso",
-            description: "Usuário foi ativiado com sucesso",
+            description: "Usuário ativado com sucesso",
             buttonText: "OK",
             onPressed: () => Navigator.pushAndRemoveUntil(
                 context,

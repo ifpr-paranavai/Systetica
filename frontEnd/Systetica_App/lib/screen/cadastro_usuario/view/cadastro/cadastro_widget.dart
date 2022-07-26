@@ -18,46 +18,7 @@ class CadastroWidget extends State<CadastroPage> {
   final CadastroController _controller = CadastroController();
   late ScrollController _scrollController;
   late ScrollController _scrollControllerDropDown;
-  final _picker = ImagePicker();
 
-  Future<void> _adicionarImagem() async {
-    PickedFile? pickedImagem =
-        await _picker.getImage(source: ImageSource.gallery);
-    if (pickedImagem != null) {
-      CroppedFile _croppedFile = await _funcaoCroppedFile(pickedImagem);
-      setState(
-        () {
-          File imagem = File(_croppedFile.path);
-          _controller.imagemBase64 = base64Encode(imagem.readAsBytesSync());
-        },
-      );
-    }
-  }
-
-  Future<CroppedFile> _funcaoCroppedFile(PickedFile pickedImagem) async {
-    CroppedFile? _croppedFile = await ImageCropper().cropImage(
-      sourcePath: pickedImagem.path,
-      aspectRatioPresets: [
-        CropAspectRatioPreset.original,
-      ],
-      cropStyle: CropStyle.circle,
-      uiSettings: [
-        AndroidUiSettings(
-          toolbarTitle: 'Recortar',
-          toolbarColor: AppColors.bluePrincipal,
-          toolbarWidgetColor: Colors.white,
-          initAspectRatio: CropAspectRatioPreset.original,
-          lockAspectRatio: false,
-          backgroundColor: Colors.white,
-          activeControlsWidgetColor: AppColors.redPrincipal,
-        ),
-        IOSUiSettings(
-          title: 'Recortar',
-        ),
-      ],
-    );
-    return _croppedFile!;
-  }
 
   @override
   void initState() {
@@ -145,7 +106,7 @@ class CadastroWidget extends State<CadastroPage> {
       labelText: "E-mail",
       paddingBottom: 0,
       maxLength: 80,
-      paddingTop: 5,
+      paddingTop: 6,
       isIconDate: true,
       icon: const Icon(
         Icons.email,
@@ -163,7 +124,7 @@ class CadastroWidget extends State<CadastroPage> {
       mask: "(##) #####-####",
       paddingBottom: 0,
       maxLength: 15,
-      paddingTop: 5,
+      paddingTop: 6,
       isIconDate: true,
       icon: const Icon(
         Icons.phone,
@@ -180,7 +141,7 @@ class CadastroWidget extends State<CadastroPage> {
       maxLength: 16,
       isPassword: true,
       paddingBottom: 0,
-      paddingTop: 5,
+      paddingTop: 6,
       controller: _controller.senhaController,
       validator: _controller.senhaValidator,
     );
@@ -192,25 +153,9 @@ class CadastroWidget extends State<CadastroPage> {
       maxLength: 16,
       isPassword: true,
       paddingBottom: 0,
-      paddingTop: 5,
+      paddingTop: 6,
       controller: _controller.confirmaSenhaController,
       validator: _controller.confirmaSenhaValidator,
-    );
-  }
-
-  BotaoIconWidget botaoFoto() {
-    return BotaoIconWidget(
-      paddingTop: 5,
-      paddingBottom: 0,
-      paddingRight: 120,
-      labelText: "Foto de Perfil",
-      largura: 340,
-      fontSize: 18,
-      corBotao: Colors.white,
-      corTexto: Colors.black,
-      corBorda: Colors.blueGrey,
-      fontWeight: FontWeight.normal,
-      onPressed: () => _adicionarImagem(),
     );
   }
 
