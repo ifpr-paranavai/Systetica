@@ -1,11 +1,12 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:systetica/components/texto_erro_widget.dart';
 import 'package:systetica/database/repository/token_repository.dart';
+import 'package:systetica/model/Info.dart';
 import 'package:systetica/model/TokenDTO.dart';
-import 'package:systetica/model/UsuarioDTO.dart';
 import 'package:systetica/request/dio_config.dart';
 import 'package:systetica/screen/perfil/perfil_service.dart';
 
@@ -14,23 +15,19 @@ class PerfilController {
   PickedFile? pickedFile;
   String imagemBase64 = "";
 
-  Future<UsuarioDTO?> buscarUsuarioEmail(BuildContext context) async {
+  Future<Info?> buscarUsuarioEmail(BuildContext context) async {
     var connected = await ConnectionCheck.check();
+    Info info = Info(success: true);
     if (connected) {
       try {
         TokenDTO _tokenDto = TokenDTO().toDTO(
           await TokenRepository.findToken(),
         );
-        return await PerfilService.buscarUsuario(_tokenDto);
+        info = await PerfilService.buscarUsuario(_tokenDto);
+        return info;
       } catch (e) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            backgroundColor: Colors.blueGrey,
-            content: TextoErroWidget(
-              mensagem: "Ocorreu algum erro ao buscar dados",
-            ),
-          ),
-        );
+        info.success = false;
+        return info;
       }
     } else {
       ScaffoldMessenger.of(context).showSnackBar(

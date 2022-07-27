@@ -14,6 +14,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   google_fonts: ^3.0.1
   jwt_decoder: ^2.0.1
+  loading_animation_widget: ^1.2.0+2
 
 dev_dependencies:
   flutter_test:
@@ -37,8 +38,7 @@ dev_dependencies:
   animated_text_kit:
   image_picker:
   image_cropper:
-  dropdown_button2:
-
+  dropdown_button2: ^1.7.0
 
 flutter:
   uses-material-design: true
@@ -49,3 +49,4 @@ flutter:
     - assets/img/login.png
     - assets/img/registro.png
     - assets/img/ativar-usuario.png
+    - assets/img/erro.png

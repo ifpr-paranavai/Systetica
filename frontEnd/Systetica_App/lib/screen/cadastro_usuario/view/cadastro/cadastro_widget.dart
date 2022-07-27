@@ -12,7 +12,6 @@ import 'package:systetica/components/input/campo_texto_widget.dart';
 import 'package:systetica/components/text_autenticacoes_widget.dart';
 import 'package:systetica/screen/cadastro_usuario/cadastro_controller.dart';
 import 'package:systetica/screen/cadastro_usuario/view/cadastro/cadastro_page.dart';
-import 'package:systetica/style/app_colors..dart';
 
 class CadastroWidget extends State<CadastroPage> {
   final CadastroController _controller = CadastroController();
@@ -124,7 +123,7 @@ class CadastroWidget extends State<CadastroPage> {
       mask: "(##) #####-####",
       paddingBottom: 0,
       maxLength: 15,
-      paddingTop: 6,
+      paddingTop: 8,
       isIconDate: true,
       icon: const Icon(
         Icons.phone,

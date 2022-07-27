@@ -22,6 +22,8 @@ class CadastroController {
 
   var myPageTransition = MyPageTransition();
 
+  //Todo, create class validator geral
+
   MultiValidator get nomeValidator {
     return MultiValidator([
       RequiredValidator(errorText: 'Campo obrigatório'),

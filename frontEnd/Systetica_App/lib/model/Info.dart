@@ -21,9 +21,9 @@ class Info {
 
   Map<String, dynamic> toJson() {
     return {
-      SUCCESS: this.success,
-      MESSAGE: this.message,
-      OBJECT: this.object,
+      SUCCESS: success,
+      MESSAGE: message,
+      OBJECT: object,
     };
   }
 }

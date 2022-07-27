@@ -36,9 +36,4 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-// TODO
-// diminuir foto e texto e adicionar
-// botão de 3 pontos na parte superior a
-// direita e adicionar linha nas opções a baixo
-//
 

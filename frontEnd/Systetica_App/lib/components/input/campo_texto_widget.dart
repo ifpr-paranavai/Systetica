@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
+import'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class CampoTextoWidget extends StatefulWidget {
-  const CampoTextoWidget({
+  CampoTextoWidget({
     Key? key,
     required this.labelText,
     this.onChanged,
@@ -38,12 +38,14 @@ class CampoTextoWidget extends StatefulWidget {
   final Widget? icon;
   final TextEditingController? controller;
   final String? Function(String?)? validator;
+  final formKey = GlobalKey<FormState>();
 
   @override
   _CampoTextoWidget createState() => _CampoTextoWidget();
 }
 
 class _CampoTextoWidget extends State<CampoTextoWidget> {
+  final formKey = GlobalKey<FormState>();
   bool _esconderTextSenha = true;
   Color _corDaBorda = Colors.black;
 
@@ -151,6 +153,8 @@ class _CampoTextoWidget extends State<CampoTextoWidget> {
                 : null,
       ),
       validator: widget.validator,
+      key: formKey,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
     );
   }
 }

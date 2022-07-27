@@ -7,12 +7,14 @@ class TextAutenticacoesWidget extends StatefulWidget {
     required this.text,
     this.paddingTop = 0,
     this.paddingBottom = 0,
+    this.paddingLeft = 35,
     this.fontSize = 37,
   }) : super(key: key);
 
   String text;
   double paddingTop;
   double paddingBottom;
+  double paddingLeft;
   double fontSize;
 
   @override
@@ -26,7 +28,7 @@ class _TextAutenticacoesWidget extends State<TextAutenticacoesWidget> {
       alignment: Alignment.centerLeft,
       child: Padding(
         padding: EdgeInsets.only(
-          left: 35,
+          left: widget.paddingLeft,
           top: widget.paddingTop,
           bottom: widget.paddingBottom,
         ),

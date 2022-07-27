@@ -28,7 +28,7 @@ import java.util.Optional;
 @Slf4j
 public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
 
-    private static final long OITO_HORAS_MILLISEGUNDOS = 28800000;
+    private static final long DEZ_MINUTOS_MILLISECUNDOS_CODIGO = 600000;
     private static final long DEZ_MB = 10024000L;
 
     private final UsuarioRepository usuarioRepository;
@@ -103,7 +103,7 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
         } else {
             var tempoExpiracao = new Date().getTime() - usuario.get().getDataCadastro().getTime();
 
-            if (tempoExpiracao < OITO_HORAS_MILLISEGUNDOS) {
+            if (tempoExpiracao < DEZ_MINUTOS_MILLISECUNDOS_CODIGO) {
                 usuario.get().setCodigoAleatorio(null);
                 usuario.get().setDataCodigo(null);
                 usuario.get().setUsuarioAtivo(true);

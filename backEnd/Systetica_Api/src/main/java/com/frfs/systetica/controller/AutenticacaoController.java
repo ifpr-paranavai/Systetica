@@ -46,7 +46,7 @@ public class AutenticacaoController {
 
                 String access_token = JWT.create()
                         .withSubject(usuario.getEmail())
-                        .withExpiresAt(new Date(System.currentTimeMillis() + 10 * 60 * 1000))
+                        .withExpiresAt(new Date(System.currentTimeMillis() + 10 * 60 * 1000)) // TODO TEMPO TOKEN
                         .withIssuer(request.getRequestURL().toString())
                         .withClaim("roles", usuario.getRoles().stream().map(Role::getName).collect(Collectors.toList()))
                         .sign(algorithm);
