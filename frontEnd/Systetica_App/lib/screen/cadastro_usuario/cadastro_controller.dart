@@ -28,9 +28,14 @@ class CadastroController {
     ]);
   }
 
+
   MultiValidator get telefoneValidator {
     return MultiValidator([
       RequiredValidator(errorText: 'Campo obrigatório'),
+      MinLengthValidator(
+        15,
+        errorText: 'Campo deve ter ao menos 15 dígitos',
+      ),
     ]);
   }
 

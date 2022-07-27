@@ -31,10 +31,6 @@ public class Usuario implements Serializable {
     private String nome;
 
     @NotNull
-    @Column(name = "cpf", unique = true, length = 14)
-    private String cpf;
-
-    @NotNull
     @Column(name = "telefone", length = 15)
     private String telefone;
 
@@ -59,10 +55,6 @@ public class Usuario implements Serializable {
     @NotNull
     @Column(name = "data_cadastro")
     private Date dataCadastro;
-
-    @NotNull
-    @Column(name = "status", length = 1)
-    private String status = String.valueOf('A');
 
     @ManyToMany(fetch = FetchType.EAGER)
     private Collection<Role> roles = new ArrayList<>();;

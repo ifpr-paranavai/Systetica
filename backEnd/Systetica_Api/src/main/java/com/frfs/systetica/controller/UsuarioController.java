@@ -42,10 +42,10 @@ public class UsuarioController {
         return new ResponseEntity<>(result, result.getSuccess() ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @PostMapping("/buscar-todos")
+    @GetMapping(value = "email/{email}")
     @ResponseBody
-    public ResponseEntity<Object> buscarTodos() {
-        ReturnData<Object> result = usuarioService.buscarTodos();
+    public ResponseEntity<Object> buscarPorEmail(@PathVariable String email) {
+        ReturnData<Object> result = usuarioService.buscarPorEmail(email);
 
         return new ResponseEntity<>(result, result.getSuccess() ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
     }

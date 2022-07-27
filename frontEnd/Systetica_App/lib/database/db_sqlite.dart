@@ -39,6 +39,7 @@ class DbSQLite {
     ${TokenORM.ID} $idType,
     ${TokenORM.ACCESS_TOKEN} $textType,
     ${TokenORM.REFRESH_TOKEN} $textType,
+    ${TokenORM.EMAIL} $textType,
     ${TokenORM.DATE_TIME_TOKEN} $textType
     )''');
   }

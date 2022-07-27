@@ -35,10 +35,10 @@ class TokenRepository {
     }
   }
 
-  static Future<bool> updateToken(TokenORM tokenORM) async {
+  static Future<bool> updateToken(TokenDTO tokenDTO) async {
     final db = await DbSQLite.instance.database;
-    final qtdeUpdate = await db.update(TokenORM.TABLE, tokenORM.toJson(),
-        where: "id = ?", whereArgs: [tokenORM.id]);
+    final qtdeUpdate = await db.update(TokenORM.TABLE, tokenDTO.toJson(),
+        where: "id = ?", whereArgs: [tokenDTO.id]);
 
     if (qtdeUpdate > 0) {
       return true;

@@ -4,11 +4,9 @@ import com.frfs.systetica.dto.UsuarioDTO;
 import com.frfs.systetica.dto.response.ReturnData;
 import com.frfs.systetica.entity.Usuario;
 import com.frfs.systetica.exception.BusinessException;
-import com.frfs.systetica.mapper.CidadeMapper;
 import com.frfs.systetica.mapper.UsuarioMapper;
 import com.frfs.systetica.repository.UsuarioRepository;
 import com.frfs.systetica.utils.GerarCodigoAleatorio;
-import com.frfs.systetica.utils.Validate;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.codec.binary.Base64;
@@ -42,10 +40,6 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
     @Override
     public ReturnData<String> salvar(UsuarioDTO usuarioDTO) {
         try {
-            if (usuarioDTO.getCpf() != null && usuarioRepository.findByCpf(usuarioDTO.getCpf()).isPresent()) {
-                return new ReturnData<>(false, "CPF já esta sendo utilizado.");
-            }
-
             if (usuarioRepository.findByEmail(usuarioDTO.getEmail()).isPresent()) {
                 return new ReturnData<>(false, "Email já esta sendo utilizado.");
             }
@@ -88,8 +82,8 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
     public ReturnData<Object> buscarPorEmail(String email) {
         var usuario = usuarioRepository.findByEmail(email);
         if (usuario.isEmpty()) {
-            return new ReturnData<>(false, "Não foi possível encontrar usuário pelo email informado",
-                    "Usuário não encontrado");
+            return new ReturnData<>(false, "Usuário não encontrado.",
+                    "Não foi possível encontrar usuário pelo email" + email);
         }
         return new ReturnData<>(true, "", usuarioMapper.toDto(usuario.get()));
     }

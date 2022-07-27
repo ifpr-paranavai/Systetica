@@ -5,7 +5,6 @@ import 'package:systetica/components/imagens_widget.dart';
 import 'package:systetica/components/input/campo_texto_widget.dart';
 import 'package:systetica/components/page_transition.dart';
 import 'package:systetica/components/text_autenticacoes_widget.dart';
-import 'package:systetica/screen/home/view/home_page.dart';
 import 'package:systetica/screen/login/login_controller.dart';
 import 'package:systetica/screen/login/view/gerar_codigo/gerar_codigo_page.dart';
 import 'package:systetica/screen/login/view/login/login_page.dart';
@@ -98,16 +97,8 @@ class LoginWidget extends State<LoginPage> {
       largura: 190,
       corBotao: Colors.black87.withOpacity(0.9),
       corTexto: Colors.white,
-      // onPressed: () async {
-      //   await controller.login(context, widget);
-      // },
-      onPressed: () => {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const HomePage(),
-          ),
-        )
+      onPressed: () async {
+        await controller.login(context, widget);
       },
     );
   }

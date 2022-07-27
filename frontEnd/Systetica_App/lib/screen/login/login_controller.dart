@@ -7,13 +7,14 @@ import 'package:systetica/components/texto_erro_widget.dart';
 import 'package:systetica/database/orm/token_orm.dart';
 import 'package:systetica/database/repository/token_repository.dart';
 import 'package:systetica/model/LoginDTO.dart';
+import 'package:systetica/model/TokenDTO.dart';
 import 'package:systetica/model/UsuarioDTO.dart';
 import 'package:systetica/request/dio_config.dart';
 import 'package:systetica/screen/home/view/home_page.dart';
 import 'package:systetica/screen/inicio/view/inicio_page.dart';
 import 'package:systetica/screen/login/login_service.dart';
 import 'package:systetica/screen/login/view/alterar_senha/alterar_senha_page.dart';
-import 'package:systetica/utils/validacoes.dart';
+import 'package:systetica/utils/util.dart';
 
 class LoginController {
   final emailController = TextEditingController();
@@ -87,18 +88,19 @@ class LoginController {
               email: emailController.text,
               password: senhaController.text,
             );
-            var tokenDto = await LoginService.login(login);
+            TokenDTO? tokenDto = await LoginService.login(login);
 
             // Verificar se já existe alguma Usuario cadastrado no banco
             TokenORM existeTokenORM = await TokenRepository.findToken();
 
-            if (Validacoes.isIntegerNull(existeTokenORM.id) &&
-                Validacoes.isEmptOrNull(existeTokenORM.accessToken) &&
-                Validacoes.isEmptOrNull(existeTokenORM.refreshToken)) {
+            if (Util.isIntegerNull(existeTokenORM.id) &&
+                Util.isEmptOrNull(existeTokenORM.accessToken) &&
+                Util.isEmptOrNull(existeTokenORM.email) &&
+                Util.isEmptOrNull(existeTokenORM.refreshToken)) {
               TokenRepository.insertToken(tokenDto!);
             } else {
-              existeTokenORM.id = existeTokenORM.id;
-              TokenRepository.updateToken(existeTokenORM);
+              tokenDto!.id = existeTokenORM.id;
+              TokenRepository.updateToken(tokenDto);
             }
 
             // Finaliza o loading na tela

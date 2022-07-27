@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import 'package:systetica/model/Info.dart';
 import 'package:systetica/model/LoginDTO.dart';
@@ -19,7 +17,7 @@ class LoginService {
     try {
       var response = await dio.post("login", data: formData);
 
-      var token = TokenDTO.fromJson(response.data);
+      TokenDTO token = TokenDTO.fromJson(response.data);
       return token;
     } on DioError catch (e) {
       try {

@@ -5,17 +5,20 @@ class TokenORM {
   static const String ID = "id";
   static const String ACCESS_TOKEN = "access_token";
   static const String REFRESH_TOKEN = "refresh_token";
+  static const String EMAIL = "email";
   static const String DATE_TIME_TOKEN = "date_time_token";
 
   int? id;
   String? accessToken;
   String? refreshToken;
+  String? email;
   String? dateTimeToken;
 
   TokenORM({
     this.id,
     this.accessToken,
     this.refreshToken,
+    this.email,
     this.dateTimeToken,
   });
 
@@ -23,6 +26,7 @@ class TokenORM {
         ID: id,
         ACCESS_TOKEN: accessToken,
         REFRESH_TOKEN: refreshToken,
+        EMAIL: email,
         DATE_TIME_TOKEN: dateTimeToken,
       };
 
@@ -30,6 +34,7 @@ class TokenORM {
         id: (json['id']),
         accessToken: (json['access_token'] ?? ""),
         refreshToken: (json['refresh_token'] ?? ""),
+        email: (json['email'] ?? ""),
         dateTimeToken: (json['data_time_token'] ?? ""),
       );
 
@@ -37,6 +42,7 @@ class TokenORM {
     return TokenORM(
       accessToken: tokenDTO.accessToken,
       refreshToken: tokenDTO.refreshToken,
+      email: tokenDTO.email,
       dateTimeToken: tokenDTO.dateTimeToken,
     );
   }
@@ -45,12 +51,14 @@ class TokenORM {
     int? id,
     String? accessToken,
     String? refreshToken,
+    String? email,
     String? dateTimeToken,
   }) =>
       TokenORM(
         id: id ?? this.id,
         accessToken: accessToken ?? this.accessToken,
         refreshToken: refreshToken ?? this.refreshToken,
+        email: email ?? this.email,
         dateTimeToken: dateTimeToken ?? this.dateTimeToken,
       );
 }

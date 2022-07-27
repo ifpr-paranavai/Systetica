@@ -24,9 +24,6 @@ public class UsuarioDTO implements Serializable {
     @JsonProperty("nome")
     private String nome;
 
-    @JsonProperty("cpf")
-    private String cpf;
-
     @JsonProperty("telefone")
     private String telefone;
 
@@ -47,9 +44,6 @@ public class UsuarioDTO implements Serializable {
 
     @JsonProperty("data_cadastro")
     private Date dataCadastro = new Date();
-
-    @JsonProperty("status")
-    private String status = String.valueOf('A');
 
     @JsonProperty("roles")
     private Collection<RoleDTO> roles;

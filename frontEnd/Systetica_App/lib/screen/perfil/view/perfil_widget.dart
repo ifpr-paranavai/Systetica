@@ -69,29 +69,38 @@ class PerfilWidget extends State<PerfilPage> {
       child: Scaffold(
         floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
         floatingActionButton: dropDownButton(),
-        body: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: const Alignment(0.1, 0.05),
-              colors: [Colors.grey.withOpacity(0.4), Colors.white],
-            ),
-          ),
-          child: Center(
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  boxFoto(),
-                  sizedBox(height: 50),
-                  cardInfoUsuario(),
-                ],
-              ),
-            ),
-          ),
-        ),
+        body: FutureBuilder<UsuarioDTO?>(
+          future: _controller.buscarUsuarioEmail(context),
+          builder: (context, snapShot) {
+            if(!snapShot.hasData){
+              return Text("Sem dados");
+            } else {
+              return Container(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: const Alignment(0.1, 0.05),
+                    colors: [Colors.grey.withOpacity(0.4), Colors.white],
+                  ),
+                ),
+                child: Center(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        boxFoto(),
+                        sizedBox(height: 50),
+                        cardInfoUsuario(),
+                      ],
+                    ),
+                  ),
+                ),
+              );
+            }
+          },
+        )
       ),
     );
   }
