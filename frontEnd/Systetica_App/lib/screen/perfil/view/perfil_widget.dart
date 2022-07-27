@@ -9,12 +9,53 @@ import 'package:systetica/model/UsuarioDTO.dart';
 import 'package:systetica/screen/perfil/perfil_controller.dart';
 import 'package:systetica/screen/perfil/view/data.dart';
 import 'package:systetica/screen/perfil/view/perfil_page.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:systetica/style/app_colors..dart';
 
 class PerfilWidget extends State<PerfilPage> {
   var myPageTransition = MyPageTransition();
   final PerfilController _controller = PerfilController();
   UsuarioDTO data = getUsuarioData();
   dynamic _image;
+
+  final List<Widget> items = [
+    Row(
+      children: const [
+        Icon(
+          Icons.edit,
+          color: Colors.white,
+          size: 22,
+        ),
+        SizedBox(
+          width: 10,
+        ),
+        Text(
+          "Editar",
+          style: TextStyle(
+            color: Colors.white,
+          ),
+        ),
+      ],
+    ),
+    Row(
+      children: const [
+        Icon(
+          Icons.logout,
+          color: Colors.white,
+          size: 22,
+        ),
+        SizedBox(
+          width: 10,
+        ),
+        Text(
+          "Sair",
+          style: TextStyle(
+            color: Colors.white,
+          ),
+        ),
+      ],
+    ),
+  ];
 
   @override
   void initState() {
@@ -27,14 +68,7 @@ class PerfilWidget extends State<PerfilPage> {
     return SafeArea(
       child: Scaffold(
         floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
-        floatingActionButton: const Padding(
-          padding: EdgeInsets.only(top: 15),
-          child: Icon(
-            Icons.more_horiz,
-            size: 25,
-            color: Colors.black,
-          ),
-        ),
+        floatingActionButton: dropDownButton(),
         body: Container(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           decoration: BoxDecoration(
@@ -62,10 +96,41 @@ class PerfilWidget extends State<PerfilPage> {
     );
   }
 
+  DropdownButtonHideUnderline dropDownButton() {
+    return DropdownButtonHideUnderline(
+      child: Padding(
+        padding: const EdgeInsets.only(top: 18),
+        child: DropdownButton2(
+          customButton: const Padding(
+            padding: EdgeInsets.only(bottom: 3),
+            child:  Icon(
+              Icons.more_vert,
+              size: 40,
+              color: AppColors.redPrincipal,
+            ),
+          ),
+          items: items.map((item) => DropdownMenuItem<Widget>(
+            value: item,
+            child: item,
+          )).toList(),
+          onChanged: (value) {},
+          itemPadding: const EdgeInsets.all(15),
+          dropdownWidth: 120,
+          dropdownDecoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(15),
+            color: AppColors.bluePrincipal,
+          ),
+          dropdownElevation: 8,
+          offset: const Offset(-70, 0),
+        ),
+      ),
+    );
+  }
+
   SizedBox boxFoto() {
     return SizedBox(
-      width: 190,
-      height: 190,
+      width: 195,
+      height: 195,
       child: Container(
         decoration: BoxDecoration(
           shape: BoxShape.circle,
@@ -96,7 +161,7 @@ class PerfilWidget extends State<PerfilPage> {
   Container iconErroFoto() {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.redPrincipal,
         shape: BoxShape.circle,
         boxShadow: [
           BoxShadow(
@@ -107,8 +172,9 @@ class PerfilWidget extends State<PerfilPage> {
         ],
       ),
       child: const Icon(
-        Icons.people,
+        Icons.person,
         size: 100,
+        color: Colors.white,
       ),
     );
   }
@@ -135,7 +201,6 @@ class PerfilWidget extends State<PerfilPage> {
           itemNome(),
           itemTelefone(),
           itemEmail(),
-          itemCpf(),
         ],
       ),
     );
@@ -155,10 +220,7 @@ class PerfilWidget extends State<PerfilPage> {
     );
   }
 
-  Text textNomeTelefone({
-    required String text,
-    required double fonrSize,
-  }) {
+  Text textNomeTelefone({required String text, required double fonrSize,}) {
     return Text(
       text,
       style: GoogleFonts.lora(
@@ -189,13 +251,6 @@ class PerfilWidget extends State<PerfilPage> {
     return ItemLista(
       titulo: "E-mail",
       descricao: data.email!,
-    );
-  }
-
-  ItemLista itemCpf() {
-    return ItemLista(
-      titulo: "CPF",
-      descricao: data.cpf!,
     );
   }
 

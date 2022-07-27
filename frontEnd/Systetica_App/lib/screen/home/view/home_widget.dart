@@ -180,7 +180,7 @@ class HomeWidget extends State<HomePage> {
 
   BottomNavigationBarItem bottomPerfil() {
     return const BottomNavigationBarItem(
-      icon: Icon(Icons.people),
+      icon: Icon(Icons.person),
       label: 'Perfil',
     );
   }
