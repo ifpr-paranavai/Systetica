@@ -36,7 +36,7 @@ dev_dependencies:
   page_transition: ^2.0.9
   form_field_validator: ^1.1.0
   animated_text_kit:
-  image_picker:
+  image_picker: ^0.8.5+3
   image_cropper:
   dropdown_button2: ^1.7.0
 

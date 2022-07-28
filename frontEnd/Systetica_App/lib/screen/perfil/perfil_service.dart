@@ -1,8 +1,5 @@
-import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import 'package:systetica/model/Info.dart';
-import 'package:systetica/model/LoginDTO.dart';
 import 'package:systetica/model/TokenDTO.dart';
 import 'package:systetica/model/UsuarioDTO.dart';
 import 'package:systetica/utils/dio/dio_config_api.dart';

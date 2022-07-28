@@ -1,23 +1,19 @@
-import 'dart:convert';
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:image_cropper/image_cropper.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:systetica/components/botoes/botao_icon_widget.dart';
 import 'package:systetica/components/botoes/botao_widget.dart';
 import 'package:systetica/components/icon_arrow_widget.dart';
 import 'package:systetica/components/imagens_widget.dart';
 import 'package:systetica/components/input/campo_texto_widget.dart';
+import 'package:systetica/components/page_transition.dart';
 import 'package:systetica/components/text_autenticacoes_widget.dart';
 import 'package:systetica/screen/cadastro_usuario/cadastro_controller.dart';
+import 'package:systetica/screen/cadastro_usuario/view/ativar_usuario/ativar_usuario_page.dart';
 import 'package:systetica/screen/cadastro_usuario/view/cadastro/cadastro_page.dart';
 
 class CadastroWidget extends State<CadastroPage> {
   final CadastroController _controller = CadastroController();
+  var myPageTransition = MyPageTransition();
   late ScrollController _scrollController;
   late ScrollController _scrollControllerDropDown;
-
 
   @override
   void initState() {
@@ -58,8 +54,8 @@ class CadastroWidget extends State<CadastroPage> {
                       inputEmail(),
                       inputSenha(),
                       inputConfirmaSenha(),
-                      // botaoFoto(),
                       botaoCadastrar(),
+                      botaoAtivar(),
                     ],
                   ),
                 ),
@@ -161,7 +157,7 @@ class CadastroWidget extends State<CadastroPage> {
   BotaoWidget botaoCadastrar() {
     return BotaoWidget(
       paddingTop: 10,
-      paddingBottom: 25,
+      paddingBottom: 0,
       labelText: "CADASTRAR",
       largura: 190,
       corBotao: Colors.black87.withOpacity(0.9),
@@ -172,6 +168,23 @@ class CadastroWidget extends State<CadastroPage> {
           widget,
         );
       },
+    );
+  }
+
+  BotaoWidget botaoAtivar() {
+    return BotaoWidget(
+      paddingTop: 18,
+      paddingBottom: 30,
+      labelText: "ATIVAR USUÁRIO",
+      largura: 190,
+      corBotao: Colors.black87.withOpacity(0.9),
+      corTexto: Colors.white,
+      onPressed: () => Navigator.of(context).push(
+        myPageTransition.pageTransition(
+          child: const AtivarUsuarioPage(),
+          childCurrent: widget,
+        ),
+      ),
     );
   }
 }

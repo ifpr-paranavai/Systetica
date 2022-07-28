@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:systetica/style/app_colors..dart';
 
 class BotaoWidget extends StatefulWidget {
   const BotaoWidget({
@@ -14,6 +15,7 @@ class BotaoWidget extends StatefulWidget {
     this.paddingRight = 0,
     this.fontSize = 14,
     this.fontWeight = FontWeight.bold,
+    this.overlayColor = AppColors.blue5,
   }) : super(key: key);
 
   final String labelText;
@@ -27,6 +29,7 @@ class BotaoWidget extends StatefulWidget {
   final double paddingRight;
   final double fontSize;
   final FontWeight? fontWeight;
+  final Color overlayColor;
 
   @override
   _BotaoWidget createState() => _BotaoWidget();
@@ -40,21 +43,9 @@ class _BotaoWidget extends State<BotaoWidget> {
         top: widget.paddingTop,
         bottom: widget.paddingBottom,
       ),
-      child: Container(
+      child: SizedBox(
         width: widget.largura,
         height: 47,
-        decoration: BoxDecoration(
-          color: widget.corBotao,
-          borderRadius: const BorderRadius.all(
-            Radius.circular(
-              12,
-            ),
-          ),
-          border: Border.all(
-            color: widget.corBorda,
-            width: 1,
-          ),
-        ),
         child: _textButton(),
       ),
     );
@@ -68,6 +59,21 @@ class _BotaoWidget extends State<BotaoWidget> {
           color: widget.corTexto,
           fontWeight: widget.fontWeight,
           fontSize: widget.fontSize,
+        ),
+      ),
+      style: ButtonStyle(
+        overlayColor: MaterialStateProperty.all(widget.overlayColor),
+        backgroundColor: MaterialStateProperty.all(widget.corBotao),
+        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(
+              12,
+            ),
+            side: BorderSide(
+              color: widget.corBorda,
+              width: 1,
+            ),
+          ),
         ),
       ),
       onPressed: widget.onPressed,

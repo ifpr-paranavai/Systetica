@@ -23,18 +23,19 @@ class PageImpl {
   int? numberOfElements;
   bool? empty;
 
-  PageImpl(
-      {this.content,
-        this.pageable,
-        this.last,
-        this.totalElements,
-        this.totalPages,
-        this.size,
-        this.number,
-        this.sort,
-        this.first,
-        this.numberOfElements,
-        this.empty});
+  PageImpl({
+    content,
+    pageable,
+    last,
+    totalElements,
+    totalPages,
+    size,
+    number,
+    sort,
+    first,
+    numberOfElements,
+    empty,
+  });
 
   PageImpl.fromJson(Map<String, dynamic> json) {
     if (json[CONTENT] != null) {
@@ -44,48 +45,48 @@ class PageImpl {
       });
     }
     pageable =
-    json[PAGEABLE] != null ? new Pageable.fromJson(json[PAGEABLE]) : null;
+        json[PAGEABLE] != null ? Pageable.fromJson(json[PAGEABLE]) : null;
     last = json[LAST];
     totalElements = json[TOTAL_ELEMENTS];
     totalPages = json[TOTAL_PAGES];
     size = json[SIZE];
     number = json[NUMBER];
-    sort = json[SORT] != null ? new Sort.fromJson(json[SORT]) : null;
+    sort = json[SORT] != null ? Sort.fromJson(json[SORT]) : null;
     first = json[FIRST];
     numberOfElements = json[NUMBER_OF_ELEMENTS];
     empty = json[EMPTY];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.content != null) {
-      data[CONTENT] = this.content!.toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (content != null) {
+      data[CONTENT] = content!.toList();
     }
-    if (this.pageable != null) {
-      data[PAGEABLE] = this.pageable!.toJson();
+    if (pageable != null) {
+      data[PAGEABLE] = pageable!.toJson();
     }
-    data[LAST] = this.last;
-    data[TOTAL_ELEMENTS] = this.totalElements;
-    data[TOTAL_PAGES] = this.totalPages;
-    data[SIZE] = this.size;
-    data[NUMBER] = this.number;
-    if (this.sort != null) {
-      data[SORT] = this.sort!.toJson();
+    data[LAST] = last;
+    data[TOTAL_ELEMENTS] = totalElements;
+    data[TOTAL_PAGES] = totalPages;
+    data[SIZE] = size;
+    data[NUMBER] = number;
+    if (sort != null) {
+      data[SORT] = sort!.toJson();
     }
-    data[FIRST] = this.first;
-    data[NUMBER_OF_ELEMENTS] = this.numberOfElements;
-    data[EMPTY] = this.empty;
+    data[FIRST] = first;
+    data[NUMBER_OF_ELEMENTS] = numberOfElements;
+    data[EMPTY] = empty;
     return data;
   }
 }
 
 class Pageable {
-  static const String SORT = 'sort';
-  static const String OFFSET = 'offset';
-  static const String PAGE_SIZE = 'pageSize';
-  static const String PAGE_NUMBER = 'pageNumber';
-  static const String PAGED = 'paged';
-  static const String UNPAGED = 'unpaged';
+  static String SORT = 'sort';
+  static String OFFSET = 'offset';
+  static String PAGE_SIZE = 'pageSize';
+  static String PAGE_NUMBER = 'pageNumber';
+  static String PAGED = 'paged';
+  static String UNPAGED = 'unpaged';
 
   Sort? sort;
   int? offset;
@@ -94,16 +95,10 @@ class Pageable {
   bool? paged;
   bool? unpaged;
 
-  Pageable(
-      {this.sort,
-        this.offset,
-        this.pageSize,
-        this.pageNumber,
-        this.paged,
-        this.unpaged});
+  Pageable({sort, offset, pageSize, pageNumber, paged, unpaged});
 
   Pageable.fromJson(Map<String, dynamic> json) {
-    sort = json[SORT] != null ? new Sort.fromJson(json[SORT]) : null;
+    sort = json[SORT] != null ? Sort.fromJson(json[SORT]) : null;
     offset = json[OFFSET];
     pageSize = json[PAGE_SIZE];
     pageNumber = json[PAGE_NUMBER];
@@ -112,29 +107,29 @@ class Pageable {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.sort != null) {
-      data[SORT] = this.sort!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (sort != null) {
+      data[SORT] = sort!.toJson();
     }
-    data[OFFSET] = this.offset;
-    data[PAGE_SIZE] = this.pageSize;
-    data[PAGE_NUMBER] = this.pageNumber;
-    data[PAGED] = this.paged;
-    data[UNPAGED] = this.unpaged;
+    data[OFFSET] = offset;
+    data[PAGE_SIZE] = pageSize;
+    data[PAGE_NUMBER] = pageNumber;
+    data[PAGED] = paged;
+    data[UNPAGED] = unpaged;
     return data;
   }
 }
 
 class Sort {
-  static const String SORTED = 'sorted';
-  static const String UNSORTED = 'unsorted';
-  static const String EMPTY = 'empty';
+  static String SORTED = 'sorted';
+  static String UNSORTED = 'unsorted';
+  static String EMPTY = 'empty';
 
   bool? sorted;
   bool? unsorted;
   bool? empty;
 
-  Sort({this.sorted, this.unsorted, this.empty});
+  Sort({sorted, unsorted, empty});
 
   Sort.fromJson(Map<String, dynamic> json) {
     sorted = json[SORTED];
@@ -143,10 +138,10 @@ class Sort {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data[SORTED] = this.sorted;
-    data[UNSORTED] = this.unsorted;
-    data[EMPTY] = this.empty;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data[SORTED] = sorted;
+    data[UNSORTED] = unsorted;
+    data[EMPTY] = empty;
     return data;
   }
 }

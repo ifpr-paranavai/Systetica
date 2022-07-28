@@ -111,6 +111,7 @@ class InicioWidget extends State<InicioPage> with TickerProviderStateMixin {
       paddingBottom: 18,
       labelText: "LOGIN",
       largura: 190,
+      overlayColor: Colors.grey,
       corBotao: Colors.white,
       corTexto: Colors.black,
       onPressed: () => Navigator.of(context).push(

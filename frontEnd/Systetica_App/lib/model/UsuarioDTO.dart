@@ -1,4 +1,3 @@
-import 'package:systetica/model/CidadeDTO.dart';
 import 'package:systetica/model/RoleDTO.dart';
 
 class UsuarioDTO {

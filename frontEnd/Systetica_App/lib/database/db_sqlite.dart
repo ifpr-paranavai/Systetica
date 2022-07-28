@@ -23,15 +23,8 @@ class DbSQLite {
   }
 
   Future _createDB(Database db, int version) async {
-    final idType = 'INTEGER PRIMARY KEY AUTOINCREMENT';
-    final intType = 'INTEGER NOT NULL';
-    final intTypeNull = 'INTEGER';
-    final doubleTyprNull = 'REAL';
-    final textType = 'TEXT NOT NULL';
-    final textTypeNull = 'TEXT';
-    final varType = 'VARCHAR(255) NOT NULL';
-    final varFKType = 'INTEGER';
-    final dateTimeType = 'DATETIME';
+    String idType = 'INTEGER PRIMARY KEY AUTOINCREMENT';
+    String textType = 'TEXT NOT NULL';
 
     //Tabela ConfigServer
     await db.execute('''
