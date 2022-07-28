@@ -27,6 +27,7 @@ class TokenDTO {
   }
 
   TokenDTO.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
     accessToken = json['access_token'];
     refreshToken = json['refresh_token'];
     email = Util.emailDecode(accessToken!);

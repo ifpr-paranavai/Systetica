@@ -4,7 +4,6 @@ import 'package:systetica/components/loading/show_loading_widget.dart';
 import 'package:systetica/components/page_transition.dart';
 import 'package:systetica/components/show_modal_sucesso_widget.dart';
 import 'package:systetica/components/texto_erro_widget.dart';
-import 'package:systetica/database/orm/token_orm.dart';
 import 'package:systetica/database/repository/token_repository.dart';
 import 'package:systetica/model/LoginDTO.dart';
 import 'package:systetica/model/TokenDTO.dart';
@@ -88,19 +87,19 @@ class LoginController {
               email: emailController.text,
               password: senhaController.text,
             );
-            TokenDTO? tokenDto = await LoginService.login(login);
+            TokenDTO? tokenRequest = await LoginService.login(login);
 
             // Verificar se já existe alguma Usuario cadastrado no banco
-            TokenORM existeTokenORM = await TokenRepository.findToken();
+            TokenDTO tokenDTO = await TokenRepository.findToken();
 
-            if (Util.isIntegerNull(existeTokenORM.id) &&
-                Util.isEmptOrNull(existeTokenORM.accessToken) &&
-                Util.isEmptOrNull(existeTokenORM.email) &&
-                Util.isEmptOrNull(existeTokenORM.refreshToken)) {
-              TokenRepository.insertToken(tokenDto!);
+            if (Util.isIntegerNull(tokenDTO.id) &&
+                Util.isEmptOrNull(tokenDTO.accessToken) &&
+                Util.isEmptOrNull(tokenDTO.email) &&
+                Util.isEmptOrNull(tokenDTO.refreshToken)) {
+              TokenRepository.insertToken(tokenRequest!);
             } else {
-              tokenDto!.id = existeTokenORM.id;
-              TokenRepository.updateToken(tokenDto);
+              tokenRequest!.id = tokenDTO.id;
+              TokenRepository.updateToken(tokenRequest);
             }
 
             // Finaliza o loading na tela
@@ -108,9 +107,8 @@ class LoginController {
 
             Navigator.pushAndRemoveUntil(
               context,
-              myPageTransition.pageTransition(
-                child: const HomePage(),
-                childCurrent: widget,
+              MaterialPageRoute(
+                builder: (context) => HomePage(),
               ),
               (route) => false,
             );

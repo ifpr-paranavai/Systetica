@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
+import 'package:systetica/database/repository/token_repository.dart';
 import 'package:systetica/screen/agendamentos/view/agendamento_page.dart';
 import 'package:systetica/screen/agendar/view/agendar_page.dart';
 import 'package:systetica/screen/cadastros_administrador/view/cadastro_administrador_page.dart';
@@ -9,32 +10,32 @@ import 'package:systetica/screen/perfil/view/perfil_page.dart';
 import 'package:systetica/style/app_colors..dart';
 
 class HomeWidget extends State<HomePage> {
-  int _selectedIndex = 0;
+  late int _selectedIndex = 0;
 
   List<Widget> widgetOpcoes = <Widget>[];
   List<BottomNavigationBarItem> bottomNavigations = <BottomNavigationBarItem>[];
 
   @override
   void initState() {
-    // TokenRepository.findToken().then((value) {
-    setState(() {
-      String mytokenTest =
-          "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJydWFudmhhMTVAZ21haWwuY29tIiwicm9sZXMiOlsiQURNSU5JU1RSQURPUiJdLCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwOTAvbG9naW4iLCJleHAiOjE2NTEyOTE3MTN9.FCOLo3ZUtr8i2pv8uXGij1Z16lcjW05hPRcTQd3Tz5w";
-
-      Map<String, dynamic> tokenDecodificado = JwtDecoder.decode(mytokenTest);
-      if (tokenDecodificado['roles'][0] == "ADMINISTRADOR") {
-        widgetOpcoes = widgetOpcoesAdministrador;
-        bottomNavigations = bottomNavigationAdministrador;
-      } else if (tokenDecodificado['roles'][0] == "FUNCIONARIO") {
-        widgetOpcoes = widgetOpcoesFuncionario;
-        bottomNavigations = bottomNavigationFuncionario;
-      } else {
-        widgetOpcoes = widgetOpcoesCliente;
-        bottomNavigations = bottomNavigationCliente;
-      }
-    });
-    // });
+    widgetOpcoes = widgetOpcoesCliente;
+    bottomNavigations = bottomNavigationCliente;
     super.initState();
+    buscarTokenLocal();
+  }
+
+  Future<void> buscarTokenLocal() async {
+    await TokenRepository.findToken().then((value) {
+      setState(() {
+        Map<String, dynamic> tokenDecodificado = JwtDecoder.decode(value.accessToken!);
+        if (tokenDecodificado['roles'][0] == "ADMINISTRADOR") {
+          widgetOpcoes = widgetOpcoesAdministrador;
+          bottomNavigations = bottomNavigationAdministrador;
+        } else if (tokenDecodificado['roles'][0] == "FUNCIONARIO") {
+          widgetOpcoes = widgetOpcoesFuncionario;
+          bottomNavigations = bottomNavigationFuncionario;
+        }
+      });
+    });
   }
 
   void _onItemTapped(int index) {

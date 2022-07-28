@@ -19,9 +19,7 @@ class PerfilController {
     Info info = Info(success: true);
     if (connected) {
       try {
-        TokenDTO _tokenDto = TokenDTO().toDTO(
-          await TokenRepository.findToken(),
-        );
+        TokenDTO _tokenDto = await TokenRepository.findToken();
         info = await PerfilService.buscarUsuario(_tokenDto);
         return info;
       } catch (e) {

@@ -3,6 +3,7 @@ import 'dart:typed_data';
 
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:systetica/components/imagens_widget.dart';
 import 'package:systetica/components/item_list.dart';
 import 'package:systetica/components/loading/loading_animation.dart';
@@ -84,7 +85,7 @@ class PerfilWidget extends State<PerfilPage> {
                   widgetComponent: Center(
                     child: Column(
                       children: [
-                        sizedBox(height: mediaQueryHeight * 0.08),
+                        tituloSystetica(paddingTop: mediaQueryHeight * 0.04),
                         boxFoto(usuarioDTO.imagemBase64),
                         sizedBox(height: 50),
                         cardInfoUsuario(usuarioDTO: usuarioDTO),
@@ -134,6 +135,22 @@ class PerfilWidget extends State<PerfilPage> {
           ),
           dropdownElevation: 8,
           offset: const Offset(-78, 2),
+        ),
+      ),
+    );
+  }
+
+  Padding tituloSystetica({required double paddingTop}) {
+    return Padding(
+      padding: EdgeInsets.only(top: paddingTop, bottom: paddingTop),
+      child: Center(
+        child: Text(
+          'Perfil',
+          style: GoogleFonts.amaticSc(
+            fontSize: 35,
+            fontWeight: FontWeight.bold,
+            color: Colors.black,
+          ),
         ),
       ),
     );
@@ -281,5 +298,4 @@ class PerfilWidget extends State<PerfilPage> {
       ),
     );
   }
-
 }

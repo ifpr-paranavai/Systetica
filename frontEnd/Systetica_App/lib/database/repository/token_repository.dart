@@ -3,6 +3,7 @@ import 'package:systetica/database/orm/token_orm.dart';
 import 'package:systetica/model/TokenDTO.dart';
 
 class TokenRepository {
+
   static Future<bool> insertToken(TokenDTO tokenDTO) async {
     final db = await DbSQLite.instance.database;
     final id = await db.insert(TokenORM.TABLE, tokenDTO.toJson());
@@ -23,15 +24,15 @@ class TokenRepository {
     return usuarios.isNotEmpty;
   }
 
-  static Future<TokenORM> findToken() async {
+  static Future<TokenDTO> findToken() async {
     final db = await DbSQLite.instance.database;
 
-    final usuario = await db.query(TokenORM.TABLE);
+    final token = await db.query(TokenORM.TABLE);
 
-    if (usuario.isNotEmpty) {
-      return TokenORM.fromJson(usuario.first);
+    if (token.isNotEmpty) {
+      return TokenDTO.fromJson(token.first);
     } else {
-      return TokenORM();
+      return TokenDTO();
     }
   }
 
@@ -47,10 +48,10 @@ class TokenRepository {
     }
   }
 
-  static Future<bool> deleteUsuario(TokenORM usuarioORM) async {
+  static Future<bool> deleteUsuario(TokenDTO tokenDTO) async {
     final db = await DbSQLite.instance.database;
     final qtdeUpdate = await db.delete(
-        TokenORM.TABLE, where: "id = ?", whereArgs: [usuarioORM.id]);
+        TokenORM.TABLE, where: "id = ?", whereArgs: [tokenDTO.id]);
 
     if (qtdeUpdate > 0) {
       return true;
