@@ -4,11 +4,13 @@ import 'package:systetica/components/icon_arrow_widget.dart';
 import 'package:systetica/components/imagens_widget.dart';
 import 'package:systetica/components/input/campo_texto_widget.dart';
 import 'package:systetica/components/text_autenticacoes_widget.dart';
+import 'package:systetica/model/validator/MultiValidatorUsuario.dart';
 import 'package:systetica/screen/login/login_controller.dart';
 import 'package:systetica/screen/login/view/alterar_senha/alterar_senha_page.dart';
 
 class AlterarSenhaWidget extends State<AlterarSenhaPage> {
-  LoginController controller = LoginController();
+  final LoginController _controller = LoginController();
+  final MultiValidatorUsuario _validatorUsuario = MultiValidatorUsuario();
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +26,7 @@ class AlterarSenhaWidget extends State<AlterarSenhaPage> {
               child: SingleChildScrollView(
                 child: Form(
                   autovalidateMode: AutovalidateMode.onUserInteraction,
-                  key: controller.formKey,
+                  key: _controller.formKey,
                   child: Column(
                     children: [
                       imagemAlterarSenha(),
@@ -71,8 +73,8 @@ class AlterarSenhaWidget extends State<AlterarSenhaPage> {
         Icons.email,
         color: Colors.black87,
       ),
-      controller: controller.emailController,
-      validator: controller.emailValidator,
+      controller: _controller.emailController,
+      validator: _validatorUsuario.emailValidator,
     );
   }
 
@@ -87,8 +89,8 @@ class AlterarSenhaWidget extends State<AlterarSenhaPage> {
         Icons.code,
         color: Colors.black87,
       ),
-      controller: controller.codicoController,
-      validator: controller.codigoValidator,
+      controller: _controller.codicoController,
+      validator: _validatorUsuario.codigoValidator,
     );
   }
 
@@ -99,8 +101,8 @@ class AlterarSenhaWidget extends State<AlterarSenhaPage> {
       isPassword: true,
       paddingBottom: 0,
       paddingTop: 10,
-      controller: controller.senhaController,
-      validator: controller.senhaValidator,
+      controller: _controller.senhaController,
+      validator: _validatorUsuario.senhaValidator,
     );
   }
 
@@ -111,8 +113,8 @@ class AlterarSenhaWidget extends State<AlterarSenhaPage> {
       isPassword: true,
       paddingBottom: 0,
       paddingTop: 10,
-      controller: controller.confirmaSenhaController,
-      validator: controller.confirmaSenhaValidator,
+      controller: _controller.confirmaSenhaController,
+      validator: _validatorUsuario.confirmaSenhaValidator,
     );
   }
 
@@ -124,7 +126,7 @@ class AlterarSenhaWidget extends State<AlterarSenhaPage> {
       largura: 190,
       corBotao: Colors.black87.withOpacity(0.9),
       corTexto: Colors.white,
-      onPressed: () => controller.alterarSenha(
+      onPressed: () => _controller.alterarSenha(
         context,
         widget,
       ),

@@ -4,11 +4,13 @@ import 'package:systetica/components/icon_arrow_widget.dart';
 import 'package:systetica/components/imagens_widget.dart';
 import 'package:systetica/components/input/campo_texto_widget.dart';
 import 'package:systetica/components/text_autenticacoes_widget.dart';
+import 'package:systetica/model/validator/MultiValidatorUsuario.dart';
 import 'package:systetica/screen/login/login_controller.dart';
 import 'package:systetica/screen/login/view/gerar_codigo/gerar_codigo_page.dart';
 
 class GerarCodigoWidget extends State<GerarCodigoPage> {
-  LoginController controller = LoginController();
+  final LoginController _controller = LoginController();
+  final MultiValidatorUsuario _validatorUsuario = MultiValidatorUsuario();
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +26,7 @@ class GerarCodigoWidget extends State<GerarCodigoPage> {
               child: SingleChildScrollView(
                 child: Form(
                   autovalidateMode: AutovalidateMode.onUserInteraction,
-                  key: controller.formKey,
+                  key: _controller.formKey,
                   child: Column(
                     children: [
                       imagemGerarCodigo(),
@@ -67,8 +69,8 @@ class GerarCodigoWidget extends State<GerarCodigoPage> {
         Icons.email,
         color: Colors.black87,
       ),
-      controller: controller.emailController,
-      validator: controller.emailValidator,
+      controller: _controller.emailController,
+      validator: _validatorUsuario.emailValidator,
     );
   }
 
@@ -81,7 +83,7 @@ class GerarCodigoWidget extends State<GerarCodigoPage> {
       largura: 190,
       corBotao: Colors.black87.withOpacity(0.9),
       corTexto: Colors.white,
-      onPressed: () => controller.gerarCodigo(
+      onPressed: () => _controller.gerarCodigo(
         context,
         widget,
       ),

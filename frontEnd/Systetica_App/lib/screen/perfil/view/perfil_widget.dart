@@ -156,23 +156,21 @@ class PerfilWidget extends State<PerfilPage> {
     );
   }
 
-  SizedBox boxFoto(dynamic imagemUsuario) {
-    return SizedBox(
+  Container boxFoto(dynamic imagemUsuario) {
+    return Container(
       width: 160,
       height: 160,
-      child: Container(
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          boxShadow: [
-            BoxShadow(
-              blurRadius: 5,
-              color: Colors.black.withOpacity(0.6),
-              spreadRadius: 2,
-            )
-          ],
-        ),
-        child: imgPerfil(imagemUsuario),
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        boxShadow: [
+          BoxShadow(
+            blurRadius: 5,
+            color: Colors.black.withOpacity(0.6),
+            spreadRadius: 2,
+          )
+        ],
       ),
+      child: imgPerfil(imagemUsuario),
     );
   }
 
@@ -273,7 +271,8 @@ class PerfilWidget extends State<PerfilPage> {
 
   TextAutenticacoesWidget textoErro(double mediaQueryWidth) {
     return TextAutenticacoesWidget(
-      paddingLeft: mediaQueryWidth * 0.12,
+      paddingLeft: mediaQueryWidth * 0.11,
+      paddingRight: mediaQueryWidth * 0.11,
       text: "Oopss...ocorreu algum erro. \nTente novamente mais tarde.",
     );
   }

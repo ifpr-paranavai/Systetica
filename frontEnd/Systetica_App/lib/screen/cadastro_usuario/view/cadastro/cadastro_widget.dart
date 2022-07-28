@@ -5,12 +5,14 @@ import 'package:systetica/components/imagens_widget.dart';
 import 'package:systetica/components/input/campo_texto_widget.dart';
 import 'package:systetica/components/page_transition.dart';
 import 'package:systetica/components/text_autenticacoes_widget.dart';
+import 'package:systetica/model/validator/MultiValidatorUsuario.dart';
 import 'package:systetica/screen/cadastro_usuario/cadastro_controller.dart';
 import 'package:systetica/screen/cadastro_usuario/view/ativar_usuario/ativar_usuario_page.dart';
 import 'package:systetica/screen/cadastro_usuario/view/cadastro/cadastro_page.dart';
 
 class CadastroWidget extends State<CadastroPage> {
   final CadastroController _controller = CadastroController();
+  final MultiValidatorUsuario _validatorUsuario = MultiValidatorUsuario();
   var myPageTransition = MyPageTransition();
   late ScrollController _scrollController;
   late ScrollController _scrollControllerDropDown;
@@ -92,7 +94,7 @@ class CadastroWidget extends State<CadastroPage> {
         color: Colors.black87,
       ),
       controller: _controller.nomeController,
-      validator: _controller.nomeValidator,
+      validator: _validatorUsuario.nomeValidator,
     );
   }
 
@@ -108,7 +110,7 @@ class CadastroWidget extends State<CadastroPage> {
         color: Colors.black87,
       ),
       controller: _controller.emailController,
-      validator: _controller.emailValidator,
+      validator: _validatorUsuario.emailValidator,
     );
   }
 
@@ -126,7 +128,7 @@ class CadastroWidget extends State<CadastroPage> {
         color: Colors.black87,
       ),
       controller: _controller.telefone1,
-      validator: _controller.telefoneValidator,
+      validator: _validatorUsuario.telefoneValidator,
     );
   }
 
@@ -138,7 +140,7 @@ class CadastroWidget extends State<CadastroPage> {
       paddingBottom: 0,
       paddingTop: 6,
       controller: _controller.senhaController,
-      validator: _controller.senhaValidator,
+      validator: _validatorUsuario.senhaValidator,
     );
   }
 
@@ -150,7 +152,7 @@ class CadastroWidget extends State<CadastroPage> {
       paddingBottom: 0,
       paddingTop: 6,
       controller: _controller.confirmaSenhaController,
-      validator: _controller.confirmaSenhaValidator,
+      validator: _validatorUsuario.confirmaSenhaValidator,
     );
   }
 

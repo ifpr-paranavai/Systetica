@@ -36,6 +36,7 @@ class PerfilController {
           ),
         ),
       );
+      return info;
     }
   }
 }

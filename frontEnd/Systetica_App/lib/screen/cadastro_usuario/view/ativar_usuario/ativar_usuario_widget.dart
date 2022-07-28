@@ -4,11 +4,13 @@ import 'package:systetica/components/icon_arrow_widget.dart';
 import 'package:systetica/components/imagens_widget.dart';
 import 'package:systetica/components/input/campo_texto_widget.dart';
 import 'package:systetica/components/text_autenticacoes_widget.dart';
+import 'package:systetica/model/validator/MultiValidatorUsuario.dart';
 import 'package:systetica/screen/cadastro_usuario/cadastro_controller.dart';
 import 'package:systetica/screen/cadastro_usuario/view/ativar_usuario/ativar_usuario_page.dart';
 
 class AtivarUsuarioWidget extends State<AtivarUsuarioPage> {
-  CadastroController controller = CadastroController();
+  final CadastroController _controller = CadastroController();
+  final MultiValidatorUsuario _validatorUsuario = MultiValidatorUsuario();
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +28,7 @@ class AtivarUsuarioWidget extends State<AtivarUsuarioPage> {
               child: SingleChildScrollView(
                 child: Form(
                   autovalidateMode: AutovalidateMode.onUserInteraction,
-                  key: controller.formKey,
+                  key: _controller.formKey,
                   child: Column(
                     children: [
                       imageAtivarUsuario(),
@@ -72,8 +74,8 @@ class AtivarUsuarioWidget extends State<AtivarUsuarioPage> {
         Icons.email,
         color: Colors.black87,
       ),
-      controller: controller.emailController,
-      validator: controller.emailValidator,
+      controller: _controller.emailController,
+      validator: _validatorUsuario.emailValidator,
     );
   }
 
@@ -88,8 +90,8 @@ class AtivarUsuarioWidget extends State<AtivarUsuarioPage> {
         Icons.code,
         color: Colors.black87,
       ),
-      controller: controller.codicoController,
-      validator: controller.codigoValidator,
+      controller: _controller.codicoController,
+      validator: _validatorUsuario.codigoValidator,
     );
   }
 
@@ -101,7 +103,7 @@ class AtivarUsuarioWidget extends State<AtivarUsuarioPage> {
       largura: 190,
       corBotao: Colors.black87.withOpacity(0.9),
       corTexto: Colors.white,
-      onPressed: () => controller.ativiarUsuario(context),
+      onPressed: () => _controller.ativiarUsuario(context),
     );
   }
 }

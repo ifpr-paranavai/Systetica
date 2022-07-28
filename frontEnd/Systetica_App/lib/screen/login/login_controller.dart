@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:form_field_validator/form_field_validator.dart';
 import 'package:systetica/components/loading/show_loading_widget.dart';
 import 'package:systetica/components/page_transition.dart';
 import 'package:systetica/components/show_modal_sucesso_widget.dart';
@@ -23,53 +22,6 @@ class LoginController {
   final confirmaSenhaController = TextEditingController();
   var myPageTransition = MyPageTransition();
   final formKey = GlobalKey<FormState>();
-
-  MultiValidator get emailValidator {
-    return MultiValidator([
-      RequiredValidator(errorText: 'Campo obrigatório'),
-      EmailValidator(errorText: 'E-mail inválido'),
-    ]);
-  }
-
-  MultiValidator get senhaValidator {
-    return MultiValidator([
-      RequiredValidator(errorText: 'Campo obrigatório'),
-      MinLengthValidator(
-        6,
-        errorText: 'Campo deve ter ao menos 6 dígitos',
-      ),
-    ]);
-  }
-
-  MultiValidator get confirmaSenhaValidator {
-    return MultiValidator([
-      RequiredValidator(errorText: 'Campo obrigatório'),
-      MinLengthValidator(
-        6,
-        errorText: 'Campo deve ter ao menos 6 caracteres',
-      ),
-    ]);
-  }
-
-  MultiValidator get cpfValidator {
-    return MultiValidator([
-      RequiredValidator(errorText: 'Campo obrigatório'),
-      MinLengthValidator(
-        11,
-        errorText: 'Campo deve possuir no menos 11 caracteres',
-      ),
-    ]);
-  }
-
-  MultiValidator get codigoValidator {
-    return MultiValidator([
-      RequiredValidator(errorText: 'Campo obrigatório'),
-      MinLengthValidator(
-        6,
-        errorText: 'Campo deve possuir no menos 6 caracteres',
-      ),
-    ]);
-  }
 
   Future<void> login(BuildContext context, Widget widget) async {
     var connected = await ConnectionCheck.check();
@@ -107,8 +59,9 @@ class LoginController {
 
             Navigator.pushAndRemoveUntil(
               context,
-              MaterialPageRoute(
-                builder: (context) => HomePage(),
+              myPageTransition.pageTransition(
+                child: const HomePage(),
+                childCurrent: widget,
               ),
               (route) => false,
             );

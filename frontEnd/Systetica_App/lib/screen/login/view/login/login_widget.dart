@@ -5,12 +5,14 @@ import 'package:systetica/components/imagens_widget.dart';
 import 'package:systetica/components/input/campo_texto_widget.dart';
 import 'package:systetica/components/page_transition.dart';
 import 'package:systetica/components/text_autenticacoes_widget.dart';
+import 'package:systetica/model/validator/MultiValidatorUsuario.dart';
 import 'package:systetica/screen/login/login_controller.dart';
 import 'package:systetica/screen/login/view/gerar_codigo/gerar_codigo_page.dart';
 import 'package:systetica/screen/login/view/login/login_page.dart';
 
 class LoginWidget extends State<LoginPage> {
   LoginController controller = LoginController();
+  final MultiValidatorUsuario _validatorUsuario = MultiValidatorUsuario();
   var myPageTransition = MyPageTransition();
 
   @override
@@ -73,7 +75,7 @@ class LoginWidget extends State<LoginPage> {
         color: Colors.black87,
       ),
       controller: controller.emailController,
-      validator: controller.emailValidator,
+      validator: _validatorUsuario.emailValidator,
     );
   }
 
@@ -85,7 +87,7 @@ class LoginWidget extends State<LoginPage> {
       paddingBottom: 0,
       paddingTop: 5,
       controller: controller.senhaController,
-      validator: controller.senhaValidator,
+      validator: _validatorUsuario.senhaValidator,
     );
   }
 

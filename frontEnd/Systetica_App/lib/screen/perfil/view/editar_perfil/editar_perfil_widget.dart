@@ -64,8 +64,9 @@ class EditarPerfilWidget extends State<EditarPerfilPage> {
   }
 
   Future<void> _adicionarImagem() async {
-    PickedFile? pickedImagem =
-        await _picker.getImage(source: ImageSource.gallery);
+    //Todo - testar esta alteração
+    XFile? pickedImagem =
+        await _picker.pickImage(source: ImageSource.gallery);
     if (pickedImagem != null) {
       CroppedFile _croppedFile = await _funcaoCroppedFile(pickedImagem);
       setState(
@@ -77,7 +78,7 @@ class EditarPerfilWidget extends State<EditarPerfilPage> {
     }
   }
 
-  Future<CroppedFile> _funcaoCroppedFile(PickedFile pickedImagem) async {
+  Future<CroppedFile> _funcaoCroppedFile(XFile pickedImagem) async {
     CroppedFile? _croppedFile = await ImageCropper().cropImage(
       sourcePath: pickedImagem.path,
       aspectRatioPresets: [

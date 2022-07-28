@@ -21,7 +21,7 @@ class _SingleChildScrollEdicaoState extends State<SingleChildScrollEdicao> {
         decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
-            end: const Alignment(0.1, 0.05),
+            end: const Alignment(0.3, 0.05),
             colors: [Colors.grey.withOpacity(0.4), Colors.white],
           ),
         ),
