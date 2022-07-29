@@ -32,4 +32,36 @@ class PerfilService {
       rethrow;
     }
   }
+
+  static Future<Info> atualizarUsuario(
+    TokenDTO tokenDTO,
+    UsuarioDTO usuarioDTO,
+  ) async {
+    Info info = Info(success: true);
+    try {
+      Dio dio = DioConfigApi.builderConfigJson();
+
+      dio.options.headers["Authorization"] = "Bearer ${tokenDTO.accessToken}";
+
+      var response =
+          await dio.put("usuario/atualizar", data: usuarioDTO.toJson());
+
+      info = Info.fromJson(response.data);
+
+      return info;
+    } on DioError catch (e) {
+      try {
+        if (e.type == DioErrorType.connectTimeout) {
+          throw Exception("Erro de requisição: ${e.message}");
+        }
+        info.success = false;
+        info.message = "Erro: ${e.message}";
+        return info;
+      } catch (e) {
+        throw Exception(e.runtimeType);
+      }
+    } on Exception catch (ex) {
+      rethrow;
+    }
+  }
 }

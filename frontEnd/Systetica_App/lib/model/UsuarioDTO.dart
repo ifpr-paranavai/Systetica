@@ -4,7 +4,6 @@ class UsuarioDTO {
   UsuarioDTO({
     this.id,
     this.nome,
-    this.cpf,
     this.telefone,
     this.email,
     this.password,
@@ -15,7 +14,6 @@ class UsuarioDTO {
 
   int? id;
   String? nome;
-  String? cpf;
   String? telefone;
   String? email;
   String? password;
@@ -26,7 +24,6 @@ class UsuarioDTO {
   UsuarioDTO.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     nome = json['nome'];
-    cpf = json['cpf'];
     telefone = json['telefone'];
     email = json['email'];
     password = json['password'];
@@ -41,7 +38,6 @@ class UsuarioDTO {
     final _data = <String, dynamic>{};
     _data['id'] = id ?? "";
     _data['nome'] = nome;
-    _data['cpf'] = cpf;
     _data['telefone'] = telefone;
     _data['email'] = email;
     _data['password'] = password;

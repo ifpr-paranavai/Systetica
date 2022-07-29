@@ -29,6 +29,7 @@ class PerfilWidget extends State<PerfilPage> {
 
   @override
   void initState() {
+    _controller.usuarioDTO = UsuarioDTO();
     super.initState();
   }
 
@@ -38,8 +39,6 @@ class PerfilWidget extends State<PerfilPage> {
     double mediaQueryWidth = (MediaQuery.of(context).size.width);
     return SafeArea(
       child: Scaffold(
-        floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
-        floatingActionButton: dropDownButton(),
         body: FutureBuilder<Info?>(
           future: _controller.buscarUsuarioEmail(context),
           builder: (context, snapShot) {
@@ -47,15 +46,16 @@ class PerfilWidget extends State<PerfilPage> {
               return const LoadingAnimation();
             } else if (snapShot.hasData) {
               if (snapShot.data!.success!) {
-                UsuarioDTO usuarioDTO = snapShot.data!.object;
+                _controller.usuarioDTO = snapShot.data!.object;
                 return SingleChildScrollEdicao(
+                  opcoes: dropDownButton(usuarioDTO: _controller.usuarioDTO),
                   widgetComponent: Center(
                     child: Column(
                       children: [
-                        tituloSystetica(paddingTop: mediaQueryHeight * 0.04),
-                        boxFoto(usuarioDTO.imagemBase64),
-                        sizedBox(height: 50),
-                        cardInfoUsuario(usuarioDTO: usuarioDTO),
+                        boxFoto(_controller.usuarioDTO.imagemBase64),
+                        sizedBox(height: mediaQueryHeight * 0.05),
+                        tituloSystetica(bottom: mediaQueryHeight * 0.03),
+                        cardInfoUsuario(usuarioDTO: _controller.usuarioDTO),
                       ],
                     ),
                   ),
@@ -72,71 +72,79 @@ class PerfilWidget extends State<PerfilPage> {
     );
   }
 
-  DropdownButtonHideUnderline dropDownButton() {
+  DropdownButtonHideUnderline dropDownButton({required UsuarioDTO usuarioDTO}) {
     return DropdownButtonHideUnderline(
-      child: Padding(
-        padding: const EdgeInsets.only(top: 18),
-        child: DropdownButton2(
-          customButton: const Padding(
-            padding: EdgeInsets.only(bottom: 3),
-            child: Icon(
-              Icons.more_vert,
-              size: 35,
-              color: AppColors.redPrincipal,
+      child: Container(
+        alignment: Alignment.centerRight,
+        child: Padding(
+          padding: const EdgeInsets.only(top: 8, right: 8),
+          child: DropdownButton2(
+            customButton: const Padding(
+              padding: EdgeInsets.only(bottom: 3),
+              child: Icon(
+                Icons.more_vert,
+                size: 35,
+                color: AppColors.redPrincipal,
+              ),
             ),
-          ),
-          itemPadding: const EdgeInsets.all(15),
-          dropdownWidth: 105,
-          dropdownDecoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15),
-            color: AppColors.bluePrincipal,
-          ),
-          dropdownElevation: 8,
-          offset: const Offset(-65, 2),
-          items: menuItems
-              .map(
-                (item) => DropdownMenuItem<MenuItemDto>(
-                  value: item,
-                  child: MenuItemDto.buildItem(item),
-                ),
-              )
-              .toList(),
-          onChanged: (value) {
-            if (value == menuItems.first) {
-              Navigator.of(context).push(
-                _controller.myPageTransition.pageTransition(
-                  child: const PerfilFormPage(),
-                  childCurrent: widget,
-                  buttoToTop: true,
-                ),
-              );
-            } else {
-              var alertDialog = AlertDialogWidget();
-              alertDialog.alertDialog(
-                showModalOk: false,
-                context: context,
-                titulo: "Atenção!",
-                descricao: "Tem certeza que dejesa sair?",
-                onPressedNao: () => Navigator.pop(context),
-                onPressedOk: () => Navigator.pushAndRemoveUntil(
-                  context,
-                  _controller.myPageTransition.pageTransition(
-                    child: const InicioPage(),
-                    childCurrent: widget,
+            itemPadding: const EdgeInsets.all(15),
+            dropdownWidth: 105,
+            dropdownDecoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15),
+              color: AppColors.bluePrincipal,
+            ),
+            dropdownElevation: 8,
+            offset: const Offset(-65, 2),
+            focusColor: Colors.transparent,
+            items: menuItems
+                .map(
+                  (item) => DropdownMenuItem<MenuItemDto>(
+                    value: item,
+                    child: MenuItemDto.buildItem(item),
                   ),
-                  (route) => false,
-                ),
-              );
-            }
-          },
+                )
+                .toList(),
+            onChanged: (value) {
+              if (value == menuItems.first) {
+                Navigator.of(context)
+                    .push(
+                      _controller.myPageTransition.pageTransition(
+                        child: PerfilFormPage(usuarioDTO: usuarioDTO),
+                        childCurrent: widget,
+                        buttoToTop: true,
+                      ),
+                    )
+                    .then(
+                      (value) => setState(() {}),
+                    );
+              } else {
+                var alertDialog = AlertDialogWidget();
+                alertDialog.alertDialog(
+                  showModalOk: false,
+                  context: context,
+                  titulo: "Atenção!",
+                  descricao: "Tem certeza que dejesa sair?",
+                  onPressedNao: () => Navigator.pop(context),
+                  onPressedOk: () => Navigator.pushAndRemoveUntil(
+                    context,
+                    _controller.myPageTransition.pageTransition(
+                      child: const InicioPage(),
+                      childCurrent: widget,
+                    ),
+                    (route) => false,
+                  ),
+                );
+              }
+            },
+          ),
         ),
       ),
     );
   }
 
-  Padding tituloSystetica({required double paddingTop}) {
+  Padding tituloSystetica({required double bottom}) {
     return Padding(
-      padding: EdgeInsets.only(top: paddingTop, bottom: paddingTop),
+      padding: EdgeInsets.only(bottom: bottom),
       child: Center(
         child: Text(
           'Perfil',
@@ -259,14 +267,15 @@ class PerfilWidget extends State<PerfilPage> {
     return ImagensWidget(
       paddingLeft: 0,
       image: "erro.png",
-      widthImagem: 340,
+      widthImagem: 320,
     );
   }
 
   TextAutenticacoesWidget textoErro(double mediaQueryWidth) {
     return TextAutenticacoesWidget(
-      paddingLeft: mediaQueryWidth * 0.11,
-      paddingRight: mediaQueryWidth * 0.11,
+      paddingLeft: mediaQueryWidth * 0.10,
+      paddingRight: mediaQueryWidth * 0.10,
+      fontSize: 33,
       text: "Oopss...ocorreu algum erro. \nTente novamente mais tarde.",
     );
   }

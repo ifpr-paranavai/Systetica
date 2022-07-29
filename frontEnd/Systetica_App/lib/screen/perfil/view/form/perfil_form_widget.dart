@@ -3,18 +3,13 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:systetica/components/botoes/botao_icon_widget.dart';
 import 'package:systetica/components/botoes/botao_widget.dart';
 import 'package:systetica/components/icon_arrow_widget.dart';
 import 'package:systetica/components/imagens_widget.dart';
 import 'package:systetica/components/input/campo_texto_widget.dart';
-import 'package:systetica/components/loading/loading_animation.dart';
 import 'package:systetica/components/text_autenticacoes_widget.dart';
-import 'package:systetica/model/Info.dart';
-import 'package:systetica/model/UsuarioDTO.dart';
 import 'package:systetica/model/validator/MultiValidatorUsuario.dart';
 import 'package:systetica/screen/perfil/perfil_controller.dart';
 import 'package:systetica/screen/perfil/view/form/perfil_form_page.dart';
@@ -27,11 +22,64 @@ class PerfilFormWidget extends State<PerfilFormPage> {
 
   late ScrollController _scrollController;
 
+  @override
+  void initState() {
+    super.initState();
+    _controller.usuarioDTO = widget.usuarioDTO!;
+    _controller.nomeController.text = _controller.usuarioDTO.nome!;
+    _controller.telefoneController.text = _controller.usuarioDTO.telefone!;
+    _controller.imagemBase64 = _controller.usuarioDTO.imagemBase64!;
+    _scrollController = ScrollController();
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    double mediaQueryHeight = (MediaQuery.of(context).size.height);
+    return SafeArea(
+      child: Scaffold(
+        body: Column(
+          children: [
+            IconArrowWidget(
+              onPressed: () => Navigator.pop(context),
+            ),
+            Expanded(
+              child: SingleChildScrollView(
+                controller: _scrollController,
+                child: Form(
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  key: _controller.formKey,
+                  child: Column(
+                    children: [
+                      sizedBox(height: mediaQueryHeight * 0.02),
+                      boxFoto(_controller.imagemBase64),
+                      sizedBox(height: mediaQueryHeight * 0.05),
+                      textoEditar(),
+                      inputNome(),
+                      inputTelefone(),
+                      botaoCadastrar(),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   Future<void> _adicionarImagem() async {
     XFile? pickedImagem = await _picker.pickImage(source: ImageSource.gallery);
     if (pickedImagem != null) {
       CroppedFile _croppedFile = await _funcaoCroppedFile(pickedImagem);
-      setState(() {
+      setState(
+            () {
           File imagem = File(_croppedFile.path);
           _controller.imagemBase64 = base64Encode(imagem.readAsBytesSync());
           _controller.imagemAlterada = true;
@@ -63,75 +111,6 @@ class PerfilFormWidget extends State<PerfilFormPage> {
       ],
     );
     return _croppedFile!;
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _scrollController = ScrollController();
-  }
-
-  @override
-  void dispose() {
-    _scrollController.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    double mediaQueryHeight = (MediaQuery.of(context).size.height);
-    double mediaQueryWidth = (MediaQuery.of(context).size.width);
-    return SafeArea(
-      child: Scaffold(
-        body: FutureBuilder<Info?>(
-          future: _controller.buscarUsuarioEmail(context),
-          builder: (context, snapShot) {
-            if (!snapShot.hasData) {
-              return const LoadingAnimation();
-            } else if (snapShot.hasData) {
-              if (snapShot.data!.success!) {
-                UsuarioDTO usuarioDTO = snapShot.data!.object;
-                if (usuarioDTO.imagemBase64 != _controller.imagemBase64 &&
-                    !_controller.imagemAlterada) {
-                  _controller.imagemBase64 = usuarioDTO.imagemBase64!;
-                }
-                return Column(
-                  children: [
-                    IconArrowWidget(
-                      onPressed: () => Navigator.pop(context),
-                    ),
-                    Expanded(
-                      child: SingleChildScrollView(
-                        controller: _scrollController,
-                        child: Form(
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          key: _controller.formKey,
-                          child: Column(
-                            children: [
-                              sizedBox(height: mediaQueryHeight * 0.02),
-                              boxFoto(_controller.imagemBase64),
-                              sizedBox(height: 40),
-                              textoEditar(),
-                              inputNome(),
-                              inputTelefone(),
-                              botaoCadastrar(),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                );
-              } else {
-                return erroRequisicao(mediaQueryWidth);
-              }
-            } else {
-              return erroRequisicao(mediaQueryWidth);
-            }
-          },
-        ),
-      ),
-    );
   }
 
   Container boxFoto(dynamic imagemUsuario) {
@@ -200,6 +179,8 @@ class PerfilFormWidget extends State<PerfilFormPage> {
   TextAutenticacoesWidget textoEditar() {
     return TextAutenticacoesWidget(
       text: "Editar Perfil",
+      fontSize: 30,
+      paddingBottom: 6,
     );
   }
 
@@ -232,7 +213,7 @@ class PerfilFormWidget extends State<PerfilFormPage> {
         Icons.phone,
         color: Colors.black87,
       ),
-      controller: _controller.telefone,
+      controller: _controller.telefoneController,
       validator: _validatorUsuario.telefoneValidator,
     );
   }
@@ -245,7 +226,7 @@ class PerfilFormWidget extends State<PerfilFormPage> {
       largura: 190,
       corBotao: Colors.black87.withOpacity(0.9),
       corTexto: Colors.white,
-      onPressed: () {},
+      onPressed: () => _controller.atualizarUsuarioEmail(context),
     );
   }
 
