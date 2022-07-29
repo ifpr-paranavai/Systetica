@@ -4,59 +4,27 @@ import 'dart:typed_data';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:systetica/components/alert_dialog_widget.dart';
 import 'package:systetica/components/imagens_widget.dart';
 import 'package:systetica/components/item_list.dart';
 import 'package:systetica/components/loading/loading_animation.dart';
-import 'package:systetica/components/page_transition.dart';
 import 'package:systetica/components/single_child_scroll_edicao.dart';
 import 'package:systetica/components/text_autenticacoes_widget.dart';
 import 'package:systetica/model/Info.dart';
+import 'package:systetica/model/MenuItemDto.dart';
 import 'package:systetica/model/UsuarioDTO.dart';
+import 'package:systetica/screen/inicio/view/inicio_page.dart';
 import 'package:systetica/screen/perfil/perfil_controller.dart';
+import 'package:systetica/screen/perfil/view/perfil_form_page.dart';
 import 'package:systetica/screen/perfil/view/perfil_page.dart';
 import 'package:systetica/style/app_colors..dart';
 
 class PerfilWidget extends State<PerfilPage> {
-  var myPageTransition = MyPageTransition();
   final PerfilController _controller = PerfilController();
 
-  final List<Widget> items = [
-    Row(
-      children: const [
-        Icon(
-          Icons.edit,
-          color: Colors.white,
-          size: 22,
-        ),
-        SizedBox(
-          width: 10,
-        ),
-        Text(
-          "Editar",
-          style: TextStyle(
-            color: Colors.white,
-          ),
-        ),
-      ],
-    ),
-    Row(
-      children: const [
-        Icon(
-          Icons.logout,
-          color: Colors.white,
-          size: 22,
-        ),
-        SizedBox(
-          width: 10,
-        ),
-        Text(
-          "Sair",
-          style: TextStyle(
-            color: Colors.white,
-          ),
-        ),
-      ],
-    ),
+  List<MenuItemDto> menuItems = [
+    MenuItemDto(text: 'Editar', icon: Icons.edit),
+    MenuItemDto(text: 'Sair', icon: Icons.close)
   ];
 
   @override
@@ -68,7 +36,6 @@ class PerfilWidget extends State<PerfilPage> {
   Widget build(BuildContext context) {
     double mediaQueryHeight = (MediaQuery.of(context).size.height);
     double mediaQueryWidth = (MediaQuery.of(context).size.width);
-
     return SafeArea(
       child: Scaffold(
         floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
@@ -118,23 +85,50 @@ class PerfilWidget extends State<PerfilPage> {
               color: AppColors.redPrincipal,
             ),
           ),
-          items: items
-              .map(
-                (item) => DropdownMenuItem<Widget>(
-                  value: item,
-                  child: item,
-                ),
-              )
-              .toList(),
-          onChanged: (value) {},
           itemPadding: const EdgeInsets.all(15),
-          dropdownWidth: 120,
+          dropdownWidth: 105,
           dropdownDecoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15),
             color: AppColors.bluePrincipal,
           ),
           dropdownElevation: 8,
-          offset: const Offset(-78, 2),
+          offset: const Offset(-65, 2),
+          items: menuItems
+              .map(
+                (item) => DropdownMenuItem<MenuItemDto>(
+                  value: item,
+                  child: MenuItemDto.buildItem(item),
+                ),
+              )
+              .toList(),
+          onChanged: (value) {
+            if (value == menuItems.first) {
+              Navigator.of(context).push(
+                _controller.myPageTransition.pageTransition(
+                  child: const PerfilFormPage(),
+                  childCurrent: widget,
+                  buttoToTop: true,
+                ),
+              );
+            } else {
+              var alertDialog = AlertDialogWidget();
+              alertDialog.alertDialog(
+                showModalOk: false,
+                context: context,
+                titulo: "Atenção!",
+                descricao: "Você tem certeza que dejesa sair?",
+                onPressedNao: () => Navigator.pop(context),
+                onPressedOk: () => Navigator.pushAndRemoveUntil(
+                  context,
+                  _controller.myPageTransition.pageTransition(
+                    child: const InicioPage(),
+                    childCurrent: widget,
+                  ),
+                  (route) => false,
+                ),
+              );
+            }
+          },
         ),
       ),
     );

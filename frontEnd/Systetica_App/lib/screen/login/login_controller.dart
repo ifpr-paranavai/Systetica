@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:systetica/components/loading/show_loading_widget.dart';
 import 'package:systetica/components/page_transition.dart';
-import 'package:systetica/components/show_modal_sucesso_widget.dart';
+import 'package:systetica/components/alert_dialog_widget.dart';
 import 'package:systetica/components/texto_erro_widget.dart';
 import 'package:systetica/database/repository/token_repository.dart';
 import 'package:systetica/model/LoginDTO.dart';
@@ -113,18 +113,19 @@ class LoginController {
             Navigator.pop(contextLoading, loading);
 
             var contextShowModal = context;
-            var showModalOkWidget = ShowModalOkWidget();
+            var alertDialog = AlertDialogWidget();
             if (infoResponse.success!) {
-              showModalOkWidget.showModalOk(
-                context,
-                title: "Sucesso",
-                description:
+              alertDialog.alertDialog(
+                showModalOk: true,
+                context: context,
+                titulo: "Sucesso",
+                descricao:
                     "Código para alterar senha enviado para o email:\n${emailController.text}.",
                 buttonText: "OK",
-                onPressed: () {
+                onPressedOk: () {
                   Navigator.pop(
                     contextShowModal,
-                    showModalOkWidget,
+                    alertDialog,
                   );
                   Navigator.of(context).push(
                     myPageTransition.pageTransition(
@@ -135,11 +136,14 @@ class LoginController {
                 },
               );
             } else {
-              showModalOkWidget.showModalOk(context,
-                  title: "Erro",
-                  description: infoResponse.message!,
-                  buttonText: "OK",
-                  onPressed: () => Navigator.pop(context));
+              alertDialog.alertDialog(
+                showModalOk: true,
+                context: context,
+                titulo: "Erro",
+                descricao: infoResponse.message!,
+                buttonText: "OK",
+                onPressedOk: () => Navigator.pop(context),
+              );
             }
           } catch (e) {
             ScaffoldMessenger.of(context).showSnackBar(
@@ -202,27 +206,32 @@ class LoginController {
             // Finaliza o loading na tela
             Navigator.pop(contextLoading, loading);
 
-            var showModalOkWidget = ShowModalOkWidget();
+            var alertDialog = AlertDialogWidget();
             if (infoResponse.success!) {
-              showModalOkWidget.showModalOk(
-                context,
-                title: "Sucesso",
-                description: "Senha alterada com sucesso",
+              alertDialog.alertDialog(
+                showModalOk: true,
+                context: context,
+                titulo: "Sucesso",
+                descricao: "Senha alterada com sucesso",
                 buttonText: "OK",
-                onPressed: () => Navigator.pushAndRemoveUntil(
-                    context,
-                    myPageTransition.pageTransition(
-                      child: const InicioPage(),
-                      childCurrent: widget,
-                    ),
-                    (route) => false),
+                onPressedOk: () => Navigator.pushAndRemoveUntil(
+                  context,
+                  myPageTransition.pageTransition(
+                    child: const InicioPage(),
+                    childCurrent: widget,
+                  ),
+                  (route) => false,
+                ),
               );
             } else {
-              showModalOkWidget.showModalOk(context,
-                  title: "Erro",
-                  description: infoResponse.message!,
-                  buttonText: "OK",
-                  onPressed: () => Navigator.pop(context));
+              alertDialog.alertDialog(
+                showModalOk: true,
+                context: context,
+                titulo: "Erro",
+                descricao: infoResponse.message!,
+                buttonText: "OK",
+                onPressedOk: () => Navigator.pop(context),
+              );
             }
           } catch (e) {
             ScaffoldMessenger.of(context).showSnackBar(

@@ -12,6 +12,8 @@ public interface UsuarioService {
 
     ReturnData<Object> buscarPorEmail(String email);
 
+    ReturnData<Object> buscarPorEmailToken(String email);
+
     ReturnData<Object> buscarTodos();
 
     ReturnData<String> ativar(UsuarioDTO usuarioDTO);

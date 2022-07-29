@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.frfs.systetica.entity.Usuario;
 import com.frfs.systetica.entity.Role;
 import com.frfs.systetica.service.UsuarioService;
+import com.frfs.systetica.utils.Constantes;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -42,11 +43,11 @@ public class AutenticacaoController {
                 JWTVerifier verifier = JWT.require(algorithm).build();
                 DecodedJWT decodedJWT = verifier.verify(refresh_token);
                 String email = decodedJWT.getSubject();
-                Usuario usuario = (Usuario) usuarioService.buscarPorEmail(email).getResponse();
+                Usuario usuario = (Usuario) usuarioService.buscarPorEmailToken(email).getResponse();
 
                 String access_token = JWT.create()
                         .withSubject(usuario.getEmail())
-                        .withExpiresAt(new Date(System.currentTimeMillis() + 10 * 60 * 1000)) // TODO TEMPO TOKEN
+                        .withExpiresAt(new Date(System.currentTimeMillis() + Constantes.TOKEN_24_HORAS))
                         .withIssuer(request.getRequestURL().toString())
                         .withClaim("roles", usuario.getRoles().stream().map(Role::getName).collect(Collectors.toList()))
                         .sign(algorithm);

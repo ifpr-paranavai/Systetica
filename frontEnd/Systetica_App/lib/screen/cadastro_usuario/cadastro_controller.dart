@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:systetica/components/loading/show_loading_widget.dart';
 import 'package:systetica/components/page_transition.dart';
-import 'package:systetica/components/show_modal_sucesso_widget.dart';
+import 'package:systetica/components/alert_dialog_widget.dart';
 import 'package:systetica/components/texto_erro_widget.dart';
 import 'package:systetica/model/UsuarioDTO.dart';
 import 'package:systetica/request/dio_config.dart';
@@ -11,7 +11,7 @@ import 'package:systetica/screen/inicio/view/inicio_page.dart';
 
 class CadastroController {
   final nomeController = TextEditingController();
-  final telefone1 = TextEditingController();
+  final telefone = TextEditingController();
   final emailController = TextEditingController();
   final senhaController = TextEditingController();
   final confirmaSenhaController = TextEditingController();
@@ -43,7 +43,7 @@ class CadastroController {
           try {
             UsuarioDTO usuarioDTO = UsuarioDTO(
               nome: nomeController.text,
-              telefone: telefone1.text,
+              telefone: telefone.text,
               email: emailController.text,
               password: senhaController.text,
             );
@@ -61,7 +61,7 @@ class CadastroController {
             // Finaliza o loading na tela
             Navigator.pop(contextLoading, loading);
 
-            var showModalOkWidget = ShowModalOkWidget();
+            var alertDialogOk = AlertDialogWidget();
             if (infoResponse.success!) {
               Navigator.of(context).push(
                 myPageTransition.pageTransition(
@@ -70,11 +70,14 @@ class CadastroController {
                 ),
               );
             } else {
-              showModalOkWidget.showModalOk(context,
-                  title: "Erro",
-                  description: infoResponse.message!,
-                  buttonText: "OK",
-                  onPressed: () => Navigator.pop(context));
+              alertDialogOk.alertDialog(
+                showModalOk: true,
+                context: context,
+                titulo: "Erro",
+                descricao: infoResponse.message!,
+                buttonText: "OK",
+                onPressedOk: () => Navigator.pop(context),
+              );
             }
           } catch (e) {
             ScaffoldMessenger.of(context).showSnackBar(
@@ -122,26 +125,31 @@ class CadastroController {
         // Finaliza o loading na tela
         Navigator.pop(contextLoading, loading);
 
-        var showModalOkWidget = ShowModalOkWidget();
+        var alertDialog = AlertDialogWidget();
         if (infoResponse.success!) {
-          showModalOkWidget.showModalOk(
-            context,
-            title: "Sucesso",
-            description: "Usuário ativado com sucesso",
+          alertDialog.alertDialog(
+            showModalOk: true,
+            context: context,
+            titulo: "Sucesso",
+            descricao: "Usuário ativado com sucesso",
             buttonText: "OK",
-            onPressed: () => Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const InicioPage(),
-                ),
-                (route) => false),
+            onPressedOk: () => Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const InicioPage(),
+              ),
+              (route) => false,
+            ),
           );
         } else {
-          showModalOkWidget.showModalOk(context,
-              title: "Erro",
-              description: infoResponse.message!,
-              buttonText: "OK",
-              onPressed: () => Navigator.pop(context));
+          alertDialog.alertDialog(
+            showModalOk: true,
+            context: context,
+            titulo: "Erro",
+            descricao: infoResponse.message!,
+            buttonText: "OK",
+            onPressedOk: () => Navigator.pop(context),
+          );
         }
       } catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(

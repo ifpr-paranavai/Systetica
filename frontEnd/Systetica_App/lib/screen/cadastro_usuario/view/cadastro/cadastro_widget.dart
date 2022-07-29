@@ -13,7 +13,9 @@ import 'package:systetica/screen/cadastro_usuario/view/cadastro/cadastro_page.da
 class CadastroWidget extends State<CadastroPage> {
   final CadastroController _controller = CadastroController();
   final MultiValidatorUsuario _validatorUsuario = MultiValidatorUsuario();
+
   var myPageTransition = MyPageTransition();
+
   late ScrollController _scrollController;
   late ScrollController _scrollControllerDropDown;
 
@@ -127,7 +129,7 @@ class CadastroWidget extends State<CadastroPage> {
         Icons.phone,
         color: Colors.black87,
       ),
-      controller: _controller.telefone1,
+      controller: _controller.telefone,
       validator: _validatorUsuario.telefoneValidator,
     );
   }

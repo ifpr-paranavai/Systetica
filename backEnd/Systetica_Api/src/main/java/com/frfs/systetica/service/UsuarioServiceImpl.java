@@ -6,6 +6,7 @@ import com.frfs.systetica.entity.Usuario;
 import com.frfs.systetica.exception.BusinessException;
 import com.frfs.systetica.mapper.UsuarioMapper;
 import com.frfs.systetica.repository.UsuarioRepository;
+import com.frfs.systetica.utils.Constantes;
 import com.frfs.systetica.utils.GerarCodigoAleatorio;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,10 +28,6 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Slf4j
 public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
-
-    private static final long DEZ_MINUTOS_MILLISECUNDOS_CODIGO = 600000;
-    private static final long DEZ_MB = 10024000L;
-
     private final UsuarioRepository usuarioRepository;
     private final UsuarioMapper usuarioMapper;
     private final PasswordEncoder passwordEncoder;
@@ -88,6 +85,15 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
         return new ReturnData<>(true, "", usuarioMapper.toDto(usuario.get()));
     }
 
+    public ReturnData<Object> buscarPorEmailToken(String email) {
+        var usuario = usuarioRepository.findByEmail(email);
+        if (usuario.isEmpty()) {
+            return new ReturnData<>(false, "Usuário não encontrado.",
+                    "Não foi possível encontrar usuário pelo email" + email);
+        }
+        return new ReturnData<>(true, "", usuario.get());
+    }
+
     @Override
     public ReturnData<Object> buscarTodos() {
         return new ReturnData<>(true, "", usuarioMapper.toListDto(usuarioRepository.findAll()));
@@ -103,7 +109,7 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
         } else {
             var tempoExpiracao = new Date().getTime() - usuario.get().getDataCadastro().getTime();
 
-            if (tempoExpiracao < DEZ_MINUTOS_MILLISECUNDOS_CODIGO) {
+            if (tempoExpiracao < Constantes.DEZ_MINUTOS_MILLISECUNDOS_CODIGO) {
                 usuario.get().setCodigoAleatorio(null);
                 usuario.get().setDataCodigo(null);
                 usuario.get().setUsuarioAtivo(true);
@@ -197,7 +203,7 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
 
         byte[] bytesEncoded = Base64.encodeBase64(imagemBase64.getBytes());
 
-        if (bytesEncoded.length > DEZ_MB) {
+        if (bytesEncoded.length > Constantes.FILE_DEZ_MB) {
             return new ReturnData<>(true, "Imagem deve possuir menos de 10mb.");
         }
 
