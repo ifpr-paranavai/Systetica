@@ -19,6 +19,7 @@ class PerfilController {
 
   File? image;
   PickedFile? pickedFile;
+  bool imagemAlterada = false;
   String imagemBase64 = "";
 
   Future<Info?> buscarUsuarioEmail(BuildContext context) async {

@@ -15,7 +15,7 @@ import 'package:systetica/model/MenuItemDto.dart';
 import 'package:systetica/model/UsuarioDTO.dart';
 import 'package:systetica/screen/inicio/view/inicio_page.dart';
 import 'package:systetica/screen/perfil/perfil_controller.dart';
-import 'package:systetica/screen/perfil/view/perfil_form_page.dart';
+import 'package:systetica/screen/perfil/view/form/perfil_form_page.dart';
 import 'package:systetica/screen/perfil/view/perfil_page.dart';
 import 'package:systetica/style/app_colors..dart';
 
@@ -116,7 +116,7 @@ class PerfilWidget extends State<PerfilPage> {
                 showModalOk: false,
                 context: context,
                 titulo: "Atenção!",
-                descricao: "Você tem certeza que dejesa sair?",
+                descricao: "Tem certeza que dejesa sair?",
                 onPressedNao: () => Navigator.pop(context),
                 onPressedOk: () => Navigator.pushAndRemoveUntil(
                   context,

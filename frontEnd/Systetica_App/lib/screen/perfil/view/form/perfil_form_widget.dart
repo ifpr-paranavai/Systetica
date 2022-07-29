@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:systetica/components/botoes/botao_icon_widget.dart';
@@ -16,7 +17,7 @@ import 'package:systetica/model/Info.dart';
 import 'package:systetica/model/UsuarioDTO.dart';
 import 'package:systetica/model/validator/MultiValidatorUsuario.dart';
 import 'package:systetica/screen/perfil/perfil_controller.dart';
-import 'package:systetica/screen/perfil/view/perfil_form_page.dart';
+import 'package:systetica/screen/perfil/view/form/perfil_form_page.dart';
 import 'package:systetica/style/app_colors..dart';
 
 class PerfilFormWidget extends State<PerfilFormPage> {
@@ -30,10 +31,10 @@ class PerfilFormWidget extends State<PerfilFormPage> {
     XFile? pickedImagem = await _picker.pickImage(source: ImageSource.gallery);
     if (pickedImagem != null) {
       CroppedFile _croppedFile = await _funcaoCroppedFile(pickedImagem);
-      setState(
-            () {
+      setState(() {
           File imagem = File(_croppedFile.path);
           _controller.imagemBase64 = base64Encode(imagem.readAsBytesSync());
+          _controller.imagemAlterada = true;
         },
       );
     }
@@ -90,6 +91,10 @@ class PerfilFormWidget extends State<PerfilFormPage> {
             } else if (snapShot.hasData) {
               if (snapShot.data!.success!) {
                 UsuarioDTO usuarioDTO = snapShot.data!.object;
+                if (usuarioDTO.imagemBase64 != _controller.imagemBase64 &&
+                    !_controller.imagemAlterada) {
+                  _controller.imagemBase64 = usuarioDTO.imagemBase64!;
+                }
                 return Column(
                   children: [
                     IconArrowWidget(
@@ -104,7 +109,7 @@ class PerfilFormWidget extends State<PerfilFormPage> {
                           child: Column(
                             children: [
                               sizedBox(height: mediaQueryHeight * 0.02),
-                              boxFoto(usuarioDTO.imagemBase64),
+                              boxFoto(_controller.imagemBase64),
                               sizedBox(height: 40),
                               textoEditar(),
                               inputNome(),
@@ -126,22 +131,6 @@ class PerfilFormWidget extends State<PerfilFormPage> {
           },
         ),
       ),
-    );
-  }
-
-  BotaoIconWidget botaoFoto() {
-    return BotaoIconWidget(
-      paddingTop: 5,
-      paddingBottom: 0,
-      paddingRight: 120,
-      labelText: "Foto de Perfil",
-      largura: 340,
-      fontSize: 18,
-      corBotao: Colors.white,
-      corTexto: Colors.black,
-      corBorda: Colors.blueGrey,
-      fontWeight: FontWeight.normal,
-      onPressed: () => _adicionarImagem(),
     );
   }
 
@@ -180,7 +169,31 @@ class PerfilFormWidget extends State<PerfilFormPage> {
     return CircleAvatar(
       backgroundColor: Colors.black,
       backgroundImage: backgroundImage,
-      child: Icon(Icons.add_circle),
+      child: paddingIconEditarFoto(),
+    );
+  }
+
+  Padding paddingIconEditarFoto() {
+    return Padding(
+      padding: const EdgeInsets.only(top: 120, left: 120),
+      child: SizedBox(
+        width: 40,
+        height: 40,
+        child: CircleAvatar(
+          radius: 20,
+          backgroundColor: AppColors.redPrincipal,
+          child: IconButton(
+            splashColor: Colors.transparent,
+            highlightColor: Colors.transparent,
+            iconSize: 20,
+            color: Colors.white,
+            icon: const Icon(
+              Icons.edit,
+            ),
+            onPressed: () => _adicionarImagem(),
+          ),
+        ),
+      ),
     );
   }
 
@@ -275,8 +288,10 @@ class PerfilFormWidget extends State<PerfilFormPage> {
     );
   }
 
-  Container iconErroFoto() {
+  Widget iconErroFoto() {
     return Container(
+      width: 160,
+      height: 160,
       decoration: BoxDecoration(
         color: AppColors.redPrincipal,
         shape: BoxShape.circle,
@@ -288,10 +303,13 @@ class PerfilFormWidget extends State<PerfilFormPage> {
           )
         ],
       ),
-      child: const Icon(
-        Icons.person,
-        size: 100,
-        color: Colors.white,
+      child: IconButton(
+        icon: const Icon(
+          Icons.edit,
+          size: 100,
+          color: Colors.white,
+        ),
+        onPressed: () => _adicionarImagem(),
       ),
     );
   }
