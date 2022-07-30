@@ -10,9 +10,7 @@ public interface UsuarioService {
 
     ReturnData<Object> buscarPorId(Long id);
 
-    ReturnData<Object> buscarPorEmail(String email);
-
-    ReturnData<Object> buscarPorEmailToken(String email);
+    ReturnData<Object> buscarPorEmail(String email, boolean buscarParaToken);
 
     ReturnData<Object> buscarTodos();
 

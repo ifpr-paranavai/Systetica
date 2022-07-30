@@ -67,7 +67,7 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
 
     @Override
     public ReturnData<Object> buscarPorId(Long id) {
-        var usuario = usuarioRepository.findById(id);
+        Optional<Usuario> usuario = usuarioRepository.findById(id);
         if (usuario.isEmpty()) {
             return new ReturnData<>(false, "Usuário não encontrado.",
                     "Não foi possível encontrar usuário pelo id " + id);
@@ -76,22 +76,17 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
     }
 
     @Override
-    public ReturnData<Object> buscarPorEmail(String email) {
+    public ReturnData<Object> buscarPorEmail(String email, boolean buscarParaToken) {
         var usuario = usuarioRepository.findByEmail(email);
         if (usuario.isEmpty()) {
             return new ReturnData<>(false, "Usuário não encontrado.",
                     "Não foi possível encontrar usuário pelo email" + email);
         }
-        return new ReturnData<>(true, "", usuarioMapper.toDto(usuario.get()));
-    }
-
-    public ReturnData<Object> buscarPorEmailToken(String email) {
-        var usuario = usuarioRepository.findByEmail(email);
-        if (usuario.isEmpty()) {
-            return new ReturnData<>(false, "Usuário não encontrado.",
-                    "Não foi possível encontrar usuário pelo email" + email);
+        if (buscarParaToken) {
+            return new ReturnData<>(true, "", usuario.get());
+        } else {
+            return new ReturnData<>(true, "", usuarioMapper.toDto(usuario.get()));
         }
-        return new ReturnData<>(true, "", usuario.get());
     }
 
     @Override

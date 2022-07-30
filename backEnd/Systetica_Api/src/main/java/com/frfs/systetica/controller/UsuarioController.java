@@ -45,7 +45,7 @@ public class UsuarioController {
     @GetMapping(value = "email/{email}")
     @ResponseBody
     public ResponseEntity<Object> buscarPorEmail(@PathVariable String email) {
-        ReturnData<Object> result = usuarioService.buscarPorEmail(email);
+        ReturnData<Object> result = usuarioService.buscarPorEmail(email, false);
 
         return new ResponseEntity<>(result, result.getSuccess() ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
     }

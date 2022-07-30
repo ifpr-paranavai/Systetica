@@ -1,7 +1,7 @@
 package com.frfs.systetica.controller;
 
-import com.frfs.systetica.dto.response.ReturnData;
 import com.frfs.systetica.service.CidadeService;
+import com.frfs.systetica.dto.response.ReturnData;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
