@@ -24,7 +24,7 @@ class DbSQLite {
 
   Future _createDB(Database db, int version) async {
     String idType = 'INTEGER PRIMARY KEY AUTOINCREMENT';
-    String textType = 'TEXT NOT NULL';
+    String textType = 'TEXT';
 
     //Tabela ConfigServer
     await db.execute('''

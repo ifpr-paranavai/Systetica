@@ -10,10 +10,13 @@ import 'package:systetica/components/item_list.dart';
 import 'package:systetica/components/loading/loading_animation.dart';
 import 'package:systetica/components/single_child_scroll_edicao.dart';
 import 'package:systetica/components/text_autenticacoes_widget.dart';
+import 'package:systetica/database/repository/token_repository.dart';
 import 'package:systetica/model/Info.dart';
 import 'package:systetica/model/MenuItemDto.dart';
+import 'package:systetica/model/TokenDTO.dart';
 import 'package:systetica/model/UsuarioDTO.dart';
 import 'package:systetica/screen/inicio/view/inicio_page.dart';
+import 'package:systetica/screen/login/view/login/login_page.dart';
 import 'package:systetica/screen/perfil/perfil_controller.dart';
 import 'package:systetica/screen/perfil/view/form/perfil_form_page.dart';
 import 'package:systetica/screen/perfil/view/perfil_page.dart';
@@ -52,9 +55,9 @@ class PerfilWidget extends State<PerfilPage> {
                   widgetComponent: Center(
                     child: Column(
                       children: [
+                        tituloSystetica(bottom: mediaQueryHeight * 0.03),
                         boxFoto(_controller.usuarioDTO.imagemBase64),
                         sizedBox(height: mediaQueryHeight * 0.05),
-                        tituloSystetica(bottom: mediaQueryHeight * 0.03),
                         cardInfoUsuario(usuarioDTO: _controller.usuarioDTO),
                       ],
                     ),
@@ -125,14 +128,19 @@ class PerfilWidget extends State<PerfilPage> {
                   titulo: "Atenção!",
                   descricao: "Tem certeza que dejesa sair?",
                   onPressedNao: () => Navigator.pop(context),
-                  onPressedOk: () => Navigator.pushAndRemoveUntil(
-                    context,
-                    _controller.myPageTransition.pageTransition(
-                      child: const InicioPage(),
-                      childCurrent: widget,
-                    ),
-                    (route) => false,
-                  ),
+                  onPressedOk: () async {
+                    await TokenRepository.updateToken(
+                      TokenDTO(id: 1),
+                    );
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      _controller.myPageTransition.pageTransition(
+                        child: const InicioPage(),
+                        childCurrent: widget,
+                      ),
+                      (route) => false,
+                    );
+                  },
                 );
               }
             },
@@ -149,7 +157,7 @@ class PerfilWidget extends State<PerfilPage> {
         child: Text(
           'Perfil',
           style: GoogleFonts.amaticSc(
-            fontSize: 35,
+            fontSize: 38,
             fontWeight: FontWeight.bold,
             color: Colors.black,
           ),

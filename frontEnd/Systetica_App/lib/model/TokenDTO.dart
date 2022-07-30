@@ -10,6 +10,7 @@ class TokenDTO {
 
   TokenDTO({
     this.id,
+    this.accessToken,
     this.refreshToken,
     this.email,
     this.dateTimeToken,
@@ -30,8 +31,8 @@ class TokenDTO {
     id = json['id'];
     accessToken = json['access_token'];
     refreshToken = json['refresh_token'];
-    email = Util.emailDecode(accessToken!);
-    dateTimeToken = DateTime.now().toString();
+    email = accessToken == null ? null : Util.emailDecode(accessToken!);
+    dateTimeToken = json['date_time_token'] ?? DateTime.now().toString();
   }
 
   Map<String, dynamic> toJson() {

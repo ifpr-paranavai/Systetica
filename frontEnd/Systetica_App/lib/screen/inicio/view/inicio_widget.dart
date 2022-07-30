@@ -5,11 +5,13 @@ import 'package:systetica/components/botoes/botao_widget.dart';
 import 'package:systetica/components/imagens_widget.dart';
 import 'package:systetica/components/page_transition.dart';
 import 'package:systetica/screen/cadastro_usuario/view/cadastro/cadastro_page.dart';
+import 'package:systetica/screen/inicio/inicio_controller.dart';
 import 'package:systetica/screen/inicio/view/inicio_page.dart';
 import 'package:systetica/screen/login/view/login/login_page.dart';
 import 'package:systetica/style/app_colors..dart';
 
 class InicioWidget extends State<InicioPage> with TickerProviderStateMixin {
+  final InicioController _controller = InicioController();
   var myPageTransition = MyPageTransition();
   final List<Color> _colorList = [
     AppColors.blue1,
@@ -28,6 +30,7 @@ class InicioWidget extends State<InicioPage> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
+    _controller.verificarDirecionamentoUsuario(context);
     Timer(
       const Duration(microseconds: 0),
       () {

@@ -17,9 +17,9 @@ class HomeWidget extends State<HomePage> {
 
   @override
   void initState() {
+    super.initState();
     widgetOpcoes = widgetOpcoesCliente;
     bottomNavigations = bottomNavigationCliente;
-    super.initState();
     buscarTokenLocal();
   }
 

@@ -79,7 +79,7 @@ class PerfilFormWidget extends State<PerfilFormPage> {
     if (pickedImagem != null) {
       CroppedFile _croppedFile = await _funcaoCroppedFile(pickedImagem);
       setState(
-            () {
+        () {
           File imagem = File(_croppedFile.path);
           _controller.imagemBase64 = base64Encode(imagem.readAsBytesSync());
           _controller.imagemAlterada = true;
@@ -207,7 +207,7 @@ class PerfilFormWidget extends State<PerfilFormPage> {
       mask: "(##) #####-####",
       paddingBottom: 0,
       maxLength: 15,
-      paddingTop: 8,
+      paddingTop: 12,
       isIconDate: true,
       icon: const Icon(
         Icons.phone,
