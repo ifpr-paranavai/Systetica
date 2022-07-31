@@ -40,7 +40,6 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
             if (usuarioRepository.findByEmail(usuarioDTO.getEmail()).isPresent()) {
                 return new ReturnData<>(false, "Email já esta sendo utilizado.");
             }
-
             var codigoAleatorio = codigoAleatorioService.gerarCodigo();
 
             var returnDataEmail = emailService.enviarEmail(true, usuarioDTO.getEmail(),
@@ -84,9 +83,8 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
         }
         if (buscarParaToken) {
             return new ReturnData<>(true, "", usuario.get());
-        } else {
-            return new ReturnData<>(true, "", usuarioMapper.toDto(usuario.get()));
         }
+        return new ReturnData<>(true, "", usuarioMapper.toDto(usuario.get()));
     }
 
     @Override
@@ -101,49 +99,41 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
 
         if (usuario.isEmpty()) {
             return new ReturnData<>(false, "Email ou código informado inválido");
-        } else {
-            var tempoExpiracao = new Date().getTime() - usuario.get().getDataCadastro().getTime();
-
-            if (tempoExpiracao < Constantes.DEZ_MINUTOS_MILLISECUNDOS_CODIGO) {
-                usuario.get().setCodigoAleatorio(null);
-                usuario.get().setDataCodigo(null);
-                usuario.get().setUsuarioAtivo(true);
-                usuarioRepository.saveAndFlush(usuario.get());
-                return new ReturnData<>(true, "Usuário ativado com sucesso");
-            } else {
-                return new ReturnData<>(false, "Código expirado");
-            }
         }
+        var tempoExpiracao = new Date().getTime() - usuario.get().getDataCadastro().getTime();
+
+        if (tempoExpiracao < Constantes.DEZ_MINUTOS_MILLISECUNDOS_CODIGO) {
+            usuario.get().setCodigoAleatorio(null);
+            usuario.get().setDataCodigo(null);
+            usuario.get().setUsuarioAtivo(true);
+            usuarioRepository.saveAndFlush(usuario.get());
+            return new ReturnData<>(true, "Usuário ativado com sucesso");
+        }
+        return new ReturnData<>(false, "Código expirado");
     }
 
     @Override
     public ReturnData<String> gerarCodigoAlterarSenha(String email) {
-        try {
-            var usuario = usuarioRepository.findByEmail(email);
+        var usuario = usuarioRepository.findByEmail(email);
 
-            if (usuario.isEmpty()) {
-                return new ReturnData<>(false,
-                        "Usuário não encontrado, por favor verifique email informado");
-            } else {
-                var codigoAleatorio = codigoAleatorioService.gerarCodigo();
-
-                var returnDataEmail = emailService.enviarEmail(false, email,
-                        codigoAleatorio, usuario.get().getNome());
-
-                if (returnDataEmail.getSuccess()) {
-                    usuario.get().setCodigoAleatorio(codigoAleatorio);
-                    usuario.get().setDataCodigo(new Date());
-
-                    usuarioRepository.saveAndFlush(usuario.get());
-
-                    return new ReturnData<>(true, "Código para alterar senha enviado");
-                }
-                return returnDataEmail;
-            }
-        } catch (Exception ex) {
-            return new ReturnData<>(false, "Ocorreu um erro ao enviar email",
-                    ex.getMessage() + "\nMotivo: " + ex.getCause());
+        if (usuario.isEmpty()) {
+            return new ReturnData<>(false,
+                    "Usuário não encontrado, por favor verifique email informado");
         }
+        var codigoAleatorio = codigoAleatorioService.gerarCodigo();
+
+        var returnDataEmail = emailService.enviarEmail(false, email,
+                codigoAleatorio, usuario.get().getNome());
+
+        if (!returnDataEmail.getSuccess()) {
+            return returnDataEmail;
+        }
+        usuario.get().setCodigoAleatorio(codigoAleatorio);
+        usuario.get().setDataCodigo(new Date());
+
+        usuarioRepository.saveAndFlush(usuario.get());
+        return new ReturnData<>(true, "Código para alterar senha enviado");
+
     }
 
     @Override
@@ -154,14 +144,13 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
 
             if (usuario.isEmpty()) {
                 return new ReturnData<>(false, "Email ou código são inválidos");
-            } else {
-                usuario.get().setCodigoAleatorio(null);
-                usuario.get().setDataCodigo(null);
-                usuario.get().setPassword(passwordEncoder.encode(usuarioDTO.getPassword()));
-
-                usuarioRepository.saveAndFlush(usuario.get());
-                return new ReturnData<>(true, "Senhar alterada com sucesso");
             }
+            usuario.get().setCodigoAleatorio(null);
+            usuario.get().setDataCodigo(null);
+            usuario.get().setPassword(passwordEncoder.encode(usuarioDTO.getPassword()));
+
+            usuarioRepository.saveAndFlush(usuario.get());
+            return new ReturnData<>(true, "Senhar alterada com sucesso");
         } catch (Exception ex) {
             return new ReturnData<>(false, "Ocorreu um erro ao alterar senha",
                     ex.getMessage() + "\nMotivo: " + ex.getCause());
@@ -199,7 +188,7 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
         byte[] bytesEncoded = Base64.encodeBase64(imagemBase64.getBytes());
 
         if (bytesEncoded.length > Constantes.FILE_DEZ_MB) {
-            return new ReturnData<>(true, "Imagem deve possuir menos de 10mb.");
+            return new ReturnData<>(false, "Imagem deve possuir menos de 10mb.");
         }
 
         return new ReturnData<>(true, imagemBase64);

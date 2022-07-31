@@ -7,6 +7,7 @@ import com.frfs.systetica.entity.Role;
 import com.frfs.systetica.entity.Usuario;
 import com.frfs.systetica.mapper.UsuarioMapper;
 import com.frfs.systetica.repository.UsuarioRepository;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
@@ -20,6 +21,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.util.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
 @ActiveProfiles(profiles = "local")
@@ -251,4 +254,166 @@ public class UsuarioServiceTest {
 
         usuarioService.loadUserByUsername(email);
     }
+
+    // Testes para ReturnData false
+    @Test
+    @DisplayName("Deve informa que o email já esta sendo utilizado")
+    public void deveInformarEmailUtilizado() {
+
+        Usuario usuario = Mockito.mock(Usuario.class);
+        UsuarioDTO usuarioDTO = Mockito.mock(UsuarioDTO.class);
+        Optional<Usuario> usuarioOptional = Optional.of(usuario);
+
+        Mockito.when(usuarioDTO.getEmail()).thenReturn("systetica@gmail.com");
+        Mockito.when(usuarioRepository.findByEmail(ArgumentMatchers.eq("systetica@gmail.com"))).thenReturn(usuarioOptional);
+
+        ReturnData<String> returnData = new ReturnData<>(false, "Email já esta sendo utilizado.");
+
+        assertEquals(usuarioService.salvar(usuarioDTO), returnData);
+    }
+
+    @Test
+    @DisplayName("Deve informar que ocorreu algum erro para enviar email ao salvar usuario")
+    public void deveInformarQueEmailNaoEnviado() {
+        int codigoAleatorio = 123456;
+
+        Usuario usuario = Mockito.mock(Usuario.class);
+        UsuarioDTO usuarioDTO = Mockito.mock(UsuarioDTO.class);
+        Optional<Usuario> usuarioOptional = Optional.of(usuario);
+
+        Mockito.when(usuarioDTO.getNome()).thenReturn("Systetica App");
+        Mockito.when(usuarioDTO.getEmail()).thenReturn("systetica@gmail.com");
+
+        ReturnData<String> returnDataEmail = new ReturnData<>(false, "", "Ocorreu algum erro ao enviar email!");
+
+        Mockito.when(usuarioRepository.findByEmail(ArgumentMatchers.eq("mock@gmail.com"))).thenReturn(usuarioOptional);
+        Mockito.when(codigoAleatorioService.gerarCodigo()).thenReturn(123456);
+        Mockito.when(emailService.enviarEmail(
+                true,
+                usuarioDTO.getEmail(),
+                codigoAleatorio,
+                usuarioDTO.getNome())
+        ).thenReturn(returnDataEmail);
+
+        assertEquals(usuarioService.salvar(usuarioDTO), returnDataEmail);
+    }
+
+    @Test
+    @DisplayName("Deve informar que usuário não foi encontrado por id")
+    public void deveInformaUsuarioNaoEncontradoPorId() {
+        Long usuarioId = 1L;
+        Optional<Usuario> usuarioOptional = Optional.empty();
+
+        Mockito.when(usuarioRepository.findById(ArgumentMatchers.eq(usuarioId))).thenReturn(usuarioOptional);
+
+        ReturnData<String> returnData = new ReturnData<>(false, "Usuário não encontrado.",
+                "Não foi possível encontrar usuário pelo id " + usuarioId);
+
+        assertEquals(usuarioService.buscarPorId(usuarioId), returnData);
+    }
+
+    @Test
+    @DisplayName("Buscar informar que usuário não foi encontrado por email")
+    public void deveInformaUsuarioNaoEncontradoPorEmail() {
+        String email = "mock@gmail.com";
+
+        Optional<Usuario> usuarioOptional = Optional.empty();
+        Mockito.when(usuarioRepository.findByEmail(ArgumentMatchers.eq(email))).thenReturn(usuarioOptional);
+
+        ReturnData<String> returnData = new ReturnData<>(false, "Usuário não encontrado.",
+                "Não foi possível encontrar usuário pelo email" + email);
+
+        assertEquals(usuarioService.buscarPorEmail(email, false), returnData);
+    }
+
+    @Test
+    @DisplayName("Buscar informar que email ou código é inválido")
+    public void deveInformaEmailCodigoInformadoInvalido() {
+        int codigoAleatorio = 123456;
+        String email = "systetica@gmail.com";
+
+        UsuarioDTO usuarioDTO = Mockito.mock(UsuarioDTO.class);
+        Optional<Usuario> usuarioOptional = Optional.empty();
+
+        Mockito.when(usuarioRepository.findByEmailAndCodigoAleatorio(
+                email,
+                codigoAleatorio
+        )).thenReturn(usuarioOptional);
+
+        ReturnData<String> returnData = new ReturnData<>(false, "Email ou código informado inválido");
+
+        assertEquals(usuarioService.ativar(usuarioDTO), returnData);
+    }
+
+    @Test
+    @DisplayName("Deve informar código aleatório expirado")
+    public void deveInformarCodigoExpirado() {
+        int codigoAleatorio = 123456;
+        String email = "systetica@gmail.com";
+
+        Usuario usuario = Mockito.mock(Usuario.class);
+        UsuarioDTO usuarioDTO = Mockito.mock(UsuarioDTO.class);
+        Optional<Usuario> usuarioOptional = Optional.of(usuario);
+
+        Mockito.when(usuarioDTO.getEmail()).thenReturn(email);
+        Mockito.when(usuarioDTO.getCodigoAleatorio()).thenReturn(codigoAleatorio);
+
+        Mockito.when(usuarioOptional.get().getDataCadastro())
+                .thenReturn(new GregorianCalendar(2020, Calendar.FEBRUARY, 11).getTime());
+
+        Mockito.when(usuarioRepository.findByEmailAndCodigoAleatorio(
+                email,
+                codigoAleatorio
+        )).thenReturn(usuarioOptional);
+
+        ReturnData<String> returnData = new ReturnData<>(false, "Código expirado");
+
+        assertEquals(usuarioService.ativar(usuarioDTO), returnData);
+    }
+
+    @Test
+    @DisplayName("Buscar informar que usuário não foi encontrado por email")
+    public void deveInformaUsuarioNaoEncontradoPorEmailInformado() {
+        String email = "mock@gmail.com";
+
+        Optional<Usuario> usuarioOptional = Optional.empty();
+        Mockito.when(usuarioRepository.findByEmail(ArgumentMatchers.eq(email))).thenReturn(usuarioOptional);
+
+        ReturnData<String> returnData = new ReturnData<>(false,
+                "Usuário não encontrado, por favor verifique email informado");
+
+        assertEquals(usuarioService.gerarCodigoAlterarSenha(email), returnData);
+    }
+
+    @Test
+    @DisplayName("Deve informar que email ou código são invalido para alterar senha")
+    public void deveInformarEmailCodigoInvalidoAlterarSenha() {
+        int codigoAleatorio = 123456;
+
+        UsuarioDTO usuarioDTO = Mockito.mock(UsuarioDTO.class);
+        Optional<Usuario> usuarioOptional = Optional.empty();
+
+        Mockito.when(usuarioDTO.getEmail()).thenReturn("systetica@gmail.com");
+        Mockito.when(usuarioDTO.getCodigoAleatorio()).thenReturn(codigoAleatorio);
+
+        Mockito.when(usuarioRepository.findByEmailAndCodigoAleatorio(
+                usuarioDTO.getEmail(),
+                usuarioDTO.getCodigoAleatorio()
+        )).thenReturn(usuarioOptional);
+
+        ReturnData<String> returnData = new ReturnData<>(false, "Email ou código são inválidos");
+
+        assertEquals(usuarioService.alterarSenha(usuarioDTO), returnData);
+    }
+
+    @Test
+    @DisplayName("Deve informar que imagem deve possuir menos de 10mb")
+    public void deveInformarImagemDeveSerMenorDezMb() {
+        String imagemBase64 = RandomStringUtils.randomAscii(11485760);
+
+        ReturnData<String> returnData = new ReturnData<>(false, "Imagem deve possuir menos de 10mb.");
+
+        assertEquals(usuarioService.converteFileBase64(imagemBase64), returnData);
+    }
+
 }
