@@ -36,7 +36,7 @@ public class EmailServiceImpl implements EmailService {
             message.setText(emailDTO.getMensagemText());
 
             javaMailSender.send(message);
-            return new ReturnData<>(true, "", "Senha enviado com sucesso!");
+            return new ReturnData<>(true, "", "Código enviado com sucesso!");
         } catch (BusinessException busEx) {
             return new ReturnData<>(false, "Ocorreu um erro ao enviar email.", busEx.getMessage());
         } catch (Exception ex) {

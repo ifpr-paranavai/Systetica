@@ -7,7 +7,6 @@ import com.frfs.systetica.exception.BusinessException;
 import com.frfs.systetica.mapper.UsuarioMapper;
 import com.frfs.systetica.repository.UsuarioRepository;
 import com.frfs.systetica.utils.Constantes;
-import com.frfs.systetica.utils.GerarCodigoAleatorio;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.codec.binary.Base64;
@@ -33,6 +32,7 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
     private final PasswordEncoder passwordEncoder;
     private final RoleService roleService;
     private final EmailService emailService;
+    private final CodigoAleatorioService codigoAleatorioService;
 
     @Override
     public ReturnData<String> salvar(UsuarioDTO usuarioDTO) {
@@ -41,7 +41,7 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
                 return new ReturnData<>(false, "Email já esta sendo utilizado.");
             }
 
-            var codigoAleatorio = GerarCodigoAleatorio.gerarCodigo();
+            var codigoAleatorio = codigoAleatorioService.gerarCodigo();
 
             var returnDataEmail = emailService.enviarEmail(true, usuarioDTO.getEmail(),
                     codigoAleatorio, usuarioDTO.getNome());
@@ -125,7 +125,7 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
                 return new ReturnData<>(false,
                         "Usuário não encontrado, por favor verifique email informado");
             } else {
-                var codigoAleatorio = GerarCodigoAleatorio.gerarCodigo();
+                var codigoAleatorio = codigoAleatorioService.gerarCodigo();
 
                 var returnDataEmail = emailService.enviarEmail(false, email,
                         codigoAleatorio, usuario.get().getNome());
@@ -207,7 +207,7 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        var usuario = usuarioRepository.findByEmail(email);
+        Optional<Usuario> usuario = usuarioRepository.findByEmail(email);
 
         if (usuario.isEmpty()) {
             throw new UsernameNotFoundException("Usuário não encontrado");
