@@ -17,7 +17,7 @@ class InicioController {
       DateTime dataAtual = DateTime.now();
       if (dataToken.day < dataAtual.day ||
           dataToken.month < dataAtual.month ||
-          dataToken.year < dataToken.year) {
+          dataToken.year < dataAtual.year) {
         Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:systetica/database/repository/token_repository.dart';
+import 'package:systetica/screen/administrador/view/administrador_page.dart';
 import 'package:systetica/screen/agendamentos/view/agendamento_page.dart';
 import 'package:systetica/screen/agendar/view/agendar_page.dart';
-import 'package:systetica/screen/cadastros_administrador/view/cadastro_administrador_page.dart';
 import 'package:systetica/screen/home/view/home_page.dart';
 import 'package:systetica/screen/pagamentos/view/pagamento_page.dart';
 import 'package:systetica/screen/perfil/view/perfil_page.dart';

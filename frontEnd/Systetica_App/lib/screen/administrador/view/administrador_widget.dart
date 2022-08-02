@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:systetica/screen/cadastros_administrador/view/cadastro_administrador_page.dart';
+import 'package:flutter/services.dart';
+import 'package:systetica/components/page_transition.dart';
+import 'package:systetica/screen/administrador/view/administrador_page.dart';
+import 'package:systetica/screen/ativar_funcionario/view/ativar_funcionario_page.dart';
+import 'package:systetica/screen/empresa/view/empresa_page.dart';
+import 'package:systetica/screen/produto/view/produto_page.dart';
+import 'package:systetica/screen/servico/view/servico_page.dart';
 import 'package:systetica/style/app_colors..dart';
 
 class CadastroAdministradorWidget extends State<CadastroAdministradorPage>
@@ -7,6 +13,7 @@ class CadastroAdministradorWidget extends State<CadastroAdministradorPage>
   late AnimationController _controller;
   late Animation<double> _animation;
   late Animation<double> _animation2;
+  final _myPageTransition = MyPageTransition();
 
   @override
   void initState() {
@@ -51,11 +58,11 @@ class CadastroAdministradorWidget extends State<CadastroAdministradorPage>
                 title: "Empresa",
                 icon: Icons.account_balance,
                 color: AppColors.bluePrincipal,
-                route: const Text("E"),
+                route: const EmpresaPage(),
                 title2: 'Serviços',
                 icon2: Icons.construction,
                 color2: Colors.lightGreen,
-                route2: const Text("E"),
+                route2: const ServicoPage(),
                 width: _width,
                 context: context,
               ),
@@ -63,11 +70,11 @@ class CadastroAdministradorWidget extends State<CadastroAdministradorPage>
                 title: "Produtos",
                 icon: Icons.add_shopping_cart,
                 color: AppColors.redPrincipal,
-                route: const Text("E"),
+                route: const ProdutoPage(),
                 title2: 'Ativar Funcionário',
                 icon2: Icons.person,
                 color2: Colors.black,
-                route2: const Text("E"),
+                route2: const AtivarFuncionarioPage(),
                 width: _width,
                 context: context,
               ),
@@ -182,7 +189,7 @@ class CadastroAdministradorWidget extends State<CadastroAdministradorPage>
           splashColor: Colors.transparent,
           child: Container(
             padding: const EdgeInsets.all(15),
-            height: width / 2.2,
+            height: width / 2.1,
             width: width / 2.4,
             decoration: BoxDecoration(
               color: Colors.white,
@@ -203,6 +210,16 @@ class CadastroAdministradorWidget extends State<CadastroAdministradorPage>
               texto: texto,
             ),
           ),
+          onTap: () {
+            HapticFeedback.lightImpact();
+            Navigator.of(context).push(
+              _myPageTransition.pageTransition(
+                child: route,
+                childCurrent: widget,
+                buttoToTop: true,
+              ),
+            );
+          },
         ),
       ),
     );
