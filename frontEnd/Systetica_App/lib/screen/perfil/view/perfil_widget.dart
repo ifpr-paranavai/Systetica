@@ -16,7 +16,6 @@ import 'package:systetica/model/MenuItemDto.dart';
 import 'package:systetica/model/TokenDTO.dart';
 import 'package:systetica/model/UsuarioDTO.dart';
 import 'package:systetica/screen/inicio/view/inicio_page.dart';
-import 'package:systetica/screen/login/view/login/login_page.dart';
 import 'package:systetica/screen/perfil/perfil_controller.dart';
 import 'package:systetica/screen/perfil/view/form/perfil_form_page.dart';
 import 'package:systetica/screen/perfil/view/perfil_page.dart';
@@ -32,8 +31,8 @@ class PerfilWidget extends State<PerfilPage> {
 
   @override
   void initState() {
-    _controller.usuarioDTO = UsuarioDTO();
     super.initState();
+    _controller.usuarioDTO = UsuarioDTO();
   }
 
   @override
@@ -55,7 +54,7 @@ class PerfilWidget extends State<PerfilPage> {
                   widgetComponent: Center(
                     child: Column(
                       children: [
-                        tituloSystetica(bottom: mediaQueryHeight * 0.03),
+                        tituloPerfil(bottom: mediaQueryHeight * 0.03),
                         boxFoto(_controller.usuarioDTO.imagemBase64),
                         sizedBox(height: mediaQueryHeight * 0.05),
                         cardInfoUsuario(usuarioDTO: _controller.usuarioDTO),
@@ -150,7 +149,7 @@ class PerfilWidget extends State<PerfilPage> {
     );
   }
 
-  Padding tituloSystetica({required double bottom}) {
+  Padding tituloPerfil({required double bottom}) {
     return Padding(
       padding: EdgeInsets.only(bottom: bottom),
       child: Center(

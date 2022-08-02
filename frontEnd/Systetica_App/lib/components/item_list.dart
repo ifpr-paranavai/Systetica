@@ -25,14 +25,17 @@ class ItemLista extends StatelessWidget {
           ),
           text(
             text: titulo,
-            fontSize: 16,
+            fontSize: 16.5,
+            opacity: 0.6,
+            fontWeight: FontWeight.w700,
           ),
           sizedBox(
             height: 3,
           ),
           text(
             text: descricao,
-            fontSize: 15,
+            fontSize: 15.5,
+            opacity: 0.5,
             fontWeight: FontWeight.normal,
           ),
           Divider(
@@ -46,13 +49,15 @@ class ItemLista extends StatelessWidget {
   Text text({
     required String text,
     required double fontSize,
-    FontWeight fontWeight = FontWeight.bold,
+    required double opacity,
+    required FontWeight fontWeight,
   }) {
     return Text(
       text,
       style: TextStyle(
         fontSize: fontSize,
         fontWeight: fontWeight,
+        color: Colors.black.withOpacity(opacity),
       ),
     );
   }

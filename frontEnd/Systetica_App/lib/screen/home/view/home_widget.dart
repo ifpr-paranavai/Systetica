@@ -26,7 +26,8 @@ class HomeWidget extends State<HomePage> {
   Future<void> buscarTokenLocal() async {
     await TokenRepository.findToken().then((value) {
       setState(() {
-        Map<String, dynamic> tokenDecodificado = JwtDecoder.decode(value.accessToken!);
+        Map<String, dynamic> tokenDecodificado =
+            JwtDecoder.decode(value.accessToken!);
         if (tokenDecodificado['roles'][0] == "ADMINISTRADOR") {
           widgetOpcoes = widgetOpcoesAdministrador;
           bottomNavigations = bottomNavigationAdministrador;
@@ -51,6 +52,7 @@ class HomeWidget extends State<HomePage> {
     double screenWidth = MediaQuery.of(context).size.width;
     return SafeArea(
       child: Scaffold(
+        backgroundColor: Colors.white,
         body: Center(
           child: widgetOpcoes.elementAt(_selectedIndex),
         ),
