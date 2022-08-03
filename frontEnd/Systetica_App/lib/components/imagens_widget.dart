@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 
 class ImagensWidget extends StatefulWidget {
@@ -6,11 +8,13 @@ class ImagensWidget extends StatefulWidget {
     required this.image,
     this.paddingLeft = 0,
     this.paddingBottom = 0,
+    this.paddingTop = 0,
     required this.widthImagem,
   }) : super(key: key);
 
   String image;
   double paddingLeft;
+  double paddingTop;
   double paddingBottom;
   double? widthImagem;
 
@@ -23,6 +27,7 @@ class _ImagensWidget extends State<ImagensWidget> {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(
+        top: widget.paddingTop,
         left: widget.paddingLeft,
         bottom: widget.paddingBottom,
       ),

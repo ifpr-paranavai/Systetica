@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:systetica/database/orm/token_orm.dart';
 import 'package:systetica/utils/util.dart';
 

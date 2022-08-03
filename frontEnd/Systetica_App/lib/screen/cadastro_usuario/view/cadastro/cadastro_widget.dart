@@ -35,58 +35,58 @@ class CadastroWidget extends State<CadastroPage> {
 
   @override
   Widget build(BuildContext context) {
+    double altura = MediaQuery.of(context).size.height;
+    double largura = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Colors.white,
+      floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
+      floatingActionButton: IconArrowWidget(
+        paddingTop: altura * 0.01,
+        onPressed: () => Navigator.pop(context),
+      ),
       body: SafeArea(
-        child: Column(
-          children: [
-            IconArrowWidget(
-              onPressed: () => Navigator.pop(context),
+        child: SingleChildScrollView(
+          controller: _scrollController,
+          child: Form(
+            autovalidateMode: AutovalidateMode.onUserInteraction,
+            key: _controller.formKey,
+            child: Column(
+              children: [
+                _imageRegistro(paddinTop: altura * 0.03),
+                _textoAutenticacao(),
+                _inputNome(paddingHorizontal: largura * 0.08),
+                _inputTelefone(paddingHorizontal: largura * 0.08),
+                _inputEmail(paddingHorizontal: largura * 0.08),
+                _inputSenha(paddingHorizontal: largura * 0.08),
+                _inputConfirmaSenha(paddingHorizontal: largura * 0.08),
+                _botaoCadastrar(),
+                _botaoAtivar(),
+              ],
             ),
-            Expanded(
-              child: SingleChildScrollView(
-                controller: _scrollController,
-                child: Form(
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  key: _controller.formKey,
-                  child: Column(
-                    children: [
-                      imageRegistro(),
-                      textoAutenticacao(),
-                      inputNome(),
-                      inputTelefone(),
-                      inputEmail(),
-                      inputSenha(),
-                      inputConfirmaSenha(),
-                      botaoCadastrar(),
-                      botaoAtivar(),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );
   }
 
-  ImagensWidget imageRegistro() {
+  ImagensWidget _imageRegistro({required double paddinTop}) {
     return ImagensWidget(
+      paddingTop: paddinTop,
       image: "registro.png",
       widthImagem: 180,
     );
   }
 
-  TextAutenticacoesWidget textoAutenticacao() {
+  TextAutenticacoesWidget _textoAutenticacao() {
     return TextAutenticacoesWidget(
       text: "Registrar-se",
     );
   }
 
-  CampoTextoWidget inputNome() {
+  CampoTextoWidget _inputNome({required double paddingHorizontal}) {
     return CampoTextoWidget(
       labelText: "Nome completo",
+      paddingHorizontal: paddingHorizontal,
       paddingBottom: 0,
       maxLength: 100,
       paddingTop: 14,
@@ -100,9 +100,10 @@ class CadastroWidget extends State<CadastroPage> {
     );
   }
 
-  CampoTextoWidget inputEmail() {
+  CampoTextoWidget _inputEmail({required double paddingHorizontal}) {
     return CampoTextoWidget(
       labelText: "E-mail",
+      paddingHorizontal: paddingHorizontal,
       paddingBottom: 0,
       maxLength: 80,
       paddingTop: 6,
@@ -116,9 +117,10 @@ class CadastroWidget extends State<CadastroPage> {
     );
   }
 
-  CampoTextoWidget inputTelefone() {
+  CampoTextoWidget _inputTelefone({required double paddingHorizontal}) {
     return CampoTextoWidget(
       labelText: "Telefone",
+      paddingHorizontal: paddingHorizontal,
       keyboardType: TextInputType.number,
       mask: "(##) #####-####",
       paddingBottom: 0,
@@ -134,8 +136,9 @@ class CadastroWidget extends State<CadastroPage> {
     );
   }
 
-  CampoTextoWidget inputSenha() {
+  CampoTextoWidget _inputSenha({required double paddingHorizontal}) {
     return CampoTextoWidget(
+      paddingHorizontal: paddingHorizontal,
       labelText: "Senha",
       maxLength: 16,
       isPassword: true,
@@ -146,8 +149,9 @@ class CadastroWidget extends State<CadastroPage> {
     );
   }
 
-  CampoTextoWidget inputConfirmaSenha() {
+  CampoTextoWidget _inputConfirmaSenha({required double paddingHorizontal}) {
     return CampoTextoWidget(
+      paddingHorizontal: paddingHorizontal,
       labelText: "Confirmar senha",
       maxLength: 16,
       isPassword: true,
@@ -158,7 +162,7 @@ class CadastroWidget extends State<CadastroPage> {
     );
   }
 
-  BotaoWidget botaoCadastrar() {
+  BotaoWidget _botaoCadastrar() {
     return BotaoWidget(
       paddingTop: 10,
       paddingBottom: 0,
@@ -175,7 +179,7 @@ class CadastroWidget extends State<CadastroPage> {
     );
   }
 
-  BotaoWidget botaoAtivar() {
+  BotaoWidget _botaoAtivar() {
     return BotaoWidget(
       paddingTop: 18,
       paddingBottom: 30,

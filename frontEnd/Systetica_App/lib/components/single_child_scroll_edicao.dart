@@ -3,11 +3,9 @@ import 'package:flutter/material.dart';
 class SingleChildScrollEdicao extends StatefulWidget {
   const SingleChildScrollEdicao({
     Key? key,
-    required this.opcoes,
     required this.widgetComponent,
   }) : super(key: key);
 
-  final Widget opcoes;
   final Widget widgetComponent;
 
   @override
@@ -28,7 +26,6 @@ class _SingleChildScrollEdicaoState extends State<SingleChildScrollEdicao> {
       ),
       child: Column(
         children: [
-          widget.opcoes,
           Expanded(
             child: SingleChildScrollView(
               child: Container(

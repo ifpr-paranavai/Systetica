@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names, file_names, non_constant_identifier_names
+
 class PageImpl {
   static const String CONTENT = 'content';
   static const String PAGEABLE = 'pageable';

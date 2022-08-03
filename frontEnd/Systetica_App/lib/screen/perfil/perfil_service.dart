@@ -1,3 +1,5 @@
+// ignore_for_file: unused_catch_clause
+
 import 'package:dio/dio.dart';
 import 'package:systetica/model/Info.dart';
 import 'package:systetica/model/TokenDTO.dart';

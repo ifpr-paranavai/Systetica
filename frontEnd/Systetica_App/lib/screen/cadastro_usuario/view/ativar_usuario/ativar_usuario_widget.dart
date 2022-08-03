@@ -14,48 +14,45 @@ class AtivarUsuarioWidget extends State<AtivarUsuarioPage> {
 
   @override
   Widget build(BuildContext context) {
+    double altura = MediaQuery.of(context).size.height;
+    double largura = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Colors.white,
+      floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
+      floatingActionButton: IconArrowWidget(
+        paddingTop: altura * 0.01,
+        onPressed: () => Navigator.pop(context),
+      ),
       body: SafeArea(
-        child: Column(
-          children: [
-            IconArrowWidget(
-              paddingTop: 5,
-              paddingBotton: 5,
-              onPressed: () => Navigator.pop(context),
+        child: SingleChildScrollView(
+          child: Form(
+            autovalidateMode: AutovalidateMode.onUserInteraction,
+            key: _controller.formKey,
+            child: Column(
+              children: [
+                _imageAtivarUsuario(paddinTop: altura * 0.03),
+                _textAtivar(),
+                _inputEmail(paddingHorizontal: largura * 0.08),
+                _inputCodigo(paddingHorizontal: largura * 0.08),
+                _botaoAtivaUsuario(),
+              ],
             ),
-            Expanded(
-              child: SingleChildScrollView(
-                child: Form(
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  key: _controller.formKey,
-                  child: Column(
-                    children: [
-                      imageAtivarUsuario(),
-                      textAtivar(),
-                      inputEmail(),
-                      inputCodigo(),
-                      botaoAtivaUsuario(),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );
   }
 
-  ImagensWidget imageAtivarUsuario() {
+  ImagensWidget _imageAtivarUsuario({required double paddinTop}) {
     return ImagensWidget(
+      paddingTop: paddinTop,
       paddingLeft: 10,
       image: "ativar-usuario.png",
       widthImagem: 220,
     );
   }
 
-  TextAutenticacoesWidget textAtivar() {
+  TextAutenticacoesWidget _textAtivar() {
     return TextAutenticacoesWidget(
       paddingTop: 10,
       paddingBottom: 2,
@@ -63,9 +60,10 @@ class AtivarUsuarioWidget extends State<AtivarUsuarioPage> {
     );
   }
 
-  CampoTextoWidget inputEmail() {
+  CampoTextoWidget _inputEmail({required double paddingHorizontal}) {
     return CampoTextoWidget(
       labelText: "E-mail",
+      paddingHorizontal: paddingHorizontal,
       paddingBottom: 0,
       maxLength: 50,
       paddingTop: 10,
@@ -79,9 +77,10 @@ class AtivarUsuarioWidget extends State<AtivarUsuarioPage> {
     );
   }
 
-  CampoTextoWidget inputCodigo() {
+  CampoTextoWidget _inputCodigo({required double paddingHorizontal}) {
     return CampoTextoWidget(
       labelText: "Códico",
+      paddingHorizontal: paddingHorizontal,
       paddingBottom: 0,
       maxLength: 10,
       paddingTop: 10,
@@ -95,7 +94,7 @@ class AtivarUsuarioWidget extends State<AtivarUsuarioPage> {
     );
   }
 
-  BotaoWidget botaoAtivaUsuario() {
+  BotaoWidget _botaoAtivaUsuario() {
     return BotaoWidget(
       paddingTop: 18,
       paddingBottom: 30,

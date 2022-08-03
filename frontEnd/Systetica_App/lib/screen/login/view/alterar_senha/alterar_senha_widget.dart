@@ -14,47 +14,46 @@ class AlterarSenhaWidget extends State<AlterarSenhaPage> {
 
   @override
   Widget build(BuildContext context) {
+    double altura = MediaQuery.of(context).size.height;
+    double largura = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Colors.white,
+      floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
+      floatingActionButton: IconArrowWidget(
+        paddingTop: altura * 0.01,
+        onPressed: () => Navigator.pop(context),
+      ),
       body: SafeArea(
-        child: Column(
-          children: [
-            IconArrowWidget(
-              onPressed: () => Navigator.pop(context),
+        child: SingleChildScrollView(
+          child: Form(
+            autovalidateMode: AutovalidateMode.onUserInteraction,
+            key: _controller.formKey,
+            child: Column(
+              children: [
+                _imagemAlterarSenha(paddinTop: altura * 0.03),
+                _textoAlterarSenha(),
+                _inputEmail(paddingHorizontal: largura * 0.08),
+                _inputCodigo(paddingHorizontal: largura * 0.08),
+                _inputNovaSenha(paddingHorizontal: largura * 0.08),
+                _inputConfirmaSenha(paddingHorizontal: largura * 0.08),
+                _botaoAlterarSenha(),
+              ],
             ),
-            Expanded(
-              child: SingleChildScrollView(
-                child: Form(
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  key: _controller.formKey,
-                  child: Column(
-                    children: [
-                      imagemAlterarSenha(),
-                      textoAlterarSenha(),
-                      inputEmail(),
-                      inputCodigo(),
-                      inputNovaSenha(),
-                      inputConfirmaSenha(),
-                      botaoAlterarSenha(),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );
   }
 
-  ImagensWidget imagemAlterarSenha() {
+  ImagensWidget _imagemAlterarSenha({required double paddinTop}) {
     return ImagensWidget(
+      paddingTop: paddinTop,
       image: "alterar-senha.png",
       widthImagem: 275,
     );
   }
 
-  TextAutenticacoesWidget textoAlterarSenha() {
+  TextAutenticacoesWidget _textoAlterarSenha() {
     return TextAutenticacoesWidget(
       paddingTop: 10,
       paddingBottom: 2,
@@ -62,9 +61,10 @@ class AlterarSenhaWidget extends State<AlterarSenhaPage> {
     );
   }
 
-  CampoTextoWidget inputEmail() {
+  CampoTextoWidget _inputEmail({required double paddingHorizontal}) {
     return CampoTextoWidget(
       labelText: "E-mail",
+      paddingHorizontal: paddingHorizontal,
       paddingBottom: 0,
       maxLength: 50,
       paddingTop: 10,
@@ -78,9 +78,10 @@ class AlterarSenhaWidget extends State<AlterarSenhaPage> {
     );
   }
 
-  CampoTextoWidget inputCodigo() {
+  CampoTextoWidget _inputCodigo({required double paddingHorizontal}) {
     return CampoTextoWidget(
       labelText: "Códico",
+      paddingHorizontal: paddingHorizontal,
       paddingBottom: 0,
       maxLength: 10,
       paddingTop: 10,
@@ -94,9 +95,10 @@ class AlterarSenhaWidget extends State<AlterarSenhaPage> {
     );
   }
 
-  CampoTextoWidget inputNovaSenha() {
+  CampoTextoWidget _inputNovaSenha({required double paddingHorizontal}) {
     return CampoTextoWidget(
       labelText: "Nova senha",
+      paddingHorizontal: paddingHorizontal,
       maxLength: 16,
       isPassword: true,
       paddingBottom: 0,
@@ -106,9 +108,10 @@ class AlterarSenhaWidget extends State<AlterarSenhaPage> {
     );
   }
 
-  CampoTextoWidget inputConfirmaSenha() {
+  CampoTextoWidget _inputConfirmaSenha({required double paddingHorizontal}) {
     return CampoTextoWidget(
       labelText: "Confirmar senha",
+      paddingHorizontal: paddingHorizontal,
       maxLength: 16,
       isPassword: true,
       paddingBottom: 0,
@@ -118,7 +121,7 @@ class AlterarSenhaWidget extends State<AlterarSenhaPage> {
     );
   }
 
-  BotaoWidget botaoAlterarSenha() {
+  BotaoWidget _botaoAlterarSenha() {
     return BotaoWidget(
       paddingTop: 18,
       paddingBottom: 30,

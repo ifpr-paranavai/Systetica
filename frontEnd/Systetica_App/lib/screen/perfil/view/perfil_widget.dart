@@ -3,7 +3,6 @@ import 'dart:typed_data';
 
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:systetica/components/alert_dialog_widget.dart';
 import 'package:systetica/components/imagens_widget.dart';
 import 'package:systetica/components/item_list.dart';
@@ -24,7 +23,7 @@ import 'package:systetica/style/app_colors..dart';
 class PerfilWidget extends State<PerfilPage> {
   final PerfilController _controller = PerfilController();
 
-  List<MenuItemDto> menuItems = [
+  final List<MenuItemDto> _menuItems = [
     MenuItemDto(text: 'Editar', icon: Icons.edit),
     MenuItemDto(text: 'Sair', icon: Icons.close)
   ];
@@ -37,8 +36,8 @@ class PerfilWidget extends State<PerfilPage> {
 
   @override
   Widget build(BuildContext context) {
-    double mediaQueryHeight = (MediaQuery.of(context).size.height);
-    double mediaQueryWidth = (MediaQuery.of(context).size.width);
+    double _altura = MediaQuery.of(context).size.height;
+    double _largura = MediaQuery.of(context).size.width;
     return SafeArea(
       child: Scaffold(
         body: FutureBuilder<Info?>(
@@ -49,24 +48,31 @@ class PerfilWidget extends State<PerfilPage> {
             } else if (snapShot.hasData) {
               if (snapShot.data!.success!) {
                 _controller.usuarioDTO = snapShot.data!.object;
-                return SingleChildScrollEdicao(
-                  opcoes: dropDownButton(usuarioDTO: _controller.usuarioDTO),
-                  widgetComponent: Center(
-                    child: Column(
-                      children: [
-                        tituloPerfil(bottom: mediaQueryHeight * 0.03),
-                        boxFoto(_controller.usuarioDTO.imagemBase64),
-                        sizedBox(height: mediaQueryHeight * 0.05),
-                        cardInfoUsuario(usuarioDTO: _controller.usuarioDTO),
-                      ],
+                return Stack(
+                  children: [
+                    SingleChildScrollEdicao(
+                      widgetComponent: Center(
+                        child: Column(
+                          children: [
+                            _sizedBox(height: _altura * 0.08),
+                            _boxFoto(_controller.usuarioDTO.imagemBase64),
+                            _sizedBox(height: _altura * 0.07),
+                            _textoPerfil(),
+                            _cardInfoUsuario(
+                              usuarioDTO: _controller.usuarioDTO,
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
-                  ),
+                    _dropDownButton(usuarioDTO: _controller.usuarioDTO),
+                  ],
                 );
               } else {
-                return erroRequisicao(mediaQueryWidth);
+                return _erroRequisicao(_largura);
               }
             } else {
-              return erroRequisicao(mediaQueryWidth);
+              return _erroRequisicao(_largura);
             }
           },
         ),
@@ -74,10 +80,12 @@ class PerfilWidget extends State<PerfilPage> {
     );
   }
 
-  DropdownButtonHideUnderline dropDownButton({required UsuarioDTO usuarioDTO}) {
+  DropdownButtonHideUnderline _dropDownButton({
+    required UsuarioDTO usuarioDTO,
+  }) {
     return DropdownButtonHideUnderline(
       child: Container(
-        alignment: Alignment.centerRight,
+        alignment: Alignment.topRight,
         child: Padding(
           padding: const EdgeInsets.only(top: 8, right: 8),
           child: DropdownButton2(
@@ -98,7 +106,7 @@ class PerfilWidget extends State<PerfilPage> {
             dropdownElevation: 8,
             offset: const Offset(-65, 2),
             focusColor: Colors.transparent,
-            items: menuItems
+            items: _menuItems
                 .map(
                   (item) => DropdownMenuItem<MenuItemDto>(
                     value: item,
@@ -107,7 +115,7 @@ class PerfilWidget extends State<PerfilPage> {
                 )
                 .toList(),
             onChanged: (value) {
-              if (value == menuItems.first) {
+              if (value == _menuItems.first) {
                 Navigator.of(context)
                     .push(
                       _controller.myPageTransition.pageTransition(
@@ -149,23 +157,15 @@ class PerfilWidget extends State<PerfilPage> {
     );
   }
 
-  Padding tituloPerfil({required double bottom}) {
-    return Padding(
-      padding: EdgeInsets.only(bottom: bottom),
-      child: Center(
-        child: Text(
-          'Perfil',
-          style: GoogleFonts.amaticSc(
-            fontSize: 38,
-            fontWeight: FontWeight.bold,
-            color: Colors.black,
-          ),
-        ),
-      ),
+  TextAutenticacoesWidget _textoPerfil() {
+    return TextAutenticacoesWidget(
+      text: "Perfil",
+      fontSize: 30,
+      paddingBottom: 6,
     );
   }
 
-  Container boxFoto(dynamic imagemUsuario) {
+  Container _boxFoto(dynamic imagemUsuario) {
     return Container(
       width: 160,
       height: 160,
@@ -179,31 +179,31 @@ class PerfilWidget extends State<PerfilPage> {
           )
         ],
       ),
-      child: imgPerfil(imagemUsuario),
+      child: _imgPerfil(imagemUsuario),
     );
   }
 
-  Widget imgPerfil(dynamic image) {
+  Widget _imgPerfil(dynamic image) {
     if (image == null || image == "") {
-      return iconErroFoto();
+      return _iconErroFoto();
     } else {
       image = base64Decode(image);
       if (image is Uint8List) {
-        return circleAvatar(backgroundImage: MemoryImage(image));
+        return _circleAvatar(backgroundImage: MemoryImage(image));
       } else {
-        return circleAvatar(backgroundImage: FileImage(image));
+        return _circleAvatar(backgroundImage: FileImage(image));
       }
     }
   }
 
-  CircleAvatar circleAvatar({required ImageProvider backgroundImage}) {
+  CircleAvatar _circleAvatar({required ImageProvider backgroundImage}) {
     return CircleAvatar(
       backgroundColor: Colors.black,
       backgroundImage: backgroundImage,
     );
   }
 
-  Padding cardInfoUsuario({required UsuarioDTO usuarioDTO}) {
+  Padding _cardInfoUsuario({required UsuarioDTO usuarioDTO}) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 18),
       child: Card(
@@ -216,38 +216,38 @@ class PerfilWidget extends State<PerfilPage> {
         ),
         child: Column(
           children: [
-            sizedBox(height: 5),
-            itemNome(usuarioDTO.nome!),
-            itemTelefone(usuarioDTO.telefone!),
-            itemEmail(usuarioDTO.email!),
+            _sizedBox(height: 5),
+            _itemNome(usuarioDTO.nome!),
+            _itemTelefone(usuarioDTO.telefone!),
+            _itemEmail(usuarioDTO.email!),
           ],
         ),
       ),
     );
   }
 
-  ItemLista itemNome(String nome) {
+  ItemLista _itemNome(String nome) {
     return ItemLista(
       titulo: "Nome completo",
       descricao: nome,
     );
   }
 
-  ItemLista itemTelefone(String telefone) {
+  ItemLista _itemTelefone(String telefone) {
     return ItemLista(
       titulo: "Telefone",
       descricao: telefone,
     );
   }
 
-  ItemLista itemEmail(String email) {
+  ItemLista _itemEmail(String email) {
     return ItemLista(
       titulo: "E-mail",
       descricao: email,
     );
   }
 
-  SizedBox sizedBox({double? height = 40, double? width = 0}) {
+  SizedBox _sizedBox({double? height = 40, double? width = 0}) {
     return SizedBox(
       height: height,
       width: width,
@@ -255,22 +255,22 @@ class PerfilWidget extends State<PerfilPage> {
   }
 
   // Widgets de erro
-  Center erroRequisicao(double mediaQueryWidth) {
+  Center _erroRequisicao(double _largura) {
     return Center(
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            imagemErro(),
-            textoErro(mediaQueryWidth),
+            _imagemErro(),
+            _textoErro(_largura),
           ],
         ),
       ),
     );
   }
 
-  ImagensWidget imagemErro() {
+  ImagensWidget _imagemErro() {
     return ImagensWidget(
       paddingLeft: 0,
       image: "erro.png",
@@ -278,16 +278,16 @@ class PerfilWidget extends State<PerfilPage> {
     );
   }
 
-  TextAutenticacoesWidget textoErro(double mediaQueryWidth) {
+  TextAutenticacoesWidget _textoErro(double _largura) {
     return TextAutenticacoesWidget(
-      paddingLeft: mediaQueryWidth * 0.10,
-      paddingRight: mediaQueryWidth * 0.10,
+      paddingLeft: _largura * 0.10,
+      paddingRight: _largura * 0.10,
       fontSize: 33,
       text: "Oopss...ocorreu algum erro. \nTente novamente mais tarde.",
     );
   }
 
-  Container iconErroFoto() {
+  Container _iconErroFoto() {
     return Container(
       decoration: BoxDecoration(
         color: AppColors.redPrincipal,

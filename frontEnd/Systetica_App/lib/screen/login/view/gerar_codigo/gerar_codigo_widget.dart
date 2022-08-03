@@ -14,53 +14,53 @@ class GerarCodigoWidget extends State<GerarCodigoPage> {
 
   @override
   Widget build(BuildContext context) {
+    double altura = MediaQuery.of(context).size.height;
+    double largura = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Colors.white,
+      floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
+      floatingActionButton: IconArrowWidget(
+        paddingTop: altura * 0.01,
+        onPressed: () => Navigator.pop(context),
+      ),
       body: SafeArea(
-        child: Column(
-          children: [
-            IconArrowWidget(
-              onPressed: () => Navigator.pop(context),
+        child: SingleChildScrollView(
+          child: Form(
+            autovalidateMode: AutovalidateMode.onUserInteraction,
+            key: _controller.formKey,
+            child: Column(
+              children: [
+                _imagemGerarCodigo(paddinTop: altura * 0.03),
+                _textoGerarCodigo(),
+                _inputEmail(paddingHorizontal: largura * 0.08),
+                _botaoGerarCodigo(),
+              ],
             ),
-            Expanded(
-              child: SingleChildScrollView(
-                child: Form(
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  key: _controller.formKey,
-                  child: Column(
-                    children: [
-                      imagemGerarCodigo(),
-                      textoGerarCodigo(),
-                      inputEmail(),
-                      botaoGerarCodigo(),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );
   }
 
-  ImagensWidget imagemGerarCodigo() {
+  ImagensWidget _imagemGerarCodigo({required double paddinTop}) {
     return ImagensWidget(
+      paddingTop: paddinTop,
       paddingLeft: 5,
       image: "gerar-codigo.png",
       widthImagem: 260,
     );
   }
 
-  TextAutenticacoesWidget textoGerarCodigo() {
+  TextAutenticacoesWidget _textoGerarCodigo() {
     return TextAutenticacoesWidget(
       text: "Gerar Código",
     );
   }
 
-  CampoTextoWidget inputEmail() {
+  CampoTextoWidget _inputEmail({required double paddingHorizontal}) {
     return CampoTextoWidget(
       labelText: "E-mail",
+      paddingHorizontal: paddingHorizontal,
       paddingBottom: 0,
       maxLength: 50,
       paddingTop: 10,
@@ -74,8 +74,7 @@ class GerarCodigoWidget extends State<GerarCodigoPage> {
     );
   }
 
-
-  BotaoWidget botaoGerarCodigo() {
+  BotaoWidget _botaoGerarCodigo() {
     return BotaoWidget(
       paddingTop: 70,
       paddingBottom: 30,

@@ -12,28 +12,28 @@ import 'package:systetica/style/app_colors..dart';
 class HomeWidget extends State<HomePage> {
   late int _selectedIndex = 0;
 
-  List<Widget> widgetOpcoes = <Widget>[];
-  List<BottomNavigationBarItem> bottomNavigations = <BottomNavigationBarItem>[];
+  List<Widget> _widgetOpcoes = <Widget>[];
+  List<BottomNavigationBarItem> _bottomNavigations = <BottomNavigationBarItem>[];
 
   @override
   void initState() {
     super.initState();
-    widgetOpcoes = widgetOpcoesCliente;
-    bottomNavigations = bottomNavigationCliente;
-    buscarTokenLocal();
+    _widgetOpcoes = _widgetOpcoesCliente;
+    _bottomNavigations = _bottomNavigationCliente;
+    _buscarTokenLocal();
   }
 
-  Future<void> buscarTokenLocal() async {
+  Future<void> _buscarTokenLocal() async {
     await TokenRepository.findToken().then((value) {
       setState(() {
         Map<String, dynamic> tokenDecodificado =
             JwtDecoder.decode(value.accessToken!);
         if (tokenDecodificado['roles'][0] == "ADMINISTRADOR") {
-          widgetOpcoes = widgetOpcoesAdministrador;
-          bottomNavigations = bottomNavigationAdministrador;
+          _widgetOpcoes = _widgetOpcoesAdministrador;
+          _bottomNavigations = _bottomNavigationAdministrador;
         } else if (tokenDecodificado['roles'][0] == "FUNCIONARIO") {
-          widgetOpcoes = widgetOpcoesFuncionario;
-          bottomNavigations = bottomNavigationFuncionario;
+          _widgetOpcoes = _widgetOpcoesFuncionario;
+          _bottomNavigations = _bottomNavigationFuncionario;
         }
       });
     });
@@ -54,7 +54,7 @@ class HomeWidget extends State<HomePage> {
       child: Scaffold(
         backgroundColor: Colors.white,
         body: Center(
-          child: widgetOpcoes.elementAt(_selectedIndex),
+          child: _widgetOpcoes.elementAt(_selectedIndex),
         ),
         bottomNavigationBar: Container(
           margin: const EdgeInsets.all(10),
@@ -84,7 +84,7 @@ class HomeWidget extends State<HomePage> {
               showUnselectedLabels: false,
               enableFeedback: false,
               currentIndex: _selectedIndex,
-              items: bottomNavigations,
+              items: _bottomNavigations,
               onTap: _onItemTapped,
             ),
           ),
@@ -93,7 +93,7 @@ class HomeWidget extends State<HomePage> {
     );
   }
 
-  List<Widget> get widgetOpcoesCliente {
+  List<Widget> get _widgetOpcoesCliente {
     List<Widget> widgets = <Widget>[
       const AgendarPage(),
       const AgendamentoPage(),
@@ -102,7 +102,7 @@ class HomeWidget extends State<HomePage> {
     return widgets;
   }
 
-  List<Widget> get widgetOpcoesFuncionario {
+  List<Widget> get _widgetOpcoesFuncionario {
     List<Widget> widgets = <Widget>[
       const AgendarPage(),
       const PagamentoPage(),
@@ -112,7 +112,7 @@ class HomeWidget extends State<HomePage> {
     return widgets;
   }
 
-  List<Widget> get widgetOpcoesAdministrador {
+  List<Widget> get _widgetOpcoesAdministrador {
     List<Widget> widgets = <Widget>[
       const AgendarPage(),
       const PagamentoPage(),
@@ -123,65 +123,65 @@ class HomeWidget extends State<HomePage> {
     return widgets;
   }
 
-  List<BottomNavigationBarItem> get bottomNavigationCliente {
+  List<BottomNavigationBarItem> get _bottomNavigationCliente {
     List<BottomNavigationBarItem> bottomNavigatrion = <BottomNavigationBarItem>[
-      bottomAgendar(),
-      bottomAgendamentos(),
-      bottomPerfil(),
+      _bottomAgendar(),
+      _bottomAgendamentos(),
+      _bottomPerfil(),
     ];
     return bottomNavigatrion;
   }
 
-  List<BottomNavigationBarItem> get bottomNavigationFuncionario {
+  List<BottomNavigationBarItem> get _bottomNavigationFuncionario {
     List<BottomNavigationBarItem> bottomNavigatrion = <BottomNavigationBarItem>[
-      bottomAgendar(),
-      bottomPagamentos(),
-      bottomAgendamentos(),
-      bottomPerfil(),
+      _bottomAgendar(),
+      _bottomPagamentos(),
+      _bottomAgendamentos(),
+      _bottomPerfil(),
     ];
     return bottomNavigatrion;
   }
 
-  List<BottomNavigationBarItem> get bottomNavigationAdministrador {
+  List<BottomNavigationBarItem> get _bottomNavigationAdministrador {
     List<BottomNavigationBarItem> bottomNavigatrion = <BottomNavigationBarItem>[
-      bottomAgendar(),
-      bottomPagamentos(),
-      bottomAgendamentos(),
-      bottomCadastros(),
-      bottomPerfil(),
+      _bottomAgendar(),
+      _bottomPagamentos(),
+      _bottomAgendamentos(),
+      _bottomCadastros(),
+      _bottomPerfil(),
     ];
     return bottomNavigatrion;
   }
 
-  BottomNavigationBarItem bottomAgendar() {
+  BottomNavigationBarItem _bottomAgendar() {
     return const BottomNavigationBarItem(
       icon: Icon(Icons.schedule),
       label: 'Agedar',
     );
   }
 
-  BottomNavigationBarItem bottomPagamentos() {
+  BottomNavigationBarItem _bottomPagamentos() {
     return const BottomNavigationBarItem(
       icon: Icon(Icons.monetization_on),
       label: 'Pagamento',
     );
   }
 
-  BottomNavigationBarItem bottomAgendamentos() {
+  BottomNavigationBarItem _bottomAgendamentos() {
     return const BottomNavigationBarItem(
       icon: Icon(Icons.calendar_month),
       label: 'Agendamentos',
     );
   }
 
-  BottomNavigationBarItem bottomCadastros() {
+  BottomNavigationBarItem _bottomCadastros() {
     return const BottomNavigationBarItem(
       icon: Icon(Icons.create_new_folder),
       label: 'Cadastros',
     );
   }
 
-  BottomNavigationBarItem bottomPerfil() {
+  BottomNavigationBarItem _bottomPerfil() {
     return const BottomNavigationBarItem(
       icon: Icon(Icons.person),
       label: 'Perfil',

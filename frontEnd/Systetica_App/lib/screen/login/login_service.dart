@@ -1,3 +1,5 @@
+// ignore_for_file: unused_catch_clause
+
 import 'package:dio/dio.dart';
 import 'package:systetica/model/Info.dart';
 import 'package:systetica/model/LoginDTO.dart';
@@ -32,6 +34,7 @@ class LoginService {
     } on Exception catch (ex) {
       rethrow;
     }
+    return null;
   }
 
   static Future<Info> gerarCodigoAlterarSenha(String email) async {

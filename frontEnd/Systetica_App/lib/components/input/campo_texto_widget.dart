@@ -12,6 +12,7 @@ class CampoTextoWidget extends StatefulWidget {
     required this.paddingBottom,
     this.maxLength,
     this.paddingTop = 0,
+    required this.paddingHorizontal,
     this.mask,
     this.color = Colors.blueGrey,
     this.colorCurso = Colors.black,
@@ -30,6 +31,7 @@ class CampoTextoWidget extends StatefulWidget {
   final VoidCallback? onPressedIcon;
   final double paddingBottom;
   final double? paddingTop;
+  final double paddingHorizontal;
   final int? maxLength;
   final String? mask;
   final Color? color;
@@ -63,8 +65,8 @@ class _CampoTextoWidget extends State<CampoTextoWidget> {
       padding: EdgeInsets.only(
         bottom: widget.paddingBottom,
         top: widget.paddingTop!,
-        left: 35,
-        right: 35,
+        left: widget.paddingHorizontal,
+        right: widget.paddingHorizontal,
       ),
       child: _textFormField(),
     );

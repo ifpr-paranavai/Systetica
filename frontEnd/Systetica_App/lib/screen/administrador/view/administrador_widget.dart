@@ -46,15 +46,16 @@ class CadastroAdministradorWidget extends State<CadastroAdministradorPage>
 
   @override
   Widget build(BuildContext context) {
-    double _width = MediaQuery.of(context).size.width;
+    double _largura = MediaQuery.of(context).size.width;
+    double _altura = MediaQuery.of(context).size.height;
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
           child: Column(
             children: [
-              infoGerais(widthSize: _width),
-              grupoCards(
+              _infoGerais(widthSize: _largura),
+              _grupoCards(
                 title: "Empresa",
                 icon: Icons.account_balance,
                 color: AppColors.bluePrincipal,
@@ -63,10 +64,11 @@ class CadastroAdministradorWidget extends State<CadastroAdministradorPage>
                 icon2: Icons.construction,
                 color2: Colors.lightGreen,
                 route2: const ServicoPage(),
-                width: _width,
+                largura: _largura,
+                altura: _altura,
                 context: context,
               ),
-              grupoCards(
+              _grupoCards(
                 title: "Produtos",
                 icon: Icons.add_shopping_cart,
                 color: AppColors.redPrincipal,
@@ -75,7 +77,8 @@ class CadastroAdministradorWidget extends State<CadastroAdministradorPage>
                 icon2: Icons.person,
                 color2: Colors.black,
                 route2: const AtivarFuncionarioPage(),
-                width: _width,
+                largura: _largura,
+                altura: _altura,
                 context: context,
               ),
             ],
@@ -85,27 +88,26 @@ class CadastroAdministradorWidget extends State<CadastroAdministradorPage>
     );
   }
 
-  Padding infoGerais({required double widthSize}) {
-    return Padding(
+  Container _infoGerais({required double widthSize}) {
+    return Container(
+      alignment: Alignment.topLeft,
       padding: EdgeInsets.only(
-        left: widthSize / 17,
-        right: widthSize / 15,
-        top: widthSize / 18,
-        bottom: widthSize / 18,
+        left: widthSize * 0.07,
+        top: widthSize * 0.05,
+        bottom: widthSize * 0.06,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          tituloSystetica(
+          _tituloSystetica(
             text: "Barbearia Systetica",
             fonteSize: 27,
             opacity: 0.6,
             fontWeight: FontWeight.w700,
           ),
-          SizedBox(height: widthSize / 35),
-          tituloSystetica(
-            text: "Bem vindo Franciel, aqui você poderá realizar seus "
-                "cadastros e ativar seus funcionários.",
+          SizedBox(height: widthSize * 0.04),
+          _tituloSystetica(
+            text: "Bem vindo Franciel",
             fonteSize: 19,
             opacity: 0.5,
             fontWeight: FontWeight.w500,
@@ -115,7 +117,7 @@ class CadastroAdministradorWidget extends State<CadastroAdministradorPage>
     );
   }
 
-  Text tituloSystetica({
+  Text _tituloSystetica({
     required String text,
     required double fonteSize,
     required double opacity,
@@ -132,7 +134,7 @@ class CadastroAdministradorWidget extends State<CadastroAdministradorPage>
     );
   }
 
-  Widget grupoCards({
+  Widget _grupoCards({
     required Color color,
     required IconData icon,
     required String title,
@@ -141,44 +143,48 @@ class CadastroAdministradorWidget extends State<CadastroAdministradorPage>
     required IconData icon2,
     required String title2,
     required Widget route2,
-    required double width,
+    required double largura,
+    required double altura,
     required BuildContext context,
   }) {
     return Padding(
       padding: EdgeInsets.only(
-        bottom: width / 17,
+        bottom: largura * 0.06,
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          homePageCard(
+          _homePageCard(
             color: color,
             icon: icon,
             texto: title,
             context: context,
             route: route,
-            width: width,
+            largura: largura,
+            altura: altura,
           ),
-          homePageCard(
+          _homePageCard(
             color: color2,
             icon: icon2,
             texto: title2,
             context: context,
             route: route2,
-            width: width,
+            largura: largura,
+            altura: altura,
           ),
         ],
       ),
     );
   }
 
-  Widget homePageCard({
+  Widget _homePageCard({
     required Color color,
     required IconData icon,
     required String texto,
     required BuildContext context,
     required Widget route,
-    required double width,
+    required double largura,
+    required double altura,
   }) {
     return Opacity(
       opacity: _animation.value,
@@ -189,8 +195,8 @@ class CadastroAdministradorWidget extends State<CadastroAdministradorPage>
           splashColor: Colors.transparent,
           child: Container(
             padding: const EdgeInsets.all(15),
-            height: width / 2.1,
-            width: width / 2.4,
+            height: largura * 0.47,
+            width: altura * 0.22,
             decoration: BoxDecoration(
               color: Colors.white,
               boxShadow: [
@@ -203,8 +209,9 @@ class CadastroAdministradorWidget extends State<CadastroAdministradorPage>
                 Radius.circular(25),
               ),
             ),
-            child: columnTextoIcon(
-              width: width,
+            child: _columnTextoIcon(
+              largura: largura,
+              altura: altura,
               color: color,
               icon: icon,
               texto: texto,
@@ -225,8 +232,9 @@ class CadastroAdministradorWidget extends State<CadastroAdministradorPage>
     );
   }
 
-  Column columnTextoIcon({
-    required double width,
+  Column _columnTextoIcon({
+    required double largura,
+    required double altura,
     required Color color,
     required IconData icon,
     required String texto,
@@ -235,25 +243,27 @@ class CadastroAdministradorWidget extends State<CadastroAdministradorPage>
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         const SizedBox(),
-        containerIcon(
-          width: width,
+        _containerIcon(
+          altura: altura,
+          largura: largura,
           color: color,
           icon: icon,
         ),
-        textoCards(texto: texto),
+        _textoCards(texto: texto),
         const SizedBox(),
       ],
     );
   }
 
-  Container containerIcon({
-    required double width,
+  Container _containerIcon({
+    required double largura,
+    required double altura,
     required Color color,
     required IconData icon,
   }) {
     return Container(
-      height: width / 8,
-      width: width / 8,
+      height: altura * 0.10,
+      width: largura * 0.13,
       decoration: BoxDecoration(
         color: color.withOpacity(.1),
         shape: BoxShape.circle,
@@ -265,7 +275,7 @@ class CadastroAdministradorWidget extends State<CadastroAdministradorPage>
     );
   }
 
-  Text textoCards({required String texto}) {
+  Text _textoCards({required String texto}) {
     return Text(
       texto,
       maxLines: 2,

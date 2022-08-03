@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names, file_names
+
 class Info {
   static const String SUCCESS = 'success';
   static const String MESSAGE = 'message';

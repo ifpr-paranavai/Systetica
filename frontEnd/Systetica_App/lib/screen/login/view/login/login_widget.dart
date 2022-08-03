@@ -17,55 +17,55 @@ class LoginWidget extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    double _altura = MediaQuery.of(context).size.height;
+    double _largura = MediaQuery.of(context).size.width;
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
-        body: Column(
-          children: [
-            IconArrowWidget(
-              onPressed: () => Navigator.pop(context),
+        floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
+        floatingActionButton: IconArrowWidget(
+          paddingTop: _altura * 0.01,
+          onPressed: () => Navigator.pop(context),
+        ),
+        body: SingleChildScrollView(
+          child: Form(
+            autovalidateMode: AutovalidateMode.onUserInteraction,
+            key: controller.formKey,
+            child: Column(
+              children: [
+                _imagemLogin(paddinTop: _altura * 0.03),
+                _textoLogin(),
+                _inputEmail(paddingHorizontal: _largura * 0.08),
+                _inputSenha(paddingHorizontal: _largura * 0.08),
+                _botaoLogin(),
+                _botaoEsqueciSenha(),
+              ],
             ),
-            Expanded(
-              child: SingleChildScrollView(
-                child: Form(
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  key: controller.formKey,
-                  child: Column(
-                    children: [
-                      imagemLogin(),
-                      textoLogin(),
-                      inputEmail(),
-                      inputSenha(),
-                      botaoLogin(),
-                      botaoEsqueciSenha(),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );
   }
 
-  ImagensWidget imagemLogin() {
+  ImagensWidget _imagemLogin({required double paddinTop}) {
     return ImagensWidget(
+      paddingTop: paddinTop,
       paddingLeft: 0,
       image: "login.png",
       widthImagem: 260,
     );
   }
 
-  TextAutenticacoesWidget textoLogin() {
+  TextAutenticacoesWidget _textoLogin() {
     return TextAutenticacoesWidget(
       text: "Login",
     );
   }
 
-  CampoTextoWidget inputEmail() {
+  CampoTextoWidget _inputEmail({required double paddingHorizontal}) {
     return CampoTextoWidget(
       labelText: "E-mail",
+      paddingHorizontal: paddingHorizontal,
       paddingBottom: 0,
       maxLength: 50,
       paddingTop: 10,
@@ -79,9 +79,10 @@ class LoginWidget extends State<LoginPage> {
     );
   }
 
-  CampoTextoWidget inputSenha() {
+  CampoTextoWidget _inputSenha({required double paddingHorizontal}) {
     return CampoTextoWidget(
       labelText: "Senha",
+      paddingHorizontal: paddingHorizontal,
       maxLength: 16,
       isPassword: true,
       paddingBottom: 0,
@@ -91,7 +92,7 @@ class LoginWidget extends State<LoginPage> {
     );
   }
 
-  BotaoWidget botaoLogin() {
+  BotaoWidget _botaoLogin() {
     return BotaoWidget(
       paddingTop: 10,
       paddingBottom: 0,
@@ -105,7 +106,7 @@ class LoginWidget extends State<LoginPage> {
     );
   }
 
-  BotaoWidget botaoEsqueciSenha() {
+  BotaoWidget _botaoEsqueciSenha() {
     return BotaoWidget(
       paddingTop: 18,
       paddingBottom: 30,

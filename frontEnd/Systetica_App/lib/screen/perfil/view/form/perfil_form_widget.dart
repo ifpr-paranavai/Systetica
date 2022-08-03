@@ -7,7 +7,6 @@ import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:systetica/components/botoes/botao_widget.dart';
 import 'package:systetica/components/icon_arrow_widget.dart';
-import 'package:systetica/components/imagens_widget.dart';
 import 'package:systetica/components/input/campo_texto_widget.dart';
 import 'package:systetica/components/text_autenticacoes_widget.dart';
 import 'package:systetica/model/validator/MultiValidatorUsuario.dart';
@@ -40,35 +39,32 @@ class PerfilFormWidget extends State<PerfilFormPage> {
 
   @override
   Widget build(BuildContext context) {
-    double mediaQueryHeight = (MediaQuery.of(context).size.height);
+    double _altura = MediaQuery.of(context).size.height;
+    double _largura = MediaQuery.of(context).size.width;
     return SafeArea(
       child: Scaffold(
-        body: Column(
-          children: [
-            IconArrowWidget(
-              onPressed: () => Navigator.pop(context),
+        floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
+        floatingActionButton: IconArrowWidget(
+          paddingTop: _altura * 0.01,
+          onPressed: () => Navigator.pop(context),
+        ),
+        body: SingleChildScrollView(
+          controller: _scrollController,
+          child: Form(
+            autovalidateMode: AutovalidateMode.onUserInteraction,
+            key: _controller.formKey,
+            child: Column(
+              children: [
+                _sizedBox(height: _altura * 0.08),
+                _boxFoto(_controller.imagemBase64),
+                _sizedBox(height: _altura * 0.07),
+                _textoEditarPerfil(),
+                _inputNome(paddingHorizontal: _largura * 0.08),
+                _inputTelefone(paddingHorizontal: _largura * 0.08),
+                _botaoCadastrar(),
+              ],
             ),
-            Expanded(
-              child: SingleChildScrollView(
-                controller: _scrollController,
-                child: Form(
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  key: _controller.formKey,
-                  child: Column(
-                    children: [
-                      sizedBox(height: mediaQueryHeight * 0.02),
-                      boxFoto(_controller.imagemBase64),
-                      sizedBox(height: mediaQueryHeight * 0.05),
-                      textoEditar(),
-                      inputNome(),
-                      inputTelefone(),
-                      botaoCadastrar(),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );
@@ -113,7 +109,7 @@ class PerfilFormWidget extends State<PerfilFormPage> {
     return _croppedFile!;
   }
 
-  Container boxFoto(dynamic imagemUsuario) {
+  Container _boxFoto(dynamic imagemUsuario) {
     return Container(
       width: 160,
       height: 160,
@@ -127,32 +123,32 @@ class PerfilFormWidget extends State<PerfilFormPage> {
           )
         ],
       ),
-      child: imgPerfil(imagemUsuario),
+      child: _imgPerfil(imagemUsuario),
     );
   }
 
-  Widget imgPerfil(dynamic image) {
+  Widget _imgPerfil(dynamic image) {
     if (image == null || image == "") {
-      return iconErroFoto();
+      return _iconErroFoto();
     } else {
       image = base64Decode(image);
       if (image is Uint8List) {
-        return circleAvatar(backgroundImage: MemoryImage(image));
+        return _circleAvatar(backgroundImage: MemoryImage(image));
       } else {
-        return circleAvatar(backgroundImage: FileImage(image));
+        return _circleAvatar(backgroundImage: FileImage(image));
       }
     }
   }
 
-  CircleAvatar circleAvatar({required ImageProvider backgroundImage}) {
+  CircleAvatar _circleAvatar({required ImageProvider backgroundImage}) {
     return CircleAvatar(
       backgroundColor: Colors.black,
       backgroundImage: backgroundImage,
-      child: paddingIconEditarFoto(),
+      child: _paddingIconEditarFoto(),
     );
   }
 
-  Padding paddingIconEditarFoto() {
+  Padding _paddingIconEditarFoto() {
     return Padding(
       padding: const EdgeInsets.only(top: 120, left: 120),
       child: SizedBox(
@@ -176,7 +172,7 @@ class PerfilFormWidget extends State<PerfilFormPage> {
     );
   }
 
-  TextAutenticacoesWidget textoEditar() {
+  TextAutenticacoesWidget _textoEditarPerfil() {
     return TextAutenticacoesWidget(
       text: "Editar Perfil",
       fontSize: 30,
@@ -184,9 +180,10 @@ class PerfilFormWidget extends State<PerfilFormPage> {
     );
   }
 
-  CampoTextoWidget inputNome() {
+  CampoTextoWidget _inputNome({required double paddingHorizontal}) {
     return CampoTextoWidget(
       labelText: "Nome completo",
+    paddingHorizontal: paddingHorizontal,
       paddingBottom: 0,
       maxLength: 100,
       paddingTop: 14,
@@ -200,9 +197,10 @@ class PerfilFormWidget extends State<PerfilFormPage> {
     );
   }
 
-  CampoTextoWidget inputTelefone() {
+  CampoTextoWidget _inputTelefone({required double paddingHorizontal}) {
     return CampoTextoWidget(
       labelText: "Telefone",
+    paddingHorizontal: paddingHorizontal,
       keyboardType: TextInputType.number,
       mask: "(##) #####-####",
       paddingBottom: 0,
@@ -218,7 +216,7 @@ class PerfilFormWidget extends State<PerfilFormPage> {
     );
   }
 
-  BotaoWidget botaoCadastrar() {
+  BotaoWidget _botaoCadastrar() {
     return BotaoWidget(
       paddingTop: 10,
       paddingBottom: 0,
@@ -230,7 +228,7 @@ class PerfilFormWidget extends State<PerfilFormPage> {
     );
   }
 
-  SizedBox sizedBox({double? height = 40, double? width = 0}) {
+  SizedBox _sizedBox({double? height = 40, double? width = 0}) {
     return SizedBox(
       height: height,
       width: width,
@@ -238,38 +236,7 @@ class PerfilFormWidget extends State<PerfilFormPage> {
   }
 
   // Widgets de erro
-  Center erroRequisicao(double mediaQueryWidth) {
-    return Center(
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            imagemErro(),
-            textoErro(mediaQueryWidth),
-          ],
-        ),
-      ),
-    );
-  }
-
-  ImagensWidget imagemErro() {
-    return ImagensWidget(
-      paddingLeft: 0,
-      image: "erro.png",
-      widthImagem: 340,
-    );
-  }
-
-  TextAutenticacoesWidget textoErro(double mediaQueryWidth) {
-    return TextAutenticacoesWidget(
-      paddingLeft: mediaQueryWidth * 0.11,
-      paddingRight: mediaQueryWidth * 0.11,
-      text: "Oopss...ocorreu algum erro. \nTente novamente mais tarde.",
-    );
-  }
-
-  Widget iconErroFoto() {
+  Widget _iconErroFoto() {
     return Container(
       width: 160,
       height: 160,

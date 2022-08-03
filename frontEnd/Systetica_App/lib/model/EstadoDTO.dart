@@ -1,5 +1,6 @@
-class EstadoDTO {
+// ignore_for_file: file_names
 
+class EstadoDTO {
   EstadoDTO({
     required this.id,
     required this.nome,

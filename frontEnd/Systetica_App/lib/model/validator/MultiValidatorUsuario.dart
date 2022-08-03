@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:form_field_validator/form_field_validator.dart';
 
 class MultiValidatorUsuario {

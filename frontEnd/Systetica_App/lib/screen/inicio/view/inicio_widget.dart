@@ -20,12 +20,9 @@ class InicioWidget extends State<InicioPage> with TickerProviderStateMixin {
     AppColors.blue4,
     AppColors.blue5,
   ];
-  List<Alignment> alignmentList = [Alignment.topCenter, Alignment.bottomCenter];
   int index = 0;
   Color _bottomColor = AppColors.blue1;
   Color _topColor = AppColors.blue5;
-  Alignment begin = Alignment.bottomCenter;
-  Alignment end = Alignment.topCenter;
 
   @override
   void initState() {
@@ -70,10 +67,10 @@ class InicioWidget extends State<InicioPage> with TickerProviderStateMixin {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  tituloSystetica(),
-                  imagemSalao(),
-                  botaoLogin(),
-                  botaoRegistrar(),
+                  _tituloSystetica(),
+                  _imagemSalao(),
+                  _botaoLogin(),
+                  _botaoRegistrar(),
                 ],
               ),
             ),
@@ -83,7 +80,7 @@ class InicioWidget extends State<InicioPage> with TickerProviderStateMixin {
     );
   }
 
-  Padding tituloSystetica() {
+  Padding _tituloSystetica() {
     return Padding(
       padding: const EdgeInsets.only(top: 40),
       child: Center(
@@ -99,7 +96,7 @@ class InicioWidget extends State<InicioPage> with TickerProviderStateMixin {
     );
   }
 
-  ImagensWidget imagemSalao() {
+  ImagensWidget _imagemSalao() {
     return ImagensWidget(
       paddingLeft: 10,
       image: "cabelereiro-inicio.png",
@@ -108,7 +105,7 @@ class InicioWidget extends State<InicioPage> with TickerProviderStateMixin {
     );
   }
 
-  BotaoWidget botaoLogin() {
+  BotaoWidget _botaoLogin() {
     return BotaoWidget(
       paddingTop: 35,
       paddingBottom: 18,
@@ -126,7 +123,7 @@ class InicioWidget extends State<InicioPage> with TickerProviderStateMixin {
     );
   }
 
-  BotaoWidget botaoRegistrar() {
+  BotaoWidget _botaoRegistrar() {
     return BotaoWidget(
       paddingTop: 0,
       paddingBottom: 30,
