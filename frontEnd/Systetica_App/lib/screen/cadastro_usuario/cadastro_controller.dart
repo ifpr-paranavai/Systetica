@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:systetica/components/alert_dialog_widget.dart';
 import 'package:systetica/components/loading/show_loading_widget.dart';
 import 'package:systetica/components/page_transition.dart';
-import 'package:systetica/components/alert_dialog_widget.dart';
 import 'package:systetica/components/texto_erro_widget.dart';
 import 'package:systetica/model/UsuarioDTO.dart';
 import 'package:systetica/request/dio_config.dart';
 import 'package:systetica/screen/cadastro_usuario/cadastro_service.dart';
 import 'package:systetica/screen/cadastro_usuario/view/ativar_usuario/ativar_usuario_page.dart';
-import 'package:systetica/screen/inicio/view/inicio_page.dart';
+import 'package:systetica/screen/login/view/login/login_page.dart';
 
 class CadastroController {
   final nomeController = TextEditingController();
@@ -136,7 +136,7 @@ class CadastroController {
             onPressedOk: () => Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(
-                builder: (context) => const InicioPage(),
+                builder: (context) => const LoginPage(inicioApp: false),
               ),
               (route) => false,
             ),

@@ -33,7 +33,7 @@ class UsuarioDTO {
     roles = json['roles'] != null
         ? (json['roles'].map<RoleDTO>((e) => RoleDTO.fromJson(e))).toList()
         : [];
-    imagemBase64 = json['imagemBase64'];
+    imagemBase64 = json['imagem_base64'];
   }
 
   Map<String, dynamic> toJson() {
@@ -47,7 +47,7 @@ class UsuarioDTO {
     _data['codigo_aleatorio'] = codigoAleatorio;
     _data['roles'] =
         roles != null ? roles!.map((e) => e.toString()).toList() : null;
-    _data['imagemBase64'] = imagemBase64;
+    _data['imagem_base64'] = imagemBase64;
     return _data;
   }
 }

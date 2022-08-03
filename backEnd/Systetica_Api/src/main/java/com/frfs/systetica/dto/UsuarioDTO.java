@@ -10,12 +10,13 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonInclude(JsonInclude.Include.NON_NULL) // todo adicionar em outros DTOS
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class UsuarioDTO implements Serializable {
 
     @JsonProperty("id")
@@ -43,11 +44,14 @@ public class UsuarioDTO implements Serializable {
     private Boolean usuarioAtivo = false;
 
     @JsonProperty("data_cadastro")
-    private Date dataCadastro = new Date();
+    private Date dataCadastro;
 
     @JsonProperty("roles")
     private Collection<RoleDTO> roles;
 
-    @JsonProperty("imagemBase64")
+    @JsonProperty("imagem_base64")
     private String imagemBase64;
+
+    @JsonProperty("empresas")
+    private List<EmpresaDTO> empresas;
 }

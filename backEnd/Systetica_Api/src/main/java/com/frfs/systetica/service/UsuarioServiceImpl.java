@@ -42,15 +42,16 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
             }
             var codigoAleatorio = codigoAleatorioService.gerarCodigo();
 
-//            var returnDataEmail = emailService.enviarEmail(true, usuarioDTO.getEmail(),
-//                    codigoAleatorio, usuarioDTO.getNome());
-//
-//            if (!returnDataEmail.getSuccess()) {
-//                return returnDataEmail;
-//            }
+            var returnDataEmail = emailService.enviarEmail(true, usuarioDTO.getEmail(),
+                    codigoAleatorio, usuarioDTO.getNome());
+
+            if (!returnDataEmail.getSuccess()) {
+                return returnDataEmail;
+            }
 
             usuarioDTO.setPassword(passwordEncoder.encode(usuarioDTO.getPassword()));
             usuarioDTO.setRoles(roleService.buscaRolePorNome("CLIENTE"));
+            usuarioDTO.setDataCadastro(new Date());
             usuarioDTO.setDataCodigo(new Date());
             usuarioDTO.setCodigoAleatorio(codigoAleatorio);
 
@@ -173,7 +174,7 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
 
             usuarioRepository.saveAndFlush(usuarioBanco.get());
 
-            return new ReturnData<>(true, "Usuário atualizazdo com sucesso.");
+            return new ReturnData<>(true, "Usuário atualizado com sucesso.");
         } catch (BusinessException busEx) {
             return new ReturnData<>(false, "Ocorreu um erro ao atualizar dados", busEx.getMessage());
         } catch (Exception ex) {
@@ -182,7 +183,7 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
         }
     }
 
-    @Override
+    @Override //TODO - criar um service específico
     public ReturnData<String> converteFileBase64(String imagemBase64) {
 
         byte[] bytesEncoded = Base64.encodeBase64(imagemBase64.getBytes());

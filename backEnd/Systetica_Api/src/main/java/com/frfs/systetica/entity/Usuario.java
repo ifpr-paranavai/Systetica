@@ -66,7 +66,7 @@ public class Usuario implements Serializable {
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
-            name = "ass_usuario_empresa",
+            name = "ass_funcionario_empresa",
             uniqueConstraints = @UniqueConstraint(columnNames = {"id_usuario", "id_empresa"}),
             joinColumns = @JoinColumn(name = "id_usuario"),
             inverseJoinColumns = @JoinColumn(name = "id_empresa"))

@@ -23,9 +23,12 @@ class LoginWidget extends State<LoginPage> {
       child: Scaffold(
         backgroundColor: Colors.white,
         floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
-        floatingActionButton: IconArrowWidget(
-          paddingTop: _altura * 0.01,
-          onPressed: () => Navigator.pop(context),
+        floatingActionButton: Visibility(
+          visible: widget.inicioApp,
+          child: IconArrowWidget(
+            paddingTop: _altura * 0.01,
+            onPressed: () => Navigator.pop(context),
+          ),
         ),
         body: SingleChildScrollView(
           child: Form(

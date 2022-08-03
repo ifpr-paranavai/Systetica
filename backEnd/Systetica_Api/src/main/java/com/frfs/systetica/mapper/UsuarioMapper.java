@@ -27,7 +27,7 @@ public interface UsuarioMapper {
             @Mapping(target = "status", ignore = true),
             @Mapping(target = "roles", ignore = true),
     })
-    List<UsuarioDTO> toListDto(List<Usuario> usuarios);
+    List<UsuarioDTO> toListDto(List<Usuario> entities);
 
     Usuario toEntity(UsuarioDTO dto);
 }

@@ -28,7 +28,7 @@ public class Empresa implements Serializable {
     private String nome;
 
     @NotNull
-    @Column(name = "cnpj", length = 18)
+    @Column(name = "cnpj", length = 18, unique = true)
     private String cnpj;
 
     @NotNull
@@ -48,7 +48,7 @@ public class Empresa implements Serializable {
 
     @NotNull
     @Column(name = "cep", length = 9)
-    private int cep;
+    private String cep;
 
     @NotNull
     @Column(name = "latitude", length = 10)
@@ -71,9 +71,14 @@ public class Empresa implements Serializable {
     @JoinColumn(name = "id_cidade")
     private Cidade cidade;
 
+    @NotNull
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_usuario_administrador")
+    private Usuario usuarioAdministrador;
+
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
-            name = "ass_usuario_empresa",
+            name = "ass_funcionario_empresa",
             uniqueConstraints = @UniqueConstraint(columnNames = {"id_empresa", "id_usuario"}),
             joinColumns = @JoinColumn(name = "id_empresa"),
             inverseJoinColumns = @JoinColumn(name = "id_usuario"))

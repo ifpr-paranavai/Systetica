@@ -12,7 +12,7 @@ public interface CidadeMapper {
 
     CidadeDTO toDto(Cidade entity);
 
-    List<CidadeDTO> toListDto(List<Cidade> cidades);
+    List<CidadeDTO> toListDto(List<Cidade> entities);
 
-    Cidade toEntity(CidadeDTO cidadeDTO);
+    Cidade toEntity(CidadeDTO dto);
 }

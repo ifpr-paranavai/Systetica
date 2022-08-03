@@ -15,6 +15,7 @@ import 'package:systetica/model/MenuItemDto.dart';
 import 'package:systetica/model/TokenDTO.dart';
 import 'package:systetica/model/UsuarioDTO.dart';
 import 'package:systetica/screen/inicio/view/inicio_page.dart';
+import 'package:systetica/screen/login/view/login/login_page.dart';
 import 'package:systetica/screen/perfil/perfil_controller.dart';
 import 'package:systetica/screen/perfil/view/form/perfil_form_page.dart';
 import 'package:systetica/screen/perfil/view/perfil_page.dart';
@@ -142,7 +143,7 @@ class PerfilWidget extends State<PerfilPage> {
                     Navigator.pushAndRemoveUntil(
                       context,
                       _controller.myPageTransition.pageTransition(
-                        child: const InicioPage(),
+                        child: const LoginPage(inicioApp: false),
                         childCurrent: widget,
                       ),
                       (route) => false,
