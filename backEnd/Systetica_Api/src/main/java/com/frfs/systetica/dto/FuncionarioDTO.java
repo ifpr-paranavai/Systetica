@@ -7,9 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 @Data
 @Builder
@@ -58,7 +56,4 @@ public class FuncionarioDTO implements Serializable {
 
     @JsonProperty("cidade_DTO")
     private CidadeDTO cidadeDTO;
-
-    @JsonProperty("tipo_funcionarios_DTO")
-    private List<TipoFuncionarioDTO> tipoFuncionariosDTO = new ArrayList<>();
 }

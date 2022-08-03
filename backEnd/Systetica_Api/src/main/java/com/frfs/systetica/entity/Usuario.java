@@ -12,6 +12,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -62,4 +63,12 @@ public class Usuario implements Serializable {
     @Column(name = "imagem_base64")
     @Lob
     private String imagemBase64;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "ass_usuario_empresa",
+            uniqueConstraints = @UniqueConstraint(columnNames = {"id_usuario", "id_empresa"}),
+            joinColumns = @JoinColumn(name = "id_usuario"),
+            inverseJoinColumns = @JoinColumn(name = "id_empresa"))
+    private List<Empresa> empresas = new ArrayList<>();
 }

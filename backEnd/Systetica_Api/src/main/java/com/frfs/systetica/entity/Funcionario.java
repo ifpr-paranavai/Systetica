@@ -8,9 +8,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -75,12 +73,4 @@ public class Funcionario implements Serializable {
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_cidade")
     private Cidade idCidade;
-
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "ass_tipo_do_funcionario",
-            uniqueConstraints = @UniqueConstraint(columnNames = {"id_funcionario", "id_tipo_funcionario"}),
-            joinColumns = @JoinColumn(name = "id_funcionario"),
-            inverseJoinColumns = @JoinColumn(name = "id_tipo_funcionario"))
-    private List<TipoFuncionario> tipoFuncionarios = new ArrayList<>();
 }
