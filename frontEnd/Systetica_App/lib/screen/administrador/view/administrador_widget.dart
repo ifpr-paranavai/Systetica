@@ -4,9 +4,9 @@ import 'package:systetica/components/loading/loading_animation.dart';
 import 'package:systetica/components/page_transition.dart';
 import 'package:systetica/model/Empresa.dart';
 import 'package:systetica/model/Info.dart';
-import 'package:systetica/screen/administrador/administrador_controller.dart';
 import 'package:systetica/screen/administrador/view/administrador_page.dart';
 import 'package:systetica/screen/ativar_funcionario/view/ativar_funcionario_page.dart';
+import 'package:systetica/screen/empresa/empresa_controller.dart';
 import 'package:systetica/screen/empresa/view/empresa_page.dart';
 import 'package:systetica/screen/produto/view/produto_page.dart';
 import 'package:systetica/screen/servico/view/servico_page.dart';
@@ -14,7 +14,7 @@ import 'package:systetica/style/app_colors..dart';
 
 class CadastroAdministradorWidget extends State<CadastroAdministradorPage>
     with SingleTickerProviderStateMixin {
-  final AdministradorController _controller = AdministradorController();
+  final EmpresaController _empresaController = EmpresaController();
   final _myPageTransition = MyPageTransition();
 
   late AnimationController _animationControllercontroller;
@@ -42,15 +42,13 @@ class CadastroAdministradorWidget extends State<CadastroAdministradorPage>
         parent: _animationControllercontroller, curve: Curves.easeOut));
 
     _animationControllercontroller.forward();
-    _animationControllercontroller.forward();
 
-    _controller.empresa = Empresa();
+    _empresaController.empresa = Empresa();
   }
 
   @override
   void dispose() {
     super.dispose();
-    _animationControllercontroller.dispose();
     _animationControllercontroller.dispose();
   }
 
@@ -62,17 +60,17 @@ class CadastroAdministradorWidget extends State<CadastroAdministradorPage>
       child: Scaffold(
         backgroundColor: Colors.white,
         body: FutureBuilder<Info?>(
-          future: _controller.buscarEmpresaEmail(context),
+          future: _empresaController.buscarEmpresaEmail(context),
           builder: (context, snapShot) {
             if (!snapShot.hasData) {
               return const LoadingAnimation();
             } else if (snapShot.hasData && snapShot.data!.success!) {
-              _controller.empresa = snapShot.data!.object;
+              _empresaController.empresa = snapShot.data!.object;
               return body(
                 altura: _altura,
                 largura: _largura,
-                empresa: _controller.empresa.nome!,
-                nomeUsuario: _controller.empresa.nomeUsuario!,
+                empresa: _empresaController.empresa.nome!,
+                nomeUsuario: _empresaController.empresa.nomeUsuario!,
               );
             } else {
               return body(
@@ -100,7 +98,7 @@ class CadastroAdministradorWidget extends State<CadastroAdministradorPage>
             descricao: _bemVindo +
                 (nomeUsuario == null
                     ? "!"
-                    : " " + _controller.empresa.nomeUsuario! + "!"),
+                    : " " + nomeUsuario + "!"),
             widthSize: largura,
           ),
           SizedBox(

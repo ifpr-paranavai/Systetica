@@ -1,12 +1,10 @@
-// ignore_for_file: unused_catch_clause
-
 import 'package:dio/dio.dart';
 import 'package:systetica/model/Empresa.dart';
 import 'package:systetica/model/Info.dart';
 import 'package:systetica/model/Token.dart';
 import 'package:systetica/utils/dio/dio_config_api.dart';
 
-class AdministradorService {
+class EmpresaService {
   static Future<Info> buscaEmpresa(Token token) async {
     Info info = Info(success: true);
     try {

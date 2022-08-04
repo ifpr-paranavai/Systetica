@@ -9,9 +9,9 @@ import 'package:systetica/model/Empresa.dart';
 import 'package:systetica/model/Info.dart';
 import 'package:systetica/model/Token.dart';
 import 'package:systetica/request/dio_config.dart';
-import 'package:systetica/screen/administrador/administrador_service.dart';
+import 'package:systetica/screen/empresa/empresa_service.dart';
 
-class AdministradorController {
+class EmpresaController {
   final formKey = GlobalKey<FormState>;
 
   late Empresa empresa;
@@ -30,7 +30,7 @@ class AdministradorController {
     if (connected) {
       try {
         Token _token = await TokenRepository.findToken();
-        info = await AdministradorService.buscaEmpresa(_token);
+        info = await EmpresaService.buscaEmpresa(_token);
         return info;
       } catch (e) {
         info.success = false;
