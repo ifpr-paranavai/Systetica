@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:systetica/components/loading/loading_animation.dart';
 import 'package:systetica/components/page_transition.dart';
+import 'package:systetica/model/Empresa.dart';
+import 'package:systetica/model/Info.dart';
+import 'package:systetica/screen/administrador/administrador_controller.dart';
 import 'package:systetica/screen/administrador/view/administrador_page.dart';
 import 'package:systetica/screen/ativar_funcionario/view/ativar_funcionario_page.dart';
 import 'package:systetica/screen/empresa/view/empresa_page.dart';
@@ -10,38 +14,44 @@ import 'package:systetica/style/app_colors..dart';
 
 class CadastroAdministradorWidget extends State<CadastroAdministradorPage>
     with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
+  final AdministradorController _controller = AdministradorController();
+  final _myPageTransition = MyPageTransition();
+
+  late AnimationController _animationControllercontroller;
   late Animation<double> _animation;
   late Animation<double> _animation2;
-  final _myPageTransition = MyPageTransition();
+
+  final String _bemVindo = "Bem vindo";
 
   @override
   void initState() {
     super.initState();
 
-    _controller = AnimationController(
+    _animationControllercontroller = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 650),
     );
 
-    _animation = Tween<double>(begin: 0, end: 1)
-        .animate(CurvedAnimation(parent: _controller, curve: Curves.easeOut))
+    _animation = Tween<double>(begin: 0, end: 1).animate(CurvedAnimation(
+        parent: _animationControllercontroller, curve: Curves.easeOut))
       ..addListener(() {
         setState(() {});
       });
 
-    _animation2 = Tween<double>(begin: -30, end: 0)
-        .animate(CurvedAnimation(parent: _controller, curve: Curves.easeOut));
+    _animation2 = Tween<double>(begin: -30, end: 0).animate(CurvedAnimation(
+        parent: _animationControllercontroller, curve: Curves.easeOut));
 
-    _controller.forward();
-    _controller.forward();
+    _animationControllercontroller.forward();
+    _animationControllercontroller.forward();
+
+    _controller.empresa = Empresa();
   }
 
   @override
   void dispose() {
     super.dispose();
-    _controller.dispose();
-    _controller.dispose();
+    _animationControllercontroller.dispose();
+    _animationControllercontroller.dispose();
   }
 
   @override
@@ -51,44 +61,93 @@ class CadastroAdministradorWidget extends State<CadastroAdministradorPage>
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              _infoGerais(widthSize: _largura),
-              _grupoCards(
-                title: "Empresa",
-                icon: Icons.account_balance,
-                color: AppColors.bluePrincipal,
-                route: const EmpresaPage(),
-                title2: 'Serviços',
-                icon2: Icons.construction,
-                color2: Colors.lightGreen,
-                route2: const ServicoPage(),
-                largura: _largura,
+        body: FutureBuilder<Info?>(
+          future: _controller.buscarEmpresaEmail(context),
+          builder: (context, snapShot) {
+            if (!snapShot.hasData) {
+              return const LoadingAnimation();
+            } else if (snapShot.hasData && snapShot.data!.success!) {
+              _controller.empresa = snapShot.data!.object;
+              return body(
                 altura: _altura,
-                context: context,
-              ),
-              _grupoCards(
-                title: "Produtos",
-                icon: Icons.add_shopping_cart,
-                color: AppColors.redPrincipal,
-                route: const ProdutoPage(),
-                title2: 'Ativar Funcionário',
-                icon2: Icons.person,
-                color2: Colors.black,
-                route2: const AtivarFuncionarioPage(),
                 largura: _largura,
+                empresa: _controller.empresa.nome!,
+                nomeUsuario: _controller.empresa.nomeUsuario!,
+              );
+            } else {
+              return body(
                 altura: _altura,
-                context: context,
-              ),
-            ],
-          ),
+                largura: _largura,
+              );
+            }
+          },
         ),
       ),
     );
   }
 
-  Container _infoGerais({required double widthSize}) {
+  Widget body({
+    required double largura,
+    required double altura,
+    String? empresa,
+    String? nomeUsuario,
+  }) {
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          _infoGerais(
+            titulo: empresa ?? "Systetica",
+            descricao: _bemVindo +
+                (nomeUsuario == null
+                    ? "!"
+                    : " " + _controller.empresa.nomeUsuario! + "!"),
+            widthSize: largura,
+          ),
+          SizedBox(
+            height: altura * 0.70,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                _grupoCards(
+                  title: "Empresa",
+                  icon: Icons.account_balance,
+                  color: AppColors.bluePrincipal,
+                  route: const EmpresaPage(),
+                  title2: 'Serviços',
+                  icon2: Icons.construction,
+                  color2: Colors.lightGreen,
+                  route2: const ServicoPage(),
+                  largura: largura,
+                  altura: altura,
+                  context: context,
+                ),
+                _grupoCards(
+                  title: "Produtos",
+                  icon: Icons.add_shopping_cart,
+                  color: AppColors.redPrincipal,
+                  route: const ProdutoPage(),
+                  title2: 'Ativar Funcionário',
+                  icon2: Icons.person,
+                  color2: Colors.black,
+                  route2: const AtivarFuncionarioPage(),
+                  largura: largura,
+                  altura: altura,
+                  context: context,
+                ),
+              ],
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  Container _infoGerais({
+    required String titulo,
+    required String descricao,
+    required double widthSize,
+  }) {
     return Container(
       alignment: Alignment.topLeft,
       padding: EdgeInsets.only(
@@ -100,14 +159,14 @@ class CadastroAdministradorWidget extends State<CadastroAdministradorPage>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _tituloSystetica(
-            text: "Barbearia Systetica",
+            text: titulo,
             fonteSize: 27,
             opacity: 0.6,
             fontWeight: FontWeight.w700,
           ),
           SizedBox(height: widthSize * 0.04),
           _tituloSystetica(
-            text: "Bem vindo Franciel",
+            text: descricao,
             fonteSize: 19,
             opacity: 0.5,
             fontWeight: FontWeight.w500,
@@ -126,6 +185,8 @@ class CadastroAdministradorWidget extends State<CadastroAdministradorPage>
     return Text(
       text,
       textAlign: TextAlign.justify,
+      maxLines: 1,
+      overflow: TextOverflow.ellipsis,
       style: TextStyle(
         fontSize: fonteSize,
         color: Colors.black.withOpacity(opacity),
@@ -134,7 +195,7 @@ class CadastroAdministradorWidget extends State<CadastroAdministradorPage>
     );
   }
 
-  Widget _grupoCards({
+  Padding _grupoCards({
     required Color color,
     required IconData icon,
     required String title,
@@ -149,7 +210,7 @@ class CadastroAdministradorWidget extends State<CadastroAdministradorPage>
   }) {
     return Padding(
       padding: EdgeInsets.only(
-        bottom: largura * 0.06,
+        bottom: altura * 0.03,
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -177,7 +238,7 @@ class CadastroAdministradorWidget extends State<CadastroAdministradorPage>
     );
   }
 
-  Widget _homePageCard({
+  Opacity _homePageCard({
     required Color color,
     required IconData icon,
     required String texto,
@@ -195,7 +256,7 @@ class CadastroAdministradorWidget extends State<CadastroAdministradorPage>
           splashColor: Colors.transparent,
           child: Container(
             padding: const EdgeInsets.all(15),
-            height: largura * 0.47,
+            height: largura * 0.48,
             width: altura * 0.22,
             decoration: BoxDecoration(
               color: Colors.white,

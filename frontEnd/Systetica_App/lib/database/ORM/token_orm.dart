@@ -1,6 +1,6 @@
 // ignore_for_file: constant_identifier_names
 
-import 'package:systetica/model/TokenDTO.dart';
+import 'package:systetica/model/Token.dart';
 
 class TokenORM {
   static const String TABLE = "token";
@@ -40,12 +40,12 @@ class TokenORM {
         dateTimeToken: (json['data_time_token'] ?? ""),
       );
 
-  static Future<TokenORM> fromDTO(TokenDTO tokenDTO) async {
+  static Future<TokenORM> fromDTO(Token token) async {
     return TokenORM(
-      accessToken: tokenDTO.accessToken,
-      refreshToken: tokenDTO.refreshToken,
-      email: tokenDTO.email,
-      dateTimeToken: tokenDTO.dateTimeToken,
+      accessToken: token.accessToken,
+      refreshToken: token.refreshToken,
+      email: token.email,
+      dateTimeToken: token.dateTimeToken,
     );
   }
 

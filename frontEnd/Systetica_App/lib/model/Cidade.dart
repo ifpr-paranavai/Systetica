@@ -1,9 +1,9 @@
 // ignore_for_file: file_names
 
-import 'package:systetica/model/EstadoDTO.dart';
+import 'package:systetica/model/Estado.dart';
 
-class CidadeDTO {
-  CidadeDTO({
+class Cidade {
+  Cidade({
     required this.id,
     required this.nome,
     this.estado,
@@ -11,19 +11,19 @@ class CidadeDTO {
 
   late final int id;
   late final String nome;
-  EstadoDTO? estado;
+  Estado? estado;
 
-  CidadeDTO.fromJson(Map<String, dynamic> json) {
+  Cidade.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     nome = json['nome'];
-    estado = EstadoDTO.fromJson(json['estado']);
+    estado = Estado.fromJson(json['estado']);
   }
 
-  static List<CidadeDTO> fromJsonList(List<dynamic> json) {
-    var lista = <CidadeDTO>[];
+  static List<Cidade> fromJsonList(List<dynamic> json) {
+    var lista = <Cidade>[];
 
     for (var i = 0; i < json.length; i++) {
-      lista.add(CidadeDTO.fromJson(json[i]));
+      lista.add(Cidade.fromJson(json[i]));
     }
 
     return lista;

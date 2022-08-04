@@ -3,14 +3,14 @@
 import 'package:systetica/database/orm/token_orm.dart';
 import 'package:systetica/utils/util.dart';
 
-class TokenDTO {
+class Token {
   int? id;
   String? accessToken;
   String? refreshToken;
   String? email;
   String? dateTimeToken;
 
-  TokenDTO({
+  Token({
     this.id,
     this.accessToken,
     this.refreshToken,
@@ -18,18 +18,18 @@ class TokenDTO {
     this.dateTimeToken,
   });
 
-  TokenDTO toDTO(TokenORM tokenORM) {
-    TokenDTO tokenDTO = TokenDTO();
-    tokenDTO.id = tokenORM.id;
-    tokenDTO.accessToken = tokenORM.accessToken;
-    tokenDTO.refreshToken = tokenORM.refreshToken;
-    tokenDTO.email = tokenORM.email;
-    tokenDTO.dateTimeToken = tokenORM.dateTimeToken;
+  Token toDTO(TokenORM tokenORM) {
+    Token token = Token();
+    token.id = tokenORM.id;
+    token.accessToken = tokenORM.accessToken;
+    token.refreshToken = tokenORM.refreshToken;
+    token.email = tokenORM.email;
+    token.dateTimeToken = tokenORM.dateTimeToken;
 
-    return tokenDTO;
+    return token;
   }
 
-  TokenDTO.fromJson(Map<String, dynamic> json) {
+  Token.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     accessToken = json['access_token'];
     refreshToken = json['refresh_token'];

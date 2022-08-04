@@ -1,12 +1,12 @@
 import 'package:systetica/database/db_sqlite.dart';
 import 'package:systetica/database/orm/token_orm.dart';
-import 'package:systetica/model/TokenDTO.dart';
+import 'package:systetica/model/Token.dart';
 
 class TokenRepository {
 
-  static Future<bool> insertToken(TokenDTO tokenDTO) async {
+  static Future<bool> insertToken(Token token) async {
     final db = await DbSQLite.instance.database;
-    final id = await db.insert(TokenORM.TABLE, tokenDTO.toJson());
+    final id = await db.insert(TokenORM.TABLE, token.toJson());
 
     if (id > 0) {
       return true;
@@ -24,22 +24,22 @@ class TokenRepository {
     return usuarios.isNotEmpty;
   }
 
-  static Future<TokenDTO> findToken() async {
+  static Future<Token> findToken() async {
     final db = await DbSQLite.instance.database;
 
     final token = await db.query(TokenORM.TABLE);
 
     if (token.isNotEmpty) {
-      return TokenDTO.fromJson(token.first);
+      return Token.fromJson(token.first);
     } else {
-      return TokenDTO();
+      return Token();
     }
   }
 
-  static Future<bool> updateToken(TokenDTO tokenDTO) async {
+  static Future<bool> updateToken(Token token) async {
     final db = await DbSQLite.instance.database;
-    final qtdeUpdate = await db.update(TokenORM.TABLE, tokenDTO.toJson(),
-        where: "id = ?", whereArgs: [tokenDTO.id]);
+    final qtdeUpdate = await db.update(TokenORM.TABLE, token.toJson(),
+        where: "id = ?", whereArgs: [token.id]);
 
     if (qtdeUpdate > 0) {
       return true;
@@ -48,10 +48,10 @@ class TokenRepository {
     }
   }
 
-  static Future<bool> deleteUsuario(TokenDTO tokenDTO) async {
+  static Future<bool> deleteUsuario(Token token) async {
     final db = await DbSQLite.instance.database;
     final qtdeUpdate = await db.delete(
-        TokenORM.TABLE, where: "id = ?", whereArgs: [tokenDTO.id]);
+        TokenORM.TABLE, where: "id = ?", whereArgs: [token.id]);
 
     if (qtdeUpdate > 0) {
       return true;

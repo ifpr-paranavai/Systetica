@@ -1,7 +1,7 @@
 // ignore_for_file: file_names
 
-class EstadoDTO {
-  EstadoDTO({
+class Estado {
+  Estado({
     required this.id,
     required this.nome,
     required this.uf,
@@ -11,7 +11,7 @@ class EstadoDTO {
   late final String nome;
   late final String uf;
 
-  EstadoDTO.fromJson(Map<String, dynamic> json) {
+  Estado.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     nome = json['nome'];
     uf = json['uf'];

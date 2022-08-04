@@ -8,8 +8,8 @@ import 'package:systetica/components/page_transition.dart';
 import 'package:systetica/components/texto_erro_widget.dart';
 import 'package:systetica/database/repository/token_repository.dart';
 import 'package:systetica/model/Info.dart';
-import 'package:systetica/model/TokenDTO.dart';
-import 'package:systetica/model/UsuarioDTO.dart';
+import 'package:systetica/model/Token.dart';
+import 'package:systetica/model/Usuario.dart';
 import 'package:systetica/request/dio_config.dart';
 import 'package:systetica/screen/perfil/perfil_service.dart';
 
@@ -19,22 +19,22 @@ class PerfilController {
   final emailController = TextEditingController();
   final formKey = GlobalKey<FormState>();
 
-  late UsuarioDTO usuarioDTO;
+  late Usuario usuario;
 
   var myPageTransition = MyPageTransition();
 
   File? image;
   PickedFile? pickedFile;
   bool imagemAlterada = false;
-  String imagemBase64 = "";
+  String? imagemBase64;
 
   Future<Info?> buscarUsuarioEmail(BuildContext context) async {
     var connected = await ConnectionCheck.check();
     Info info = Info(success: true);
     if (connected) {
       try {
-        TokenDTO _tokenDto = await TokenRepository.findToken();
-        info = await PerfilService.buscarUsuario(_tokenDto);
+        Token _token = await TokenRepository.findToken();
+        info = await PerfilService.buscarUsuario(_token);
         return info;
       } catch (e) {
         info.success = false;
@@ -66,12 +66,12 @@ class PerfilController {
           "Aguarde...",
         );
 
-        usuarioDTO.nome = nomeController.text;
-        usuarioDTO.telefone = telefoneController.text;
-        usuarioDTO.imagemBase64 = imagemBase64;
+        usuario.nome = nomeController.text;
+        usuario.telefone = telefoneController.text;
+        usuario.imagemBase64 = imagemBase64;
 
-        TokenDTO _tokenDto = await TokenRepository.findToken();
-        Info _info = await PerfilService.atualizarUsuario(_tokenDto, usuarioDTO);
+        Token _token = await TokenRepository.findToken();
+        Info _info = await PerfilService.atualizarUsuario(_token, usuario);
         // Finaliza o loading na tela
         Navigator.pop(contextLoading, loading);
 

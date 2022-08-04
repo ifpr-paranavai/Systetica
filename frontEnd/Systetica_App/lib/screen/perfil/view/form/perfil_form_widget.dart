@@ -24,10 +24,10 @@ class PerfilFormWidget extends State<PerfilFormPage> {
   @override
   void initState() {
     super.initState();
-    _controller.usuarioDTO = widget.usuarioDTO!;
-    _controller.nomeController.text = _controller.usuarioDTO.nome!;
-    _controller.telefoneController.text = _controller.usuarioDTO.telefone!;
-    _controller.imagemBase64 = _controller.usuarioDTO.imagemBase64!;
+    _controller.usuario = widget.usuario!;
+    _controller.nomeController.text = _controller.usuario.nome!;
+    _controller.telefoneController.text = _controller.usuario.telefone!;
+    _controller.imagemBase64 = _controller.usuario.imagemBase64;
     _scrollController = ScrollController();
   }
 
@@ -183,7 +183,7 @@ class PerfilFormWidget extends State<PerfilFormPage> {
   CampoTextoWidget _inputNome({required double paddingHorizontal}) {
     return CampoTextoWidget(
       labelText: "Nome completo",
-    paddingHorizontal: paddingHorizontal,
+      paddingHorizontal: paddingHorizontal,
       paddingBottom: 0,
       maxLength: 100,
       paddingTop: 14,
@@ -200,7 +200,7 @@ class PerfilFormWidget extends State<PerfilFormPage> {
   CampoTextoWidget _inputTelefone({required double paddingHorizontal}) {
     return CampoTextoWidget(
       labelText: "Telefone",
-    paddingHorizontal: paddingHorizontal,
+      paddingHorizontal: paddingHorizontal,
       keyboardType: TextInputType.number,
       mask: "(##) #####-####",
       paddingBottom: 0,

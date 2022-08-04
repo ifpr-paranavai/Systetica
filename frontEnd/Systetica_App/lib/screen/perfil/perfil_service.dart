@@ -2,21 +2,21 @@
 
 import 'package:dio/dio.dart';
 import 'package:systetica/model/Info.dart';
-import 'package:systetica/model/TokenDTO.dart';
-import 'package:systetica/model/UsuarioDTO.dart';
+import 'package:systetica/model/Token.dart';
+import 'package:systetica/model/Usuario.dart';
 import 'package:systetica/utils/dio/dio_config_api.dart';
 
 class PerfilService {
-  static Future<dynamic> buscarUsuario(TokenDTO tokenDTO) async {
+  static Future<Info> buscarUsuario(Token token) async {
     Info info = Info(success: true);
     try {
       Dio dio = DioConfigApi.builderConfigJson();
 
-      dio.options.headers["Authorization"] = "Bearer ${tokenDTO.accessToken}";
+      dio.options.headers["Authorization"] = "Bearer ${token.accessToken}";
 
-      var response = await dio.get("usuario/email/" + tokenDTO.email!);
+      var response = await dio.get("usuario/email/" + token.email!);
 
-      info.object = UsuarioDTO.fromJson(response.data['response']);
+      info.object = Usuario.fromJson(response.data['response']);
 
       return info;
     } on DioError catch (e) {
@@ -36,17 +36,17 @@ class PerfilService {
   }
 
   static Future<Info> atualizarUsuario(
-    TokenDTO tokenDTO,
-    UsuarioDTO usuarioDTO,
+    Token token,
+    Usuario usuario,
   ) async {
     Info info = Info(success: true);
     try {
       Dio dio = DioConfigApi.builderConfigJson();
 
-      dio.options.headers["Authorization"] = "Bearer ${tokenDTO.accessToken}";
+      dio.options.headers["Authorization"] = "Bearer ${token.accessToken}";
 
       var response =
-          await dio.put("usuario/atualizar", data: usuarioDTO.toJson());
+          await dio.put("usuario/atualizar", data: usuario.toJson());
 
       info = Info.fromJson(response.data);
 

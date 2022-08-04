@@ -75,6 +75,7 @@ public class EmpresaServiceImpl implements EmpresaService {
             empresaBanco.get().setEndereco(empresaDTO.getEndereco());
             empresaBanco.get().setNumero(empresaDTO.getNumero());
             empresaBanco.get().setCep(empresaDTO.getCep());
+            empresaBanco.get().setBairro(empresaDTO.getBairro());
             empresaBanco.get().setLatitude(empresaDTO.getLatitude());
             empresaBanco.get().setLongitude(empresaDTO.getLongitude());
             empresaBanco.get().setLogoBase64(returnDataConverteBase64.getMessage());
@@ -95,10 +96,13 @@ public class EmpresaServiceImpl implements EmpresaService {
         Optional<Empresa> empresa = empresaRepository.findByUsuarioAdministradorEmail(email);
 
         if (empresa.isEmpty()) {
-            return new ReturnData<>(false, "Empresa não encontrada.",
+            return new ReturnData<>(false, "Empresa não encontrada",
                     "Não foi possível encontrar empresa pelo email " + email);
         }
 
-        return new ReturnData<>(true, "", empresaMapper.toDto(empresa.get()));
+        EmpresaDTO empresaDTO = empresaMapper.toDto(empresa.get());
+        empresaDTO.setNomeUsuario(empresa.get().getUsuarioAdministrador().getNome().split(" ")[0]);
+
+        return new ReturnData<>(true, "", empresaDTO);
     }
 }

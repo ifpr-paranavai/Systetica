@@ -41,6 +41,9 @@ public class EmpresaDTO {
     @JsonProperty("cep")
     private String cep;
 
+    @JsonProperty("bairro")
+    private String bairro;
+
     @JsonProperty("latitude")
     private String latitude;
 
@@ -58,6 +61,9 @@ public class EmpresaDTO {
 
     @JsonProperty("usuario_administrador")
     private UsuarioDTO usuarioAdministrador;
+
+    @JsonProperty("nome_usuario")
+    private String nomeUsuario;
 
     @JsonProperty("usuarios")
     private List<UsuarioDTO> usuarios;

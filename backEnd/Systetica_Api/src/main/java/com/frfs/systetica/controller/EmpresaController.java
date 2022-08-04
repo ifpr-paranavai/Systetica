@@ -1,7 +1,6 @@
 package com.frfs.systetica.controller;
 
 import com.frfs.systetica.dto.EmpresaDTO;
-import com.frfs.systetica.dto.UsuarioDTO;
 import com.frfs.systetica.dto.response.ReturnData;
 import com.frfs.systetica.service.EmpresaService;
 import lombok.RequiredArgsConstructor;

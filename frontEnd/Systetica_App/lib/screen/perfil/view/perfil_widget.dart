@@ -11,10 +11,9 @@ import 'package:systetica/components/single_child_scroll_edicao.dart';
 import 'package:systetica/components/text_autenticacoes_widget.dart';
 import 'package:systetica/database/repository/token_repository.dart';
 import 'package:systetica/model/Info.dart';
-import 'package:systetica/model/MenuItemDto.dart';
-import 'package:systetica/model/TokenDTO.dart';
-import 'package:systetica/model/UsuarioDTO.dart';
-import 'package:systetica/screen/inicio/view/inicio_page.dart';
+import 'package:systetica/model/MenuItem.dart';
+import 'package:systetica/model/Token.dart';
+import 'package:systetica/model/Usuario.dart';
 import 'package:systetica/screen/login/view/login/login_page.dart';
 import 'package:systetica/screen/perfil/perfil_controller.dart';
 import 'package:systetica/screen/perfil/view/form/perfil_form_page.dart';
@@ -32,7 +31,7 @@ class PerfilWidget extends State<PerfilPage> {
   @override
   void initState() {
     super.initState();
-    _controller.usuarioDTO = UsuarioDTO();
+    _controller.usuario = Usuario();
   }
 
   @override
@@ -48,7 +47,7 @@ class PerfilWidget extends State<PerfilPage> {
               return const LoadingAnimation();
             } else if (snapShot.hasData) {
               if (snapShot.data!.success!) {
-                _controller.usuarioDTO = snapShot.data!.object;
+                _controller.usuario = snapShot.data!.object;
                 return Stack(
                   children: [
                     SingleChildScrollEdicao(
@@ -56,17 +55,17 @@ class PerfilWidget extends State<PerfilPage> {
                         child: Column(
                           children: [
                             _sizedBox(height: _altura * 0.08),
-                            _boxFoto(_controller.usuarioDTO.imagemBase64),
+                            _boxFoto(_controller.usuario.imagemBase64),
                             _sizedBox(height: _altura * 0.07),
                             _textoPerfil(),
                             _cardInfoUsuario(
-                              usuarioDTO: _controller.usuarioDTO,
+                              usuario: _controller.usuario,
                             ),
                           ],
                         ),
                       ),
                     ),
-                    _dropDownButton(usuarioDTO: _controller.usuarioDTO),
+                    _dropDownButton(usuario: _controller.usuario),
                   ],
                 );
               } else {
@@ -82,7 +81,7 @@ class PerfilWidget extends State<PerfilPage> {
   }
 
   DropdownButtonHideUnderline _dropDownButton({
-    required UsuarioDTO usuarioDTO,
+    required Usuario usuario,
   }) {
     return DropdownButtonHideUnderline(
       child: Container(
@@ -120,7 +119,7 @@ class PerfilWidget extends State<PerfilPage> {
                 Navigator.of(context)
                     .push(
                       _controller.myPageTransition.pageTransition(
-                        child: PerfilFormPage(usuarioDTO: usuarioDTO),
+                        child: PerfilFormPage(usuario: usuario),
                         childCurrent: widget,
                         buttoToTop: true,
                       ),
@@ -138,7 +137,7 @@ class PerfilWidget extends State<PerfilPage> {
                   onPressedNao: () => Navigator.pop(context),
                   onPressedOk: () async {
                     await TokenRepository.updateToken(
-                      TokenDTO(id: 1),
+                      Token(id: 1),
                     );
                     Navigator.pushAndRemoveUntil(
                       context,
@@ -204,7 +203,7 @@ class PerfilWidget extends State<PerfilPage> {
     );
   }
 
-  Padding _cardInfoUsuario({required UsuarioDTO usuarioDTO}) {
+  Padding _cardInfoUsuario({required Usuario usuario}) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 18),
       child: Card(
@@ -218,9 +217,9 @@ class PerfilWidget extends State<PerfilPage> {
         child: Column(
           children: [
             _sizedBox(height: 5),
-            _itemNome(usuarioDTO.nome!),
-            _itemTelefone(usuarioDTO.telefone!),
-            _itemEmail(usuarioDTO.email!),
+            _itemNome(usuario.nome!),
+            _itemTelefone(usuario.telefone!),
+            _itemEmail(usuario.email!),
           ],
         ),
       ),

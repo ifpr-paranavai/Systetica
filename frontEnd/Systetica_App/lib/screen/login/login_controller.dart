@@ -4,9 +4,9 @@ import 'package:systetica/components/page_transition.dart';
 import 'package:systetica/components/alert_dialog_widget.dart';
 import 'package:systetica/components/texto_erro_widget.dart';
 import 'package:systetica/database/repository/token_repository.dart';
-import 'package:systetica/model/LoginDTO.dart';
-import 'package:systetica/model/TokenDTO.dart';
-import 'package:systetica/model/UsuarioDTO.dart';
+import 'package:systetica/model/Login.dart';
+import 'package:systetica/model/Token.dart';
+import 'package:systetica/model/Usuario.dart';
 import 'package:systetica/request/dio_config.dart';
 import 'package:systetica/screen/home/view/home_page.dart';
 import 'package:systetica/screen/inicio/view/inicio_page.dart';
@@ -35,22 +35,22 @@ class LoginController {
             "Aguarde...",
           );
           try {
-            LoginDTO login = LoginDTO(
+            Login login = Login(
               email: emailController.text,
               password: senhaController.text,
             );
-            TokenDTO? tokenRequest = await LoginService.login(login);
+            Token? tokenRequest = await LoginService.login(login);
 
             // Verificar se já existe alguma Usuario cadastrado no banco
-            TokenDTO tokenDTO = await TokenRepository.findToken();
+            Token token = await TokenRepository.findToken();
 
-            if (Util.isIntegerNull(tokenDTO.id) &&
-                Util.isEmptOrNull(tokenDTO.accessToken) &&
-                Util.isEmptOrNull(tokenDTO.email) &&
-                Util.isEmptOrNull(tokenDTO.refreshToken)) {
+            if (Util.isIntegerNull(token.id) &&
+                Util.isEmptOrNull(token.accessToken) &&
+                Util.isEmptOrNull(token.email) &&
+                Util.isEmptOrNull(token.refreshToken)) {
               TokenRepository.insertToken(tokenRequest!);
             } else {
-              tokenRequest!.id = tokenDTO.id;
+              tokenRequest!.id = token.id;
               TokenRepository.updateToken(tokenRequest);
             }
 
@@ -196,12 +196,12 @@ class LoginController {
             "Aguarde...",
           );
           try {
-            UsuarioDTO usuarioDTO = UsuarioDTO(
+            Usuario usuario = Usuario(
               email: emailController.text,
               codigoAleatorio: int.parse(codicoController.text),
               password: senhaController.text,
             );
-            var infoResponse = await LoginService.alterarSenha(usuarioDTO);
+            var infoResponse = await LoginService.alterarSenha(usuario);
 
             // Finaliza o loading na tela
             Navigator.pop(contextLoading, loading);

@@ -1,9 +1,9 @@
 // ignore_for_file: file_names
 
-import 'package:systetica/model/RoleDTO.dart';
+import 'package:systetica/model/Role.dart';
 
-class UsuarioDTO {
-  UsuarioDTO({
+class Usuario {
+  Usuario({
     this.id,
     this.nome,
     this.telefone,
@@ -20,10 +20,10 @@ class UsuarioDTO {
   String? email;
   String? password;
   int? codigoAleatorio;
-  List<RoleDTO>? roles;
+  List<Role>? roles;
   String? imagemBase64;
 
-  UsuarioDTO.fromJson(Map<String, dynamic> json) {
+  Usuario.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     nome = json['nome'];
     telefone = json['telefone'];
@@ -31,7 +31,7 @@ class UsuarioDTO {
     password = json['password'];
     codigoAleatorio = json['codigo_aleatorio'];
     roles = json['roles'] != null
-        ? (json['roles'].map<RoleDTO>((e) => RoleDTO.fromJson(e))).toList()
+        ? (json['roles'].map<Role>((e) => Role.fromJson(e))).toList()
         : [];
     imagemBase64 = json['imagem_base64'];
   }

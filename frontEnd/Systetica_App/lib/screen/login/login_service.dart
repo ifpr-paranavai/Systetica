@@ -2,24 +2,24 @@
 
 import 'package:dio/dio.dart';
 import 'package:systetica/model/Info.dart';
-import 'package:systetica/model/LoginDTO.dart';
-import 'package:systetica/model/TokenDTO.dart';
-import 'package:systetica/model/UsuarioDTO.dart';
+import 'package:systetica/model/Login.dart';
+import 'package:systetica/model/Token.dart';
+import 'package:systetica/model/Usuario.dart';
 import 'package:systetica/utils/dio/dio_config_api.dart';
 
 class LoginService {
-  static Future<TokenDTO?> login(LoginDTO loginDTO) async {
+  static Future<Token?> login(Login login) async {
     Dio dio = DioConfigApi.builderConfigFormData();
 
     FormData formData = FormData.fromMap({
-      'email': loginDTO.email,
-      'password': loginDTO.password,
+      'email': login.email,
+      'password': login.password,
     });
 
     try {
       var response = await dio.post("login", data: formData);
 
-      TokenDTO token = TokenDTO.fromJson(response.data);
+      Token token = Token.fromJson(response.data);
       return token;
     } on DioError catch (e) {
       try {
@@ -63,12 +63,12 @@ class LoginService {
     }
   }
 
-  static Future<Info> alterarSenha(UsuarioDTO usuarioDTO) async {
+  static Future<Info> alterarSenha(Usuario usuario) async {
     try {
       Dio dio = DioConfigApi.builderConfigJson();
 
       var response =
-          await dio.put("usuario/alterar-senha", data: usuarioDTO.toJson());
+          await dio.put("usuario/alterar-senha", data: usuario.toJson());
 
       return Info.fromJson(response.data);
     } on DioError catch (e) {

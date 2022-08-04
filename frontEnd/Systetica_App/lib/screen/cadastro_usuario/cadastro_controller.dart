@@ -3,7 +3,7 @@ import 'package:systetica/components/alert_dialog_widget.dart';
 import 'package:systetica/components/loading/show_loading_widget.dart';
 import 'package:systetica/components/page_transition.dart';
 import 'package:systetica/components/texto_erro_widget.dart';
-import 'package:systetica/model/UsuarioDTO.dart';
+import 'package:systetica/model/Usuario.dart';
 import 'package:systetica/request/dio_config.dart';
 import 'package:systetica/screen/cadastro_usuario/cadastro_service.dart';
 import 'package:systetica/screen/cadastro_usuario/view/ativar_usuario/ativar_usuario_page.dart';
@@ -41,7 +41,7 @@ class CadastroController {
       if (formKey.currentState != null) {
         if (formKey.currentState?.validate() ?? true) {
           try {
-            UsuarioDTO usuarioDTO = UsuarioDTO(
+            Usuario usuario = Usuario(
               nome: nomeController.text,
               telefone: telefone.text,
               email: emailController.text,
@@ -56,7 +56,7 @@ class CadastroController {
             );
 
             var infoResponse =
-                await CadastroService.cadastroUsuario(usuarioDTO);
+                await CadastroService.cadastroUsuario(usuario);
 
             // Finaliza o loading na tela
             Navigator.pop(contextLoading, loading);
@@ -108,7 +108,7 @@ class CadastroController {
     var connected = await ConnectionCheck.check();
     if (connected) {
       try {
-        UsuarioDTO usuarioDTO = UsuarioDTO(
+        Usuario usuario = Usuario(
           email: emailController.text,
           codigoAleatorio: int.parse(codicoController.text),
         );
@@ -120,7 +120,7 @@ class CadastroController {
           "Aguarde...",
         );
 
-        var infoResponse = await CadastroService.ativarUsuario(usuarioDTO);
+        var infoResponse = await CadastroService.ativarUsuario(usuario);
 
         // Finaliza o loading na tela
         Navigator.pop(contextLoading, loading);

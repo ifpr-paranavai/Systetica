@@ -1,7 +1,7 @@
 // ignore_for_file: file_names
 
-class RoleDTO {
-  RoleDTO({
+class Role {
+  Role({
     required this.id,
     required this.name,
   });
@@ -9,7 +9,7 @@ class RoleDTO {
   late final int id;
   late final String name;
 
-  RoleDTO.fromJson(Map<String, dynamic> json) {
+  Role.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
   }

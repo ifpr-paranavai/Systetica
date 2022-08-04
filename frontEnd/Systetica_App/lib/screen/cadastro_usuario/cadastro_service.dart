@@ -2,15 +2,15 @@
 
 import 'package:dio/dio.dart';
 import 'package:systetica/model/Info.dart';
-import 'package:systetica/model/UsuarioDTO.dart';
+import 'package:systetica/model/Usuario.dart';
 import 'package:systetica/utils/dio/dio_config_api.dart';
 
 class CadastroService {
-  static Future<Info> cadastroUsuario(UsuarioDTO usuarioDTO) async {
+  static Future<Info> cadastroUsuario(Usuario usuario) async {
     try {
       Dio dio = DioConfigApi.builderConfigJson();
 
-      var response = await dio.post("usuario/salvar", data: usuarioDTO.toJson());
+      var response = await dio.post("usuario/salvar", data: usuario.toJson());
      
       return Info.fromJson(response.data);
     } on DioError catch (e) {
@@ -28,11 +28,11 @@ class CadastroService {
   }
 
 
-  static Future<Info> ativarUsuario(UsuarioDTO usuarioDTO) async {
+  static Future<Info> ativarUsuario(Usuario usuario) async {
     try {
       Dio dio = DioConfigApi.builderConfigJson();
 
-      var response = await dio.put("usuario/ativar", data: usuarioDTO.toJson());
+      var response = await dio.put("usuario/ativar", data: usuario.toJson());
 
       return Info.fromJson(response.data);
     } on DioError catch (e) {

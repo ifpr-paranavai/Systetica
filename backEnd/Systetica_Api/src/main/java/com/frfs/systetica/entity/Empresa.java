@@ -51,6 +51,10 @@ public class Empresa implements Serializable {
     private String cep;
 
     @NotNull
+    @Column(name = "bairro", length = 100)
+    private String bairro;
+
+    @NotNull
     @Column(name = "latitude", length = 10)
     private String latitude;
 

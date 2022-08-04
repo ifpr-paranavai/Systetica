@@ -1,14 +1,14 @@
 // ignore_for_file: file_names
 
-class LoginDTO {
-  LoginDTO({
+class Login {
+  Login({
     required this.email,
     required this.password,
   });
   late final String email;
   late final String password;
 
-  LoginDTO.fromJson(Map<String, dynamic> json) {
+  Login.fromJson(Map<String, dynamic> json) {
     email = json['email'];
     password = json['password'];
   }
