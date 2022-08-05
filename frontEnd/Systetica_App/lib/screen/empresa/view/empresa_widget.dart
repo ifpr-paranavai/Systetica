@@ -2,12 +2,12 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:flutter/material.dart';
 import 'package:systetica/components/botoes/botao_widget.dart';
 import 'package:systetica/components/icon_arrow_widget.dart';
-import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:systetica/components/imagens_widget.dart';
 import 'package:systetica/components/input/campo_pesquisa_widget.dart';
 import 'package:systetica/components/input/campo_texto_widget.dart';
@@ -19,7 +19,6 @@ import 'package:systetica/model/Cidade.dart';
 import 'package:systetica/model/Empresa.dart';
 import 'package:systetica/model/Info.dart';
 import 'package:systetica/model/MenuItem.dart';
-import 'package:systetica/model/Page_impl.dart';
 import 'package:systetica/model/validator/MultiValidatorEmpresa.dart';
 import 'package:systetica/screen/empresa/empresa_controller.dart';
 import 'package:systetica/screen/empresa/empresa_service.dart';
@@ -75,29 +74,16 @@ class EmpresaWidget extends State<EmpresaPage> {
               return const LoadingAnimation();
             } else if (snapShot.hasData && snapShot.data!.success!) {
               _controller.empresa = snapShot.data!.object;
-              return Stack(
-                children: [
-                  SingleChildScrollComponent(
-                    widgetComponent: Center(
-                      child: Column(
-                        children: [
-                          _sizedBox(height: _altura * 0.08),
-                          _boxFoto(_controller.empresa.logoBase64),
-                          _sizedBox(height: _altura * 0.07),
-                          _textoEmpresa(),
-                          _cardInfoEmpresa(
-                            empresa: _controller.empresa,
-                          ),
-                          _sizedBox(height: _altura * 0.05),
-                        ],
-                      ),
-                    ),
-                  ),
-                  _dropDownButton(empresa: _controller.empresa),
-                ],
+              return widgetInfoEmpresa(
+                altura: _altura,
+                empresa: _controller.empresa,
+                logoBase64: _controller.empresa.logoBase64!,
               );
             } else {
-              return _erroRequisicao(_largura);
+              return widgetCadastrarEmpresa(
+                altura: _altura,
+                largura: _largura,
+              );
             }
           },
         ),
@@ -105,44 +91,68 @@ class EmpresaWidget extends State<EmpresaPage> {
     );
   }
 
-  // Scaffold paraDeCadastro(){
-  //   return Scaffold(
-  //     backgroundColor: Colors.white,
-  //     floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
-  //     floatingActionButton: IconArrowWidget(
-  //       paddingTop: _altura * 0.01,
-  //       onPressed: () => Navigator.pop(context),
-  //     ),
-  //     body: SingleChildScrollView(
-  //       controller: _scrollController,
-  //       child: Form(
-  //         autovalidateMode: AutovalidateMode.onUserInteraction,
-  //         key: _controller.formKey,
-  //         child: Center(
-  //           child: Column(
-  //             children: [
-  //               _sizedBox(height: _altura * 0.08),
-  //               _boxFoto(_controller.empresa.logoBase64),
-  //               _sizedBox(height: _altura * 0.07),
-  //               inputCidade(),
-  //               _textoCadastrarEmpresa(),
-  //               _inputNomeEmpresa(paddingHorizontal: _largura),
-  //               _inputCnpj(paddingHorizontal: _largura),
-  //               _inputTelefone(paddingHorizontal: _largura),
-  //               _inputTelefone2(paddingHorizontal: _largura),
-  //               _inputEndereco(paddingHorizontal: _largura),
-  //               _inputNumero(paddingHorizontal: _largura),
-  //               _inputCep(paddingHorizontal: _largura),
-  //               _inputBairro(paddingHorizontal: _largura),
-  //               _botaoCadastrar(),
-  //             ],
-  //           ),
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  // }
+  Stack widgetInfoEmpresa({
+    required double altura,
+    required Empresa empresa,
+    required String logoBase64,
+  }) {
+    return Stack(
+      children: [
+        SingleChildScrollComponent(
+          widgetComponent: Center(
+            child: Column(
+              children: [
+                _sizedBox(height: altura * 0.08),
+                _boxFoto(logoBase64),
+                _sizedBox(height: altura * 0.07),
+                _textoEmpresa(),
+                _cardInfoEmpresa(
+                  empresa: empresa,
+                ),
+                _sizedBox(height: altura * 0.05),
+              ],
+            ),
+          ),
+        ),
+        _dropDownButton(empresa: empresa),
+      ],
+    );
+  }
 
+  SingleChildScrollView widgetCadastrarEmpresa({
+    required double altura,
+    required double largura,
+  }) {
+    return SingleChildScrollView(
+      controller: _scrollController,
+      child: Form(
+        autovalidateMode: AutovalidateMode.onUserInteraction,
+        key: _controller.formKey,
+        child: Center(
+          child: Column(
+            children: [
+              _sizedBox(height: altura * 0.08),
+              _boxFoto(_controller.empresa.logoBase64),
+              _sizedBox(height: altura * 0.07),
+              inputCidade(),
+              _textoCadastrarEmpresa(),
+              _inputNomeEmpresa(paddingHorizontal: largura),
+              _inputCnpj(paddingHorizontal: largura),
+              _inputTelefone(paddingHorizontal: largura),
+              _inputTelefone2(paddingHorizontal: largura),
+              _inputEndereco(paddingHorizontal: largura),
+              _inputNumero(paddingHorizontal: largura),
+              _inputCep(paddingHorizontal: largura),
+              _inputBairro(paddingHorizontal: largura),
+              _botaoCadastrar(),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  // Opções para foto
   Future<void> _adicionarImagem() async {
     XFile? pickedImagem = await _picker.pickImage(source: ImageSource.gallery);
     if (pickedImagem != null) {
@@ -221,9 +231,7 @@ class EmpresaWidget extends State<EmpresaPage> {
   }
 
   // Opções para info empresa
-  DropdownButtonHideUnderline _dropDownButton({
-    required Empresa empresa,
-  }) {
+  DropdownButtonHideUnderline _dropDownButton({required Empresa empresa}) {
     return DropdownButtonHideUnderline(
       child: Container(
         alignment: Alignment.topRight,
