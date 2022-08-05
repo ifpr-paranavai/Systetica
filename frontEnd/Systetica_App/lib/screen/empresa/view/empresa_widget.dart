@@ -8,7 +8,6 @@ import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:systetica/components/botoes/botao_widget.dart';
 import 'package:systetica/components/icon_arrow_widget.dart';
-import 'package:systetica/components/imagens_widget.dart';
 import 'package:systetica/components/input/campo_pesquisa_widget.dart';
 import 'package:systetica/components/input/campo_texto_widget.dart';
 import 'package:systetica/components/item_list.dart';
@@ -445,7 +444,7 @@ class EmpresaWidget extends State<EmpresaPage> {
       keyboardType: TextInputType.number,
       mask: "(##) ####-####",
       paddingBottom: 0,
-      maxLength: 15,
+      maxLength: 14,
       paddingTop: 8,
       isIconDate: true,
       icon: const Icon(
@@ -584,38 +583,6 @@ class EmpresaWidget extends State<EmpresaPage> {
         ),
         onPressed: () => _adicionarImagem(),
       ),
-    );
-  }
-
-  Center _erroRequisicao(double _largura) {
-    return Center(
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            _imagemErro(),
-            _textoErro(_largura),
-          ],
-        ),
-      ),
-    );
-  }
-
-  ImagensWidget _imagemErro() {
-    return ImagensWidget(
-      paddingLeft: 0,
-      image: "erro.png",
-      widthImagem: 320,
-    );
-  }
-
-  TextAutenticacoesWidget _textoErro(double _largura) {
-    return TextAutenticacoesWidget(
-      paddingLeft: _largura * 0.10,
-      paddingRight: _largura * 0.10,
-      fontSize: 33,
-      text: "Oopss...ocorreu algum erro. \nTente novamente mais tarde.",
     );
   }
 }

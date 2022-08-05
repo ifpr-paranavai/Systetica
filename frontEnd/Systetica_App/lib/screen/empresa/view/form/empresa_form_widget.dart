@@ -7,7 +7,6 @@ import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:systetica/components/botoes/botao_widget.dart';
 import 'package:systetica/components/icon_arrow_widget.dart';
-import 'package:systetica/components/input/campo_pesquisa_widget.dart';
 import 'package:systetica/components/input/campo_texto_widget.dart';
 import 'package:systetica/components/text_autenticacoes_widget.dart';
 import 'package:systetica/model/validator/MultiValidatorEmpresa.dart';
@@ -194,15 +193,6 @@ class EmpresaFormWidget extends State<EmpresaFormPage> {
   }
 
   // Widgets para atualizar
-
-  TextAutenticacoesWidget _textoCadastrarEmpresa() {
-    return TextAutenticacoesWidget(
-      text: "Cadastra Empresa",
-      fontSize: 30,
-      paddingBottom: 6,
-    );
-  }
-
   CampoTextoWidget _inputNomeEmpresa({required double paddingHorizontal}) {
     return CampoTextoWidget(
       labelText: "Empresa",
@@ -217,25 +207,6 @@ class EmpresaFormWidget extends State<EmpresaFormPage> {
       ),
       controller: _controller.nomeController,
       validator: _validatorEmpresa.nomeValidator,
-    );
-  }
-
-  CampoTextoWidget _inputCnpj({required double paddingHorizontal}) {
-    return CampoTextoWidget(
-      labelText: "CNPJ",
-      paddingHorizontal: paddingHorizontal * 0.08,
-      keyboardType: TextInputType.number,
-      mask: "##.###.###/####-##",
-      paddingBottom: 0,
-      maxLength: 18,
-      paddingTop: 8,
-      isIconDate: true,
-      icon: const Icon(
-        Icons.credit_card,
-        color: Colors.black87,
-      ),
-      controller: _controller.cnpjController,
-      validator: _validatorEmpresa.cnpjValidator,
     );
   }
 
@@ -265,7 +236,7 @@ class EmpresaFormWidget extends State<EmpresaFormPage> {
       keyboardType: TextInputType.number,
       mask: "(##) ####-####",
       paddingBottom: 0,
-      maxLength: 15,
+      maxLength: 14,
       paddingTop: 8,
       isIconDate: true,
       icon: const Icon(
@@ -355,7 +326,7 @@ class EmpresaFormWidget extends State<EmpresaFormPage> {
       largura: 190,
       corBotao: Colors.black87.withOpacity(0.9),
       corTexto: Colors.white,
-      onPressed: () {},
+      onPressed: () => _controller.atualizarEmpresa(context),
     );
   }
 
