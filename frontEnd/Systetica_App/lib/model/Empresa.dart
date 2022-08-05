@@ -42,6 +42,7 @@ class Empresa {
     telefone1 = json['telefone1'];
     telefone2 = json['telefone2'];
     endereco = json['endereco'];
+    numero = json['numero'];
     cep = json['cep'];
     bairro = json['bairro'];
     latitude = json['latitude'];
@@ -59,6 +60,7 @@ class Empresa {
     _data['telefone1'] = telefone1;
     _data['telefone2'] = telefone2;
     _data['endereco'] = endereco;
+    _data['numero'] = numero;
     _data['cep'] = cep;
     _data['bairro'] = bairro;
     _data['latitude'] = latitude;

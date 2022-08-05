@@ -7,7 +7,7 @@ import 'package:systetica/components/alert_dialog_widget.dart';
 import 'package:systetica/components/imagens_widget.dart';
 import 'package:systetica/components/item_list.dart';
 import 'package:systetica/components/loading/loading_animation.dart';
-import 'package:systetica/components/single_child_scroll_edicao.dart';
+import 'package:systetica/components/single_child_scroll_component.dart';
 import 'package:systetica/components/text_autenticacoes_widget.dart';
 import 'package:systetica/database/repository/token_repository.dart';
 import 'package:systetica/model/Info.dart';
@@ -50,7 +50,7 @@ class PerfilWidget extends State<PerfilPage> {
                 _controller.usuario = snapShot.data!.object;
                 return Stack(
                   children: [
-                    SingleChildScrollEdicao(
+                    SingleChildScrollComponent(
                       widgetComponent: Center(
                         child: Column(
                           children: [

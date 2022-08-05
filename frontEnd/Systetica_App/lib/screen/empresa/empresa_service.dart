@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:systetica/model/Cidade.dart';
 import 'package:systetica/model/Empresa.dart';
 import 'package:systetica/model/Info.dart';
 import 'package:systetica/model/Token.dart';
@@ -31,5 +32,24 @@ class EmpresaService {
     } on Exception catch (ex) {
       rethrow;
     }
+  }
+
+  static Future<Info> buscarCidade({
+    int? pageNumber,
+    int? size = 5,
+    String? nomeCidade,
+  }) async {
+    String path = "cidade/buscar-todos?search=$nomeCidade&size=$size";
+
+    Dio dio = DioConfigApi.builderConfig();
+
+    var response = await dio.post(path);
+
+    Info info = Info();
+
+    info.success = true;
+    info.object = Cidade.fromJsonList(response.data['response']);
+
+    return info;
   }
 }

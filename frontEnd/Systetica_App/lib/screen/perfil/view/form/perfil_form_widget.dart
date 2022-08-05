@@ -208,7 +208,7 @@ class PerfilFormWidget extends State<PerfilFormPage> {
       paddingTop: 12,
       isIconDate: true,
       icon: const Icon(
-        Icons.phone,
+        Icons.phone_android,
         color: Colors.black87,
       ),
       controller: _controller.telefoneController,

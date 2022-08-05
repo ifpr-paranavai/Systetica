@@ -54,11 +54,9 @@ public class Empresa implements Serializable {
     @Column(name = "bairro", length = 100)
     private String bairro;
 
-    @NotNull
     @Column(name = "latitude", length = 10)
     private String latitude;
 
-    @NotNull
     @Column(name = "longitude", length = 10)
     private String longitude;
 

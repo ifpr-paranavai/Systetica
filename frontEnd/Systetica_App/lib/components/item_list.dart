@@ -54,6 +54,8 @@ class ItemLista extends StatelessWidget {
   }) {
     return Text(
       text,
+      maxLines: 2,
+      overflow: TextOverflow.ellipsis,
       style: TextStyle(
         fontSize: fontSize,
         fontWeight: fontWeight,

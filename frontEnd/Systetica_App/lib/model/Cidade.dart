@@ -4,13 +4,13 @@ import 'package:systetica/model/Estado.dart';
 
 class Cidade {
   Cidade({
-    required this.id,
-    required this.nome,
+    this.id,
+    this.nome,
     this.estado,
   });
 
-  late final int id;
-  late final String nome;
+  int? id;
+  String? nome;
   Estado? estado;
 
   Cidade.fromJson(Map<String, dynamic> json) {

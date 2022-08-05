@@ -11,7 +11,7 @@ import 'package:systetica/screen/login/view/login/login_page.dart';
 
 class CadastroController {
   final nomeController = TextEditingController();
-  final telefone = TextEditingController();
+  final telefoneController = TextEditingController();
   final emailController = TextEditingController();
   final senhaController = TextEditingController();
   final confirmaSenhaController = TextEditingController();
@@ -43,7 +43,7 @@ class CadastroController {
           try {
             Usuario usuario = Usuario(
               nome: nomeController.text,
-              telefone: telefone.text,
+              telefone: telefoneController.text,
               email: emailController.text,
               password: senhaController.text,
             );

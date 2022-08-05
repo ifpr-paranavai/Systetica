@@ -16,15 +16,15 @@ class AlterarSenhaWidget extends State<AlterarSenhaPage> {
   Widget build(BuildContext context) {
     double altura = MediaQuery.of(context).size.height;
     double largura = MediaQuery.of(context).size.width;
-    return Scaffold(
-      backgroundColor: Colors.white,
-      floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
-      floatingActionButton: IconArrowWidget(
-        paddingTop: altura * 0.01,
-        onPressed: () => Navigator.pop(context),
-      ),
-      body: SafeArea(
-        child: SingleChildScrollView(
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
+        floatingActionButton: IconArrowWidget(
+          paddingTop: altura * 0.01,
+          onPressed: () => Navigator.pop(context),
+        ),
+        body: SingleChildScrollView(
           child: Form(
             autovalidateMode: AutovalidateMode.onUserInteraction,
             key: _controller.formKey,

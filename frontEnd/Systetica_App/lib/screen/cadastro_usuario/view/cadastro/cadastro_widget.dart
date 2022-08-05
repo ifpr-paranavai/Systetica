@@ -17,48 +17,45 @@ class CadastroWidget extends State<CadastroPage> {
   var myPageTransition = MyPageTransition();
 
   late ScrollController _scrollController;
-  late ScrollController _scrollControllerDropDown;
 
   @override
   void initState() {
     super.initState();
     _scrollController = ScrollController();
-    _scrollControllerDropDown = ScrollController();
   }
 
   @override
   void dispose() {
     _scrollController.dispose();
-    _scrollControllerDropDown.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    double altura = MediaQuery.of(context).size.height;
-    double largura = MediaQuery.of(context).size.width;
-    return Scaffold(
-      backgroundColor: Colors.white,
-      floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
-      floatingActionButton: IconArrowWidget(
-        paddingTop: altura * 0.01,
-        onPressed: () => Navigator.pop(context),
-      ),
-      body: SafeArea(
-        child: SingleChildScrollView(
+    double _altura = MediaQuery.of(context).size.height;
+    double _largura = MediaQuery.of(context).size.width;
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
+        floatingActionButton: IconArrowWidget(
+          paddingTop: _altura * 0.01,
+          onPressed: () => Navigator.pop(context),
+        ),
+        body: SingleChildScrollView(
           controller: _scrollController,
           child: Form(
             autovalidateMode: AutovalidateMode.onUserInteraction,
             key: _controller.formKey,
             child: Column(
               children: [
-                _imageRegistro(paddinTop: altura * 0.03),
+                _imageRegistro(paddinTop: _altura),
                 _textoAutenticacao(),
-                _inputNome(paddingHorizontal: largura * 0.08),
-                _inputTelefone(paddingHorizontal: largura * 0.08),
-                _inputEmail(paddingHorizontal: largura * 0.08),
-                _inputSenha(paddingHorizontal: largura * 0.08),
-                _inputConfirmaSenha(paddingHorizontal: largura * 0.08),
+                _inputNome(paddingHorizontal: _largura),
+                _inputTelefone(paddingHorizontal: _largura),
+                _inputEmail(paddingHorizontal: _largura),
+                _inputSenha(paddingHorizontal: _largura),
+                _inputConfirmaSenha(paddingHorizontal: _largura),
                 _botaoCadastrar(),
                 _botaoAtivar(),
               ],
@@ -71,7 +68,7 @@ class CadastroWidget extends State<CadastroPage> {
 
   ImagensWidget _imageRegistro({required double paddinTop}) {
     return ImagensWidget(
-      paddingTop: paddinTop,
+      paddingTop: paddinTop * 0.03,
       image: "registro.png",
       widthImagem: 180,
     );
@@ -117,10 +114,11 @@ class CadastroWidget extends State<CadastroPage> {
     );
   }
 
+
   CampoTextoWidget _inputTelefone({required double paddingHorizontal}) {
     return CampoTextoWidget(
       labelText: "Telefone",
-      paddingHorizontal: paddingHorizontal,
+      paddingHorizontal: paddingHorizontal * 0.08,
       keyboardType: TextInputType.number,
       mask: "(##) #####-####",
       paddingBottom: 0,
@@ -128,10 +126,10 @@ class CadastroWidget extends State<CadastroPage> {
       paddingTop: 8,
       isIconDate: true,
       icon: const Icon(
-        Icons.phone,
+        Icons.phone_android,
         color: Colors.black87,
       ),
-      controller: _controller.telefone,
+      controller: _controller.telefoneController,
       validator: _validatorUsuario.telefoneValidator,
     );
   }
