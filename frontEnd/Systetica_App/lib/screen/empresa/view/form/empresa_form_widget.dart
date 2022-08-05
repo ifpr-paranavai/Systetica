@@ -1,3 +1,7 @@
+import 'dart:convert';
+import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
@@ -9,6 +13,7 @@ import 'package:systetica/components/text_autenticacoes_widget.dart';
 import 'package:systetica/model/validator/MultiValidatorEmpresa.dart';
 import 'package:systetica/screen/empresa/empresa_controller.dart';
 import 'package:systetica/screen/empresa/view/form/empresa_form_page.dart';
+import 'package:systetica/style/app_colors..dart';
 
 class EmpresaFormWidget extends State<EmpresaFormPage> {
   final EmpresaController _controller = EmpresaController();
@@ -19,6 +24,15 @@ class EmpresaFormWidget extends State<EmpresaFormPage> {
   @override
   void initState() {
     super.initState();
+    _controller.empresa = widget.empresa!;
+    _controller.nomeController.text = _controller.empresa.nome!;
+    _controller.telefone1Controller.text = _controller.empresa.telefone1!;
+    _controller.telefone2Controller.text = _controller.empresa.telefone2 ?? "";
+    _controller.enderecoController.text = _controller.empresa.endereco!;
+    _controller.numeroController.text = _controller.empresa.numero.toString();
+    _controller.cepController.text = _controller.empresa.cep!;
+    _controller.bairroController.text = _controller.empresa.bairro!;
+    _controller.logoBase64 = _controller.empresa.logoBase64;
     _scrollController = ScrollController();
   }
 
@@ -44,14 +58,142 @@ class EmpresaFormWidget extends State<EmpresaFormPage> {
           child: Form(
             autovalidateMode: AutovalidateMode.onUserInteraction,
             key: _controller.formKey,
-            child: Column(
-              children: [],
+            child: Center(
+              child: Column(
+                children: [
+                  _sizedBox(height: _altura * 0.08),
+                  _boxFoto(_controller.logoBase64),
+                  _sizedBox(height: _altura * 0.07),
+                  _textoEditarEmpresa(),
+                  _inputNomeEmpresa(paddingHorizontal: _largura),
+                  _inputTelefone(paddingHorizontal: _largura),
+                  _inputTelefone2(paddingHorizontal: _largura),
+                  _inputEndereco(paddingHorizontal: _largura),
+                  _inputNumero(paddingHorizontal: _largura),
+                  _inputCep(paddingHorizontal: _largura),
+                  _inputBairro(paddingHorizontal: _largura),
+                  _botaoCadastrar(),
+                ],
+              ),
             ),
           ),
         ),
       ),
     );
   }
+
+  TextAutenticacoesWidget _textoEditarEmpresa() {
+    return TextAutenticacoesWidget(
+      text: "Editar Empresa",
+      fontSize: 30,
+      paddingBottom: 6,
+    );
+  }
+
+  // Widgets para foto
+  Future<void> _adicionarImagem() async {
+    XFile? pickedImagem = await _picker.pickImage(source: ImageSource.gallery);
+    if (pickedImagem != null) {
+      CroppedFile _croppedFile = await _funcaoCroppedFile(pickedImagem);
+      setState(
+        () {
+          File imagem = File(_croppedFile.path);
+          _controller.logoBase64 = base64Encode(imagem.readAsBytesSync());
+          _controller.imagemAlterada = true;
+        },
+      );
+    }
+  }
+
+  Future<CroppedFile> _funcaoCroppedFile(XFile pickedImagem) async {
+    CroppedFile? _croppedFile = await ImageCropper().cropImage(
+      sourcePath: pickedImagem.path,
+      aspectRatioPresets: [
+        CropAspectRatioPreset.original,
+      ],
+      cropStyle: CropStyle.circle,
+      uiSettings: [
+        AndroidUiSettings(
+          toolbarTitle: 'Recortar',
+          toolbarColor: AppColors.bluePrincipal,
+          toolbarWidgetColor: Colors.white,
+          initAspectRatio: CropAspectRatioPreset.original,
+          lockAspectRatio: false,
+          backgroundColor: Colors.white,
+          activeControlsWidgetColor: AppColors.redPrincipal,
+        ),
+        IOSUiSettings(
+          title: 'Recortar',
+        ),
+      ],
+    );
+    return _croppedFile!;
+  }
+
+  Container _boxFoto(dynamic imagemUsuario) {
+    return Container(
+      width: 160,
+      height: 160,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        boxShadow: [
+          BoxShadow(
+            blurRadius: 5,
+            color: Colors.black.withOpacity(0.6),
+            spreadRadius: 2,
+          )
+        ],
+      ),
+      child: _imgPerfil(imagemUsuario),
+    );
+  }
+
+  Widget _imgPerfil(dynamic image) {
+    if (image == null || image == "") {
+      return _iconErroFoto();
+    } else {
+      image = base64Decode(image);
+      if (image is Uint8List) {
+        return _circleAvatar(backgroundImage: MemoryImage(image));
+      } else {
+        return _circleAvatar(backgroundImage: FileImage(image));
+      }
+    }
+  }
+
+  CircleAvatar _circleAvatar({required ImageProvider backgroundImage}) {
+    return CircleAvatar(
+      backgroundColor: Colors.black,
+      backgroundImage: backgroundImage,
+      child: _paddingIconEditarFoto(),
+    );
+  }
+
+  Padding _paddingIconEditarFoto() {
+    return Padding(
+      padding: const EdgeInsets.only(top: 120, left: 120),
+      child: SizedBox(
+        width: 40,
+        height: 40,
+        child: CircleAvatar(
+          radius: 20,
+          backgroundColor: AppColors.redPrincipal,
+          child: IconButton(
+            splashColor: Colors.transparent,
+            highlightColor: Colors.transparent,
+            iconSize: 20,
+            color: Colors.white,
+            icon: const Icon(
+              Icons.edit,
+            ),
+            onPressed: () => _adicionarImagem(),
+          ),
+        ),
+      ),
+    );
+  }
+
+  // Widgets para atualizar
 
   TextAutenticacoesWidget _textoCadastrarEmpresa() {
     return TextAutenticacoesWidget(
@@ -205,12 +347,11 @@ class EmpresaFormWidget extends State<EmpresaFormPage> {
     );
   }
 
-
   BotaoWidget _botaoCadastrar() {
     return BotaoWidget(
       paddingTop: 18,
       paddingBottom: 30,
-      labelText: "CADASTRAR",
+      labelText: "SALVAR",
       largura: 190,
       corBotao: Colors.black87.withOpacity(0.9),
       corTexto: Colors.white,
@@ -222,6 +363,33 @@ class EmpresaFormWidget extends State<EmpresaFormPage> {
     return SizedBox(
       height: height,
       width: width,
+    );
+  }
+
+  // Widgets de erro
+  Widget _iconErroFoto() {
+    return Container(
+      width: 160,
+      height: 160,
+      decoration: BoxDecoration(
+        color: AppColors.redPrincipal,
+        shape: BoxShape.circle,
+        boxShadow: [
+          BoxShadow(
+            blurRadius: 5,
+            color: Colors.black.withOpacity(0.6),
+            spreadRadius: 2,
+          )
+        ],
+      ),
+      child: IconButton(
+        icon: const Icon(
+          Icons.edit,
+          size: 100,
+          color: Colors.white,
+        ),
+        onPressed: () => _adicionarImagem(),
+      ),
     );
   }
 }

@@ -150,7 +150,7 @@ class EmpresaWidget extends State<EmpresaPage> {
       setState(
         () {
           File imagem = File(_croppedFile.path);
-          _controller.imagemBase64 = base64Encode(imagem.readAsBytesSync());
+          _controller.logoBase64 = base64Encode(imagem.readAsBytesSync());
           _controller.imagemAlterada = true;
         },
       );

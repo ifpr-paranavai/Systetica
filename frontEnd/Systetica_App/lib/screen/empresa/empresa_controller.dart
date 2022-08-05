@@ -31,7 +31,7 @@ class EmpresaController {
   File? image;
   PickedFile? pickedFile;
   bool imagemAlterada = false;
-  String? imagemBase64;
+  String? logoBase64;
   Cidade? cidade;
 
   Future<Info?> buscarEmpresaEmail(BuildContext context) async {

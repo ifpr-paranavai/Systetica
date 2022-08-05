@@ -59,8 +59,8 @@ class PerfilFormWidget extends State<PerfilFormPage> {
                 _boxFoto(_controller.imagemBase64),
                 _sizedBox(height: _altura * 0.07),
                 _textoEditarPerfil(),
-                _inputNome(paddingHorizontal: _largura * 0.08),
-                _inputTelefone(paddingHorizontal: _largura * 0.08),
+                _inputNome(paddingHorizontal: _largura),
+                _inputTelefone(paddingHorizontal: _largura),
                 _botaoCadastrar(),
               ],
             ),
@@ -183,7 +183,7 @@ class PerfilFormWidget extends State<PerfilFormPage> {
   CampoTextoWidget _inputNome({required double paddingHorizontal}) {
     return CampoTextoWidget(
       labelText: "Nome completo",
-      paddingHorizontal: paddingHorizontal,
+      paddingHorizontal: paddingHorizontal * 0.08,
       paddingBottom: 0,
       maxLength: 100,
       paddingTop: 14,
@@ -200,7 +200,7 @@ class PerfilFormWidget extends State<PerfilFormPage> {
   CampoTextoWidget _inputTelefone({required double paddingHorizontal}) {
     return CampoTextoWidget(
       labelText: "Telefone",
-      paddingHorizontal: paddingHorizontal,
+      paddingHorizontal: paddingHorizontal * 0.08,
       keyboardType: TextInputType.number,
       mask: "(##) #####-####",
       paddingBottom: 0,
