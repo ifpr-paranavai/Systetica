@@ -100,6 +100,7 @@ class EmpresaFormWidget extends State<EmpresaFormPage> {
                     validatorEmpresa: _multiValidatorEmpresa,
                   ),
                   _inputEmpresa.inputCidade(
+                    cidadeEditar: _controller.cidade,
                     paddingHorizontal: _largura,
                     controller: _controller,
                   ),

@@ -1,18 +1,20 @@
 // ignore_for_file: must_be_immutable
 
-import 'package:flutter/material.dart';
 import 'package:dropdown_search/dropdown_search.dart';
+import 'package:flutter/material.dart';
 import 'package:systetica/model/Cidade.dart';
 
 class CampoPesquisaWidget extends StatefulWidget {
-  CampoPesquisaWidget({Key? key,
+  CampoPesquisaWidget({
+    Key? key,
     required this.compareFn,
     required this.asyncItems,
     required this.onChanged,
     required this.labelSeachTextPrincipal,
     required this.labelSeachTextPesquisa,
-    required this.paddingHorizontal})
-      : super(key: key);
+    required this.paddingHorizontal,
+    this.cidadeEditar,
+  }) : super(key: key);
   final myKey = GlobalKey<DropdownSearchState<dynamic>>();
 
   DropdownSearchCompareFn<Cidade>? compareFn;
@@ -20,6 +22,7 @@ class CampoPesquisaWidget extends StatefulWidget {
   Function(Cidade?)? onChanged;
   String labelSeachTextPrincipal;
   String labelSeachTextPesquisa;
+  Cidade? cidadeEditar;
 
   double paddingHorizontal;
 
@@ -32,7 +35,7 @@ class _CampoPesquisaWidget extends State<CampoPesquisaWidget> {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(
-        top: 8,
+        top: 9,
         left: widget.paddingHorizontal,
         right: widget.paddingHorizontal,
       ),
@@ -51,8 +54,7 @@ class _CampoPesquisaWidget extends State<CampoPesquisaWidget> {
               return us.where((e) => e.nome!.contains("Mrs")).toList();
             },
           ),
-          emptyBuilder: (context, erro) =>
-          const Center(
+          emptyBuilder: (context, erro) => const Center(
             child: Text(
               'Nenhuma cidade encontrada',
               overflow: TextOverflow.ellipsis,
@@ -70,6 +72,7 @@ class _CampoPesquisaWidget extends State<CampoPesquisaWidget> {
         dropdownButtonProps: _dropdownButtonProps(),
         itemAsString: (Cidade cidade) => cidade.nome ?? "",
         onChanged: widget.onChanged,
+        selectedItem: widget.cidadeEditar,
       ),
     );
   }
@@ -86,10 +89,10 @@ class _CampoPesquisaWidget extends State<CampoPesquisaWidget> {
     );
   }
 
-  // Personalização do field de pesquisa
+  // Personalização do input para digitar cidade
   TextFieldProps _textFieldProps({required String label}) {
     return TextFieldProps(
-      padding: const EdgeInsets.only(bottom: 5, left: 8, right: 8),
+      padding: const EdgeInsets.only(bottom: 5, left: 8, right: 8, top: 15),
       decoration: InputDecoration(
         contentPadding: const EdgeInsets.only(
           top: 13,
