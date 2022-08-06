@@ -31,7 +31,7 @@ dev_dependencies:
   cpf_cnpj_validator: ^2.0.0
   responsive_grid: ^2.0.0
   intl: ^0.17.0
-  dropdown_search: ^3.0.1
+  dropdown_search: 5.0.2
   flutter_animator: ^3.2.2
   page_transition: ^2.0.9
   form_field_validator: ^1.1.0

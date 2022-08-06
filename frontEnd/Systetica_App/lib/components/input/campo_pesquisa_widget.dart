@@ -2,25 +2,29 @@
 
 import 'package:flutter/material.dart';
 import 'package:dropdown_search/dropdown_search.dart';
+import 'package:systetica/model/Cidade.dart';
 
 class CampoPesquisaWidget extends StatefulWidget {
-  CampoPesquisaWidget({Key? key,
-    required this.objects,
-    required this.objectAsString,
-    required this.objectOnFind,
-    required this.onChanged,
-    required this.labelText,
-    required this.labelSeachText,
-    required this.icon,
-  }) : super(key: key);
+  CampoPesquisaWidget(
+      {Key? key,
+      required this.objects,
+      required this.compareFn,
+      required this.asyncItems,
+      required this.onChanged,
+      required this.labelSeachTextPrincipal,
+      required this.labelSeachTextPesquisa,
+      required this.paddingHorizontal})
+      : super(key: key);
+  final myKey = GlobalKey<DropdownSearchState<dynamic>>();
 
   List<dynamic>? objects;
-  DropdownSearchItemAsString<dynamic>? objectAsString;
-  DropdownSearchOnFind<dynamic>? objectOnFind;
+  DropdownSearchCompareFn<dynamic>? compareFn;
+  DropdownSearchOnFind<Cidade>? asyncItems;
   ValueChanged<dynamic>? onChanged;
-  String? labelText;
-  String? labelSeachText;
-  Widget icon;
+  String labelSeachTextPrincipal;
+  String labelSeachTextPesquisa;
+
+  double paddingHorizontal;
 
   @override
   _CampoPesquisaWidget createState() => _CampoPesquisaWidget();
@@ -29,87 +33,107 @@ class CampoPesquisaWidget extends StatefulWidget {
 class _CampoPesquisaWidget extends State<CampoPesquisaWidget> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.only(
-        top: 5,
-        bottom: 15,
-        left: 35,
-        right: 35,
+    return Padding(
+      padding: EdgeInsets.only(
+        top: 8,
+        left: widget.paddingHorizontal,
+        right: widget.paddingHorizontal,
       ),
-      child: _dropdownSearch(),
+      child: DropdownSearch<Cidade>(
+        validator: (value) => value == null ? 'Campo obrigatório' : null,
+        asyncItems: widget.asyncItems,
+        compareFn: widget.compareFn,
+        popupProps: PopupPropsMultiSelection.modalBottomSheet(
+          emptyBuilder: (context, erro) => const Text(
+            'Nenhuma cidade encontrada',
+          ),
+          isFilterOnline: true,
+          showSelectedItems: true,
+          showSearchBox: true,
+          itemBuilder: _popupItemPesquisa,
+          searchFieldProps:
+              _textFieldProps(label: widget.labelSeachTextPesquisa),
+        ),
+        dropdownDecoratorProps: _dropDownDecoratorProps(
+          label: widget.labelSeachTextPrincipal,
+        ),
+        dropdownButtonProps: _dropdownButtonProps(),
+      ),
     );
   }
 
-  DropdownSearch<dynamic> _dropdownSearch() {
-    return DropdownSearch<dynamic>(
-
-      // popupBackgroundColor: Colors.grey.shade50,
-      popupShape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(15),
-          bottomRight: Radius.circular(15),
+  Widget _popupItemPesquisa(BuildContext context, Cidade cidade, bool select) {
+    return Center(
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 10),
+        child: ListTile(
+          selected: select,
+          title: Text(cidade.nome ?? ''),
         ),
       ),
-      validator: (value) => value == null ? 'Campo obrigatório' : null,
+    );
+  }
 
-      // Pesonalização do Field de pesquisa abaixo
-      searchFieldProps: TextFieldProps(
-        padding: const EdgeInsets.only(top: 15, bottom: 4, left: 8, right: 8),
-        decoration: InputDecoration(
-          contentPadding: const EdgeInsets.only(
-            top: 13,
-            bottom: 13,
-            left: 8,
+  // Personalização do field de pesquisa
+  TextFieldProps _textFieldProps({required String label}) {
+    return TextFieldProps(
+      padding: const EdgeInsets.only(bottom: 5, left: 8, right: 8),
+      decoration: InputDecoration(
+        contentPadding: const EdgeInsets.only(
+          top: 13,
+          bottom: 13,
+          left: 8,
+        ),
+        labelText: label,
+        enabledBorder: const OutlineInputBorder(
+          borderSide: BorderSide(
+            color: Colors.blueGrey,
           ),
-          labelText: widget.labelSeachText,
-
-          enabledBorder: const OutlineInputBorder(
-            borderSide: BorderSide(
-              color: Colors.blueGrey,
-            ),
-            borderRadius: BorderRadius.all(
-              Radius.circular(15),
-            ),
+          borderRadius: BorderRadius.all(
+            Radius.circular(15),
           ),
-          focusedBorder: const OutlineInputBorder(
-            borderSide: BorderSide(
-              color: Colors.black,
-            ),
-            borderRadius: BorderRadius.all(
-              Radius.circular(15),
-            ),
+        ),
+        focusedBorder: const OutlineInputBorder(
+          borderSide: BorderSide(
+            color: Colors.black,
           ),
-
-          border: const OutlineInputBorder(
-            borderSide: BorderSide(
-              color: Colors.red,
-            ),
-            borderRadius: BorderRadius.all(
-              Radius.circular(15),
-            ),
+          borderRadius: BorderRadius.all(
+            Radius.circular(15),
           ),
-          errorBorder: const OutlineInputBorder(
-            borderSide: BorderSide(
-              color: Colors.red,
-            ),
-            borderRadius: BorderRadius.all(
-              Radius.circular(15),
-            ),
+        ),
+        border: const OutlineInputBorder(
+          borderSide: BorderSide(
+            color: Colors.red,
           ),
-          focusedErrorBorder: const OutlineInputBorder(
-            borderSide: BorderSide(
-              color: Colors.red,
-            ),
-            borderRadius: BorderRadius.all(
-              Radius.circular(15),
-            ),
+          borderRadius: BorderRadius.all(
+            Radius.circular(15),
+          ),
+        ),
+        errorBorder: const OutlineInputBorder(
+          borderSide: BorderSide(
+            color: Colors.red,
+          ),
+          borderRadius: BorderRadius.all(
+            Radius.circular(15),
+          ),
+        ),
+        focusedErrorBorder: const OutlineInputBorder(
+          borderSide: BorderSide(
+            color: Colors.red,
+          ),
+          borderRadius: BorderRadius.all(
+            Radius.circular(15),
           ),
         ),
       ),
+    );
+  }
 
-      // Cor de fundo ao clicar
+  // Personalização do Input de pesquisa
+  DropDownDecoratorProps _dropDownDecoratorProps({required String label}) {
+    return DropDownDecoratorProps(
       dropdownSearchDecoration: InputDecoration(
-        labelText: widget.labelText,
+        labelText: label,
         //Borda Principal
         enabledBorder: const OutlineInputBorder(
           borderRadius: BorderRadius.all(
@@ -163,23 +187,15 @@ class _CampoPesquisaWidget extends State<CampoPesquisaWidget> {
         filled: false,
         isCollapsed: false,
       ),
+    );
+  }
 
-      // Personalização Icon
-      dropdownButtonProps: IconButtonProps(
-        padding: const EdgeInsets.only(
-          right: 20,
-        ),
-        icon: widget.icon,
-        color: Colors.black,
-        autofocus: false,
-        enableFeedback: false,
-      ),
-
-      mode: Mode.MENU,
-      isFilteredOnline: true,
-      showClearButton: false,
-      showSearchBox: true,
-      onFind: widget.objectOnFind,
+  // Personalização do Icone
+  DropdownButtonProps _dropdownButtonProps() {
+    return const DropdownButtonProps(
+      color: Colors.black,
+      autofocus: false,
+      enableFeedback: false,
     );
   }
 }

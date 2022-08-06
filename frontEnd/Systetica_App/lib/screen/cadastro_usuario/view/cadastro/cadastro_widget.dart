@@ -83,7 +83,7 @@ class CadastroWidget extends State<CadastroPage> {
   CampoTextoWidget _inputNome({required double paddingHorizontal}) {
     return CampoTextoWidget(
       labelText: "Nome completo",
-      paddingHorizontal: paddingHorizontal,
+      paddingHorizontal: paddingHorizontal * 0.08,
       paddingBottom: 0,
       maxLength: 100,
       paddingTop: 14,
@@ -100,7 +100,7 @@ class CadastroWidget extends State<CadastroPage> {
   CampoTextoWidget _inputEmail({required double paddingHorizontal}) {
     return CampoTextoWidget(
       labelText: "E-mail",
-      paddingHorizontal: paddingHorizontal,
+      paddingHorizontal: paddingHorizontal * 0.08,
       paddingBottom: 0,
       maxLength: 80,
       paddingTop: 6,
@@ -114,7 +114,6 @@ class CadastroWidget extends State<CadastroPage> {
     );
   }
 
-
   CampoTextoWidget _inputTelefone({required double paddingHorizontal}) {
     return CampoTextoWidget(
       labelText: "Telefone",
@@ -126,7 +125,7 @@ class CadastroWidget extends State<CadastroPage> {
       paddingTop: 8,
       isIconDate: true,
       icon: const Icon(
-        Icons.phone_android,
+        Icons.phone,
         color: Colors.black87,
       ),
       controller: _controller.telefoneController,
@@ -136,7 +135,7 @@ class CadastroWidget extends State<CadastroPage> {
 
   CampoTextoWidget _inputSenha({required double paddingHorizontal}) {
     return CampoTextoWidget(
-      paddingHorizontal: paddingHorizontal,
+      paddingHorizontal: paddingHorizontal * 0.08,
       labelText: "Senha",
       maxLength: 16,
       isPassword: true,
@@ -149,7 +148,7 @@ class CadastroWidget extends State<CadastroPage> {
 
   CampoTextoWidget _inputConfirmaSenha({required double paddingHorizontal}) {
     return CampoTextoWidget(
-      paddingHorizontal: paddingHorizontal,
+      paddingHorizontal: paddingHorizontal * 0.08,
       labelText: "Confirmar senha",
       maxLength: 16,
       isPassword: true,

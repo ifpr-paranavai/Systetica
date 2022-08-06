@@ -133,7 +133,6 @@ class EmpresaWidget extends State<EmpresaPage> {
               _sizedBox(height: altura * 0.08),
               _boxFoto(_controller.empresa.logoBase64),
               _sizedBox(height: altura * 0.07),
-              inputCidade(),
               _textoCadastrarEmpresa(),
               _inputNomeEmpresa(paddingHorizontal: largura),
               _inputCnpj(paddingHorizontal: largura),
@@ -143,6 +142,7 @@ class EmpresaWidget extends State<EmpresaPage> {
               _inputNumero(paddingHorizontal: largura),
               _inputCep(paddingHorizontal: largura),
               _inputBairro(paddingHorizontal: largura),
+              _inputCidade(paddingHorizontal: largura),
               _botaoCadastrar(),
             ],
           ),
@@ -376,7 +376,7 @@ class EmpresaWidget extends State<EmpresaPage> {
   // Opções para cadatrar empresa
   TextAutenticacoesWidget _textoCadastrarEmpresa() {
     return TextAutenticacoesWidget(
-      text: "Cadastra Empresa",
+      text: "Cadastrar Empresa",
       fontSize: 30,
       paddingBottom: 6,
     );
@@ -526,14 +526,14 @@ class EmpresaWidget extends State<EmpresaPage> {
     );
   }
 
-  CampoPesquisaWidget inputCidade() {
+  CampoPesquisaWidget _inputCidade({required double paddingHorizontal}) {
     return CampoPesquisaWidget(
-      labelText: "Cidade",
-      labelSeachText: "Digite nome da cidade",
-      icon: const Icon(Icons.location_city),
+      paddingHorizontal: paddingHorizontal * 0.08,
+      labelSeachTextPrincipal: "Cidade",
+      labelSeachTextPesquisa: "Digite nome da cidade",
       objects: cidades,
-      objectAsString: (cidade) => cidade.nome,
-      objectOnFind: (String? cidade) => buscarCidadeFiltro(cidade),
+      compareFn: (cidade, buscaCidade) => cidade.nome == buscaCidade.nome,
+      asyncItems: (String? cidade) => buscarCidadeFiltro(cidade),
       onChanged: (value) {
         cidade = value;
       },

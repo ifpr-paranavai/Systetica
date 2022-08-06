@@ -38,7 +38,7 @@ class EmpresaService {
 
   static Future<Info> buscarCidade({
     int? pageNumber,
-    int? size = 5,
+    int? size = 7,
     String? nomeCidade,
   }) async {
     String path = "cidade/buscar-todos?search=$nomeCidade&size=$size";
