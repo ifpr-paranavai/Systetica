@@ -87,7 +87,7 @@ class EmpresaWidget extends State<EmpresaPage> {
               children: [
                 _sizedBox(height: altura * 0.08),
                 _boxFoto(logoBase64),
-                _sizedBox(height: altura * 0.07),
+                _sizedBox(height: altura * 0.06),
                 _textoEmpresa(),
                 _cardInfoEmpresa(
                   empresa: empresa,
@@ -164,7 +164,8 @@ class EmpresaWidget extends State<EmpresaPage> {
               _inputEmpresa.botaoCadastrar(
                 label: "CADASTRAR",
                 onPressed: () => _controller
-                    .cadastrarEmpresa(context),
+                    .cadastrarEmpresa(context)
+                    .then((value) => setState(() {})),
               ),
             ],
           ),
@@ -340,7 +341,7 @@ class EmpresaWidget extends State<EmpresaPage> {
 
   ItemLista _itemNome(String nome) {
     return ItemLista(
-      titulo: "Empresa",
+      titulo: "Nome",
       descricao: nome,
     );
   }

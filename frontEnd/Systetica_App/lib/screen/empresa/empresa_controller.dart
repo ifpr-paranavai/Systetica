@@ -36,33 +36,6 @@ class EmpresaController {
   String? logoBase64;
   Cidade? cidade;
 
-  Future<Info?> buscarEmpresaEmail(BuildContext context) async {
-    var connected = await ConnectionCheck.check();
-    Info info = Info(success: true);
-
-    if (connected) {
-      try {
-        Token _token = await TokenRepository.findToken();
-        info = await EmpresaService.buscaEmpresa(_token);
-        return info;
-      } catch (e) {
-        info.success = false;
-        return info;
-      }
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          backgroundColor: Colors.blueGrey,
-          padding: EdgeInsets.all(12),
-          content: TextoErroWidget(
-            mensagem: "Por Favor, conecte-se a rede para busca dados",
-          ),
-        ),
-      );
-      return info;
-    }
-  }
-
   Future<void> cadastrarEmpresa(BuildContext context) async {
     var connected = await ConnectionCheck.check();
     if (connected) {
@@ -109,7 +82,7 @@ class EmpresaController {
 
             var alertDialogOk = AlertDialogWidget();
             if (_info.success!) {
-              Navigator.pop(context);
+              return;
             } else {
               alertDialogOk.alertDialog(
                 showModalOk: true,
@@ -211,6 +184,33 @@ class EmpresaController {
           ),
         ),
       );
+    }
+  }
+
+  Future<Info?> buscarEmpresaEmail(BuildContext context) async {
+    var connected = await ConnectionCheck.check();
+    Info info = Info(success: true);
+
+    if (connected) {
+      try {
+        Token _token = await TokenRepository.findToken();
+        info = await EmpresaService.buscaEmpresa(_token);
+        return info;
+      } catch (e) {
+        info.success = false;
+        return info;
+      }
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          backgroundColor: Colors.blueGrey,
+          padding: EdgeInsets.all(12),
+          content: TextoErroWidget(
+            mensagem: "Por Favor, conecte-se a rede para busca dados",
+          ),
+        ),
+      );
+      return info;
     }
   }
 

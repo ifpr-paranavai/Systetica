@@ -22,7 +22,7 @@ class InputEmpresa {
     required MultiValidatorEmpresa validatorEmpresa,
   }) {
     return CampoTextoWidget(
-      labelText: "Empresa",
+      labelText: "Nome",
       paddingHorizontal: paddingHorizontal * 0.08,
       paddingBottom: 0,
       maxLength: 100,

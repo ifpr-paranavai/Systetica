@@ -18,8 +18,6 @@ class CadastroAdministradorWidget extends State<CadastroAdministradorPage>
   final _myPageTransition = MyPageTransition();
 
   late AnimationController _animationControllercontroller;
-  late Animation<double> _animation;
-  late Animation<double> _animation2;
 
   final String _bemVindo = "Bem vindo";
 
@@ -31,15 +29,6 @@ class CadastroAdministradorWidget extends State<CadastroAdministradorPage>
       vsync: this,
       duration: const Duration(milliseconds: 650),
     );
-
-    _animation = Tween<double>(begin: 0, end: 1).animate(CurvedAnimation(
-        parent: _animationControllercontroller, curve: Curves.easeOut))
-      ..addListener(() {
-        setState(() {});
-      });
-
-    _animation2 = Tween<double>(begin: -30, end: 0).animate(CurvedAnimation(
-        parent: _animationControllercontroller, curve: Curves.easeOut));
 
     _animationControllercontroller.forward();
 
@@ -96,9 +85,7 @@ class CadastroAdministradorWidget extends State<CadastroAdministradorPage>
           _infoGerais(
             titulo: empresa ?? "Systetica",
             descricao: _bemVindo +
-                (nomeUsuario == null
-                    ? "!"
-                    : " " + nomeUsuario + "!"),
+                (nomeUsuario == null ? "!" : " " + nomeUsuario + "!"),
             widthSize: largura,
           ),
           SizedBox(
@@ -236,7 +223,7 @@ class CadastroAdministradorWidget extends State<CadastroAdministradorPage>
     );
   }
 
-  Opacity _homePageCard({
+  InkWell _homePageCard({
     required Color color,
     required IconData icon,
     required String texto,
@@ -245,49 +232,43 @@ class CadastroAdministradorWidget extends State<CadastroAdministradorPage>
     required double largura,
     required double altura,
   }) {
-    return Opacity(
-      opacity: _animation.value,
-      child: Transform.translate(
-        offset: Offset(0, _animation2.value),
-        child: InkWell(
-          highlightColor: Colors.transparent,
-          splashColor: Colors.transparent,
-          child: Container(
-            padding: const EdgeInsets.all(15),
-            height: largura * 0.48,
-            width: altura * 0.22,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              boxShadow: [
-                BoxShadow(
-                  color: const Color(0xff040039).withOpacity(.13),
-                  blurRadius: 99,
-                ),
-              ],
-              borderRadius: const BorderRadius.all(
-                Radius.circular(25),
-              ),
+    return InkWell(
+      highlightColor: Colors.transparent,
+      splashColor: Colors.transparent,
+      child: Container(
+        padding: const EdgeInsets.all(15),
+        height: largura * 0.48,
+        width: altura * 0.22,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: const Color(0xff040039).withOpacity(.13),
+              blurRadius: 99,
             ),
-            child: _columnTextoIcon(
-              largura: largura,
-              altura: altura,
-              color: color,
-              icon: icon,
-              texto: texto,
-            ),
+          ],
+          borderRadius: const BorderRadius.all(
+            Radius.circular(25),
           ),
-          onTap: () {
-            HapticFeedback.lightImpact();
-            Navigator.of(context).push(
-              _myPageTransition.pageTransition(
-                child: route,
-                childCurrent: widget,
-                buttoToTop: true,
-              ),
-            );
-          },
+        ),
+        child: _columnTextoIcon(
+          largura: largura,
+          altura: altura,
+          color: color,
+          icon: icon,
+          texto: texto,
         ),
       ),
+      onTap: () {
+        HapticFeedback.lightImpact();
+        Navigator.of(context).push(
+          _myPageTransition.pageTransition(
+            child: route,
+            childCurrent: widget,
+            buttoToTop: true,
+          ),
+        );
+      },
     );
   }
 

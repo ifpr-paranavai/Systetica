@@ -52,7 +52,6 @@ class Empresa {
     longitude = json['longitude'];
     logoBase64 = json['logo_base64'];
     cidade = Cidade.fromJson(json['cidade']);
-    usuarioAdministrador = Usuario.fromJson(json['usuario_administrador']);
     nomeUsuario = json['nome_usuario'];
   }
 

@@ -18,7 +18,6 @@ class EmpresaService {
       var response = await dio.get("empresa/email/" + token.email!);
 
       info.object = Empresa.fromJson(response.data['response']);
-
       return info;
     } on DioError catch (e) {
       try {
