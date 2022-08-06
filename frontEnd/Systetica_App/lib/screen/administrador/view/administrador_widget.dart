@@ -261,13 +261,17 @@ class CadastroAdministradorWidget extends State<CadastroAdministradorPage>
       ),
       onTap: () {
         HapticFeedback.lightImpact();
-        Navigator.of(context).push(
-          _myPageTransition.pageTransition(
-            child: route,
-            childCurrent: widget,
-            buttoToTop: true,
-          ),
-        );
+        Navigator.of(context)
+            .push(
+              _myPageTransition.pageTransition(
+                child: route,
+                childCurrent: widget,
+                buttoToTop: true,
+              ),
+            )
+            .then(
+              (value) => setState(() {}),
+            );
       },
     );
   }

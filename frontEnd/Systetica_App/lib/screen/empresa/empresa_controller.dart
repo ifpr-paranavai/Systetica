@@ -146,14 +146,7 @@ class EmpresaController {
 
         var alertDialogOk = AlertDialogWidget();
         if (_info.success!) {
-          alertDialogOk.alertDialog(
-            showModalOk: true,
-            context: context,
-            titulo: "Sucesso",
-            descricao: "Empresa cadastrada com sucesso",
-            buttonText: "OK",
-            onPressedOk: () => Navigator.pop(context),
-          );
+          return Navigator.pop(context);
         } else {
           alertDialogOk.alertDialog(
             showModalOk: true,

@@ -23,6 +23,7 @@ class EmpresaFormWidget extends State<EmpresaFormPage> {
   @override
   void initState() {
     super.initState();
+    _scrollController = ScrollController();
     _controller.empresa = widget.empresa!;
     _controller.nomeController.text = _controller.empresa.nome!;
     _controller.telefone1Controller.text = _controller.empresa.telefone1!;
@@ -32,7 +33,7 @@ class EmpresaFormWidget extends State<EmpresaFormPage> {
     _controller.cepController.text = _controller.empresa.cep!;
     _controller.bairroController.text = _controller.empresa.bairro!;
     _controller.logoBase64 = _controller.empresa.logoBase64;
-    _scrollController = ScrollController();
+    _controller.cidade = _controller.empresa.cidade!;
   }
 
   @override
@@ -98,9 +99,15 @@ class EmpresaFormWidget extends State<EmpresaFormPage> {
                     controller: _controller,
                     validatorEmpresa: _multiValidatorEmpresa,
                   ),
+                  _inputEmpresa.inputCidade(
+                    paddingHorizontal: _largura,
+                    controller: _controller,
+                  ),
                   _inputEmpresa.botaoCadastrar(
                     label: "SALVAR",
-                    onPressed: () => _controller.atualizarEmpresa(context),
+                    onPressed: () => _controller.atualizarEmpresa(context).then(
+                          (value) => setState(() {}),
+                        ),
                   ),
                 ],
               ),
