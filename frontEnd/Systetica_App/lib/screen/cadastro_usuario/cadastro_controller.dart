@@ -56,7 +56,7 @@ class CadastroController {
             );
 
             var infoResponse =
-                await CadastroService.cadastroUsuario(usuario);
+                await CadastroService.cadastrarUsuario(usuario);
 
             // Finaliza o loading na tela
             Navigator.pop(contextLoading, loading);

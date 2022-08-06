@@ -1,6 +1,7 @@
 // ignore_for_file: file_names
 
 import 'package:systetica/model/Cidade.dart';
+import 'package:systetica/model/Usuario.dart';
 
 class Empresa {
   Empresa({
@@ -17,6 +18,7 @@ class Empresa {
     this.longitude,
     this.logoBase64,
     this.cidade,
+    this.usuarioAdministrador,
     this.nomeUsuario,
   });
 
@@ -33,6 +35,7 @@ class Empresa {
   String? longitude;
   String? logoBase64;
   Cidade? cidade;
+  Usuario? usuarioAdministrador;
   String? nomeUsuario;
 
   Empresa.fromJson(Map<String, dynamic> json) {
@@ -49,6 +52,7 @@ class Empresa {
     longitude = json['longitude'];
     logoBase64 = json['logo_base64'];
     cidade = Cidade.fromJson(json['cidade']);
+    usuarioAdministrador = Usuario.fromJson(json['usuario_administrador']);
     nomeUsuario = json['nome_usuario'];
   }
 
@@ -67,6 +71,7 @@ class Empresa {
     _data['longitude'] = longitude;
     _data['logo_base64'] = logoBase64;
     _data['cidade'] = cidade?.toJson();
+    _data['usuario_administrador'] = usuarioAdministrador?.toJson();
     _data['nome_usuario'] = nomeUsuario;
     return _data;
   }

@@ -60,8 +60,8 @@ public class Usuario implements Serializable {
     @ManyToMany(fetch = FetchType.EAGER)
     private Collection<Role> roles = new ArrayList<>();;
 
-    @Column(name = "imagem_base64")
     @Lob
+    @Column(name = "imagem_base64", length = 16777215)
     private String imagemBase64;
 
     @ManyToMany(cascade = CascadeType.ALL)

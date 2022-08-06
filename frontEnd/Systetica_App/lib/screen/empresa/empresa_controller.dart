@@ -11,6 +11,7 @@ import 'package:systetica/model/Cidade.dart';
 import 'package:systetica/model/Empresa.dart';
 import 'package:systetica/model/Info.dart';
 import 'package:systetica/model/Token.dart';
+import 'package:systetica/model/Usuario.dart';
 import 'package:systetica/request/dio_config.dart';
 import 'package:systetica/screen/empresa/empresa_service.dart';
 
@@ -62,22 +63,91 @@ class EmpresaController {
     }
   }
 
-  Future<List<Cidade>> buscarCidadeFiltro(String? nomeCidade) async {
-    try {
-      Info info = await EmpresaService.buscarCidade(nomeCidade: nomeCidade);
+  Future<void> cadastrarEmpresa(BuildContext context) async {
+    var connected = await ConnectionCheck.check();
+    if (connected) {
+      if (logoBase64 == null || logoBase64 == "") {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            backgroundColor: Colors.blueGrey,
+            padding: EdgeInsets.all(18),
+            content: TextoErroWidget(
+              mensagem: "Por favor, adicione imagem da sua empresa",
+            ),
+          ),
+        );
+        return;
+      }
 
-      List<Cidade> cidadesRetorno = info.object;
-      return cidadesRetorno;
-    } catch (e) {
-      debugPrint(e.toString());
-      return [];
+      if (formKey.currentState != null) {
+        if (formKey.currentState?.validate() ?? true) {
+          try {
+            Token _token = await TokenRepository.findToken();
+
+            empresa.nome = nomeController.text;
+            empresa.cnpj = cnpjController.text;
+            empresa.telefone1 = telefone1Controller.text;
+            empresa.telefone2 = telefone2Controller.text;
+            empresa.endereco = enderecoController.text;
+            empresa.numero = int.parse(numeroController.text);
+            empresa.cep = cepController.text;
+            empresa.bairro = bairroController.text;
+            empresa.logoBase64 = logoBase64;
+            empresa.cidade = cidade;
+            empresa.usuarioAdministrador = Usuario(email: _token.email);
+
+            var contextLoading = context;
+            var loading = ShowLoadingWidget.showLoadingLabel(
+              contextLoading,
+              "Aguarde...",
+            );
+
+            Info _info = await EmpresaService.cadastrarEmpresa(_token, empresa);
+
+            // Finaliza o loading na tela
+            Navigator.pop(contextLoading, loading);
+
+            var alertDialogOk = AlertDialogWidget();
+            if (_info.success!) {
+              Navigator.pop(context);
+            } else {
+              alertDialogOk.alertDialog(
+                showModalOk: true,
+                context: context,
+                titulo: "Erro",
+                descricao: _info.message!,
+                buttonText: "OK",
+                onPressedOk: () => Navigator.pop(context),
+              );
+            }
+          } catch (e) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                backgroundColor: Colors.blueGrey,
+                content: TextoErroWidget(
+                  mensagem: "Ocorreu algum erro de comunicação com o servidor",
+                ),
+              ),
+            );
+          }
+        }
+      }
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          backgroundColor: Colors.blueGrey,
+          padding: EdgeInsets.all(12),
+          content: TextoErroWidget(
+            mensagem: "Por Favor, conecte-se a rede para cadastrar uma empresa",
+          ),
+        ),
+      );
     }
   }
 
   Future<void> atualizarEmpresa(BuildContext context) async {
     var connected = await ConnectionCheck.check();
     if (connected) {
-      Info info = Info(success: true);
       try {
         // Loading apresentado na tela
         var contextLoading = context;
@@ -94,22 +164,29 @@ class EmpresaController {
         empresa.cep = cepController.text;
         empresa.bairro = bairroController.text;
         empresa.logoBase64 = logoBase64;
-        //Todo adicionar sobre cidade
+        empresa.cidade = cidade;
 
         Token _token = await TokenRepository.findToken();
         Info _info = await EmpresaService.atualizarEmpresa(_token, empresa);
         // Finaliza o loading na tela
         Navigator.pop(contextLoading, loading);
 
+        var alertDialogOk = AlertDialogWidget();
         if (_info.success!) {
-          Navigator.pop(context);
+          alertDialogOk.alertDialog(
+            showModalOk: true,
+            context: context,
+            titulo: "Sucesso",
+            descricao: "Empresa cadastrada com sucesso",
+            buttonText: "OK",
+            onPressedOk: () => Navigator.pop(context),
+          );
         } else {
-          var alertDialogOk = AlertDialogWidget();
           alertDialogOk.alertDialog(
             showModalOk: true,
             context: context,
             titulo: "Erro",
-            descricao: info.message!,
+            descricao: _info.message!,
             buttonText: "OK",
             onPressedOk: () => Navigator.pop(context),
           );
@@ -134,6 +211,15 @@ class EmpresaController {
           ),
         ),
       );
+    }
+  }
+
+  Future<List<Cidade>> buscarCidadeFiltro(String? nomeCidade) async {
+    try {
+      Info info = await EmpresaService.buscarCidade(nomeCidade: nomeCidade);
+      return info.object;
+    } catch (e) {
+      return [];
     }
   }
 }

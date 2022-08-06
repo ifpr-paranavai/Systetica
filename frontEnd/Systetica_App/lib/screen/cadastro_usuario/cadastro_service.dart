@@ -6,7 +6,7 @@ import 'package:systetica/model/Usuario.dart';
 import 'package:systetica/utils/dio/dio_config_api.dart';
 
 class CadastroService {
-  static Future<Info> cadastroUsuario(Usuario usuario) async {
+  static Future<Info> cadastrarUsuario(Usuario usuario) async {
     try {
       Dio dio = DioConfigApi.builderConfigJson();
 

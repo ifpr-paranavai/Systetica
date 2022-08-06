@@ -5,22 +5,19 @@ import 'package:dropdown_search/dropdown_search.dart';
 import 'package:systetica/model/Cidade.dart';
 
 class CampoPesquisaWidget extends StatefulWidget {
-  CampoPesquisaWidget(
-      {Key? key,
-      required this.objects,
-      required this.compareFn,
-      required this.asyncItems,
-      required this.onChanged,
-      required this.labelSeachTextPrincipal,
-      required this.labelSeachTextPesquisa,
-      required this.paddingHorizontal})
+  CampoPesquisaWidget({Key? key,
+    required this.compareFn,
+    required this.asyncItems,
+    required this.onChanged,
+    required this.labelSeachTextPrincipal,
+    required this.labelSeachTextPesquisa,
+    required this.paddingHorizontal})
       : super(key: key);
   final myKey = GlobalKey<DropdownSearchState<dynamic>>();
 
-  List<dynamic>? objects;
-  DropdownSearchCompareFn<dynamic>? compareFn;
+  DropdownSearchCompareFn<Cidade>? compareFn;
   DropdownSearchOnFind<Cidade>? asyncItems;
-  ValueChanged<dynamic>? onChanged;
+  Function(Cidade?)? onChanged;
   String labelSeachTextPrincipal;
   String labelSeachTextPesquisa;
 
@@ -44,20 +41,35 @@ class _CampoPesquisaWidget extends State<CampoPesquisaWidget> {
         asyncItems: widget.asyncItems,
         compareFn: widget.compareFn,
         popupProps: PopupPropsMultiSelection.modalBottomSheet(
-          emptyBuilder: (context, erro) => const Text(
-            'Nenhuma cidade encontrada',
-          ),
           isFilterOnline: true,
           showSelectedItems: true,
           showSearchBox: true,
           itemBuilder: _popupItemPesquisa,
-          searchFieldProps:
-              _textFieldProps(label: widget.labelSeachTextPesquisa),
+          favoriteItemProps: FavoriteItemProps(
+            showFavoriteItems: true,
+            favoriteItems: (us) {
+              return us.where((e) => e.nome!.contains("Mrs")).toList();
+            },
+          ),
+          emptyBuilder: (context, erro) =>
+          const Center(
+            child: Text(
+              'Nenhuma cidade encontrada',
+              overflow: TextOverflow.ellipsis,
+              maxLines: 1,
+              style: TextStyle(fontSize: 18),
+            ),
+          ),
+          searchFieldProps: _textFieldProps(
+            label: widget.labelSeachTextPesquisa,
+          ),
         ),
         dropdownDecoratorProps: _dropDownDecoratorProps(
           label: widget.labelSeachTextPrincipal,
         ),
         dropdownButtonProps: _dropdownButtonProps(),
+        itemAsString: (Cidade cidade) => cidade.nome ?? "",
+        onChanged: widget.onChanged,
       ),
     );
   }

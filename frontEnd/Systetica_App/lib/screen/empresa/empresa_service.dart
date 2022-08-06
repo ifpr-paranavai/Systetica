@@ -38,7 +38,7 @@ class EmpresaService {
 
   static Future<Info> buscarCidade({
     int? pageNumber,
-    int? size = 7,
+    int? size = 9,
     String? nomeCidade,
   }) async {
     String path = "cidade/buscar-todos?search=$nomeCidade&size=$size";
@@ -55,18 +55,14 @@ class EmpresaService {
     return info;
   }
 
-  static Future<Info> atualizarEmpresa(
-      Token token,
-      Empresa empresa,
-      ) async {
+  static Future<Info> atualizarEmpresa(Token token, Empresa empresa) async {
     Info info = Info(success: true);
     try {
       Dio dio = DioConfigApi.builderConfigJson();
 
       dio.options.headers["Authorization"] = "Bearer ${token.accessToken}";
 
-      var response =
-      await dio.put("empresa/atualizar", data: empresa.toJson());
+      var response = await dio.put("empresa/atualizar", data: empresa.toJson());
 
       info = Info.fromJson(response.data);
 
@@ -78,6 +74,34 @@ class EmpresaService {
         }
         info.success = false;
         info.message = "Erro: ${e.message}";
+        return info;
+      } catch (e) {
+        throw Exception(e.runtimeType);
+      }
+    } on Exception catch (ex) {
+      rethrow;
+    }
+  }
+
+  static Future<Info> cadastrarEmpresa(Token token, Empresa empresa) async {
+    Info info = Info(success: true);
+    try {
+      Dio dio = DioConfigApi.builderConfigJson();
+
+      dio.options.headers["Authorization"] = "Bearer ${token.accessToken}";
+
+      var response = await dio.post("empresa/salvar", data: empresa.toJson());
+
+      info = Info.fromJson(response.data);
+
+      return info;
+    } on DioError catch (e) {
+      try {
+        if (e.type == DioErrorType.connectTimeout) {
+          throw Exception("Erro de requisição: ${e.message}");
+        }
+        info.success = false;
+        info.message = "Ocorreu algum erro ao tentar salvar empresa";
         return info;
       } catch (e) {
         throw Exception(e.runtimeType);

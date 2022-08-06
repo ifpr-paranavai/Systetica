@@ -6,46 +6,30 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:systetica/components/botoes/botao_widget.dart';
 import 'package:systetica/components/icon_arrow_widget.dart';
-import 'package:systetica/components/input/campo_pesquisa_widget.dart';
-import 'package:systetica/components/input/campo_texto_widget.dart';
 import 'package:systetica/components/item_list.dart';
 import 'package:systetica/components/loading/loading_animation.dart';
 import 'package:systetica/components/single_child_scroll_component.dart';
 import 'package:systetica/components/text_autenticacoes_widget.dart';
-import 'package:systetica/model/Cidade.dart';
 import 'package:systetica/model/Empresa.dart';
 import 'package:systetica/model/Info.dart';
 import 'package:systetica/model/MenuItem.dart';
 import 'package:systetica/model/validator/MultiValidatorEmpresa.dart';
+import 'package:systetica/screen/empresa/component/input_empresa.dart';
 import 'package:systetica/screen/empresa/empresa_controller.dart';
-import 'package:systetica/screen/empresa/empresa_service.dart';
 import 'package:systetica/screen/empresa/view/empresa_page.dart';
 import 'package:systetica/screen/empresa/view/form/empresa_form_page.dart';
 import 'package:systetica/style/app_colors..dart';
 
 class EmpresaWidget extends State<EmpresaPage> {
   final EmpresaController _controller = EmpresaController();
-  final MultiValidatorEmpresa _validatorEmpresa = MultiValidatorEmpresa();
+  final MultiValidatorEmpresa _multiValidatorEmpresa = MultiValidatorEmpresa();
+  final InputEmpresa _inputEmpresa = InputEmpresa();
   final _picker = ImagePicker();
   final List<MenuItemDto> _menuItems = [
     MenuItemDto(text: 'Editar', icon: Icons.edit),
   ];
   late ScrollController _scrollController;
-
-  List<Cidade> cidades = [];
-  Cidade? cidade;
-
-  Future<List<Cidade>> buscarCidadeFiltro(String? nomeCidade) async {
-    try {
-      Info info = await EmpresaService.buscarCidade(nomeCidade: nomeCidade);
-      return info.object;
-    } catch (e) {
-      debugPrint(e.toString());
-      return [];
-    }
-  }
 
   @override
   void initState() {
@@ -131,19 +115,57 @@ class EmpresaWidget extends State<EmpresaPage> {
           child: Column(
             children: [
               _sizedBox(height: altura * 0.08),
-              _boxFoto(_controller.empresa.logoBase64),
+              _boxFoto(_controller.logoBase64),
               _sizedBox(height: altura * 0.07),
-              _textoCadastrarEmpresa(),
-              _inputNomeEmpresa(paddingHorizontal: largura),
-              _inputCnpj(paddingHorizontal: largura),
-              _inputTelefone(paddingHorizontal: largura),
-              _inputTelefone2(paddingHorizontal: largura),
-              _inputEndereco(paddingHorizontal: largura),
-              _inputNumero(paddingHorizontal: largura),
-              _inputCep(paddingHorizontal: largura),
-              _inputBairro(paddingHorizontal: largura),
-              _inputCidade(paddingHorizontal: largura),
-              _botaoCadastrar(),
+              _inputEmpresa.textoCadastrarEmpresa(),
+              _inputEmpresa.inputNomeEmpresa(
+                paddingHorizontal: largura,
+                controller: _controller,
+                validatorEmpresa: _multiValidatorEmpresa,
+              ),
+              _inputEmpresa.inputCnpj(
+                paddingHorizontal: largura,
+                controller: _controller,
+                validatorEmpresa: _multiValidatorEmpresa,
+              ),
+              _inputEmpresa.inputTelefone(
+                paddingHorizontal: largura,
+                controller: _controller,
+                validatorEmpresa: _multiValidatorEmpresa,
+              ),
+              _inputEmpresa.inputTelefone2(
+                paddingHorizontal: largura,
+                controller: _controller,
+              ),
+              _inputEmpresa.inputEndereco(
+                paddingHorizontal: largura,
+                controller: _controller,
+                validatorEmpresa: _multiValidatorEmpresa,
+              ),
+              _inputEmpresa.inputNumero(
+                paddingHorizontal: largura,
+                controller: _controller,
+                validatorEmpresa: _multiValidatorEmpresa,
+              ),
+              _inputEmpresa.inputCep(
+                paddingHorizontal: largura,
+                controller: _controller,
+                validatorEmpresa: _multiValidatorEmpresa,
+              ),
+              _inputEmpresa.inputBairro(
+                paddingHorizontal: largura,
+                controller: _controller,
+                validatorEmpresa: _multiValidatorEmpresa,
+              ),
+              _inputEmpresa.inputCidade(
+                paddingHorizontal: largura,
+                controller: _controller,
+              ),
+              _inputEmpresa.botaoCadastrar(
+                label: "CADASTRAR",
+                onPressed: () => _controller
+                    .cadastrarEmpresa(context),
+              ),
             ],
           ),
         ),
@@ -160,7 +182,6 @@ class EmpresaWidget extends State<EmpresaPage> {
         () {
           File imagem = File(_croppedFile.path);
           _controller.logoBase64 = base64Encode(imagem.readAsBytesSync());
-          _controller.imagemAlterada = true;
         },
       );
     }
@@ -370,185 +391,6 @@ class EmpresaWidget extends State<EmpresaPage> {
     return ItemLista(
       titulo: "Cidade",
       descricao: cidade + " - " + sigla,
-    );
-  }
-
-  // Opções para cadatrar empresa
-  TextAutenticacoesWidget _textoCadastrarEmpresa() {
-    return TextAutenticacoesWidget(
-      text: "Cadastrar Empresa",
-      fontSize: 30,
-      paddingBottom: 6,
-    );
-  }
-
-  CampoTextoWidget _inputNomeEmpresa({required double paddingHorizontal}) {
-    return CampoTextoWidget(
-      labelText: "Empresa",
-      paddingHorizontal: paddingHorizontal * 0.08,
-      paddingBottom: 0,
-      maxLength: 100,
-      paddingTop: 14,
-      isIconDate: true,
-      icon: const Icon(
-        Icons.face_rounded,
-        color: Colors.black87,
-      ),
-      controller: _controller.nomeController,
-      validator: _validatorEmpresa.nomeValidator,
-    );
-  }
-
-  CampoTextoWidget _inputCnpj({required double paddingHorizontal}) {
-    return CampoTextoWidget(
-      labelText: "CNPJ",
-      paddingHorizontal: paddingHorizontal * 0.08,
-      keyboardType: TextInputType.number,
-      mask: "##.###.###/####-##",
-      paddingBottom: 0,
-      maxLength: 18,
-      paddingTop: 8,
-      isIconDate: true,
-      icon: const Icon(
-        Icons.credit_card,
-        color: Colors.black87,
-      ),
-      controller: _controller.cnpjController,
-      validator: _validatorEmpresa.cnpjValidator,
-    );
-  }
-
-  CampoTextoWidget _inputTelefone({required double paddingHorizontal}) {
-    return CampoTextoWidget(
-      labelText: "Telefone",
-      paddingHorizontal: paddingHorizontal * 0.08,
-      keyboardType: TextInputType.number,
-      mask: "(##) #####-####",
-      paddingBottom: 0,
-      maxLength: 15,
-      paddingTop: 8,
-      isIconDate: true,
-      icon: const Icon(
-        Icons.phone_android,
-        color: Colors.black87,
-      ),
-      controller: _controller.telefone1Controller,
-      validator: _validatorEmpresa.telefone1Validator,
-    );
-  }
-
-  CampoTextoWidget _inputTelefone2({required double paddingHorizontal}) {
-    return CampoTextoWidget(
-      labelText: "Telefone Fixo",
-      paddingHorizontal: paddingHorizontal * 0.08,
-      keyboardType: TextInputType.number,
-      mask: "(##) ####-####",
-      paddingBottom: 0,
-      maxLength: 14,
-      paddingTop: 8,
-      isIconDate: true,
-      icon: const Icon(
-        Icons.phone,
-        color: Colors.black87,
-      ),
-      controller: _controller.telefone2Controller,
-    );
-  }
-
-  CampoTextoWidget _inputEndereco({required double paddingHorizontal}) {
-    return CampoTextoWidget(
-      labelText: "Endereco",
-      paddingHorizontal: paddingHorizontal * 0.08,
-      paddingBottom: 0,
-      maxLength: 100,
-      paddingTop: 8,
-      isIconDate: true,
-      icon: const Icon(
-        Icons.maps_home_work,
-        color: Colors.black87,
-      ),
-      controller: _controller.enderecoController,
-      validator: _validatorEmpresa.enderecoValidator,
-    );
-  }
-
-  CampoTextoWidget _inputNumero({required double paddingHorizontal}) {
-    return CampoTextoWidget(
-      labelText: "Nº",
-      paddingHorizontal: paddingHorizontal * 0.08,
-      keyboardType: TextInputType.number,
-      paddingBottom: 0,
-      maxLength: 8,
-      paddingTop: 8,
-      isIconDate: true,
-      icon: const Icon(
-        Icons.numbers,
-        color: Colors.black87,
-      ),
-      controller: _controller.numeroController,
-      validator: _validatorEmpresa.numeroValidator,
-    );
-  }
-
-  CampoTextoWidget _inputCep({required double paddingHorizontal}) {
-    return CampoTextoWidget(
-      labelText: "CEP",
-      paddingHorizontal: paddingHorizontal * 0.08,
-      keyboardType: TextInputType.number,
-      mask: "#####-###",
-      paddingBottom: 0,
-      maxLength: 9,
-      paddingTop: 8,
-      isIconDate: true,
-      icon: const Icon(
-        Icons.mail,
-        color: Colors.black87,
-      ),
-      controller: _controller.cepController,
-      validator: _validatorEmpresa.cepValidator,
-    );
-  }
-
-  CampoTextoWidget _inputBairro({required double paddingHorizontal}) {
-    return CampoTextoWidget(
-      labelText: "Bairro",
-      paddingHorizontal: paddingHorizontal * 0.08,
-      paddingBottom: 0,
-      maxLength: 100,
-      paddingTop: 8,
-      isIconDate: true,
-      icon: const Icon(
-        Icons.map,
-        color: Colors.black87,
-      ),
-      controller: _controller.bairroController,
-      validator: _validatorEmpresa.bairroValidator,
-    );
-  }
-
-  CampoPesquisaWidget _inputCidade({required double paddingHorizontal}) {
-    return CampoPesquisaWidget(
-      paddingHorizontal: paddingHorizontal * 0.08,
-      labelSeachTextPrincipal: "Cidade",
-      labelSeachTextPesquisa: "Digite nome da cidade",
-      objects: cidades,
-      compareFn: (cidade, buscaCidade) => cidade.nome == buscaCidade.nome,
-      asyncItems: (String? cidade) => buscarCidadeFiltro(cidade),
-      onChanged: (value) {
-        cidade = value;
-      },
-    );
-  }
-
-  BotaoWidget _botaoCadastrar() {
-    return BotaoWidget(
-      paddingTop: 18,
-      paddingBottom: 30,
-      labelText: "CADASTRAR",
-      largura: 190,
-      corBotao: Colors.black87.withOpacity(0.9),
-      corTexto: Colors.white,
-      onPressed: () {},
     );
   }
 

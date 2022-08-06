@@ -5,18 +5,18 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:systetica/components/botoes/botao_widget.dart';
 import 'package:systetica/components/icon_arrow_widget.dart';
-import 'package:systetica/components/input/campo_texto_widget.dart';
 import 'package:systetica/components/text_autenticacoes_widget.dart';
 import 'package:systetica/model/validator/MultiValidatorEmpresa.dart';
+import 'package:systetica/screen/empresa/component/input_empresa.dart';
 import 'package:systetica/screen/empresa/empresa_controller.dart';
 import 'package:systetica/screen/empresa/view/form/empresa_form_page.dart';
 import 'package:systetica/style/app_colors..dart';
 
 class EmpresaFormWidget extends State<EmpresaFormPage> {
   final EmpresaController _controller = EmpresaController();
-  final MultiValidatorEmpresa _validatorEmpresa = MultiValidatorEmpresa();
+  final MultiValidatorEmpresa _multiValidatorEmpresa = MultiValidatorEmpresa();
+  final InputEmpresa _inputEmpresa = InputEmpresa();
   final _picker = ImagePicker();
   late ScrollController _scrollController;
 
@@ -64,14 +64,44 @@ class EmpresaFormWidget extends State<EmpresaFormPage> {
                   _boxFoto(_controller.logoBase64),
                   _sizedBox(height: _altura * 0.07),
                   _textoEditarEmpresa(),
-                  _inputNomeEmpresa(paddingHorizontal: _largura),
-                  _inputTelefone(paddingHorizontal: _largura),
-                  _inputTelefone2(paddingHorizontal: _largura),
-                  _inputEndereco(paddingHorizontal: _largura),
-                  _inputNumero(paddingHorizontal: _largura),
-                  _inputCep(paddingHorizontal: _largura),
-                  _inputBairro(paddingHorizontal: _largura),
-                  _botaoCadastrar(),
+                  _inputEmpresa.inputNomeEmpresa(
+                    paddingHorizontal: _largura,
+                    controller: _controller,
+                    validatorEmpresa: _multiValidatorEmpresa,
+                  ),
+                  _inputEmpresa.inputTelefone(
+                    paddingHorizontal: _largura,
+                    controller: _controller,
+                    validatorEmpresa: _multiValidatorEmpresa,
+                  ),
+                  _inputEmpresa.inputTelefone2(
+                    paddingHorizontal: _largura,
+                    controller: _controller,
+                  ),
+                  _inputEmpresa.inputEndereco(
+                    paddingHorizontal: _largura,
+                    controller: _controller,
+                    validatorEmpresa: _multiValidatorEmpresa,
+                  ),
+                  _inputEmpresa.inputNumero(
+                    paddingHorizontal: _largura,
+                    controller: _controller,
+                    validatorEmpresa: _multiValidatorEmpresa,
+                  ),
+                  _inputEmpresa.inputCep(
+                    paddingHorizontal: _largura,
+                    controller: _controller,
+                    validatorEmpresa: _multiValidatorEmpresa,
+                  ),
+                  _inputEmpresa.inputBairro(
+                    paddingHorizontal: _largura,
+                    controller: _controller,
+                    validatorEmpresa: _multiValidatorEmpresa,
+                  ),
+                  _inputEmpresa.botaoCadastrar(
+                    label: "SALVAR",
+                    onPressed: () => _controller.atualizarEmpresa(context),
+                  ),
                 ],
               ),
             ),
@@ -189,144 +219,6 @@ class EmpresaFormWidget extends State<EmpresaFormPage> {
           ),
         ),
       ),
-    );
-  }
-
-  // Widgets para atualizar
-  CampoTextoWidget _inputNomeEmpresa({required double paddingHorizontal}) {
-    return CampoTextoWidget(
-      labelText: "Empresa",
-      paddingHorizontal: paddingHorizontal * 0.08,
-      paddingBottom: 0,
-      maxLength: 100,
-      paddingTop: 14,
-      isIconDate: true,
-      icon: const Icon(
-        Icons.face_rounded,
-        color: Colors.black87,
-      ),
-      controller: _controller.nomeController,
-      validator: _validatorEmpresa.nomeValidator,
-    );
-  }
-
-  CampoTextoWidget _inputTelefone({required double paddingHorizontal}) {
-    return CampoTextoWidget(
-      labelText: "Telefone",
-      paddingHorizontal: paddingHorizontal * 0.08,
-      keyboardType: TextInputType.number,
-      mask: "(##) #####-####",
-      paddingBottom: 0,
-      maxLength: 15,
-      paddingTop: 8,
-      isIconDate: true,
-      icon: const Icon(
-        Icons.phone_android,
-        color: Colors.black87,
-      ),
-      controller: _controller.telefone1Controller,
-      validator: _validatorEmpresa.telefone1Validator,
-    );
-  }
-
-  CampoTextoWidget _inputTelefone2({required double paddingHorizontal}) {
-    return CampoTextoWidget(
-      labelText: "Telefone Fixo",
-      paddingHorizontal: paddingHorizontal * 0.08,
-      keyboardType: TextInputType.number,
-      mask: "(##) ####-####",
-      paddingBottom: 0,
-      maxLength: 14,
-      paddingTop: 8,
-      isIconDate: true,
-      icon: const Icon(
-        Icons.phone,
-        color: Colors.black87,
-      ),
-      controller: _controller.telefone2Controller,
-    );
-  }
-
-  CampoTextoWidget _inputEndereco({required double paddingHorizontal}) {
-    return CampoTextoWidget(
-      labelText: "Endereco",
-      paddingHorizontal: paddingHorizontal * 0.08,
-      paddingBottom: 0,
-      maxLength: 100,
-      paddingTop: 8,
-      isIconDate: true,
-      icon: const Icon(
-        Icons.maps_home_work,
-        color: Colors.black87,
-      ),
-      controller: _controller.enderecoController,
-      validator: _validatorEmpresa.enderecoValidator,
-    );
-  }
-
-  CampoTextoWidget _inputNumero({required double paddingHorizontal}) {
-    return CampoTextoWidget(
-      labelText: "Nº",
-      paddingHorizontal: paddingHorizontal * 0.08,
-      keyboardType: TextInputType.number,
-      paddingBottom: 0,
-      maxLength: 8,
-      paddingTop: 8,
-      isIconDate: true,
-      icon: const Icon(
-        Icons.numbers,
-        color: Colors.black87,
-      ),
-      controller: _controller.numeroController,
-      validator: _validatorEmpresa.numeroValidator,
-    );
-  }
-
-  CampoTextoWidget _inputCep({required double paddingHorizontal}) {
-    return CampoTextoWidget(
-      labelText: "CEP",
-      paddingHorizontal: paddingHorizontal * 0.08,
-      keyboardType: TextInputType.number,
-      mask: "#####-###",
-      paddingBottom: 0,
-      maxLength: 9,
-      paddingTop: 8,
-      isIconDate: true,
-      icon: const Icon(
-        Icons.mail,
-        color: Colors.black87,
-      ),
-      controller: _controller.cepController,
-      validator: _validatorEmpresa.cepValidator,
-    );
-  }
-
-  CampoTextoWidget _inputBairro({required double paddingHorizontal}) {
-    return CampoTextoWidget(
-      labelText: "Bairro",
-      paddingHorizontal: paddingHorizontal * 0.08,
-      paddingBottom: 0,
-      maxLength: 100,
-      paddingTop: 8,
-      isIconDate: true,
-      icon: const Icon(
-        Icons.map,
-        color: Colors.black87,
-      ),
-      controller: _controller.bairroController,
-      validator: _validatorEmpresa.bairroValidator,
-    );
-  }
-
-  BotaoWidget _botaoCadastrar() {
-    return BotaoWidget(
-      paddingTop: 18,
-      paddingBottom: 30,
-      labelText: "SALVAR",
-      largura: 190,
-      corBotao: Colors.black87.withOpacity(0.9),
-      corTexto: Colors.white,
-      onPressed: () => _controller.atualizarEmpresa(context),
     );
   }
 
