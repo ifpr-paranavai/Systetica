@@ -86,7 +86,6 @@ public class UsuarioServiceTest {
         Mockito.when(passwordEncoder.encode(ArgumentMatchers.eq("123123"))).thenReturn(passwordEncode);
         Mockito.when(roleService.buscaRolePorNome(ArgumentMatchers.eq("CLIENTE"))).thenReturn(roles);
 
-
         Mockito.when(usuarioMapper.toEntity(usuarioDTO)).thenReturn(usuario);
         Mockito.when(usuarioRepository.saveAndFlush(ArgumentMatchers.any(Usuario.class))).thenReturn(usuario);
 
