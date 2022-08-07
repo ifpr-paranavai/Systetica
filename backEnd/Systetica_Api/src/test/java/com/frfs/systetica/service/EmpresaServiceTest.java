@@ -78,4 +78,81 @@ public class EmpresaServiceTest {
         ReturnData<String> returnData = new ReturnData<>(true, "Empresa salva com sucesso", "");
         assertEquals(empresaService.salvar(empresaDTO), returnData);
     }
+
+    @Test
+    @DisplayName("Buscar atualizar uma empresa")
+    public void deveAtualizarEmpresa() {
+        String imagemBase64 = "abcdefgh";
+        Empresa empresa = Mockito.mock(Empresa.class);
+        EmpresaDTO empresaDTO = Mockito.mock(EmpresaDTO.class);
+        Optional<Empresa> empresaOptional = Optional.of(empresa);
+
+        Cidade cidade = Mockito.mock(Cidade.class);
+        CidadeDTO cidadeDTO = Mockito.mock(CidadeDTO.class);
+
+        UsuarioDTO usuarioDTO = Mockito.mock(UsuarioDTO.class);
+
+        Mockito.when(usuarioDTO.getEmail()).thenReturn("mock@gmail.com");
+
+        Mockito.when(empresaDTO.getId()).thenReturn(1L);
+        Mockito.when(empresaDTO.getLogoBase64()).thenReturn(imagemBase64);
+        Mockito.when(empresaDTO.getCidade()).thenReturn(cidadeDTO);
+
+        Mockito.when(empresaRepository.findById(empresaDTO.getId())).thenReturn(empresaOptional);
+        Mockito.when(cidadeMapper.toEntity(empresaDTO.getCidade())).thenReturn(cidade);
+
+        ReturnData<String> returnData = new ReturnData<>(true, "Empresa atualizada com sucesso.");
+        assertEquals(empresaService.atualizar(empresaDTO), returnData);
+    }
+
+    @Test
+    @DisplayName("Buscar busca empresa pelo email do usuário administrador")
+    public void deveBuscaPorEmailAdministrador() {
+        String emailAdministrador = "mock@gmail.com";
+
+        Empresa empresa = Mockito.mock(Empresa.class);
+        EmpresaDTO empresaDTO = Mockito.mock(EmpresaDTO.class);
+        Optional<Empresa> empresaOptional = Optional.of(empresa);
+
+        Usuario usuario = Mockito.mock(Usuario.class);
+
+        Mockito.when(usuario.getNome()).thenReturn("Systetica Ltda");
+        Mockito.when(empresa.getUsuarioAdministrador()).thenReturn(usuario);
+
+        Mockito.when(empresaRepository.findByUsuarioAdministradorEmail(emailAdministrador)).thenReturn(empresaOptional);
+        Mockito.when(empresaMapper.toDto(empresaOptional.get())).thenReturn(empresaDTO);
+
+        ReturnData<Object> returnData = new ReturnData<>(true, "", empresaDTO);
+        assertEquals(empresaService.buscarPorEmailAdministrador(emailAdministrador), returnData);
+    }
+
+    // Testes para ReturnData false
+    @Test
+    @DisplayName("Deve informa que o CNPJ ja esta cadastrado no sistema")
+    public void deveInformaCnpjCadastrado() {
+
+        Empresa empresa = Mockito.mock(Empresa.class);
+        EmpresaDTO empresaDTO = Mockito.mock(EmpresaDTO.class);
+        Optional<Empresa> empresaOptional = Optional.of(empresa);
+
+        Mockito.when(empresaDTO.getCnpj()).thenReturn("46.565.465/0001-45");
+
+        Mockito.when(empresaRepository.findByCnpj(ArgumentMatchers.eq("46.565.465/0001-45"))).thenReturn(empresaOptional);
+
+        ReturnData<String> returnData = new ReturnData<>(false, "Cnpj já esta cadastrado no sistema.");
+        assertEquals(empresaService.salvar(empresaDTO), returnData);
+    }
+
+    @Test
+    @DisplayName("Deve informa que empresa não foi encontrada")
+    public void deveInformaEmpresaNaoEncontrada() {
+        String email = "mock@gmail.com";
+
+        Optional<Empresa> empresaOptional = Optional.empty();
+        Mockito.when(empresaRepository.findByUsuarioAdministradorEmail(email)).thenReturn(empresaOptional);
+
+        ReturnData<Object> returnData = new ReturnData<>(false, "Empresa não encontrada",
+                "Não foi possível encontrar empresa pelo email " + email);
+        assertEquals(empresaService.buscarPorEmailAdministrador(email), returnData);
+    }
 }

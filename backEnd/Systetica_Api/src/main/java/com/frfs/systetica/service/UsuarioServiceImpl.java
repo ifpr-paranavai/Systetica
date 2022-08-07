@@ -9,7 +9,6 @@ import com.frfs.systetica.repository.UsuarioRepository;
 import com.frfs.systetica.utils.Constantes;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -33,6 +32,7 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
     private final RoleService roleService;
     private final EmailService emailService;
     private final CodigoAleatorioService codigoAleatorioService;
+    private final FileBase64Service fileBase64Service;
 
     @Override
     public ReturnData<String> salvar(UsuarioDTO usuarioDTO) {
@@ -161,7 +161,7 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
     @Override
     public ReturnData<String> atualizar(UsuarioDTO usuarioDTO) {
         try {
-            var returnDataConverteBase64 = converteFileBase64(usuarioDTO.getImagemBase64());
+            var returnDataConverteBase64 = fileBase64Service.converteFileBase64(usuarioDTO.getImagemBase64());
             if (!returnDataConverteBase64.getSuccess()) {
                 return returnDataConverteBase64;
             }
@@ -181,18 +181,6 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
             return new ReturnData<>(false, "Ocorreu um erro ao atualizar dados",
                     ex.getMessage() + "\nMotivo: " + ex.getCause());
         }
-    }
-
-    @Override //TODO - criar um service específico
-    public ReturnData<String> converteFileBase64(String imagemBase64) {
-
-        byte[] bytesEncoded = Base64.encodeBase64(imagemBase64.getBytes());
-
-        if (bytesEncoded.length > Constantes.FILE_DEZ_MB) {
-            return new ReturnData<>(false, "Imagem deve possuir menos de 10mb.");
-        }
-
-        return new ReturnData<>(true, imagemBase64);
     }
 
     @Override

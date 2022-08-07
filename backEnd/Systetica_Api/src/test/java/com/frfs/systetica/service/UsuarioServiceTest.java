@@ -7,7 +7,6 @@ import com.frfs.systetica.entity.Role;
 import com.frfs.systetica.entity.Usuario;
 import com.frfs.systetica.mapper.UsuarioMapper;
 import com.frfs.systetica.repository.UsuarioRepository;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
@@ -43,6 +42,9 @@ public class UsuarioServiceTest {
 
     @MockBean
     private CodigoAleatorioService codigoAleatorioService;
+
+    @MockBean
+    private FileBase64Service fileBase64Service;
 
     @Autowired
     private UsuarioServiceImpl usuarioService;
@@ -224,14 +226,6 @@ public class UsuarioServiceTest {
     }
 
     @Test
-    @DisplayName("Deve converter imagem em base 64")
-    public void deveConverteFileBase64() {
-        String imagemBase64 = "imagembase64paratestedemetodo";
-
-        usuarioService.converteFileBase64(imagemBase64);
-    }
-
-    @Test
     @DisplayName("Deve carregar/retorna usuáriolo pelo email")
     public void deveCarregarUsuarioPorEmail() {
         String email = "systetica@gmail.com";
@@ -404,15 +398,4 @@ public class UsuarioServiceTest {
 
         assertEquals(usuarioService.alterarSenha(usuarioDTO), returnData);
     }
-
-    @Test
-    @DisplayName("Deve informar que imagem deve possuir menos de 10mb")
-    public void deveInformarImagemDeveSerMenorDezMb() {
-        String imagemBase64 = RandomStringUtils.randomAscii(11485760);
-
-        ReturnData<String> returnData = new ReturnData<>(false, "Imagem deve possuir menos de 10mb.");
-
-        assertEquals(usuarioService.converteFileBase64(imagemBase64), returnData);
-    }
-
 }

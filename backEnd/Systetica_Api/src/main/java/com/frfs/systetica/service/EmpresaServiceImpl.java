@@ -26,8 +26,8 @@ public class EmpresaServiceImpl implements EmpresaService {
     private final EmpresaMapper empresaMapper;
     private final UsuarioRepository usuarioRepository;
     private final UsuarioMapper usuarioMapper;
-    private final UsuarioService usuarioService;
     private final CidadeMapper cidadeMapper;
+    private final FileBase64Service fileBase64Service;
 
     @Override
     public ReturnData<String> salvar(EmpresaDTO empresaDTO) {
@@ -36,7 +36,7 @@ public class EmpresaServiceImpl implements EmpresaService {
                 return new ReturnData<>(false, "Cnpj já esta cadastrado no sistema.");
             }
 
-            var returnDataConverteBase64 = usuarioService.converteFileBase64(empresaDTO.getLogoBase64());
+            var returnDataConverteBase64 = fileBase64Service.converteFileBase64(empresaDTO.getLogoBase64());
             if (!returnDataConverteBase64.getSuccess()) {
                 return returnDataConverteBase64;
             }
@@ -62,7 +62,7 @@ public class EmpresaServiceImpl implements EmpresaService {
     @Override
     public ReturnData<String> atualizar(EmpresaDTO empresaDTO) {
         try {
-            var returnDataConverteBase64 = usuarioService.converteFileBase64(empresaDTO.getLogoBase64());
+            var returnDataConverteBase64 = fileBase64Service.converteFileBase64(empresaDTO.getLogoBase64());
             if (!returnDataConverteBase64.getSuccess()) {
                 return returnDataConverteBase64;
             }
