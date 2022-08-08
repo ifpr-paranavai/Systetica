@@ -54,10 +54,10 @@ public class Empresa implements Serializable {
     @Column(name = "bairro", length = 100)
     private String bairro;
 
-    @Column(name = "latitude", length = 10)
+    @Column(name = "latitude", length = 13)
     private String latitude;
 
-    @Column(name = "longitude", length = 10)
+    @Column(name = "longitude", length = 13)
     private String longitude;
 
     @Column(name = "logo_base64")
