@@ -7,7 +7,6 @@ import 'package:systetica/components/text_autenticacoes_widget.dart';
 import 'package:systetica/model/Cidade.dart';
 import 'package:systetica/model/validator/MultiValidatorEmpresa.dart';
 import 'package:systetica/screen/empresa/empresa_controller.dart';
-import 'package:cupertino_icons/cupertino_icons.dart';
 
 class InputEmpresa {
   // Opções para cadatrar empresa

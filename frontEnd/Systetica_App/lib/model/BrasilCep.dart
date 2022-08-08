@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 class BrasilCep {
   BrasilCep({this.rua, this.bairro, this.local});
 

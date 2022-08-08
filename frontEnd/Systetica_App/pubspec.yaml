@@ -11,7 +11,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  cupertino_icons: ^1.0.2
+  cupertino_icons: ^1.0.5
   google_fonts: ^3.0.1
   jwt_decoder: ^2.0.1
   loading_animation_widget: ^1.2.0+2
@@ -37,9 +37,8 @@ dev_dependencies:
   form_field_validator: ^1.1.0
   animated_text_kit:
   image_picker: ^0.8.5+3
-  image_cropper:
+  image_cropper: ^2.0.3
   dropdown_button2: ^1.7.0
-  cupertino_icons: ^1.0.5
 
 flutter:
   uses-material-design: true
