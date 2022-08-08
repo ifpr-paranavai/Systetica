@@ -1,5 +1,6 @@
 package com.frfs.systetica.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,6 +16,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class AgendarServicoDTO implements Serializable {
 
     @JsonProperty("id")
@@ -46,9 +48,6 @@ public class AgendarServicoDTO implements Serializable {
 
     @JsonProperty("cliente_DTO")
     private UsuarioDTO usuarioDTO;
-
-    @JsonProperty("funcionario_DTO")
-    private FuncionarioDTO funcionarioDTO;
 
     @JsonProperty("servicos_DTO")
     private List<ServicoDTO> servicosDTO = new ArrayList<>();

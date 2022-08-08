@@ -43,11 +43,6 @@ public class Venda implements Serializable {
 
     @NotNull
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_funcionario")
-    private Funcionario idFuncionario;
-
-    @NotNull
-    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_cliente")
     private Usuario idUsuario;
 

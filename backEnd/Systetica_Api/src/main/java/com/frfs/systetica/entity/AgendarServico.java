@@ -58,11 +58,6 @@ public class AgendarServico implements Serializable {
     @JoinColumn(name = "id_cliente")
     private Usuario idUsuario;
 
-    @NotNull
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_funcionario")
-    private Funcionario idFuncionario;
-
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "ass_servico_agendado",
