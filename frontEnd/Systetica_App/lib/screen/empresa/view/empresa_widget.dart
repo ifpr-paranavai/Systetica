@@ -137,22 +137,22 @@ class EmpresaWidget extends State<EmpresaPage> {
                 paddingHorizontal: largura,
                 controller: _controller,
               ),
-              _inputEmpresa.inputEndereco(
-                paddingHorizontal: largura,
-                controller: _controller,
-                validatorEmpresa: _multiValidatorEmpresa,
-              ),
-              _inputEmpresa.inputNumero(
-                paddingHorizontal: largura,
-                controller: _controller,
-                validatorEmpresa: _multiValidatorEmpresa,
-              ),
               _inputEmpresa.inputCep(
                 paddingHorizontal: largura,
                 controller: _controller,
                 validatorEmpresa: _multiValidatorEmpresa,
               ),
+              _inputEmpresa.inputEndereco(
+                paddingHorizontal: largura,
+                controller: _controller,
+                validatorEmpresa: _multiValidatorEmpresa,
+              ),
               _inputEmpresa.inputBairro(
+                paddingHorizontal: largura,
+                controller: _controller,
+                validatorEmpresa: _multiValidatorEmpresa,
+              ),
+              _inputEmpresa.inputNumero(
                 paddingHorizontal: largura,
                 controller: _controller,
                 validatorEmpresa: _multiValidatorEmpresa,

@@ -1,6 +1,7 @@
 // ignore_for_file: unused_catch_clause
 
 import 'package:dio/dio.dart';
+import 'package:systetica/model/BrasilCep.dart';
 import 'package:systetica/model/Cidade.dart';
 import 'package:systetica/model/Empresa.dart';
 import 'package:systetica/model/Info.dart';
@@ -107,6 +108,22 @@ class EmpresaService {
       }
     } on Exception catch (ex) {
       rethrow;
+    }
+  }
+
+  static Future<BrasilCep> buscaCep(String cep) async {
+    BrasilCep brasilCep = BrasilCep();
+    try {
+      Dio dio = DioConfigApi.builderConfigJsonBrasilApi();
+
+      var response = await dio.get("cep/v2/" + cep);
+
+      brasilCep = BrasilCep.fromJson(response.data);
+      return brasilCep;
+    } on DioError catch (e) {
+      return brasilCep;
+    } on Exception catch (ex) {
+      return brasilCep;
     }
   }
 }

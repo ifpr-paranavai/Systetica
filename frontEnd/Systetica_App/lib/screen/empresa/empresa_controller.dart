@@ -7,6 +7,7 @@ import 'package:systetica/components/loading/show_loading_widget.dart';
 import 'package:systetica/components/page_transition.dart';
 import 'package:systetica/components/texto_erro_widget.dart';
 import 'package:systetica/database/repository/token_repository.dart';
+import 'package:systetica/model/BrasilCep.dart';
 import 'package:systetica/model/Cidade.dart';
 import 'package:systetica/model/Empresa.dart';
 import 'package:systetica/model/Info.dart';
@@ -24,6 +25,8 @@ class EmpresaController {
   final numeroController = TextEditingController();
   final cepController = TextEditingController();
   final bairroController = TextEditingController();
+  final longitudeController = TextEditingController();
+  final latitudeController = TextEditingController();
   final logoBase64Controller = TextEditingController();
   final formKey = GlobalKey<FormState>();
 
@@ -64,6 +67,9 @@ class EmpresaController {
             empresa.endereco = enderecoController.text;
             empresa.numero = int.parse(numeroController.text);
             empresa.cep = cepController.text;
+            empresa.bairro = bairroController.text;
+            empresa.latitude = latitudeController.text;
+            empresa.longitude = longitudeController.text;
             empresa.bairro = bairroController.text;
             empresa.logoBase64 = logoBase64;
             empresa.cidade = cidade;
@@ -213,6 +219,16 @@ class EmpresaController {
       return info.object;
     } catch (e) {
       return [];
+    }
+  }
+
+  Future<dynamic> buscarCep(String cep) async {
+    BrasilCep? brasilCep = await EmpresaService.buscaCep(cep);
+    if (brasilCep.rua != null && brasilCep.local != null) {
+      enderecoController.text = brasilCep.rua!;
+      bairroController.text = brasilCep.bairro!;
+      longitudeController.text = brasilCep.local!.cordenada!.longitude!;
+      latitudeController.text = brasilCep.local!.cordenada!.latitude!;
     }
   }
 }

@@ -82,6 +82,7 @@ class AlterarSenhaWidget extends State<AlterarSenhaPage> {
     return CampoTextoWidget(
       labelText: "Códico",
       paddingHorizontal: paddingHorizontal,
+      keyboardType: TextInputType.number,
       paddingBottom: 0,
       maxLength: 10,
       paddingTop: 10,

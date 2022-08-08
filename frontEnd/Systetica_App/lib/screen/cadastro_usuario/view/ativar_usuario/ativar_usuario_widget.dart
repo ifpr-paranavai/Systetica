@@ -81,6 +81,7 @@ class AtivarUsuarioWidget extends State<AtivarUsuarioPage> {
     return CampoTextoWidget(
       labelText: "Códico",
       paddingHorizontal: paddingHorizontal,
+      keyboardType: TextInputType.number,
       paddingBottom: 0,
       maxLength: 10,
       paddingTop: 10,

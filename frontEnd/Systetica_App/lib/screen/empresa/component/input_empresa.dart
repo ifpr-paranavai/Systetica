@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:systetica/components/botoes/botao_widget.dart';
 import 'package:systetica/components/input/campo_pesquisa_widget.dart';
@@ -6,6 +7,7 @@ import 'package:systetica/components/text_autenticacoes_widget.dart';
 import 'package:systetica/model/Cidade.dart';
 import 'package:systetica/model/validator/MultiValidatorEmpresa.dart';
 import 'package:systetica/screen/empresa/empresa_controller.dart';
+import 'package:cupertino_icons/cupertino_icons.dart';
 
 class InputEmpresa {
   // Opções para cadatrar empresa
@@ -163,11 +165,16 @@ class InputEmpresa {
       paddingTop: 8,
       isIconDate: true,
       icon: const Icon(
-        Icons.mail,
+        CupertinoIcons.map_pin_ellipse,
         color: Colors.black87,
       ),
       controller: controller.cepController,
       validator: validatorEmpresa.cepValidator,
+      onChanged: (value) async {
+        if (value.length == 9) {
+          controller.buscarCep(value);
+        }
+      },
     );
   }
 
@@ -184,7 +191,7 @@ class InputEmpresa {
       paddingTop: 8,
       isIconDate: true,
       icon: const Icon(
-        Icons.map,
+        CupertinoIcons.home,
         color: Colors.black87,
       ),
       controller: controller.bairroController,
