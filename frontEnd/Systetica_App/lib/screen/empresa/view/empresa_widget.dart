@@ -20,6 +20,7 @@ import 'package:systetica/screen/empresa/empresa_controller.dart';
 import 'package:systetica/screen/empresa/view/empresa_page.dart';
 import 'package:systetica/screen/empresa/view/form/empresa_form_page.dart';
 import 'package:systetica/style/app_colors..dart';
+import 'package:systetica/utils/util.dart';
 
 class EmpresaWidget extends State<EmpresaPage> {
   final EmpresaController _controller = EmpresaController();
@@ -60,7 +61,7 @@ class EmpresaWidget extends State<EmpresaPage> {
               return widgetInfoEmpresa(
                 altura: _altura,
                 empresa: _controller.empresa,
-                logoBase64: _controller.empresa.logoBase64!,
+                logoBase64: _controller.empresa.logoBase64,
               );
             } else {
               return widgetCadastrarEmpresa(
@@ -77,7 +78,7 @@ class EmpresaWidget extends State<EmpresaPage> {
   Stack widgetInfoEmpresa({
     required double altura,
     required Empresa empresa,
-    required String logoBase64,
+    String? logoBase64,
   }) {
     return Stack(
       children: [
@@ -328,7 +329,7 @@ class EmpresaWidget extends State<EmpresaPage> {
             _itemNome(empresa.nome!),
             _itemCnpj(empresa.cnpj!),
             _itemTelefone1(empresa.telefone1!),
-            _itemTelefone2(empresa.telefone2 ?? "Não cadastrado"),
+            _itemTelefone2(Util.isEmptOrNull(empresa.telefone2) ? "Não cadastrado" : empresa.telefone2!),
             _itemEndereco(empresa.endereco!, empresa.numero!.toString()),
             _itemBairro(empresa.bairro!),
             _itemCep(empresa.cep.toString()),

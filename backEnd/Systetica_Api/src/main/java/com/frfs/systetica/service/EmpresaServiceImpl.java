@@ -47,6 +47,7 @@ public class EmpresaServiceImpl implements EmpresaService {
             empresaDTO.setLogoBase64(returnDataConverteBase64.getMessage());
             empresaDTO.setUsuarioAdministrador(usuarioDTO);
             empresaDTO.setDataCadastro(new Date());
+            empresaDTO.setStatus(true);
 
             empresaRepository.saveAndFlush(empresaMapper.toEntity(empresaDTO));
 
@@ -66,22 +67,13 @@ public class EmpresaServiceImpl implements EmpresaService {
             if (!returnDataConverteBase64.getSuccess()) {
                 return returnDataConverteBase64;
             }
-
             Optional<Empresa> empresaBanco = empresaRepository.findById(empresaDTO.getId());
 
-            empresaBanco.get().setNome(empresaDTO.getNome());
-            empresaBanco.get().setTelefone1(empresaDTO.getTelefone1());
-            empresaBanco.get().setTelefone2(empresaDTO.getTelefone2());
-            empresaBanco.get().setEndereco(empresaDTO.getEndereco());
-            empresaBanco.get().setNumero(empresaDTO.getNumero());
-            empresaBanco.get().setCep(empresaDTO.getCep());
-            empresaBanco.get().setBairro(empresaDTO.getBairro());
-            empresaBanco.get().setLatitude(empresaDTO.getLatitude());
-            empresaBanco.get().setLongitude(empresaDTO.getLongitude());
-            empresaBanco.get().setLogoBase64(returnDataConverteBase64.getMessage());
-            empresaBanco.get().setCidade(cidadeMapper.toEntity(empresaDTO.getCidade()));
+            empresaDTO.setDataCadastro(empresaBanco.get().getDataCadastro());
+            empresaDTO.setCnpj(empresaBanco.get().getCnpj());
+            empresaDTO.setUsuarioAdministrador(usuarioMapper.toDto(empresaBanco.get().getUsuarioAdministrador()));
 
-            empresaRepository.saveAndFlush(empresaBanco.get());
+            empresaRepository.saveAndFlush(empresaMapper.toEntity(empresaDTO));
             return new ReturnData<>(true, "Empresa atualizada com sucesso.");
         } catch (BusinessException busEx) {
             return new ReturnData<>(false, "Ocorreu um erro ao atualizar dados", busEx.getMessage());

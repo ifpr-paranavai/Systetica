@@ -56,6 +56,9 @@ public class EmpresaDTO {
     @JsonProperty("data_cadastro")
     private Date dataCadastro;
 
+    @JsonProperty("status")
+    private Boolean status;
+
     @JsonProperty("cidade")
     private CidadeDTO cidade;
 

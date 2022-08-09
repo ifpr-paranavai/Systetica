@@ -2,6 +2,7 @@ package com.frfs.systetica.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.frfs.systetica.entity.Empresa;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,7 +20,7 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ServicoDTO implements Serializable {
 
-    @JsonProperty("name")
+    @JsonProperty("id")
     private Long id;
 
     @JsonProperty("nome")
@@ -27,9 +28,6 @@ public class ServicoDTO implements Serializable {
 
     @JsonProperty("tempo_servico")
     private Integer tempoServico;
-
-    @JsonProperty("tipo_servico")
-    private String tipoServico;
 
     @JsonProperty("descricao")
     private String descricao;
@@ -41,8 +39,14 @@ public class ServicoDTO implements Serializable {
     private Date dataCadastro;
 
     @JsonProperty("status")
-    private String status = String.valueOf('A');
+    private Boolean status;
 
-    @JsonProperty("agendar_servicos_DTO")
+    @JsonProperty("empresa")
+    private EmpresaDTO empresaDTO;
+
+    @JsonProperty("agendar_servicos")
     private List<AgendarServicoDTO> agendarServicosDTO = new ArrayList<>();
+
+    @JsonProperty("email_administrativo")
+    private String emailAdministrativo;
 }

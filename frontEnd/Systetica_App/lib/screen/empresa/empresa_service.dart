@@ -37,7 +37,6 @@ class EmpresaService {
   }
 
   static Future<Info> buscarCidade({
-    int? pageNumber,
     int? size = 9,
     String? nomeCidade,
   }) async {

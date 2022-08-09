@@ -33,11 +33,6 @@ public class Servico implements Serializable {
     @Column(name = "tempo_servico")
     private Integer tempoServico;
 
-    @NotNull
-    @Column(name = "tipo_servico", length = 80)
-    private String tipoServico;
-
-    @NotNull
     @Column(name = "descricao", length = 250)
     private String descricao;
 
@@ -50,8 +45,13 @@ public class Servico implements Serializable {
     private Date dataCadastro;
 
     @NotNull
-    @Column(name = "status", length = 1)
-    private String status = String.valueOf('A');
+    @Column(name = "status")
+    private Boolean status;
+
+    @NotNull
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "empresa")
+    private Empresa empresa;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
