@@ -83,7 +83,7 @@ class CadastroAdministradorWidget extends State<CadastroAdministradorPage>
       child: Column(
         children: [
           _infoGerais(
-            titulo: empresa ?? "Systetica",
+            titulo: empresa ?? "Por favor, cadastre sua empresa.",
             descricao: _bemVindo +
                 (nomeUsuario == null ? "!" : " " + nomeUsuario + "!"),
             widthSize: largura,
@@ -169,8 +169,7 @@ class CadastroAdministradorWidget extends State<CadastroAdministradorPage>
   }) {
     return Text(
       text,
-      textAlign: TextAlign.justify,
-      maxLines: 1,
+      maxLines: 2,
       overflow: TextOverflow.ellipsis,
       style: TextStyle(
         fontSize: fonteSize,

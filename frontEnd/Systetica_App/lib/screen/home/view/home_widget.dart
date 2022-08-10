@@ -23,30 +23,6 @@ class HomeWidget extends State<HomePage> {
     _buscarTokenLocal();
   }
 
-  Future<void> _buscarTokenLocal() async {
-    await TokenRepository.findToken().then((value) {
-      setState(() {
-        Map<String, dynamic> tokenDecodificado =
-            JwtDecoder.decode(value.accessToken!);
-        if (tokenDecodificado['roles'][0] == "ADMINISTRADOR") {
-          _widgetOpcoes = _widgetOpcoesAdministrador;
-          _bottomNavigations = _bottomNavigationAdministrador;
-        } else if (tokenDecodificado['roles'][0] == "FUNCIONARIO") {
-          _widgetOpcoes = _widgetOpcoesFuncionario;
-          _bottomNavigations = _bottomNavigationFuncionario;
-        }
-      });
-    });
-  }
-
-  void _onItemTapped(int index) {
-    setState(
-      () {
-        _selectedIndex = index;
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
@@ -90,6 +66,30 @@ class HomeWidget extends State<HomePage> {
           ),
         ),
       ),
+    );
+  }
+
+  Future<void> _buscarTokenLocal() async {
+    await TokenRepository.findToken().then((value) {
+      setState(() {
+        Map<String, dynamic> tokenDecodificado =
+        JwtDecoder.decode(value.accessToken!);
+        if (tokenDecodificado['roles'][0] == "ADMINISTRADOR") {
+          _widgetOpcoes = _widgetOpcoesAdministrador;
+          _bottomNavigations = _bottomNavigationAdministrador;
+        } else if (tokenDecodificado['roles'][0] == "FUNCIONARIO") {
+          _widgetOpcoes = _widgetOpcoesFuncionario;
+          _bottomNavigations = _bottomNavigationFuncionario;
+        }
+      });
+    });
+  }
+
+  void _onItemTapped(int index) {
+    setState(
+          () {
+        _selectedIndex = index;
+      },
     );
   }
 

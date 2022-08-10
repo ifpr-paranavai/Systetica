@@ -98,7 +98,7 @@ class EmpresaWidget extends State<EmpresaPage> {
             ),
           ),
         ),
-        _dropDownButton(empresa: empresa),
+        _dropDownButton(empresa: empresa, altura: altura),
       ],
     );
   }
@@ -253,12 +253,15 @@ class EmpresaWidget extends State<EmpresaPage> {
   }
 
   // Opções para info empresa
-  DropdownButtonHideUnderline _dropDownButton({required Empresa empresa}) {
+  DropdownButtonHideUnderline _dropDownButton({
+    required Empresa empresa,
+    required double altura,
+  }) {
     return DropdownButtonHideUnderline(
       child: Container(
         alignment: Alignment.topRight,
         child: Padding(
-          padding: const EdgeInsets.only(top: 8, right: 8),
+          padding: EdgeInsets.only(top: altura * 0.02, right: 8),
           child: DropdownButton2(
             customButton: const Padding(
               padding: EdgeInsets.only(bottom: 3),
@@ -329,7 +332,9 @@ class EmpresaWidget extends State<EmpresaPage> {
             _itemNome(empresa.nome!),
             _itemCnpj(empresa.cnpj!),
             _itemTelefone1(empresa.telefone1!),
-            _itemTelefone2(Util.isEmptOrNull(empresa.telefone2) ? "Não cadastrado" : empresa.telefone2!),
+            _itemTelefone2(Util.isEmptOrNull(empresa.telefone2)
+                ? "Não cadastrado"
+                : empresa.telefone2!),
             _itemEndereco(empresa.endereco!, empresa.numero!.toString()),
             _itemBairro(empresa.bairro!),
             _itemCep(empresa.cep.toString()),

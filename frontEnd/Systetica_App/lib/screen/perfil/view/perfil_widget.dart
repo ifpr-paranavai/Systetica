@@ -64,7 +64,10 @@ class PerfilWidget extends State<PerfilPage> {
                       ),
                     ),
                   ),
-                  _dropDownButton(usuario: _controller.usuario),
+                  _dropDownButton(
+                    usuario: _controller.usuario,
+                    altura: _altura,
+                  ),
                 ],
               );
             } else {
@@ -78,12 +81,13 @@ class PerfilWidget extends State<PerfilPage> {
 
   DropdownButtonHideUnderline _dropDownButton({
     required Usuario usuario,
+    required double altura,
   }) {
     return DropdownButtonHideUnderline(
       child: Container(
         alignment: Alignment.topRight,
         child: Padding(
-          padding: const EdgeInsets.only(top: 8, right: 8),
+          padding: EdgeInsets.only(top: altura * 0.02, right: 8),
           child: DropdownButton2(
             customButton: const Padding(
               padding: EdgeInsets.only(bottom: 3),
