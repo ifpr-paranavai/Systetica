@@ -15,6 +15,12 @@ class ServicoWidget extends State<ServicoPage> {
   final ScrollController _scrollController = ScrollController();
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+
+  @override
   Widget build(BuildContext context) {
     double _altura = MediaQuery.of(context).size.height;
     double _largura = MediaQuery.of(context).size.width;
@@ -33,11 +39,11 @@ class ServicoWidget extends State<ServicoPage> {
               return const LoadingAnimation();
             } else if (snapShot.hasData) {
               if (snapShot.data!.success!) {
-                List<Servico> servicos = snapShot.data!.object;
+                _controller.servicos = snapShot.data!.object;
                 return _body(
                   largura: _largura,
                   altura: _altura,
-                  servicos: servicos,
+                  servicos: _controller.servicos,
                 );
               } else {
                 return const Text("Nenhum serviço cadastrado"); //todo
@@ -109,7 +115,7 @@ class ServicoWidget extends State<ServicoPage> {
             width: 1,
           ),
         ),
-        child: TextField(
+        child: TextFormField(
           maxLines: 1,
           decoration: InputDecoration(
             fillColor: Colors.transparent,
@@ -130,6 +136,13 @@ class ServicoWidget extends State<ServicoPage> {
             ),
             contentPadding: EdgeInsets.zero,
           ),
+          onChanged: (value) async {
+            _controller.buscarServico(context: context, servico: value).then(
+                  (value) => setState(() {
+                    _controller.servicos = value!.object;
+                  }),
+                );
+          },
         ),
       ),
     );

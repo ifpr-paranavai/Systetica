@@ -22,7 +22,7 @@ class Servico {
   Servico.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     nome = json['nome'];
-    tempoServico = json['tempoServico'];
+    tempoServico = json['tempo_servico'];
     descricao = json['descricao'];
     preco = json['preco'];
     status = json['status'];

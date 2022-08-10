@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:systetica/model/Info.dart';
+import 'package:systetica/model/Servico.dart';
 import 'package:systetica/screen/servico/servico_service.dart';
 
 class ServicoController {
+  late List<Servico> servicos = [];
+
   Future<Info?> buscarServico({
     required BuildContext context,
     required String servico,

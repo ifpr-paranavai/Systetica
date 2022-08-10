@@ -11,7 +11,7 @@ class ServicoService{
     int? size = 1000,
     String? servico,
   }) async {
-    String path = "servico/buscar-todos?search=$servico&size=$size";
+    String path = "servico/buscar-todos?search=$servico&size=$size&sort=nome";
 
     Dio dio = DioConfigApi.builderConfig();
 
