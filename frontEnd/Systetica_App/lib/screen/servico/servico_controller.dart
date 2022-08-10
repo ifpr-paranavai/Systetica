@@ -4,7 +4,7 @@ import 'package:systetica/model/Servico.dart';
 import 'package:systetica/screen/servico/servico_service.dart';
 
 class ServicoController {
-  late List<Servico> servicos = [];
+  late List<Servico> servicos;
 
   Future<Info?> buscarServico({
     required BuildContext context,

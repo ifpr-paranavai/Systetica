@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:systetica/components/icon_arrow_widget.dart';
 import 'package:systetica/components/imagens_widget.dart';
 import 'package:systetica/components/list_view_component.dart';
-import 'package:systetica/components/loading/loading_animation.dart';
 import 'package:systetica/components/text_autenticacoes_widget.dart';
 import 'package:systetica/model/Info.dart';
 import 'package:systetica/model/Servico.dart';
@@ -13,12 +12,25 @@ import 'package:systetica/style/app_colors..dart';
 class ServicoWidget extends State<ServicoPage> {
   final ServicoController _controller = ServicoController();
   final ScrollController _scrollController = ScrollController();
+  Info? info = Info(success: false);
 
   @override
   void initState() {
     super.initState();
+    _controller.servicos = [];
+    buscaServicos();
   }
 
+  Future<void> buscaServicos() async {
+    await _controller.buscarServico(context: context, servico: "").then(
+          (value) => setState(
+            () {
+              info = value;
+              _controller.servicos = value!.object;
+            },
+          ),
+        );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,27 +44,15 @@ class ServicoWidget extends State<ServicoPage> {
           paddingTop: _altura * 0.011,
           onPressed: () => Navigator.pop(context),
         ),
-        body: FutureBuilder<Info?>(
-          future: _controller.buscarServico(context: context, servico: ""),
-          builder: (context, snapShot) {
-            if (!snapShot.hasData) {
-              return const LoadingAnimation();
-            } else if (snapShot.hasData) {
-              if (snapShot.data!.success!) {
-                _controller.servicos = snapShot.data!.object;
-                return _body(
-                  largura: _largura,
-                  altura: _altura,
-                  servicos: _controller.servicos,
-                );
-              } else {
-                return const Text("Nenhum serviço cadastrado"); //todo
-              }
-            } else {
-              return _erroRequisicao(_largura);
-            }
-          },
-        ),
+        body: info?.success == false
+            ? _erroRequisicao(largura: _largura, listaVazia: false)
+            : (_controller.servicos.isEmpty
+                ? stackListaVazia(altura: _altura, largura: _largura)
+                : _body(
+                    largura: _largura,
+                    altura: _altura,
+                    servicos: _controller.servicos,
+                  )),
       ),
     );
   }
@@ -70,15 +70,10 @@ class ServicoWidget extends State<ServicoPage> {
               altura: altura,
               largura: largura,
             ),
-            Expanded(
-              child: Container(
-                color: Colors.grey.withOpacity(0.2),
-                child: _listView(
-                  altura: altura,
-                  largura: largura,
-                  servicos: servicos,
-                ),
-              ),
+            _listView(
+              altura: altura,
+              largura: largura,
+              servicos: servicos,
             ),
           ],
         ),
@@ -108,7 +103,7 @@ class ServicoWidget extends State<ServicoPage> {
         padding: EdgeInsets.symmetric(horizontal: largura / 60),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(99),
+          borderRadius: BorderRadius.circular(20),
           border: Border.all(
             color: Colors.black,
             // width: 0.15,
@@ -137,6 +132,7 @@ class ServicoWidget extends State<ServicoPage> {
             contentPadding: EdgeInsets.zero,
           ),
           onChanged: (value) async {
+            _controller.servicos = [];
             _controller.buscarServico(context: context, servico: value).then(
                   (value) => setState(() {
                     _controller.servicos = value!.object;
@@ -153,29 +149,34 @@ class ServicoWidget extends State<ServicoPage> {
     required double largura,
     required List<Servico> servicos,
   }) {
-    return ListView.builder(
-      controller: _scrollController,
-      shrinkWrap: true,
-      padding: EdgeInsets.only(
-        left: largura * 0.04,
-        right: largura * 0.04,
+    return Expanded(
+      child: Container(
+        color: Colors.grey.withOpacity(0.2),
+        child: ListView.builder(
+          controller: _scrollController,
+          shrinkWrap: true,
+          padding: EdgeInsets.only(
+            left: largura * 0.04,
+            right: largura * 0.04,
+          ),
+          physics: const BouncingScrollPhysics(
+            parent: AlwaysScrollableScrollPhysics(),
+          ),
+          itemCount: servicos.length,
+          itemBuilder: (BuildContext context, int index) {
+            return ListViewComponent(
+              largura: largura,
+              altura: altura,
+              titulo1: "Nome: ",
+              titulo2: "Preço: ",
+              descricao1: servicos[index].nome!,
+              descricao2: "R\$ " + servicos[index].preco.toString(),
+              numero: index + 1,
+              onTap: () {},
+            );
+          },
+        ),
       ),
-      physics: const BouncingScrollPhysics(
-        parent: AlwaysScrollableScrollPhysics(),
-      ),
-      itemCount: servicos.length,
-      itemBuilder: (BuildContext context, int index) {
-        return ListViewComponent(
-          largura: largura,
-          altura: altura,
-          titulo1: "Nome: ",
-          titulo2: "Preço: ",
-          descricao1: servicos[index].nome!,
-          descricao2: "R\$ " + servicos[index].preco.toString(),
-          numero: index + 1,
-          onTap: () {},
-        );
-      },
     );
   }
 
@@ -206,35 +207,60 @@ class ServicoWidget extends State<ServicoPage> {
   }
 
   // Widgets de erro
-  Center _erroRequisicao(double _largura) {
+  Stack stackListaVazia({
+    required double altura,
+    required double largura,
+  }) {
+    return Stack(
+      children: [
+        _erroRequisicao(largura: largura, listaVazia: true),
+        buttonIcon(
+          altura: altura,
+          largura: largura,
+        ),
+      ],
+    );
+  }
+
+  Center _erroRequisicao({
+    required bool listaVazia,
+    required double largura,
+  }) {
     return Center(
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            _imagemErro(),
-            _textoErro(_largura),
+            _imagemErro(listaVazia: listaVazia),
+            _textoErro(largura: largura, listaVazia: listaVazia),
           ],
         ),
       ),
     );
   }
 
-  ImagensWidget _imagemErro() {
+  ImagensWidget _imagemErro({
+    required bool listaVazia,
+  }) {
     return ImagensWidget(
       paddingLeft: 0,
-      image: "erro.png",
+      image: listaVazia ? "list-vazia.png" : "erro.png",
       widthImagem: 320,
     );
   }
 
-  TextAutenticacoesWidget _textoErro(double _largura) {
+  TextAutenticacoesWidget _textoErro({
+    required double largura,
+    required bool listaVazia,
+  }) {
     return TextAutenticacoesWidget(
-      paddingLeft: _largura * 0.10,
-      paddingRight: _largura * 0.10,
+      paddingLeft: largura * 0.10,
+      paddingRight: largura * 0.10,
       fontSize: 33,
-      text: "Oopss...ocorreu algum erro. \nTente novamente mais tarde.",
+      text: listaVazia
+          ? "Não existe nenhum serviço cadastrado no momento."
+          : "Oopss...ocorreu algum erro. \nTente novamente mais tarde.",
     );
   }
 }
