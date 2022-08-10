@@ -260,48 +260,46 @@ class EmpresaWidget extends State<EmpresaPage> {
     return DropdownButtonHideUnderline(
       child: Container(
         alignment: Alignment.topRight,
-        child: Padding(
-          padding: EdgeInsets.only(top: altura * 0.02, right: 8),
-          child: DropdownButton2(
-            customButton: const Padding(
-              padding: EdgeInsets.only(bottom: 3),
-              child: Icon(
-                Icons.more_vert,
-                size: 35,
-                color: AppColors.redPrincipal,
-              ),
+        padding: EdgeInsets.only(top: altura * 0.02, right: 8),
+        child: DropdownButton2(
+          customButton: const Padding(
+            padding: EdgeInsets.only(bottom: 3),
+            child: Icon(
+              Icons.more_vert,
+              size: 35,
+              color: AppColors.redPrincipal,
             ),
-            itemPadding: const EdgeInsets.all(15),
-            dropdownWidth: 105,
-            dropdownDecoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15),
-              color: AppColors.bluePrincipal,
-            ),
-            dropdownElevation: 8,
-            offset: const Offset(-65, 2),
-            focusColor: Colors.transparent,
-            items: _menuItems
-                .map(
-                  (item) => DropdownMenuItem<MenuItemDto>(
-                    value: item,
-                    child: MenuItemDto.buildItem(item),
+          ),
+          itemPadding: const EdgeInsets.all(15),
+          dropdownWidth: 105,
+          dropdownDecoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(15),
+            color: AppColors.bluePrincipal,
+          ),
+          dropdownElevation: 8,
+          offset: const Offset(-65, 2),
+          focusColor: Colors.transparent,
+          items: _menuItems
+              .map(
+                (item) => DropdownMenuItem<MenuItemDto>(
+                  value: item,
+                  child: MenuItemDto.buildItem(item),
+                ),
+              )
+              .toList(),
+          onChanged: (value) {
+            Navigator.of(context)
+                .push(
+                  _controller.myPageTransition.pageTransition(
+                    child: EmpresaFormPage(empresa: empresa),
+                    childCurrent: widget,
+                    buttoToTop: true,
                   ),
                 )
-                .toList(),
-            onChanged: (value) {
-              Navigator.of(context)
-                  .push(
-                    _controller.myPageTransition.pageTransition(
-                      child: EmpresaFormPage(empresa: empresa),
-                      childCurrent: widget,
-                      buttoToTop: true,
-                    ),
-                  )
-                  .then(
-                    (value) => setState(() {}),
-                  );
-            },
-          ),
+                .then(
+                  (value) => setState(() {}),
+                );
+          },
         ),
       ),
     );

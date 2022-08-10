@@ -89,7 +89,7 @@ class _ListViewComponent extends State<ListViewComponent> {
                     ),
                     child: Icon(
                       Icons.construction,
-                      color: Colors.lightGreen.withOpacity(.9),
+                      color: Colors.lightGreen.withOpacity(.8),
                       size: 30,
                     ),
                   ),

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:systetica/components/icon_arrow_widget.dart';
 import 'package:systetica/components/imagens_widget.dart';
-import 'package:systetica/components/item_list.dart';
 import 'package:systetica/components/list_view_component.dart';
 import 'package:systetica/components/loading/loading_animation.dart';
 import 'package:systetica/components/text_autenticacoes_widget.dart';
@@ -9,6 +8,7 @@ import 'package:systetica/model/Info.dart';
 import 'package:systetica/model/Servico.dart';
 import 'package:systetica/screen/servico/servico_controller.dart';
 import 'package:systetica/screen/servico/view/servico_page.dart';
+import 'package:systetica/style/app_colors..dart';
 
 class ServicoWidget extends State<ServicoPage> {
   final ServicoController _controller = ServicoController();
@@ -23,7 +23,7 @@ class ServicoWidget extends State<ServicoPage> {
         backgroundColor: Colors.white,
         floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
         floatingActionButton: IconArrowWidget(
-          paddingTop: _altura * 0.014,
+          paddingTop: _altura * 0.011,
           onPressed: () => Navigator.pop(context),
         ),
         body: FutureBuilder<Info?>(
@@ -34,13 +34,13 @@ class ServicoWidget extends State<ServicoPage> {
             } else if (snapShot.hasData) {
               if (snapShot.data!.success!) {
                 List<Servico> servicos = snapShot.data!.object;
-                return _listaServicos(
+                return _body(
                   largura: _largura,
                   altura: _altura,
                   servicos: servicos,
                 );
               } else {
-                return const Text("Nenhum serviço cadastrado");
+                return const Text("Nenhum serviço cadastrado"); //todo
               }
             } else {
               return _erroRequisicao(_largura);
@@ -51,41 +51,49 @@ class ServicoWidget extends State<ServicoPage> {
     );
   }
 
-  Widget _listaServicos({
+  Widget _body({
     required double altura, //width
     required double largura,
     required List<Servico> servicos,
   }) {
-    return Column(
+    return Stack(
       children: [
-        pesquisa(
-          altura: altura,
-          largura: largura,
-        ),
-        Expanded(
-          child: Container(
-            color: Colors.grey.withOpacity(0.4),
-            child: _listView(
+        Column(
+          children: [
+            _pesquisaServico(
               altura: altura,
               largura: largura,
-              servicos: servicos,
             ),
-          ),
+            Expanded(
+              child: Container(
+                color: Colors.grey.withOpacity(0.2),
+                child: _listView(
+                  altura: altura,
+                  largura: largura,
+                  servicos: servicos,
+                ),
+              ),
+            ),
+          ],
+        ),
+        buttonIcon(
+          altura: altura,
+          largura: largura,
         ),
       ],
     );
   }
 
-  Widget pesquisa({
+  Widget _pesquisaServico({
     required double altura, //width
     required double largura, //height
   }) {
     return Container(
-      height: altura * 0.1,
-      color: Colors.grey.withOpacity(0.4),
+      height: altura * 0.09,
+      color: Colors.grey.withOpacity(0.2),
       padding: EdgeInsets.only(
-        top: largura * 0.030,
-        bottom: largura * 0.035,
+        top: largura * 0.040,
+        bottom: largura * 0.030,
         right: largura * 0.035,
         left: largura * 0.22,
       ),
@@ -135,7 +143,10 @@ class ServicoWidget extends State<ServicoPage> {
     return ListView.builder(
       controller: _scrollController,
       shrinkWrap: true,
-      padding: EdgeInsets.all(largura * 0.04),
+      padding: EdgeInsets.only(
+        left: largura * 0.04,
+        right: largura * 0.04,
+      ),
       physics: const BouncingScrollPhysics(
         parent: AlwaysScrollableScrollPhysics(),
       ),
@@ -152,6 +163,32 @@ class ServicoWidget extends State<ServicoPage> {
           onTap: () {},
         );
       },
+    );
+  }
+
+  Widget buttonIcon({
+    required double altura,
+    required double largura,
+  }) {
+    return Container(
+      padding: EdgeInsets.only(
+        bottom: altura * 0.04,
+        right: altura * 0.04,
+      ),
+      alignment: Alignment.bottomRight,
+      child: IconButton(
+        focusColor: Colors.transparent,
+        splashColor: Colors.transparent,
+        highlightColor: Colors.transparent,
+        icon: Icon(
+          Icons.add_circle_outlined,
+          color: AppColors.bluePrincipal.withOpacity(.9),
+          size: 60,
+        ),
+        onPressed: () {
+          print("Button");
+        },
+      ),
     );
   }
 
