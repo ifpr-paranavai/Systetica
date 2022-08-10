@@ -100,7 +100,7 @@ class ServicoWidget extends State<ServicoPage> {
       padding: EdgeInsets.only(
         top: largura * 0.040,
         bottom: largura * 0.030,
-        right: largura * 0.035,
+        right: largura * 0.037,
         left: largura * 0.22,
       ),
       child: Container(

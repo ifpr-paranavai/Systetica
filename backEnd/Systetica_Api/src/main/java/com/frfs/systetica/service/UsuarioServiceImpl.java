@@ -42,12 +42,12 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
             }
             var codigoAleatorio = codigoAleatorioService.gerarCodigo();
 
-//            var returnDataEmail = emailService.enviarEmail(true, usuarioDTO.getEmail(),
-//                    codigoAleatorio, usuarioDTO.getNome());
-//
-//            if (!returnDataEmail.getSuccess()) {
-//                return returnDataEmail;
-//            } // TODO
+            var returnDataEmail = emailService.enviarEmail(true, usuarioDTO.getEmail(),
+                    codigoAleatorio, usuarioDTO.getNome());
+
+            if (!returnDataEmail.getSuccess()) {
+                return returnDataEmail;
+            }
 
             usuarioDTO.setPassword(passwordEncoder.encode(usuarioDTO.getPassword()));
             usuarioDTO.setRoles(roleService.buscaRolePorNome("CLIENTE"));
