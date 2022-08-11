@@ -42,7 +42,7 @@ public class ServicoDTO implements Serializable {
     private Boolean status;
 
     @JsonProperty("empresa")
-    private EmpresaDTO empresaDTO;
+    private EmpresaDTO empresa;
 
     @JsonProperty("agendar_servicos")
     private List<AgendarServicoDTO> agendarServicosDTO = new ArrayList<>();
