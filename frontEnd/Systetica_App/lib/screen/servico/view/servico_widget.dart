@@ -6,6 +6,7 @@ import 'package:systetica/components/text_autenticacoes_widget.dart';
 import 'package:systetica/model/Info.dart';
 import 'package:systetica/model/Servico.dart';
 import 'package:systetica/screen/servico/servico_controller.dart';
+import 'package:systetica/screen/servico/view/detalhe/servico_detalhe_page.dart';
 import 'package:systetica/screen/servico/view/novo/servico_novo_page.dart';
 import 'package:systetica/screen/servico/view/servico_page.dart';
 import 'package:systetica/style/app_colors..dart';
@@ -173,7 +174,21 @@ class ServicoWidget extends State<ServicoPage> {
               descricao1: servicos[index].nome!,
               descricao2: "R\$ " + servicos[index].preco.toString(),
               numero: index + 1,
-              onTap: () {},
+              onTap: () {
+                Navigator.of(context)
+                    .push(
+                      _controller.myPageTransition.pageTransition(
+                        child: ServicoDetalhePage(servico: servicos[index]),
+                        childCurrent: widget,
+                        buttoToTop: true,
+                      ),
+                    )
+                    .then(
+                      (value) => setState(() {
+                        buscaServicos();
+                      }),
+                    );
+              },
             );
           },
         ),

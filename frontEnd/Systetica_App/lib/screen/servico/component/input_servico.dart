@@ -9,9 +9,11 @@ import 'package:systetica/screen/servico/servico_controller.dart';
 class InputServico {
 
   // Opções para cadatrar servico
-  TextAutenticacoesWidget textoCadastrarServico() {
+  TextAutenticacoesWidget textoCadastrarServico({
+  required String texto
+}) {
     return TextAutenticacoesWidget(
-      text: "Cadastrar Serviço",
+      text: texto,
       fontSize: 30,
       paddingBottom: 6,
     );

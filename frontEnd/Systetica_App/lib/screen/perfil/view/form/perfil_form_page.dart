@@ -6,7 +6,7 @@ import 'package:systetica/screen/perfil/view/form/perfil_form_widget.dart';
 
 class PerfilFormPage extends StatefulWidget {
   PerfilFormPage({Key? key, required this.usuario}) : super(key: key);
-  Usuario? usuario;
+  Usuario usuario;
 
   @override
   PerfilFormWidget createState() => PerfilFormWidget();

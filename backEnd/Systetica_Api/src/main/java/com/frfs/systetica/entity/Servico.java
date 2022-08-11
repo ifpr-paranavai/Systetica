@@ -26,11 +26,11 @@ public class Servico implements Serializable {
     private Long id;
 
     @NotNull
-    @Column(name = "nome", length = 100)
+    @Column(name = "nome", length = 50)
     private String nome;
 
     @NotNull
-    @Column(name = "tempo_servico")
+    @Column(name = "tempo_servico", length = 4)
     private Integer tempoServico;
 
     @Column(name = "descricao", length = 250)

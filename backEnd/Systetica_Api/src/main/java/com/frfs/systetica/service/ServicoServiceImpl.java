@@ -35,7 +35,8 @@ public class ServicoServiceImpl implements ServicoService {
                 return new ReturnData<>(false, "Empresa não encontrada",
                         "Não foi possível encontrar empresa cadastrada para salvar serviço");
             }
-            servicoDTO.setEmpresaDTO(empresaMapper.toDto(empresa.get()));
+            servicoDTO.setEmpresa(empresaMapper.toDto(empresa.get()));
+            servicoDTO.setStatus(true);
             servicoDTO.setDataCadastro(new Date());
 
             servicoRepository.saveAndFlush(servicoMapper.toEntity(servicoDTO));

@@ -42,7 +42,7 @@ class ServicoNovoWidget extends State<ServicoNovoPage> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   _sizedBox(height: _altura * 0.15),
-                  _inputEmpresa.textoCadastrarServico(),
+                  _inputEmpresa.textoCadastrarServico(texto: "Cadastrar Serviço"),
                   _inputEmpresa.inputNomeServico(
                     paddingHorizontal: _largura,
                     controller: _controller,
