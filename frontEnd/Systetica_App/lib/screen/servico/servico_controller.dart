@@ -15,12 +15,11 @@ class ServicoController {
   final tempoServicoController = TextEditingController();
   final descricaoController = TextEditingController();
   final precoController = TextEditingController();
-  final statusController = TextEditingController();
-
   final myPageTransition = MyPageTransition();
   final formKey = GlobalKey<FormState>();
   late List<Servico> servicos;
   late Servico servico;
+  bool? status;
 
   Future<void> cadastrarServico(BuildContext context) async {
     var connected = await ConnectionCheck.check();
@@ -28,17 +27,18 @@ class ServicoController {
       if (formKey.currentState != null) {
         if (formKey.currentState?.validate() ?? true) {
           try {
+            var contextLoading = context;
+            var loading = ShowLoadingWidget.showLoadingLabel(
+              contextLoading,
+              "Aguarde...",
+            );
+
             Token _token = await TokenRepository.findToken();
             servico.nome = nomeController.text;
             servico.tempoServico = int.parse(tempoServicoController.text);
             servico.preco = double.parse(precoController.text);
             servico.descricao = descricaoController.text;
             servico.emailAdministrativo = _token.email;
-            var contextLoading = context;
-            var loading = ShowLoadingWidget.showLoadingLabel(
-              contextLoading,
-              "Aguarde...",
-            );
             Info _info = await ServicoService.cadastrarServico(_token, servico);
 
             // Finaliza o loading na tela
@@ -57,7 +57,70 @@ class ServicoController {
                 onPressedOk: () => Navigator.pop(context),
               );
             }
+          } catch (e) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                backgroundColor: Colors.blueGrey,
+                content: TextoErroWidget(
+                  mensagem: "Ocorreu algum erro de comunicação com o servidor",
+                ),
+              ),
+            );
+          }
+        }
+      }
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          backgroundColor: Colors.blueGrey,
+          padding: EdgeInsets.all(12),
+          content: TextoErroWidget(
+            mensagem: "Por Favor, conecte-se a rede para cadastrar um serviço",
+          ),
+        ),
+      );
+    }
+  }
 
+  Future<void> atualizarServico(BuildContext context) async {
+    var connected = await ConnectionCheck.check();
+    if (connected) {
+      if (formKey.currentState != null) {
+        if (formKey.currentState?.validate() ?? true) {
+          try {
+            var contextLoading = context;
+            var loading = ShowLoadingWidget.showLoadingLabel(
+              contextLoading,
+              "Aguarde...",
+            );
+
+            Token _token = await TokenRepository.findToken();
+
+            servico.nome = nomeController.text;
+            servico.tempoServico = int.parse(tempoServicoController.text);
+            servico.preco = double.parse(precoController.text);
+            servico.descricao = descricaoController.text;
+            servico.emailAdministrativo = _token.email;
+            servico.status = status;
+
+            Info _info = await ServicoService.atualizarServico(_token, servico);
+
+            // Finaliza o loading na tela
+            Navigator.pop(contextLoading, loading);
+
+            var alertDialogOk = AlertDialogWidget();
+            if (_info.success!) {
+              return;
+            } else {
+              alertDialogOk.alertDialog(
+                showModalOk: true,
+                context: context,
+                titulo: "Erro",
+                descricao: _info.message!,
+                buttonText: "OK",
+                onPressedOk: () => Navigator.pop(context),
+              );
+            }
           } catch (e) {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(

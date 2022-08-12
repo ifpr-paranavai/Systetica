@@ -9,16 +9,17 @@ import 'package:systetica/model/Token.dart';
 import 'package:systetica/utils/dio/dio_config_api.dart';
 
 class EmpresaService {
-  static Future<Info> buscaEmpresa(Token token) async {
+  static Future<Info> cadastrarEmpresa(Token token, Empresa empresa) async {
     Info info = Info(success: true);
     try {
       Dio dio = DioConfigApi.builderConfigJson();
 
       dio.options.headers["Authorization"] = "Bearer ${token.accessToken}";
 
-      var response = await dio.get("empresa/email/" + token.email!);
+      var response = await dio.post("empresa/salvar", data: empresa.toJson());
 
-      info.object = Empresa.fromJson(response.data['response']);
+      info = Info.fromJson(response.data);
+
       return info;
     } on DioError catch (e) {
       try {
@@ -26,7 +27,7 @@ class EmpresaService {
           throw Exception("Erro de requisição: ${e.message}");
         }
         info.success = false;
-        info.message = "Erro: ${e.message}";
+        info.message = "Ocorreu algum erro ao tentar salvar empresa";
         return info;
       } catch (e) {
         throw Exception(e.runtimeType);
@@ -34,24 +35,6 @@ class EmpresaService {
     } on Exception catch (ex) {
       rethrow;
     }
-  }
-
-  static Future<Info> buscarCidade({
-    int? size = 9,
-    String? nomeCidade,
-  }) async {
-    String path = "cidade/buscar-todos?search=$nomeCidade&size=$size";
-
-    Dio dio = DioConfigApi.builderConfig();
-
-    var response = await dio.post(path);
-
-    Info info = Info();
-
-    info.success = true;
-    info.object = Cidade.fromJsonList(response.data['response']);
-
-    return info;
   }
 
   static Future<Info> atualizarEmpresa(Token token, Empresa empresa) async {
@@ -82,17 +65,16 @@ class EmpresaService {
     }
   }
 
-  static Future<Info> cadastrarEmpresa(Token token, Empresa empresa) async {
+  static Future<Info> buscaEmpresa(Token token) async {
     Info info = Info(success: true);
     try {
       Dio dio = DioConfigApi.builderConfigJson();
 
       dio.options.headers["Authorization"] = "Bearer ${token.accessToken}";
 
-      var response = await dio.post("empresa/salvar", data: empresa.toJson());
+      var response = await dio.get("empresa/email/" + token.email!);
 
-      info = Info.fromJson(response.data);
-
+      info.object = Empresa.fromJson(response.data['response']);
       return info;
     } on DioError catch (e) {
       try {
@@ -100,7 +82,7 @@ class EmpresaService {
           throw Exception("Erro de requisição: ${e.message}");
         }
         info.success = false;
-        info.message = "Ocorreu algum erro ao tentar salvar empresa";
+        info.message = "Erro: ${e.message}";
         return info;
       } catch (e) {
         throw Exception(e.runtimeType);
@@ -124,5 +106,23 @@ class EmpresaService {
     } on Exception catch (ex) {
       return brasilCep;
     }
+  }
+
+  static Future<Info> buscarCidade({
+    int? size = 9,
+    String? nomeCidade,
+  }) async {
+    String path = "cidade/buscar-todos?search=$nomeCidade&size=$size";
+
+    Dio dio = DioConfigApi.builderConfig();
+
+    var response = await dio.post(path);
+
+    Info info = Info();
+
+    info.success = true;
+    info.object = Cidade.fromJsonList(response.data['response']);
+
+    return info;
   }
 }

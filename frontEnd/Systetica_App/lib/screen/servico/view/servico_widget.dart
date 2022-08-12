@@ -2,19 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:systetica/components/icon_arrow_widget.dart';
 import 'package:systetica/components/imagens_widget.dart';
 import 'package:systetica/components/list_view_component.dart';
+import 'package:systetica/components/loading/loading_animation.dart';
 import 'package:systetica/components/text_autenticacoes_widget.dart';
 import 'package:systetica/model/Info.dart';
 import 'package:systetica/model/Servico.dart';
 import 'package:systetica/screen/servico/servico_controller.dart';
-import 'package:systetica/screen/servico/view/detalhe/servico_detalhe_page.dart';
-import 'package:systetica/screen/servico/view/novo/servico_novo_page.dart';
+import 'package:systetica/screen/servico/view/form/servico_form_page.dart';
 import 'package:systetica/screen/servico/view/servico_page.dart';
 import 'package:systetica/style/app_colors..dart';
+import 'package:brasil_fields/brasil_fields.dart';
 
 class ServicoWidget extends State<ServicoPage> {
   final ServicoController _controller = ServicoController();
   final ScrollController _scrollController = ScrollController();
-  Info? info = Info(success: false);
+  Info? info = Info(success: true);
+  bool loading = true;
 
   @override
   void initState() {
@@ -35,15 +37,13 @@ class ServicoWidget extends State<ServicoPage> {
           paddingTop: _altura * 0.011,
           onPressed: () => Navigator.pop(context),
         ),
-        body: info?.success == false
-            ? _erroRequisicao(largura: _largura, listaVazia: false)
-            : (_controller.servicos.isEmpty
-                ? stackListaVazia(altura: _altura, largura: _largura)
-                : _body(
-                    largura: _largura,
-                    altura: _altura,
-                    servicos: _controller.servicos,
-                  )),
+        body: loading
+            ? const LoadingAnimation()
+            : _body(
+                largura: _largura,
+                altura: _altura,
+                servicos: _controller.servicos,
+              ),
       ),
     );
   }
@@ -54,6 +54,7 @@ class ServicoWidget extends State<ServicoPage> {
             () {
               info = value;
               _controller.servicos = value!.object;
+              loading = false;
             },
           ),
         );
@@ -72,11 +73,16 @@ class ServicoWidget extends State<ServicoPage> {
               altura: altura,
               largura: largura,
             ),
-            _listView(
-              altura: altura,
-              largura: largura,
-              servicos: servicos,
-            ),
+            servicos.isEmpty
+                ? _erroRequisicao(
+                    largura: largura,
+                    listaVazia: true,
+                  )
+                : _listView(
+                    altura: altura,
+                    largura: largura,
+                    servicos: servicos,
+                  ),
           ],
         ),
         buttonIcon(
@@ -172,13 +178,13 @@ class ServicoWidget extends State<ServicoPage> {
               titulo1: "Nome: ",
               titulo2: "Preço: ",
               descricao1: servicos[index].nome!,
-              descricao2: "R\$ " + servicos[index].preco.toString(),
+              descricao2: UtilBrasilFields.obterReal(servicos[index].preco!),
               numero: index + 1,
               onTap: () {
                 Navigator.of(context)
                     .push(
                       _controller.myPageTransition.pageTransition(
-                        child: ServicoDetalhePage(servico: servicos[index]),
+                        child: ServicoFormPage(servico: servicos[index]),
                         childCurrent: widget,
                         buttoToTop: true,
                       ),
@@ -219,7 +225,7 @@ class ServicoWidget extends State<ServicoPage> {
           Navigator.of(context)
               .push(
                 _controller.myPageTransition.pageTransition(
-                  child: const ServicoNovoPage(),
+                  child: ServicoFormPage(),
                   childCurrent: widget,
                   buttoToTop: true,
                 ),
@@ -235,36 +241,27 @@ class ServicoWidget extends State<ServicoPage> {
   }
 
   // Widgets de erro
-  Stack stackListaVazia({
-    required double altura,
-    required double largura,
-  }) {
-    return Stack(
-      children: [
-        _erroRequisicao(largura: largura, listaVazia: true),
-        buttonIcon(
-          altura: altura,
-          largura: largura,
-        ),
-      ],
-    );
-  }
-
-  Center _erroRequisicao({
+  Widget _erroRequisicao({
     required bool listaVazia,
     required double largura,
   }) {
-    return Center(
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            _imagemErro(listaVazia: listaVazia),
-            _textoErro(largura: largura, listaVazia: listaVazia),
-          ],
-        ),
-      ),
+    return Expanded(
+      child: Container(
+          color: Colors.grey.withOpacity(0.2),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SingleChildScrollView(
+                child: Column(
+                  children: [
+                    _imagemErro(listaVazia: listaVazia),
+                    _textoErro(largura: largura, listaVazia: listaVazia),
+                  ],
+                ),
+              ),
+            ],
+          )),
     );
   }
 
@@ -283,11 +280,11 @@ class ServicoWidget extends State<ServicoPage> {
     required bool listaVazia,
   }) {
     return TextAutenticacoesWidget(
-      paddingLeft: largura * 0.10,
+      paddingLeft: largura * (listaVazia ? 0.18 : 0.15),
       paddingRight: largura * 0.10,
       fontSize: 33,
       text: listaVazia
-          ? "Não existe nenhum serviço cadastrado no momento."
+          ? "Nenhum serviço cadastradoa."
           : "Oopss...ocorreu algum erro. \nTente novamente mais tarde.",
     );
   }

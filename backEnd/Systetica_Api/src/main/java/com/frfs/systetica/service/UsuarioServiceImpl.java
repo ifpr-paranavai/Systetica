@@ -42,8 +42,8 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
             }
             var codigoAleatorio = codigoAleatorioService.gerarCodigo();
 
-            var returnDataEmail = emailService.enviarEmail(true, usuarioDTO.getEmail(),
-                    codigoAleatorio, usuarioDTO.getNome());
+            var returnDataEmail = emailService.enviarEmail(usuarioDTO.getEmail(), codigoAleatorio,
+                    usuarioDTO.getNome());
 
             if (!returnDataEmail.getSuccess()) {
                 return returnDataEmail;
@@ -114,7 +114,7 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
     }
 
     @Override
-    public ReturnData<String> gerarCodigoAlterarSenha(String email) {
+    public ReturnData<String> gerarCodigoAleatorio(String email) {
         var usuario = usuarioRepository.findByEmail(email);
 
         if (usuario.isEmpty()) {
@@ -123,8 +123,8 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
         }
         var codigoAleatorio = codigoAleatorioService.gerarCodigo();
 
-        var returnDataEmail = emailService.enviarEmail(false, email,
-                codigoAleatorio, usuario.get().getNome());
+        var returnDataEmail = emailService.enviarEmail(email, codigoAleatorio,
+                usuario.get().getNome());
 
         if (!returnDataEmail.getSuccess()) {
             return returnDataEmail;

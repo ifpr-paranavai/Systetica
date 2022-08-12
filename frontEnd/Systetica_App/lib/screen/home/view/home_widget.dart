@@ -36,12 +36,12 @@ class HomeWidget extends State<HomePage> {
           margin: const EdgeInsets.all(10),
           height: screenWidth * .159,
           decoration: BoxDecoration(
+            color: Colors.white,
             borderRadius: BorderRadius.circular(50),
             border: Border.all(
               color: Colors.black,
               width: 0.15,
             ),
-            color: Colors.white,
             boxShadow: [
               BoxShadow(
                 color: Colors.black.withOpacity(.15),

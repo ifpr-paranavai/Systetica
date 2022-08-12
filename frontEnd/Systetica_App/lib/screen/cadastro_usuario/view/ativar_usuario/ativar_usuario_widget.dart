@@ -3,14 +3,17 @@ import 'package:systetica/components/botoes/botao_widget.dart';
 import 'package:systetica/components/icon_arrow_widget.dart';
 import 'package:systetica/components/imagens_widget.dart';
 import 'package:systetica/components/input/campo_texto_widget.dart';
+import 'package:systetica/components/page_transition.dart';
 import 'package:systetica/components/text_autenticacoes_widget.dart';
 import 'package:systetica/model/validator/MultiValidatorUsuario.dart';
 import 'package:systetica/screen/cadastro_usuario/cadastro_controller.dart';
 import 'package:systetica/screen/cadastro_usuario/view/ativar_usuario/ativar_usuario_page.dart';
+import 'package:systetica/screen/login/view/gerar_codigo/gerar_codigo_page.dart';
 
 class AtivarUsuarioWidget extends State<AtivarUsuarioPage> {
   final CadastroController _controller = CadastroController();
   final MultiValidatorUsuario _validatorUsuario = MultiValidatorUsuario();
+  var myPageTransition = MyPageTransition();
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +38,7 @@ class AtivarUsuarioWidget extends State<AtivarUsuarioPage> {
                 _inputEmail(paddingHorizontal: largura * 0.08),
                 _inputCodigo(paddingHorizontal: largura * 0.08),
                 _botaoAtivaUsuario(),
+                _botaoReenviarCodigo(),
               ],
             ),
           ),
@@ -86,24 +90,41 @@ class AtivarUsuarioWidget extends State<AtivarUsuarioPage> {
       maxLength: 10,
       paddingTop: 10,
       isIconDate: true,
+      controller: _controller.codicoController,
+      validator: _validatorUsuario.codigoValidator,
       icon: const Icon(
         Icons.code,
         color: Colors.black87,
       ),
-      controller: _controller.codicoController,
-      validator: _validatorUsuario.codigoValidator,
     );
   }
 
   BotaoWidget _botaoAtivaUsuario() {
     return BotaoWidget(
       paddingTop: 18,
-      paddingBottom: 30,
-      labelText: "Ativar Usuário",
+      paddingBottom: 0,
+      labelText: "ATIVAR USUÁRIO",
       largura: 190,
       corBotao: Colors.black87.withOpacity(0.9),
       corTexto: Colors.white,
       onPressed: () => _controller.ativiarUsuario(context),
+    );
+  }
+
+  BotaoWidget _botaoReenviarCodigo() {
+    return BotaoWidget(
+      paddingTop: 18,
+      paddingBottom: 30,
+      labelText: "REENVIAR CÓDIGO",
+      largura: 190,
+      corBotao: Colors.black87.withOpacity(0.9),
+      corTexto: Colors.white,
+      onPressed: () => Navigator.of(context).push(
+        myPageTransition.pageTransition(
+          child: GerarCodigoPage(reenviarCodigo: true),
+          childCurrent: widget,
+        ),
+      ),
     );
   }
 }

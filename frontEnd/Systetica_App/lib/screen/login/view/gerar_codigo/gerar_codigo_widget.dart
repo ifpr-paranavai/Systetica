@@ -12,6 +12,7 @@ class GerarCodigoWidget extends State<GerarCodigoPage> {
   final LoginController _controller = LoginController();
   final MultiValidatorUsuario _validatorUsuario = MultiValidatorUsuario();
 
+
   @override
   Widget build(BuildContext context) {
     double altura = MediaQuery.of(context).size.height;
@@ -85,6 +86,7 @@ class GerarCodigoWidget extends State<GerarCodigoPage> {
       onPressed: () => _controller.gerarCodigo(
         context,
         widget,
+        widget.reenviarCodigo
       ),
     );
   }

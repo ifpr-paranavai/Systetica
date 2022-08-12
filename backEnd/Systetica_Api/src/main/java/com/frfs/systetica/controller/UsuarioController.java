@@ -61,7 +61,7 @@ public class UsuarioController {
     @PutMapping(value = "/gerar-codigo")
     @ResponseBody
     public ResponseEntity<Object> gerarCodigo(@RequestParam String email) {
-        ReturnData<String> result = usuarioService.gerarCodigoAlterarSenha(email);
+        ReturnData<String> result = usuarioService.gerarCodigoAleatorio(email);
 
         return new ResponseEntity<>(result, result.getSuccess() ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
     }

@@ -1,6 +1,5 @@
 package com.frfs.systetica.service;
 
-import com.frfs.systetica.dto.EmailDTO;
 import com.frfs.systetica.dto.response.ReturnData;
 import com.frfs.systetica.exception.BusinessException;
 import lombok.RequiredArgsConstructor;
@@ -16,24 +15,30 @@ public class EmailServiceImpl implements EmailService {
 
     private final JavaMailSender javaMailSender;
 
-    private static final String MENSAGEM_TITULO_ATIVACAO = "Ativar usuário Systetica";
-    private static final String MENSAGEM_BODY_ATIVACAO = "Código para ativar cadastro no aplicativo Systetica.";
+    private static final String MENSAGEM_TITULO = "Código Systetica";
 
-    private static final String MENSAGEM_TITULO_ALTERAR = "Alterar senha Systetica";
-    private static final String MENSAGEM_BODY_ALTERAR_SENHA = "Código para alterar senha no aplicativo Systetica.";
+    private static final String MENSAGEM_BODY = """
+            Primeiramente gostaríamos de agradecer pela utilização do aplicativo Systetica.
 
-    private static final String MENSAGEM_VALIDADE_CODIGO = "\n\nCódigo válido por 10 minutos.\nCódigo: ";
+            Estamos enviado este email com o código aleatório criado pelo aplicativo.""";
+
+
+    private static final String MENSAGEM_VALIDADE_CODIGO = """
+                        
+            Atenção!!!
+
+            Código é válido por apenas 10 minutos.
+            Código: """;
 
     @Override
-    public ReturnData<String> enviarEmail(boolean ativarUsuario, String email, Integer codigo, String nome) {
+    public ReturnData<String> enviarEmail(String email, Integer codigo, String nome) {
         try {
-            EmailDTO emailDTO = montarMensagemEmail(ativarUsuario, codigo, nome);
 
             SimpleMailMessage message = new SimpleMailMessage();
             message.setFrom("sistemas-tcc@tecnoif.com.br");
             message.setTo(email);
-            message.setSubject(emailDTO.getMensagemSubject());
-            message.setText(emailDTO.getMensagemText());
+            message.setSubject(MENSAGEM_TITULO);
+            message.setText("Olá " + nome + "!\n\n" + MENSAGEM_BODY + MENSAGEM_VALIDADE_CODIGO + codigo + "\n\nObrigado! \nSystetica");
 
             javaMailSender.send(message);
             return new ReturnData<>(true, "", "Código enviado com sucesso!");
@@ -42,18 +47,5 @@ public class EmailServiceImpl implements EmailService {
         } catch (Exception ex) {
             return new ReturnData<>(false, "Ocorreu um erro ao enviar email.", ex.getMessage() + "\nMotivo: " + ex.getCause());
         }
-    }
-
-    private EmailDTO montarMensagemEmail(boolean ativarUsuario, Integer codigo, String nome) {
-        EmailDTO emailDTO = new EmailDTO();
-
-        if (ativarUsuario) {
-            emailDTO.setMensagemSubject(MENSAGEM_TITULO_ATIVACAO);
-            emailDTO.setMensagemText("Olá " + nome + "!\n\n" + MENSAGEM_BODY_ATIVACAO + MENSAGEM_VALIDADE_CODIGO + codigo + "\n\nObrigado! \nSystetica");
-        } else {
-            emailDTO.setMensagemSubject(MENSAGEM_TITULO_ALTERAR);
-            emailDTO.setMensagemText("Olá " + nome + "!\n\n" + MENSAGEM_BODY_ALTERAR_SENHA + MENSAGEM_VALIDADE_CODIGO + codigo + "\n\nObrigado! \nSystetica");
-        }
-        return emailDTO;
     }
 }

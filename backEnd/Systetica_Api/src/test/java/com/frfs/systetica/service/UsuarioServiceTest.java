@@ -79,7 +79,6 @@ public class UsuarioServiceTest {
         Mockito.when(usuarioRepository.findByEmail(ArgumentMatchers.eq("mock@gmail.com"))).thenReturn(usuarioOptional);
         Mockito.when(codigoAleatorioService.gerarCodigo()).thenReturn(123456);
         Mockito.when(emailService.enviarEmail(
-                true,
                 usuarioDTO.getEmail(),
                 codigoAleatorio,
                 usuarioDTO.getNome())
@@ -173,14 +172,14 @@ public class UsuarioServiceTest {
         Mockito.when(codigoAleatorioService.gerarCodigo()).thenReturn(123456);
 
         Mockito.when(emailService.enviarEmail(
-                false,
+
                 usuario.getEmail(),
                 codigoAleatorio,
                 usuario.getNome())
         ).thenReturn(new ReturnData<>(true, "", "Código enviado com sucesso!"));
 
         Mockito.when(usuarioRepository.saveAndFlush(ArgumentMatchers.any(Usuario.class))).thenReturn(usuario);
-        usuarioService.gerarCodigoAlterarSenha(email);
+        usuarioService.gerarCodigoAleatorio(email);
     }
 
     @Test
@@ -282,7 +281,6 @@ public class UsuarioServiceTest {
         Mockito.when(usuarioRepository.findByEmail(ArgumentMatchers.eq("mock@gmail.com"))).thenReturn(usuarioOptional);
         Mockito.when(codigoAleatorioService.gerarCodigo()).thenReturn(123456);
         Mockito.when(emailService.enviarEmail(
-                true,
                 usuarioDTO.getEmail(),
                 codigoAleatorio,
                 usuarioDTO.getNome())
@@ -375,7 +373,7 @@ public class UsuarioServiceTest {
         ReturnData<String> returnData = new ReturnData<>(false,
                 "Usuário não encontrado, por favor verifique email informado");
 
-        assertEquals(usuarioService.gerarCodigoAlterarSenha(email), returnData);
+        assertEquals(usuarioService.gerarCodigoAleatorio(email), returnData);
     }
 
     @Test

@@ -31,7 +31,6 @@ class CadastroAdministradorWidget extends State<CadastroAdministradorPage>
     );
 
     _animationControllercontroller.forward();
-
     _empresaController.empresa = Empresa();
   }
 

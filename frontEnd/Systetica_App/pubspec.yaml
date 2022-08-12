@@ -39,6 +39,7 @@ dev_dependencies:
   image_picker: ^0.8.5+3
   image_cropper: ^2.0.3
   dropdown_button2: ^1.7.0
+  brasil_fields: ^1.4.5
 
 flutter:
   uses-material-design: true

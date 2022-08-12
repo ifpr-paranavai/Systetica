@@ -24,7 +24,7 @@ class PerfilFormWidget extends State<PerfilFormPage> {
   @override
   void initState() {
     super.initState();
-    _controller.usuario = widget.usuario!;
+    _controller.usuario = widget.usuario;
     _controller.nomeController.text = _controller.usuario.nome!;
     _controller.telefoneController.text = _controller.usuario.telefone!;
     _controller.imagemBase64 = _controller.usuario.imagemBase64;

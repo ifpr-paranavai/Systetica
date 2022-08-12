@@ -2,16 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:systetica/components/botoes/botao_widget.dart';
 import 'package:systetica/components/input/campo_texto_widget.dart';
+import 'package:systetica/components/input/custom_switch.dart';
 import 'package:systetica/components/text_autenticacoes_widget.dart';
 import 'package:systetica/model/validator/MultiValidatorServico.dart';
 import 'package:systetica/screen/servico/servico_controller.dart';
 
 class InputServico {
-
   // Opções para cadatrar servico
-  TextAutenticacoesWidget textoCadastrarServico({
-  required String texto
-}) {
+  TextAutenticacoesWidget textoCadastrarServico({required String texto}) {
     return TextAutenticacoesWidget(
       text: texto,
       fontSize: 30,
@@ -102,7 +100,20 @@ class InputServico {
         color: Colors.black87,
       ),
       controller: controller.descricaoController,
+    );
+  }
 
+  CustomSwitch customSwitch({
+    required double paddingHorizontal,
+    required ServicoController controller,
+    required Function(bool) onChanged,
+  }) {
+    return CustomSwitch(
+      paddingBottom: 0,
+      paddingHorizontal: paddingHorizontal * 0.08,
+      label: "Status",
+      value: controller.status ?? true,
+      onChanged: onChanged,
     );
   }
 

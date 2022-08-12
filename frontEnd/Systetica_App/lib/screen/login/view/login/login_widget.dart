@@ -119,7 +119,7 @@ class LoginWidget extends State<LoginPage> {
       corTexto: Colors.white,
       onPressed: () => Navigator.of(context).push(
         myPageTransition.pageTransition(
-          child: const GerarCodigoPage(),
+          child: GerarCodigoPage(),
           childCurrent: widget,
         ),
       ),
