@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class FileBase64ServiceImpl implements FileBase64Service {
 
-    @Override //TODO - criar um service específico
+    @Override
     public ReturnData<String> converteFileBase64(String imagemBase64) {
 
         byte[] bytesEncoded = Base64.encodeBase64(imagemBase64.getBytes());

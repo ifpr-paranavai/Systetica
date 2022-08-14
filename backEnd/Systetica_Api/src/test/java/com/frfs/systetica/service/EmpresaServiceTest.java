@@ -53,7 +53,7 @@ public class EmpresaServiceTest {
     }
 
     @Test
-    @DisplayName("Buscar salvar um empresa")
+    @DisplayName("Deve salvar uma empresa")
     public void deveSalvarEmpresa() {
         String imagemBase64 = "abcdefgh";
         Empresa empresa = Mockito.mock(Empresa.class);
@@ -80,7 +80,7 @@ public class EmpresaServiceTest {
     }
 
     @Test
-    @DisplayName("Buscar atualizar uma empresa")
+    @DisplayName("Deve atualizar uma empresa")
     public void deveAtualizarEmpresa() {
         String imagemBase64 = "abcdefgh";
         Empresa empresa = Mockito.mock(Empresa.class);
@@ -106,7 +106,7 @@ public class EmpresaServiceTest {
     }
 
     @Test
-    @DisplayName("Buscar busca empresa pelo email do usuário administrador")
+    @DisplayName("Deve busca empresa pelo email do usuário administrador")
     public void deveBuscaPorEmailAdministrador() {
         String emailAdministrador = "mock@gmail.com";
 

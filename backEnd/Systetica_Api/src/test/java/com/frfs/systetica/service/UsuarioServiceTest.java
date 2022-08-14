@@ -43,9 +43,6 @@ public class UsuarioServiceTest {
     @MockBean
     private CodigoAleatorioService codigoAleatorioService;
 
-    @MockBean
-    private FileBase64Service fileBase64Service;
-
     @Autowired
     private UsuarioServiceImpl usuarioService;
 
@@ -90,7 +87,8 @@ public class UsuarioServiceTest {
         Mockito.when(usuarioMapper.toEntity(usuarioDTO)).thenReturn(usuario);
         Mockito.when(usuarioRepository.saveAndFlush(ArgumentMatchers.any(Usuario.class))).thenReturn(usuario);
 
-        usuarioService.salvar(usuarioDTO);
+        ReturnData<String> returnData = new ReturnData<>(true, "Usuário salvo com sucesso", "");
+        assertEquals(usuarioService.salvar(usuarioDTO), returnData);
     }
 
     @Test
@@ -103,7 +101,8 @@ public class UsuarioServiceTest {
         Mockito.when(usuarioRepository.findById(ArgumentMatchers.eq(usuarioId))).thenReturn(usuarioOptional);
         Mockito.when(usuarioMapper.toDto(usuario)).thenReturn(usuarioDTO);
 
-        usuarioService.buscarPorId(usuarioId);
+        ReturnData<Object> returnData = new ReturnData<>(true, "", usuarioDTO);
+        assertEquals(usuarioService.buscarPorId(usuarioId), returnData);
     }
 
     @Test
@@ -116,7 +115,8 @@ public class UsuarioServiceTest {
         Mockito.when(usuarioRepository.findByEmail(ArgumentMatchers.eq(email))).thenReturn(usuarioOptional);
         Mockito.when(usuarioMapper.toDto(usuario)).thenReturn(usuarioDTO);
 
-        usuarioService.buscarPorEmail(email, false);
+        ReturnData<Object> returnData = new ReturnData<>(true, "", usuarioDTO);
+        assertEquals(usuarioService.buscarPorEmail(email, false), returnData);
     }
 
     @Test
@@ -128,7 +128,8 @@ public class UsuarioServiceTest {
         Mockito.when(usuarioRepository.findAll()).thenReturn(usuarios);
         Mockito.when(usuarioMapper.toListDto(usuarios)).thenReturn(usuariosDTO);
 
-        usuarioService.buscarTodos();
+        ReturnData<Object> returnData = new ReturnData<>(true, "", usuariosDTO);
+        assertEquals(usuarioService.buscarTodos(), returnData);
     }
 
     @Test
@@ -152,7 +153,9 @@ public class UsuarioServiceTest {
         )).thenReturn(usuarioOptional);
 
         Mockito.when(usuarioRepository.saveAndFlush(ArgumentMatchers.any(Usuario.class))).thenReturn(usuario);
-        usuarioService.ativar(usuarioDTO);
+
+        ReturnData<String> returnData = new ReturnData<>(true, "Usuário ativado com sucesso");
+        assertEquals(usuarioService.ativar(usuarioDTO), returnData);
     }
 
     @Test
@@ -179,7 +182,9 @@ public class UsuarioServiceTest {
         ).thenReturn(new ReturnData<>(true, "", "Código enviado com sucesso!"));
 
         Mockito.when(usuarioRepository.saveAndFlush(ArgumentMatchers.any(Usuario.class))).thenReturn(usuario);
-        usuarioService.gerarCodigoAleatorio(email);
+
+        ReturnData<String> returnData = new ReturnData<>(true, "Código para alterar senha enviado");
+        assertEquals(usuarioService.gerarCodigoAleatorio(email), returnData);
     }
 
     @Test
@@ -204,7 +209,9 @@ public class UsuarioServiceTest {
         Mockito.when(passwordEncoder.encode(ArgumentMatchers.eq("123123"))).thenReturn(passwordEncode);
 
         Mockito.when(usuarioRepository.saveAndFlush(ArgumentMatchers.any(Usuario.class))).thenReturn(usuario);
-        usuarioService.alterarSenha(usuarioDTO);
+
+        ReturnData<String> returnData = new ReturnData<>(true, "Senhar alterada com sucesso");
+        assertEquals(usuarioService.alterarSenha(usuarioDTO), returnData);
     }
 
     @Test
@@ -221,7 +228,9 @@ public class UsuarioServiceTest {
         Mockito.when(usuarioRepository.findById(usuarioDTO.getId())).thenReturn(usuarioOptional);
 
         Mockito.when(usuarioRepository.saveAndFlush(ArgumentMatchers.any(Usuario.class))).thenReturn(usuario);
-        usuarioService.atualizar(usuarioDTO);
+
+        ReturnData<String> returnData = new ReturnData<>(true, "Usuário atualizado com sucesso.");
+        assertEquals(usuarioService.atualizar(usuarioDTO), returnData);
     }
 
     @Test

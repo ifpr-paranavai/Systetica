@@ -40,7 +40,7 @@ public class ServicoServiceImpl implements ServicoService {
             servicoDTO.setDataCadastro(new Date());
 
             servicoRepository.saveAndFlush(servicoMapper.toEntity(servicoDTO));
-            return new ReturnData<>(true, "Servico salva com sucesso", "");
+            return new ReturnData<>(true, "Servico salvo com sucesso", "");
         } catch (BusinessException busEx) {
             return new ReturnData<>(false, "Ocorreu um erro ao salvar um servico", busEx.getMessage());
         } catch (Exception ex) {
@@ -57,7 +57,7 @@ public class ServicoServiceImpl implements ServicoService {
             servicoDTO.setDataCadastro(servico.get().getDataCadastro());
 
             servicoRepository.saveAndFlush(servicoMapper.toEntity(servicoDTO));
-            return new ReturnData<>(true, "Servico atualizada com sucesso.");
+            return new ReturnData<>(true, "Servico atualizado com sucesso.");
         } catch (BusinessException busEx) {
             return new ReturnData<>(false, "Ocorreu um erro ao atualizar dados", busEx.getMessage());
         } catch (Exception ex) {
