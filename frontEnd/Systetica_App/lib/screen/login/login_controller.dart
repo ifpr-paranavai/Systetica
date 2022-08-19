@@ -93,7 +93,11 @@ class LoginController {
     }
   }
 
-  Future<void> gerarCodigo(BuildContext context, Widget widget) async {
+  Future<void> gerarCodigo(
+    BuildContext context,
+    Widget widget,
+    bool reenviarCodigo,
+  ) async {
     var connected = await ConnectionCheck.check();
     if (connected) {
       if (formKey.currentState != null) {
@@ -127,12 +131,14 @@ class LoginController {
                     contextShowModal,
                     alertDialog,
                   );
-                  Navigator.of(context).push(
-                    myPageTransition.pageTransition(
-                      child: const AlterarSenhaPage(),
-                      childCurrent: widget,
-                    ),
-                  );
+                  reenviarCodigo
+                      ? Navigator.pop(context)
+                      : Navigator.of(context).push(
+                          myPageTransition.pageTransition(
+                            child: const AlterarSenhaPage(),
+                            childCurrent: widget,
+                          ),
+                        );
                 },
               );
             } else {

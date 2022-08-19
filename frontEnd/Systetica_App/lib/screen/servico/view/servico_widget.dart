@@ -175,10 +175,8 @@ class ServicoWidget extends State<ServicoPage> {
             return ListViewComponent(
               largura: largura,
               altura: altura,
-              titulo1: "Nome: ",
-              titulo2: "Preço: ",
-              descricao1: servicos[index].nome!,
-              descricao2: UtilBrasilFields.obterReal(servicos[index].preco!),
+              infoNome: servicos[index].nome!,
+              infoPreco: UtilBrasilFields.obterReal(servicos[index].preco!),
               numero: index + 1,
               onTap: () {
                 Navigator.of(context)

@@ -5,20 +5,16 @@ class ListViewComponent extends StatefulWidget {
     Key? key,
     required this.largura,
     required this.altura,
-    required this.titulo1,
-    required this.titulo2,
-    required this.descricao1,
-    required this.descricao2,
+    required this.infoNome,
+    required this.infoPreco,
     required this.onTap,
     required this.numero,
   }) : super(key: key);
 
   final double largura;
   final double altura;
-  final String titulo1;
-  final String titulo2;
-  final String descricao1;
-  final String descricao2;
+  final String infoNome;
+  final String infoPreco;
   final int numero;
   final GestureTapCallback onTap;
 
@@ -54,44 +50,21 @@ class _ListViewComponent extends State<ListViewComponent> {
           ),
           child: Row(
             children: [
-              text(
-                titulo: widget.numero.toString(),
-                fontWeight: FontWeight.normal,
-                fontSize: 20,
+              info(
+                informacao: widget.numero.toString(),
               ),
-              Padding(
-                padding: const EdgeInsets.only(left: 15),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    row(
-                      titulo: widget.titulo1,
-                      descricao: widget.descricao1,
-                    ),
-                    const SizedBox(height: 5),
-                    row(
-                      titulo: widget.titulo2,
-                      descricao: widget.descricao2,
-                    ),
-                  ],
+              Container(
+                padding: const EdgeInsets.only(left: 8),
+                width: 200,
+                child: info(
+                  informacao: widget.infoNome,
                 ),
               ),
               Expanded(
                 child: Container(
                   alignment: Alignment.centerRight,
-                  child: Container(
-                    height: widget.altura * 0.8,
-                    width: widget.largura * 0.11,
-                    decoration: BoxDecoration(
-                      color: Colors.lightGreen.withOpacity(.1),
-                      shape: BoxShape.circle,
-                    ),
-                    child: Icon(
-                      Icons.construction,
-                      color: Colors.lightGreen.withOpacity(.8),
-                      size: 30,
-                    ),
+                  child: info(
+                    informacao: widget.infoPreco,
                   ),
                 ),
               ),
@@ -103,37 +76,15 @@ class _ListViewComponent extends State<ListViewComponent> {
     );
   }
 
-  Row row({
-    required String titulo,
-    required String descricao,
-  }) {
-    return Row(
-      children: [
-        text(
-          titulo: titulo,
-          fontWeight: FontWeight.w700,
-          fontSize: 16.5,
-        ),
-        text(
-          titulo: descricao,
-          fontWeight: FontWeight.normal,
-          fontSize: 15.5,
-        ),
-      ],
-    );
-  }
-
-  Text text({
-    required String titulo,
-    required FontWeight fontWeight,
-    required double fontSize,
+  Widget info({
+    required String informacao,
   }) {
     return Text(
-      titulo,
+      informacao,
       maxLines: 1,
-      style: TextStyle(
-        fontWeight: fontWeight,
-        fontSize: fontSize,
+      style: const TextStyle(
+        fontWeight: FontWeight.normal,
+        fontSize: 20,
         overflow: TextOverflow.ellipsis,
       ),
     );
