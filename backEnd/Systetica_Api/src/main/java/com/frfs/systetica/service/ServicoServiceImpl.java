@@ -24,8 +24,8 @@ public class ServicoServiceImpl implements ServicoService {
 
     private final ServicoRepository servicoRepository;
     private final ServicoMapper servicoMapper;
-    private final EmpresaMapper empresaMapper;
     private final EmpresaRepository empresaRepository;
+    private final EmpresaMapper empresaMapper;
 
     @Override
     public ReturnData<String> salvar(ServicoDTO servicoDTO) {
@@ -55,6 +55,7 @@ public class ServicoServiceImpl implements ServicoService {
             Optional<Servico> servico = servicoRepository.findById(servicoDTO.getId());
 
             servicoDTO.setDataCadastro(servico.get().getDataCadastro());
+            servicoDTO.setEmpresa(empresaMapper.toDto(servico.get().getEmpresa()));
 
             servicoRepository.saveAndFlush(servicoMapper.toEntity(servicoDTO));
             return new ReturnData<>(true, "Servico atualizado com sucesso.");

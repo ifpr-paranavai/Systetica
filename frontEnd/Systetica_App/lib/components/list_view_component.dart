@@ -9,6 +9,7 @@ class ListViewComponent extends StatefulWidget {
     required this.infoPreco,
     required this.onTap,
     required this.numero,
+    this.maxLinesInfo = 1,
   }) : super(key: key);
 
   final double largura;
@@ -16,6 +17,7 @@ class ListViewComponent extends StatefulWidget {
   final String infoNome;
   final String infoPreco;
   final int numero;
+  final int maxLinesInfo;
   final GestureTapCallback onTap;
 
   @override
@@ -54,10 +56,11 @@ class _ListViewComponent extends State<ListViewComponent> {
                 informacao: widget.numero.toString(),
               ),
               Container(
-                padding: const EdgeInsets.only(left: 8),
-                width: 200,
+                padding: const EdgeInsets.only(left: 10),
+                width: 180,
                 child: info(
                   informacao: widget.infoNome,
+                  maxLines: widget.maxLinesInfo,
                 ),
               ),
               Expanded(
@@ -78,13 +81,14 @@ class _ListViewComponent extends State<ListViewComponent> {
 
   Widget info({
     required String informacao,
+    int maxLines = 1,
   }) {
     return Text(
       informacao,
-      maxLines: 1,
+      maxLines: maxLines,
       style: const TextStyle(
         fontWeight: FontWeight.normal,
-        fontSize: 20,
+        fontSize: 19,
         overflow: TextOverflow.ellipsis,
       ),
     );

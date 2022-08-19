@@ -35,12 +35,15 @@ public class ProdutoDTO implements Serializable {
     @JsonProperty("quant_estoque")
     private Integer quantEstoque;
 
-    @JsonProperty("observacao")
-    private String observacao;
-
     @JsonProperty("data_cadastro")
     private Date dataCadastro;
 
     @JsonProperty("status")
-    private String status = String.valueOf('A');
+    private Boolean status;
+
+    @JsonProperty("empresa")
+    private EmpresaDTO empresa;
+
+    @JsonProperty("email_administrativo")
+    private String emailAdministrativo;
 }

@@ -63,7 +63,7 @@ class ServicoService {
     }
   }
 
-  static Future<Info> buscarServico({
+  static Future<Info> buscarServicos({
     int? size = 1000,
     String? servico,
   }) async {

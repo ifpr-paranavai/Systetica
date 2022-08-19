@@ -153,7 +153,7 @@ class ServicoController {
     Info info = Info(success: true);
 
     try {
-      info = await ServicoService.buscarServico(servico: servico);
+      info = await ServicoService.buscarServicos(servico: servico);
     } catch (e) {
       info.success = false;
       return info;

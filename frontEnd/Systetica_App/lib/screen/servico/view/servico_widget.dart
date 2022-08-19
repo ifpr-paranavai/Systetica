@@ -98,7 +98,7 @@ class ServicoWidget extends State<ServicoPage> {
     required double largura, //height
   }) {
     return Container(
-      height: altura * 0.09,
+      height: 65, //todo verificar tamanho
       color: Colors.grey.withOpacity(0.2),
       padding: EdgeInsets.only(
         top: largura * 0.040,
@@ -178,6 +178,7 @@ class ServicoWidget extends State<ServicoPage> {
               infoNome: servicos[index].nome!,
               infoPreco: UtilBrasilFields.obterReal(servicos[index].preco!),
               numero: index + 1,
+              maxLinesInfo: 2,
               onTap: () {
                 Navigator.of(context)
                     .push(

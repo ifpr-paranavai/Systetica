@@ -60,6 +60,7 @@ class PerfilWidget extends State<PerfilPage> {
                           _cardInfoUsuario(
                             usuario: _controller.usuario,
                           ),
+                          _sizedBox(height: _altura * 0.05),
                         ],
                       ),
                     ),

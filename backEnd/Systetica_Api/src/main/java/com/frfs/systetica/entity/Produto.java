@@ -28,7 +28,7 @@ public class Produto implements Serializable {
     private String nome;
 
     @NotNull
-    @Column(name = "marca", length = 80)
+    @Column(name = "marca", length = 100)
     private String marca;
 
     @NotNull
@@ -43,15 +43,16 @@ public class Produto implements Serializable {
     @Column(name = "quant_estoque")
     private Integer quantEstoque;
 
-    @Column(name = "observacao", length = 300)
-    private String observacao;
-
     @NotNull
     @Column(name = "data_cadastro")
     private Date dataCadastro;
 
     @NotNull
-    @Column(name = "status", length = 1)
-    private String status = String.valueOf('A');
+    @Column(name = "status")
+    private Boolean status;
 
+    @NotNull
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "empresa")
+    private Empresa empresa;
 }
