@@ -4,7 +4,6 @@ import com.frfs.systetica.dto.ProdutoDTO;
 import com.frfs.systetica.dto.response.ReturnData;
 import com.frfs.systetica.entity.Empresa;
 import com.frfs.systetica.entity.Produto;
-import com.frfs.systetica.entity.Servico;
 import com.frfs.systetica.exception.BusinessException;
 import com.frfs.systetica.mapper.EmpresaMapper;
 import com.frfs.systetica.mapper.ProdutoMapper;
@@ -60,7 +59,7 @@ public class ProdutoServiceImpl implements ProdutoService {
 
 
             produtoRepository.saveAndFlush(produtoMapper.toEntity(produtoDTO));
-            return new ReturnData<>(true, "Servico atualizado com sucesso.");
+            return new ReturnData<>(true, "Produto atualizado com sucesso.");
         } catch (BusinessException busEx) {
             return new ReturnData<>(false, "Ocorreu um erro ao atualizar dados", busEx.getMessage());
         } catch (Exception ex) {

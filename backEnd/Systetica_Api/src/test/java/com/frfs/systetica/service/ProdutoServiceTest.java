@@ -1,14 +1,14 @@
 package com.frfs.systetica.service;
 
 import com.frfs.systetica.dto.EmpresaDTO;
-import com.frfs.systetica.dto.ServicoDTO;
+import com.frfs.systetica.dto.ProdutoDTO;
 import com.frfs.systetica.dto.response.ReturnData;
 import com.frfs.systetica.entity.Empresa;
-import com.frfs.systetica.entity.Servico;
+import com.frfs.systetica.entity.Produto;
 import com.frfs.systetica.mapper.EmpresaMapper;
-import com.frfs.systetica.mapper.ServicoMapper;
+import com.frfs.systetica.mapper.ProdutoMapper;
 import com.frfs.systetica.repository.EmpresaRepository;
-import com.frfs.systetica.repository.ServicoRepository;
+import com.frfs.systetica.repository.ProdutoRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
@@ -28,33 +28,33 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @ActiveProfiles(profiles = "local")
 @AutoConfigureMockMvc
 @DisplayName("ServicoServiceTest")
-public class ServicoServiceTest {
+public class ProdutoServiceTest {
 
     @MockBean
-    private ServicoRepository servicoRepository;
+    private ProdutoRepository produtoRepository;
 
     @MockBean
-    private ServicoMapper servicoMapper;
-
-    @MockBean
-    private EmpresaMapper empresaMapper;
+    private ProdutoMapper produtoMapper;
 
     @MockBean
     private EmpresaRepository empresaRepository;
 
-    @Autowired
-    private ServicoServiceImpl servicoService;
+    @MockBean
+    private EmpresaMapper empresaMapper;
 
-    public ServicoServiceTest() {
+    @Autowired
+    private ProdutoServiceImpl produtoService;
+
+    public ProdutoServiceTest() {
     }
 
     @Test
-    @DisplayName("Deve salvar um serviço")
-    public void deveSalvarServico() {
+    @DisplayName("Deve salvar um produto")
+    public void deveSalvarProduto() {
         String emailAdministrativo = "systetica@gmail.com.br";
 
-        Servico servico = Mockito.mock(Servico.class);
-        ServicoDTO servicoDTO = Mockito.mock(ServicoDTO.class);
+        Produto produto = Mockito.mock(Produto.class);
+        ProdutoDTO produtoDTO = Mockito.mock(ProdutoDTO.class);
 
         Empresa empresa = Mockito.mock(Empresa.class);
         EmpresaDTO empresaDTO = Mockito.mock(EmpresaDTO.class);
@@ -62,40 +62,41 @@ public class ServicoServiceTest {
 
         Mockito.when(empresaOptional.get().getId()).thenReturn(1L);
 
-        Mockito.when(servicoDTO.getEmailAdministrativo()).thenReturn(emailAdministrativo);
-        Mockito.when(servicoDTO.getEmpresa()).thenReturn(empresaDTO);
+        Mockito.when(produtoDTO.getNome()).thenReturn("Systetica");
+        Mockito.when(produtoDTO.getEmailAdministrativo()).thenReturn(emailAdministrativo);
+        Mockito.when(produtoDTO.getEmpresa()).thenReturn(empresaDTO);
 
         Mockito.when(empresaRepository.findByUsuarioAdministradorEmail(ArgumentMatchers.eq(emailAdministrativo)))
                 .thenReturn(empresaOptional);
         Mockito.when(empresaMapper.toDto(empresaOptional.get())).thenReturn(empresaDTO);
-        Mockito.when(servicoMapper.toEntity(servicoDTO)).thenReturn(servico);
+        Mockito.when(produtoMapper.toEntity(produtoDTO)).thenReturn(produto);
 
-        ReturnData<String> returnData = new ReturnData<>(true, "Servico salvo com sucesso", "");
-        assertEquals(servicoService.salvar(servicoDTO), returnData);
+        ReturnData<String> returnData = new ReturnData<>(true, "Produto salvo com sucesso", "");
+        assertEquals(produtoService.salvar(produtoDTO), returnData);
     }
 
     @Test
-    @DisplayName("Deve atualizar um servico")
-    public void deveAtualizarServico() {
-        Servico servico = Mockito.mock(Servico.class);
-        ServicoDTO servicoDTO = Mockito.mock(ServicoDTO.class);
-        Optional<Servico> servicoOptional = Optional.of(servico);
+    @DisplayName("Deve atualizar um produto")
+    public void deveAtualizarProduto() {
+        Produto produto = Mockito.mock(Produto.class);
+        ProdutoDTO produtoDTO = Mockito.mock(ProdutoDTO.class);
+        Optional<Produto> produtoOptional = Optional.of(produto);
 
-        Mockito.when(servicoDTO.getId()).thenReturn(1L);
-        Mockito.when(servico.getDataCadastro()).thenReturn(new Date());
+        Mockito.when(produtoDTO.getId()).thenReturn(1L);
+        Mockito.when(produto.getDataCadastro()).thenReturn(new Date());
 
-        Mockito.when(servicoRepository.findById(servicoDTO.getId())).thenReturn(servicoOptional);
-        Mockito.when(servicoMapper.toEntity(servicoDTO)).thenReturn(servico);
+        Mockito.when(produtoRepository.findById(produtoDTO.getId())).thenReturn(produtoOptional);
+        Mockito.when(produtoMapper.toEntity(produtoDTO)).thenReturn(produto);
 
-        ReturnData<String> returnData = new ReturnData<>(true, "Servico atualizado com sucesso.");
-        assertEquals(servicoService.atualizar(servicoDTO), returnData);
+        ReturnData<String> returnData = new ReturnData<>(true, "Produto atualizado com sucesso.");
+        assertEquals(produtoService.atualizar(produtoDTO), returnData);
     }
 
     // Testes para ReturnData false
     @Test
     @DisplayName("Deve informa que empresa não foi encontrada")
     public void deveInformaEmpresaNaoEncontrada() {
-        ServicoDTO servicoDTO = Mockito.mock(ServicoDTO.class);
+        ProdutoDTO produtoDTO = Mockito.mock(ProdutoDTO.class);
 
         Optional<Empresa> empresaOptional = Optional.empty();
 
@@ -103,7 +104,7 @@ public class ServicoServiceTest {
                 ArgumentMatchers.eq("systetica@gmail.com.br"))).thenReturn(empresaOptional);
 
         ReturnData<String> returnData = new ReturnData<>(false, "Empresa não encontrada",
-                "Não foi possível encontrar empresa cadastrada para salvar serviço");
-        assertEquals(servicoService.salvar(servicoDTO), returnData);
+                "Não foi possível encontrar empresa cadastrada para salvar produto");
+        assertEquals(produtoService.salvar(produtoDTO), returnData);
     }
 }

@@ -44,7 +44,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 "/produto/buscar-todos/**", //TODO - Verificar um buscar todos adm e cliente
                 "/cidade/**").permitAll();
         http.authorizeRequests().antMatchers("*", "/usuario/**")
-                .hasAnyAuthority("ADMINISTRADOR, FUNCIONARIO, CLIENTE");
+                .hasAnyAuthority("ADMINISTRADOR, FUNCIONARIO, CLIENTE")
         http.authorizeRequests().antMatchers("*", "/empresa/**", "/servico/**", "/produto/**")
                 .hasAnyAuthority("ADMINISTRADOR");
         http.authorizeRequests().anyRequest().authenticated();
