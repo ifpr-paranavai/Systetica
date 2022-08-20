@@ -22,4 +22,9 @@ class Util {
 
     return tokenDecodificado['sub'];
   }
+
+  static double toDouble(String dinheiro) {
+    var din = double.parse(dinheiro.replaceAll(',', '.'));
+    return din;
+  }
 }

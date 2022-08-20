@@ -2,7 +2,7 @@
 
 import 'package:form_field_validator/form_field_validator.dart';
 
-class MultiValidatorServico {
+class MultiValidatorProduto {
   MultiValidator get nomeValidator {
     return MultiValidator([
       RequiredValidator(errorText: 'Campo obrigatório'),

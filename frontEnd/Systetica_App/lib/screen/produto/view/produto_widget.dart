@@ -1,4 +1,3 @@
-import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:systetica/components/icon_arrow_widget.dart';
 import 'package:systetica/components/imagens_widget.dart';
@@ -8,6 +7,7 @@ import 'package:systetica/components/text_autenticacoes_widget.dart';
 import 'package:systetica/model/Info.dart';
 import 'package:systetica/model/Produto.dart';
 import 'package:systetica/screen/produto/produto_controller.dart';
+import 'package:systetica/screen/produto/view/form/produto_form_page.dart';
 import 'package:systetica/screen/produto/view/produto_page.dart';
 import 'package:systetica/style/app_colors..dart';
 import 'package:brasil_fields/brasil_fields.dart';
@@ -40,16 +40,16 @@ class ProdutoWidget extends State<ProdutoPage> {
         body: loading
             ? const LoadingAnimation()
             : _body(
-          largura: _largura,
-          altura: _altura,
-          produtos: _controller.produtos,
-        ),
+                largura: _largura,
+                altura: _altura,
+                produtos: _controller.produtos,
+              ),
       ),
     );
   }
 
   Future<void> buscaServicos() async {
-    await _controller.buscarProdutos(context: context, servico: "").then(
+    await _controller.buscarProdutos(context: context, produto: "").then(
           (value) => setState(
             () {
               info = value;
@@ -75,14 +75,14 @@ class ProdutoWidget extends State<ProdutoPage> {
             ),
             produtos.isEmpty
                 ? _erroRequisicao(
-              largura: largura,
-              listaVazia: true,
-            )
+                    largura: largura,
+                    listaVazia: true,
+                  )
                 : _listView(
-              altura: altura,
-              largura: largura,
-              produtos: produtos,
-            ),
+                    altura: altura,
+                    largura: largura,
+                    produtos: produtos,
+                  ),
           ],
         ),
         buttonIcon(
@@ -98,7 +98,7 @@ class ProdutoWidget extends State<ProdutoPage> {
     required double largura, //height
   }) {
     return Container(
-      height: 65, //todo verificar tamanho
+      height: 70,
       color: Colors.grey.withOpacity(0.2),
       padding: EdgeInsets.only(
         top: largura * 0.040,
@@ -141,11 +141,11 @@ class ProdutoWidget extends State<ProdutoPage> {
           ),
           onChanged: (value) async {
             _controller.produtos = [];
-            _controller.buscarProdutos(context: context, servico: value).then(
+            _controller.buscarProdutos(context: context, produto: value).then(
                   (value) => setState(() {
-                _controller.produtos = value!.object;
-              }),
-            );
+                    _controller.produtos = value!.object;
+                  }),
+                );
           },
         ),
       ),
@@ -176,23 +176,24 @@ class ProdutoWidget extends State<ProdutoPage> {
               largura: largura,
               altura: altura,
               infoNome: produtos[index].nome!,
-              infoPreco: UtilBrasilFields.obterReal(produtos[index].precoVenda!),
+              infoPreco:
+                  UtilBrasilFields.obterReal(produtos[index].precoVenda!),
               numero: index + 1,
               maxLinesInfo: 2,
               onTap: () {
                 Navigator.of(context)
                     .push(
-                  _controller.myPageTransition.pageTransition(
-                    child: Text(""), //TODO - Widget de Form,
-                    childCurrent: widget,
-                    buttoToTop: true,
-                  ),
-                )
+                      _controller.myPageTransition.pageTransition(
+                        child: ProdutoFormPage(produto: produtos[index]),
+                        childCurrent: widget,
+                        buttoToTop: true,
+                      ),
+                    )
                     .then(
                       (value) => setState(() {
-                    buscaServicos();
-                  }),
-                );
+                        buscaServicos();
+                      }),
+                    );
               },
             );
           },
@@ -223,17 +224,17 @@ class ProdutoWidget extends State<ProdutoPage> {
         onPressed: () {
           Navigator.of(context)
               .push(
-            _controller.myPageTransition.pageTransition(
-              child: Text(""), //TODO - Widget de Form
-              childCurrent: widget,
-              buttoToTop: true,
-            ),
-          )
+                _controller.myPageTransition.pageTransition(
+                  child: ProdutoFormPage(),
+                  childCurrent: widget,
+                  buttoToTop: true,
+                ),
+              )
               .then(
                 (value) => setState(() {
-              buscaServicos();
-            }),
-          );
+                  buscaServicos();
+                }),
+              );
         },
       ),
     );

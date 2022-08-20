@@ -98,7 +98,7 @@ class ServicoWidget extends State<ServicoPage> {
     required double largura, //height
   }) {
     return Container(
-      height: 65, //todo verificar tamanho
+      height: 70,
       color: Colors.grey.withOpacity(0.2),
       padding: EdgeInsets.only(
         top: largura * 0.040,
