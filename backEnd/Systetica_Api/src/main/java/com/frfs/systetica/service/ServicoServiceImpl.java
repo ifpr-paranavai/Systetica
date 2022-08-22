@@ -68,12 +68,14 @@ public class ServicoServiceImpl implements ServicoService {
     }
 
     @Override
-    public ReturnData<Object> buscarTodosPaginado(String search, Pageable page) {
-        return new ReturnData<>(true, "", servicoMapper.toListDto(servicoRepository.findAllFields(search, page).getContent()));
+    public ReturnData<Object> buscarTodosPaginado(String search, Pageable page, String emailAdministrativo) {
+        return new ReturnData<>(true, "", servicoMapper.toListDto(servicoRepository
+                .findAllFields(search, page, emailAdministrativo).getContent()));
     }
 
     @Override
-    public ReturnData<Object> buscarTodos(Pageable page) {
-        return new ReturnData<>(true, "", servicoMapper.toListDto(servicoRepository.findAll(page).getContent()));
+    public ReturnData<Object> buscarTodos(Pageable page, String emailAdministrativo) {
+        return new ReturnData<>(true, "", servicoMapper.toListDto(servicoRepository
+                .findAll(page, emailAdministrativo).getContent()));
     }
 }

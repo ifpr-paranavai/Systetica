@@ -11,6 +11,16 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ProdutoRepository extends JpaRepository<Produto, Long> {
 
-    @Query(" SELECT u FROM Produto u WHERE upper(u.nome) like upper(CONCAT('%',:search,'%'))")
-    Page<Produto> findAllFields(@Param("search") String search, Pageable page);
+    @Query(""" 
+                SELECT u FROM Produto u WHERE 
+                    upper(u.nome) like upper(CONCAT('%',:search,'%'))
+                    and upper(u.empresa.usuarioAdministrador.email) like upper(CONCAT('%',:emailAdministrador,'%'))
+            """)
+    Page<Produto> findAllFields(@Param("search") String search, Pageable page, String emailAdministrador);
+
+    @Query(""" 
+                SELECT u FROM Produto u WHERE 
+                    upper(u.empresa.usuarioAdministrador.email) like upper(CONCAT('%',:emailAdministrador,'%'))
+            """)
+    Page<Produto> findAll(Pageable page, String emailAdministrador);
 }

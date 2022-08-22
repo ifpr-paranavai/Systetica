@@ -38,12 +38,12 @@ public class ServicoController {
 
     @PostMapping("/buscar-todos")
     @ResponseBody
-    public ResponseEntity<Object> buscarCidades(@RequestParam String search, Pageable page){
+    public ResponseEntity<Object> buscarTodos(@RequestParam String search, Pageable page, String email) {
         ReturnData<Object> result;
-        if(search.isBlank() || search.isEmpty()){
-            result = servicoService.buscarTodos(page);
+        if (search.isBlank() || search.isEmpty()) {
+            result = servicoService.buscarTodos(page, email);
         } else {
-            result = servicoService.buscarTodosPaginado(search, page);
+            result = servicoService.buscarTodosPaginado(search, page, email);
         }
         return new ResponseEntity<>(result, result.getSuccess() ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
     }

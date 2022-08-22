@@ -40,12 +40,12 @@ public class ProdutoController {
 
     @PostMapping("/buscar-todos")
     @ResponseBody
-    public ResponseEntity<Object> buscarCidades(@RequestParam String search, Pageable page){
+    public ResponseEntity<Object> buscarTodos(@RequestParam String search, Pageable page, String email) {
         ReturnData<Object> result;
-        if(search.isBlank() || search.isEmpty()){
-            result = produtoService.buscarTodos(page);
+        if (search.isBlank() || search.isEmpty()) {
+            result = produtoService.buscarTodos(page, email);
         } else {
-            result = produtoService.buscarTodosPaginado(search, page);
+            result = produtoService.buscarTodosPaginado(search, page, email);
         }
         return new ResponseEntity<>(result, result.getSuccess() ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
     }

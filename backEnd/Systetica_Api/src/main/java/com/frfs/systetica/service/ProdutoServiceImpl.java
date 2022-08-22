@@ -69,12 +69,14 @@ public class ProdutoServiceImpl implements ProdutoService {
     }
 
     @Override
-    public ReturnData<Object> buscarTodosPaginado(String search, Pageable page) {
-        return new ReturnData<>(true, "", produtoMapper.toListDto(produtoRepository.findAllFields(search, page).getContent()));
+    public ReturnData<Object> buscarTodosPaginado(String search, Pageable page, String emailAdministrativo) {
+        return new ReturnData<>(true, "", produtoMapper.toListDto(produtoRepository
+                .findAllFields(search, page, emailAdministrativo).getContent()));
     }
 
     @Override
-    public ReturnData<Object> buscarTodos(Pageable page) {
-        return new ReturnData<>(true, "", produtoMapper.toListDto(produtoRepository.findAll(page).getContent()));
+    public ReturnData<Object> buscarTodos(Pageable page, String emailAdministrativo) {
+        return new ReturnData<>(true, "", produtoMapper.toListDto(produtoRepository
+                .findAll(page, emailAdministrativo).getContent()));
     }
 }

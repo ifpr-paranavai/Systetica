@@ -9,8 +9,8 @@ public interface ProdutoService {
 
     ReturnData<String> atualizar(ProdutoDTO produtoDTO);
 
-    ReturnData<Object> buscarTodosPaginado(String search, Pageable page);
+    ReturnData<Object> buscarTodosPaginado(String search, Pageable page, String emailAdministrativo);
 
-    ReturnData<Object> buscarTodos(Pageable page);
+    ReturnData<Object> buscarTodos(Pageable page, String emailAdministrativo);
 
 }

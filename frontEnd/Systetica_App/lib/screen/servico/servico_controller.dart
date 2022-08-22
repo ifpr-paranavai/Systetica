@@ -153,7 +153,11 @@ class ServicoController {
     Info info = Info(success: true);
 
     try {
-      info = await ServicoService.buscarServicos(servico: servico);
+      Token _token = await TokenRepository.findToken();
+      info = await ServicoService.buscarServicos(
+        servico: servico,
+        emailAdministrativo: _token.email,
+      );
     } catch (e) {
       info.success = false;
       return info;

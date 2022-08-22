@@ -11,6 +11,16 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ServicoRepository extends JpaRepository<Servico, Long> {
 
-    @Query(" SELECT u FROM Servico u WHERE upper(u.nome) like upper(CONCAT('%',:search,'%'))")
-    Page<Servico> findAllFields(@Param("search") String search, Pageable page);
+    @Query("""
+            SELECT u FROM Servico u WHERE 
+                upper(u.nome) like upper(CONCAT('%',:search,'%'))
+                and upper(u.empresa.usuarioAdministrador.email) like upper(CONCAT('%',:emailAdministrador,'%'))
+            """)
+    Page<Servico> findAllFields(@Param("search") String search, Pageable page, String emailAdministrador);
+
+    @Query(""" 
+                SELECT u FROM Servico u WHERE 
+                    upper(u.empresa.usuarioAdministrador.email) like upper(CONCAT('%',:emailAdministrador,'%'))
+            """)
+    Page<Servico> findAll(Pageable page, String emailAdministrador);
 }

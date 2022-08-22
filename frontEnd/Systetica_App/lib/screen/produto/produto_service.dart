@@ -66,8 +66,10 @@ class ProdutoService {
   static Future<Info> buscarProdutos({
     int? size = 1000,
     String? produto,
+    String? emailAdministrativo,
   }) async {
-    String path = "produto/buscar-todos?search=$produto&size=$size&sort=nome";
+    String path =
+        "produto/buscar-todos?search=$produto&size=$size&sort=nome&email=$emailAdministrativo";
 
     Dio dio = DioConfigApi.builderConfig();
 

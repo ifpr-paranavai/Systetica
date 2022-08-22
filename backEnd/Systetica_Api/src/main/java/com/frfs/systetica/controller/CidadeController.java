@@ -19,7 +19,7 @@ public class CidadeController {
 
     @PostMapping("/buscar-todos")
     @ResponseBody
-    public ResponseEntity<Object> buscarCidades(@RequestParam String search, Pageable page){
+    public ResponseEntity<Object> buscarTodos(@RequestParam String search, Pageable page){
         ReturnData<Object> result;
         if(search.isBlank() || search.isEmpty()){
             result = cidadeService.buscarTodasCidades(page);
