@@ -20,22 +20,21 @@ public class EmailServiceImpl implements EmailService {
     private static final String MENSAGEM_BODY = """
             Primeiramente gostaríamos de agradecer pela utilização do aplicativo Systetica.
 
-            Estamos enviado este email com o código aleatório criado pelo aplicativo.""";
-
+            Estamos enviado este email com o código aleatório criado pelo aplicativo.
+            
+            """;
 
     private static final String MENSAGEM_VALIDADE_CODIGO = """
-                        
             Atenção!!!
-
             Código é válido por apenas 10 minutos.
-            Código: """;
+            Código:\040""";
 
     @Override
     public ReturnData<String> enviarEmail(String email, Integer codigo, String nome) {
         try {
 
             SimpleMailMessage message = new SimpleMailMessage();
-            message.setFrom("sistemas-tcc@tecnoif.com.br");
+            message.setFrom("franciel@tecnoif.com.br");
             message.setTo(email);
             message.setSubject(MENSAGEM_TITULO);
             message.setText("Olá " + nome + "!\n\n" + MENSAGEM_BODY + MENSAGEM_VALIDADE_CODIGO + codigo + "\n\nObrigado! \nSystetica");
