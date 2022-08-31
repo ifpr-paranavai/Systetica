@@ -6,6 +6,7 @@ import com.frfs.systetica.dto.response.ReturnData;
 import com.frfs.systetica.entity.Role;
 import com.frfs.systetica.entity.Usuario;
 import com.frfs.systetica.mapper.UsuarioMapper;
+import com.frfs.systetica.repository.RoleRepository;
 import com.frfs.systetica.repository.UsuarioRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -36,6 +37,9 @@ public class UsuarioServiceTest {
 
     @MockBean
     private RoleService roleService;
+
+    @MockBean
+    private RoleRepository roleRepository;
 
     @MockBean
     private EmailService emailService;
@@ -254,6 +258,39 @@ public class UsuarioServiceTest {
         Mockito.when(usuarioOptional.get().getRoles()).thenReturn(roles);
 
         usuarioService.loadUserByUsername(email);
+    }
+
+    @Test
+    @DisplayName("Deve conceder permissão de funcionário")
+    public void deveConcederPermissaoFuncionario() {
+        String email = "usuario@gmail.com";
+        Collection<Role> roles = new ArrayList<>();
+
+        Usuario usuario = Mockito.mock(Usuario.class);
+        UsuarioDTO usuarioDTO = Mockito.mock(UsuarioDTO.class);
+        Optional<Usuario> usuarioOptional = Optional.of(usuario);
+
+        Role roleCliente = Mockito.mock(Role.class);
+        Mockito.when(roleCliente.getId()).thenReturn(1L);
+        Mockito.when(roleCliente.getName()).thenReturn("CLIENTE");
+
+        Role roleFuncionario = Mockito.mock(Role.class);
+        Mockito.when(roleFuncionario.getId()).thenReturn(2L);
+        Mockito.when(roleFuncionario.getName()).thenReturn("FUNCIONARIO");
+
+        roles.add(roleCliente);
+
+        Mockito.when(usuarioOptional.get().getId()).thenReturn(1L);
+        Mockito.when(usuarioOptional.get().getRoles()).thenReturn(roles);
+
+        Mockito.when(usuarioDTO.getEmail()).thenReturn(email);
+
+        Mockito.when(usuarioRepository.findByEmail(email)).thenReturn(usuarioOptional);
+        Mockito.when(roleRepository.findByName("FUNCIONARIO")).thenReturn(roleFuncionario);
+        Mockito.when(usuarioRepository.saveAndFlush(ArgumentMatchers.any(Usuario.class))).thenReturn(usuario);
+
+        ReturnData<String> returnData = new ReturnData<>(true, "Permissão concedida com sucesso.");
+        assertEquals(usuarioService.concederPermissaoFuncionairo(usuarioDTO), returnData);
     }
 
     // Testes para ReturnData false

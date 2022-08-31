@@ -2,9 +2,11 @@ package com.frfs.systetica.service;
 
 import com.frfs.systetica.dto.UsuarioDTO;
 import com.frfs.systetica.dto.response.ReturnData;
+import com.frfs.systetica.entity.Role;
 import com.frfs.systetica.entity.Usuario;
 import com.frfs.systetica.exception.BusinessException;
 import com.frfs.systetica.mapper.UsuarioMapper;
+import com.frfs.systetica.repository.RoleRepository;
 import com.frfs.systetica.repository.UsuarioRepository;
 import com.frfs.systetica.utils.Constantes;
 import lombok.RequiredArgsConstructor;
@@ -30,6 +32,7 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
     private final UsuarioMapper usuarioMapper;
     private final PasswordEncoder passwordEncoder;
     private final RoleService roleService;
+    private final RoleRepository roleRepository;
     private final EmailService emailService;
     private final CodigoAleatorioService codigoAleatorioService;
     private final FileBase64Service fileBase64Service;
@@ -151,7 +154,7 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
             usuario.get().setPassword(passwordEncoder.encode(usuarioDTO.getPassword()));
 
             usuarioRepository.saveAndFlush(usuario.get());
-            return new ReturnData<>(true, "Senhar alterada com sucesso");
+            return new ReturnData<>(true, "Senha alterada com sucesso");
         } catch (Exception ex) {
             return new ReturnData<>(false, "Ocorreu um erro ao alterar senha",
                     ex.getMessage() + "\nMotivo: " + ex.getCause());
@@ -179,6 +182,28 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
             return new ReturnData<>(false, "Ocorreu um erro ao atualizar dados", busEx.getMessage());
         } catch (Exception ex) {
             return new ReturnData<>(false, "Ocorreu um erro ao atualizar dados",
+                    ex.getMessage() + "\nMotivo: " + ex.getCause());
+        }
+    }
+
+    @Override
+    public ReturnData<String> concederPermissaoFuncionairo(UsuarioDTO usuarioDTO) {
+        try {
+            Collection<Role> roles = new ArrayList<>();
+            var usuario = usuarioRepository.findByEmail(usuarioDTO.getEmail());
+
+            Role role = roleRepository.findByName("FUNCIONARIO");
+
+            roles.add(role);
+
+            usuario.get().setRoles(roles);
+
+            usuarioRepository.saveAndFlush(usuario.get());
+            return new ReturnData<>(true, "Permissão concedida com sucesso.");
+        } catch (BusinessException busEx) {
+            return new ReturnData<>(false, "Ocorreu um erro ao conceder permissão", busEx.getMessage());
+        } catch (Exception ex) {
+            return new ReturnData<>(false, "Ocorreu um erro ao conceder permissão",
                     ex.getMessage() + "\nMotivo: " + ex.getCause());
         }
     }

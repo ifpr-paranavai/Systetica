@@ -74,4 +74,13 @@ public class UsuarioController {
         return new ResponseEntity<>(result, result.getSuccess() ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    @PutMapping(value = "/permissao-funcionario")
+    @ResponseBody
+    public ResponseEntity<Object> concederPermissaoFuncionairo(@Validated @RequestBody UsuarioDTO usuarioDTO) {
+        ReturnData<String> result = usuarioService.concederPermissaoFuncionairo(usuarioDTO);
+
+        return new ResponseEntity<>(result, result.getSuccess() ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+
 }

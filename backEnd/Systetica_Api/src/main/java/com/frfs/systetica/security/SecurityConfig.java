@@ -43,10 +43,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 "/servico/buscar-todos/**", //TODO - Verificar um buscar todos adm e cliente
                 "/produto/buscar-todos/**", //TODO - Verificar um buscar todos adm e cliente
                 "/cidade/**").permitAll();
+        http.authorizeRequests().antMatchers(
+                "*",
+                "/empresa/**",
+                "/servico/**",
+                "/produto/**",
+                "/usuario/permissao-funcionario/**").hasAnyAuthority("ADMINISTRADOR");
         http.authorizeRequests().antMatchers("*", "/usuario/**")
                 .hasAnyAuthority("ADMINISTRADOR, FUNCIONARIO, CLIENTE");
-        http.authorizeRequests().antMatchers("*", "/empresa/**", "/servico/**", "/produto/**")
-                .hasAnyAuthority("ADMINISTRADOR");
         http.authorizeRequests().anyRequest().authenticated();
         http.addFilter(customAuthenticationFilter);
         http.addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);

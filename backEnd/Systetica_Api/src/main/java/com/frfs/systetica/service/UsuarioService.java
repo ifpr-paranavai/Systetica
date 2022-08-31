@@ -19,4 +19,7 @@ public interface UsuarioService {
     ReturnData<String> alterarSenha(UsuarioDTO usuarioDTO);
 
     ReturnData<String> atualizar(UsuarioDTO usuarioDTO);
+
+    ReturnData<String> concederPermissaoFuncionairo(UsuarioDTO usuarioDTO);
+
 }
