@@ -11,6 +11,7 @@ import com.frfs.systetica.repository.UsuarioRepository;
 import com.frfs.systetica.utils.Constantes;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -184,6 +185,11 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
             return new ReturnData<>(false, "Ocorreu um erro ao atualizar dados",
                     ex.getMessage() + "\nMotivo: " + ex.getCause());
         }
+    }
+
+    @Override
+    public ReturnData<Object> buscarPorNomeEmail(String search, Pageable page) {
+        return new ReturnData<>(true, "", usuarioMapper.toListDto(usuarioRepository.findAllFields(search, page).getContent()));
     }
 
     @Override

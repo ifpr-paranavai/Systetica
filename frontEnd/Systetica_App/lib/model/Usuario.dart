@@ -36,6 +36,10 @@ class Usuario {
     imagemBase64 = json['imagem_base64'];
   }
 
+  static List<Usuario> fromJsonList(List json) {
+    return json.map((item) => Usuario.fromJson(item)).toList();
+  }
+
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};
     _data['id'] = id ?? "";

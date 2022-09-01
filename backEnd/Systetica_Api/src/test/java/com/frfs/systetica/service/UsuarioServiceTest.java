@@ -236,7 +236,7 @@ public class UsuarioServiceTest {
         ReturnData<String> returnData = new ReturnData<>(true, "Usuário atualizado com sucesso.");
         assertEquals(usuarioService.atualizar(usuarioDTO), returnData);
     }
-
+//TODO - rodar os testes
     @Test
     @DisplayName("Deve carregar/retorna usuáriolo pelo email")
     public void deveCarregarUsuarioPorEmail() {

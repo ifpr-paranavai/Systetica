@@ -25,7 +25,8 @@ public interface UsuarioMapper {
             @Mapping(target = "dataCadastro", ignore = true),
             @Mapping(target = "usuarioAtivo", ignore = true),
             @Mapping(target = "status", ignore = true),
-            @Mapping(target = "roles", ignore = true),
+            @Mapping(target = "imagemBase64", ignore = true),
+            @Mapping(target = "empresas", ignore = true),
     })
     List<UsuarioDTO> toListDto(List<Usuario> entities);
 

@@ -284,7 +284,7 @@ class ProdutoWidget extends State<ProdutoPage> {
       paddingRight: largura * 0.10,
       fontSize: 33,
       text: listaVazia
-          ? "Nenhum produto cadastradoa."
+          ? "Nenhum produto cadastrado."
           : "Oopss...ocorreu algum erro. \nTente novamente mais tarde.",
     );
   }

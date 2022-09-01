@@ -6,7 +6,7 @@ class ListViewComponent extends StatefulWidget {
     required this.largura,
     required this.altura,
     required this.infoNome,
-    required this.infoPreco,
+    this.infoPreco = "",
     required this.onTap,
     required this.numero,
     this.maxLinesInfo = 1,

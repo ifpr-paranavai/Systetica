@@ -5,6 +5,7 @@ import com.frfs.systetica.dto.response.ReturnData;
 import com.frfs.systetica.service.UsuarioService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -70,6 +71,14 @@ public class UsuarioController {
     @ResponseBody
     public ResponseEntity<Object> alterarSenha(@Validated @RequestBody UsuarioDTO usuarioDTO) {
         ReturnData<String> result = usuarioService.alterarSenha(usuarioDTO);
+
+        return new ResponseEntity<>(result, result.getSuccess() ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @PostMapping("/buscar-nome-email")
+    @ResponseBody
+    public ResponseEntity<Object> buscarPorNomeEmail(@RequestParam String search, Pageable page) {
+        ReturnData<Object> result = usuarioService.buscarPorNomeEmail(search, page);
 
         return new ResponseEntity<>(result, result.getSuccess() ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
     }
