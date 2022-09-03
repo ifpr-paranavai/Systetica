@@ -91,5 +91,11 @@ public class UsuarioController {
         return new ResponseEntity<>(result, result.getSuccess() ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    @GetMapping(value = "/buscar-funcionarios/{email}")
+    @ResponseBody
+    public ResponseEntity<Object> buscarFuncionarios(@PathVariable String email) {
+        ReturnData<Object> result = usuarioService.buscarFuncionarios(email);
 
+        return new ResponseEntity<>(result, result.getSuccess() ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 }

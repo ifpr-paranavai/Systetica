@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:systetica/components/icon_arrow_widget.dart';
 import 'package:systetica/components/imagens_widget.dart';
-import 'package:systetica/components/list_view_component.dart';
+import 'package:systetica/components/list_view/list_view_component.dart';
 import 'package:systetica/components/loading/loading_animation.dart';
 import 'package:systetica/components/text_autenticacoes_widget.dart';
 import 'package:systetica/model/Info.dart';

@@ -124,19 +124,6 @@ public class UsuarioServiceTest {
     }
 
     @Test
-    @DisplayName("Buscar todos usuários")
-    public void deveBuscarTodosUsuarios() {
-        List<Usuario> usuarios = Collections.emptyList();
-        List<UsuarioDTO> usuariosDTO = Collections.emptyList();
-
-        Mockito.when(usuarioRepository.findAll()).thenReturn(usuarios);
-        Mockito.when(usuarioMapper.toListDto(usuarios)).thenReturn(usuariosDTO);
-
-        ReturnData<Object> returnData = new ReturnData<>(true, "", usuariosDTO);
-        assertEquals(usuarioService.buscarTodos(), returnData);
-    }
-
-    @Test
     @DisplayName("Deve ativar usuário todos usuários")
     public void deveAtivarUsuario() {
         int codigoAleatorio = 123456;

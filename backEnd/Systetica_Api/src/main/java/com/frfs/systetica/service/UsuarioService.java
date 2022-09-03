@@ -11,8 +11,6 @@ public interface UsuarioService {
 
     ReturnData<Object> buscarPorEmail(String email, boolean buscarParaToken);
 
-    ReturnData<Object> buscarTodos();
-
     ReturnData<String> ativar(UsuarioDTO usuarioDTO);
 
     ReturnData<String> gerarCodigoAleatorio(String email);
@@ -24,5 +22,7 @@ public interface UsuarioService {
     ReturnData<Object> buscarPorNomeEmail(String search, Pageable page);
 
     ReturnData<String> concederPermissaoFuncionairo(UsuarioDTO usuarioDTO);
+
+    ReturnData<Object> buscarFuncionarios(String emailAdministrativo);
 
 }

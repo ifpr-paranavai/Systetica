@@ -36,15 +36,19 @@ public class EmpresaServiceImpl implements EmpresaService {
                 return new ReturnData<>(false, "Cnpj já esta cadastrado no sistema.");
             }
 
-            var returnDataConverteBase64 = fileBase64Service.converteFileBase64(empresaDTO.getLogoBase64());
-            if (!returnDataConverteBase64.getSuccess()) {
-                return returnDataConverteBase64;
+            if (empresaDTO.getLogoBase64() != null) {
+                var returnDataConverteBase64 = fileBase64Service.converteFileBase64(empresaDTO.getLogoBase64());
+                if (!returnDataConverteBase64.getSuccess()) {
+                    return returnDataConverteBase64;
+                }
+                empresaDTO.setLogoBase64(returnDataConverteBase64.getMessage());
             }
+
 
             UsuarioDTO usuarioDTO = usuarioMapper.toDto(usuarioRepository.findByEmail(
                     empresaDTO.getUsuarioAdministrador().getEmail()).get());
 
-            empresaDTO.setLogoBase64(returnDataConverteBase64.getMessage());
+
             empresaDTO.setUsuarioAdministrador(usuarioDTO);
             empresaDTO.setDataCadastro(new Date());
             empresaDTO.setStatus(true);

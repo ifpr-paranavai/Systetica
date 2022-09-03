@@ -12,6 +12,8 @@ class Usuario {
     this.codigoAleatorio,
     this.roles,
     this.imagemBase64,
+    this.permissaoFuncionario,
+    this.emailAdministrativo,
   });
 
   int? id;
@@ -22,6 +24,8 @@ class Usuario {
   int? codigoAleatorio;
   List<Role>? roles;
   String? imagemBase64;
+  bool? permissaoFuncionario;
+  String? emailAdministrativo;
 
   Usuario.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -34,6 +38,8 @@ class Usuario {
         ? (json['roles'].map<Role>((e) => Role.fromJson(e))).toList()
         : [];
     imagemBase64 = json['imagem_base64'];
+    permissaoFuncionario = json['permissao_funcionario'];
+    emailAdministrativo = json['email_administrativo'];
   }
 
   static List<Usuario> fromJsonList(List json) {
@@ -49,9 +55,10 @@ class Usuario {
     _data['password'] = password;
     _data['password'] = password;
     _data['codigo_aleatorio'] = codigoAleatorio;
-    _data['roles'] =
-        roles != null ? roles!.map((e) => e.toString()).toList() : null;
+    _data['roles'] = null;
     _data['imagem_base64'] = imagemBase64;
+    _data['permissao_funcionario'] = permissaoFuncionario;
+    _data['email_administrativo'] = emailAdministrativo;
     return _data;
   }
 }

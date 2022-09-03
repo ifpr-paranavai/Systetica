@@ -1,20 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:systetica/components/icon_arrow_widget.dart';
 import 'package:systetica/components/imagens_widget.dart';
-import 'package:systetica/components/list_view_component.dart';
+import 'package:systetica/components/list_view/list_view_funcionario_component.dart';
+import 'package:systetica/components/loading/loading_animation.dart';
 import 'package:systetica/components/text_autenticacoes_widget.dart';
+import 'package:systetica/model/Info.dart';
 import 'package:systetica/model/Usuario.dart';
 import 'package:systetica/screen/ativar_funcionario/ativar_funcionario_controller.dart';
 import 'package:systetica/screen/ativar_funcionario/view/ativar_funcionario_page.dart';
+import 'package:systetica/screen/ativar_funcionario/view/form/ativar_funcionario_form_page.dart';
 
 class AtivarFuncionarioWidget extends State<AtivarFuncionarioPage> {
   final AtivarFuncionarController _controller = AtivarFuncionarController();
   final ScrollController _scrollController = ScrollController();
+  Info? info = Info(success: true);
+  bool loading = true;
 
   @override
   void initState() {
     super.initState();
     _controller.usuarios = [];
+    buscarFuncionarios();
   }
 
   @override
@@ -29,13 +35,27 @@ class AtivarFuncionarioWidget extends State<AtivarFuncionarioPage> {
           paddingTop: _altura * 0.011,
           onPressed: () => Navigator.pop(context),
         ),
-        body: _body(
-          largura: _largura,
-          altura: _altura,
-          usuarios: _controller.usuarios,
-        ),
+        body: loading
+            ? const LoadingAnimation()
+            : _body(
+                largura: _largura,
+                altura: _altura,
+                usuarios: _controller.usuarios,
+              ),
       ),
     );
+  }
+
+  Future<void> buscarFuncionarios() async {
+    await _controller.buscarFuncionarios(context: context).then(
+          (value) => setState(
+            () {
+              info = value;
+              _controller.usuarios = value!.object;
+              loading = false;
+            },
+          ),
+        );
   }
 
   Widget _body({
@@ -143,13 +163,20 @@ class AtivarFuncionarioWidget extends State<AtivarFuncionarioPage> {
           ),
           itemCount: usuarios.length,
           itemBuilder: (BuildContext context, int index) {
-            return ListViewComponent(
+            return ListViewFuncionarioComponent(
               largura: largura,
               altura: altura,
               infoNome: usuarios[index].nome!,
               numero: index + 1,
-              maxLinesInfo: 2,
-              onTap: () {},
+              onTap: () {
+                Navigator.of(context).push(
+                  _controller.myPageTransition.pageTransition(
+                    child: AtivarFuncionarioFormPage(usuario: usuarios[index]),
+                    childCurrent: widget,
+                    buttoToTop: true,
+                  ),
+                );
+              },
             );
           },
         ),
@@ -165,28 +192,29 @@ class AtivarFuncionarioWidget extends State<AtivarFuncionarioPage> {
   }) {
     return Expanded(
       child: Container(
-          color: Colors.grey.withOpacity(0.2),
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: EdgeInsets.only(
-                top: altura * 0.14,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        _imagemErro(listaVazia: listaVazia),
-                        _textoErro(largura: largura, listaVazia: listaVazia),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+        color: Colors.grey.withOpacity(0.2),
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.only(
+              top: altura * 0.14,
             ),
-          )),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      _imagemErro(listaVazia: listaVazia),
+                      _textoErro(largura: largura, listaVazia: listaVazia),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 
@@ -209,7 +237,7 @@ class AtivarFuncionarioWidget extends State<AtivarFuncionarioPage> {
       paddingRight: largura * 0.10,
       fontSize: 33,
       text: listaVazia
-          ? "Busque por nome ou email"
+          ? "Nenhum funcionário cadastrado"
           : "Oopss...ocorreu algum erro. \nTente novamente mais tarde.",
     );
   }

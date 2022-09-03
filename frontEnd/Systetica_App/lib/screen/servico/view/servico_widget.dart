@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:systetica/components/icon_arrow_widget.dart';
 import 'package:systetica/components/imagens_widget.dart';
-import 'package:systetica/components/list_view_component.dart';
+import 'package:systetica/components/list_view/list_view_component.dart';
 import 'package:systetica/components/loading/loading_animation.dart';
 import 'package:systetica/components/text_autenticacoes_widget.dart';
 import 'package:systetica/model/Info.dart';
@@ -22,7 +22,7 @@ class ServicoWidget extends State<ServicoPage> {
   void initState() {
     super.initState();
     _controller.servicos = [];
-    buscaServicos();
+    buscarServicos();
   }
 
   @override
@@ -48,7 +48,7 @@ class ServicoWidget extends State<ServicoPage> {
     );
   }
 
-  Future<void> buscaServicos() async {
+  Future<void> buscarServicos() async {
     await _controller.buscarServico(context: context, servico: "").then(
           (value) => setState(
             () {
@@ -190,7 +190,7 @@ class ServicoWidget extends State<ServicoPage> {
                     )
                     .then(
                       (value) => setState(() {
-                        buscaServicos();
+                        buscarServicos();
                       }),
                     );
               },
@@ -231,7 +231,7 @@ class ServicoWidget extends State<ServicoPage> {
               )
               .then(
                 (value) => setState(() {
-                  buscaServicos();
+                  buscarServicos();
                 }),
               );
         },
@@ -283,7 +283,7 @@ class ServicoWidget extends State<ServicoPage> {
       paddingRight: largura * 0.10,
       fontSize: 33,
       text: listaVazia
-          ? "Nenhum serviço cadastradoa."
+          ? "Nenhum serviço cadastrado."
           : "Oopss...ocorreu algum erro. \nTente novamente mais tarde.",
     );
   }

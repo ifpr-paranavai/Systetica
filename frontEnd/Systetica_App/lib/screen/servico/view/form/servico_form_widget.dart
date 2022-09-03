@@ -8,7 +8,7 @@ import 'package:systetica/screen/servico/view/form/servico_form_page.dart';
 
 class ServicoFormWidget extends State<ServicoFormPage> {
   final ServicoController _controller = ServicoController();
-  final InputServico _inputEmpresa = InputServico();
+  final InputServico _inputServico = InputServico();
   final MultiValidatorServico _validatorServico = MultiValidatorServico();
   late ScrollController _scrollController;
   bool edicao = false;
@@ -55,30 +55,30 @@ class ServicoFormWidget extends State<ServicoFormPage> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   _sizedBox(height: _altura * 0.15),
-                  _inputEmpresa.textoCadastrarServico(
+                  _inputServico.textoCadastrarServico(
                       texto: "Cadastrar Serviço"),
-                  _inputEmpresa.inputNomeServico(
+                  _inputServico.inputNomeServico(
                     paddingHorizontal: _largura,
                     controller: _controller,
                     validatorServico: _validatorServico,
                   ),
-                  _inputEmpresa.inputTempoServico(
+                  _inputServico.inputTempoServico(
                     paddingHorizontal: _largura,
                     controller: _controller,
                     validatorServico: _validatorServico,
                   ),
-                  _inputEmpresa.inputPreco(
+                  _inputServico.inputPreco(
                     paddingHorizontal: _largura,
                     controller: _controller,
                     validatorServico: _validatorServico,
                   ),
-                  _inputEmpresa.inputDescricao(
+                  _inputServico.inputDescricao(
                     paddingHorizontal: _largura,
                     controller: _controller,
                     validatorServico: _validatorServico,
                   ),
                   edicao
-                      ? _inputEmpresa.customSwitch(
+                      ? _inputServico.customSwitch(
                           paddingHorizontal: _largura,
                           controller: _controller,
                           onChanged: (bool value) {
@@ -88,7 +88,7 @@ class ServicoFormWidget extends State<ServicoFormPage> {
                           },
                         )
                       : Container(),
-                  _inputEmpresa.botaoCadastrar(
+                  _inputServico.botaoCadastrar(
                     label: edicao ? "SALVAR" : "CADASTRAR",
                     onPressed: () => edicao
                         ? _controller.atualizarServico(context).then(

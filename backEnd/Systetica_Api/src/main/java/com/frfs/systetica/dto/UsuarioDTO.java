@@ -1,5 +1,6 @@
 package com.frfs.systetica.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
@@ -7,6 +8,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Column;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
@@ -52,6 +54,13 @@ public class UsuarioDTO implements Serializable {
     @JsonProperty("imagem_base64")
     private String imagemBase64;
 
+    @JsonIgnore
     @JsonProperty("empresas")
     private List<EmpresaDTO> empresas;
+
+    @JsonProperty("permissao_funcionario")
+    private Boolean permissaoFuncionario;
+
+    @JsonProperty("email_administrativo")
+    private String emailAdministrativo;
 }

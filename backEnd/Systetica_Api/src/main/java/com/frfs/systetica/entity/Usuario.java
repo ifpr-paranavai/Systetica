@@ -1,5 +1,6 @@
 package com.frfs.systetica.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
@@ -58,17 +59,24 @@ public class Usuario implements Serializable {
     private Date dataCadastro;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    private Collection<Role> roles = new ArrayList<>();;
+    private Collection<Role> roles = new ArrayList<>();
 
     @Lob
     @Column(name = "imagem_base64", length = 16777215)
     private String imagemBase64;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @Column(name = "permissao_funcionario")
+    private Boolean permissaoFuncionario;
+
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "ass_funcionario_empresa",
             uniqueConstraints = @UniqueConstraint(columnNames = {"id_usuario", "id_empresa"}),
             joinColumns = @JoinColumn(name = "id_usuario"),
             inverseJoinColumns = @JoinColumn(name = "id_empresa"))
     private List<Empresa> empresas = new ArrayList<>();
+
+    public List<Empresa> getEmpresas() {
+        return null;
+    }
 }

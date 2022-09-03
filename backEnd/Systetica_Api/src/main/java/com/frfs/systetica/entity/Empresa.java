@@ -78,7 +78,7 @@ public class Empresa implements Serializable {
     @JoinColumn(name = "id_usuario_administrador")
     private Usuario usuarioAdministrador;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany()
     @JoinTable(
             name = "ass_funcionario_empresa",
             uniqueConstraints = @UniqueConstraint(columnNames = {"id_empresa", "id_usuario"}),

@@ -1,11 +1,15 @@
 package com.frfs.systetica.service;
 
+import com.frfs.systetica.dto.EmpresaDTO;
 import com.frfs.systetica.dto.UsuarioDTO;
 import com.frfs.systetica.dto.response.ReturnData;
+import com.frfs.systetica.entity.Empresa;
 import com.frfs.systetica.entity.Role;
 import com.frfs.systetica.entity.Usuario;
 import com.frfs.systetica.exception.BusinessException;
+import com.frfs.systetica.mapper.EmpresaMapper;
 import com.frfs.systetica.mapper.UsuarioMapper;
+import com.frfs.systetica.repository.EmpresaRepository;
 import com.frfs.systetica.repository.RoleRepository;
 import com.frfs.systetica.repository.UsuarioRepository;
 import com.frfs.systetica.utils.Constantes;
@@ -20,10 +24,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -37,6 +38,8 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
     private final EmailService emailService;
     private final CodigoAleatorioService codigoAleatorioService;
     private final FileBase64Service fileBase64Service;
+    private final EmpresaRepository empresaRepository;
+    private final EmpresaMapper empresaMapper;
 
     @Override
     public ReturnData<String> salvar(UsuarioDTO usuarioDTO) {
@@ -58,6 +61,7 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
             usuarioDTO.setDataCadastro(new Date());
             usuarioDTO.setDataCodigo(new Date());
             usuarioDTO.setCodigoAleatorio(codigoAleatorio);
+            usuarioDTO.setPermissaoFuncionario(false);
 
             usuarioRepository.saveAndFlush(usuarioMapper.toEntity(usuarioDTO));
             return new ReturnData<>(true, "Usuário salvo com sucesso", "");
@@ -90,11 +94,6 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
             return new ReturnData<>(true, "", usuario.get());
         }
         return new ReturnData<>(true, "", usuarioMapper.toDto(usuario.get()));
-    }
-
-    @Override
-    public ReturnData<Object> buscarTodos() {
-        return new ReturnData<>(true, "", usuarioMapper.toListDto(usuarioRepository.findAll()));
     }
 
     @Override
@@ -189,21 +188,37 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
 
     @Override
     public ReturnData<Object> buscarPorNomeEmail(String search, Pageable page) {
-        return new ReturnData<>(true, "", usuarioMapper.toListDto(usuarioRepository.findAllFields(search, page).getContent()));
+        return new ReturnData<>(true, "", usuarioMapper
+                .toListDto(usuarioRepository.findAllFields(search, page).getContent()));
     }
 
     @Override
     public ReturnData<String> concederPermissaoFuncionairo(UsuarioDTO usuarioDTO) {
         try {
             Collection<Role> roles = new ArrayList<>();
-            var usuario = usuarioRepository.findByEmail(usuarioDTO.getEmail());
+            Optional<Usuario> usuario = usuarioRepository.findByEmail(usuarioDTO.getEmail());
 
-            Role role = roleRepository.findByName("FUNCIONARIO");
+            if (usuarioDTO.getPermissaoFuncionario()) {
+                List<Empresa> empresas = new ArrayList<>();
+                Optional<Empresa> empresa = empresaRepository
+                        .findByUsuarioAdministradorEmail(usuarioDTO.getEmailAdministrativo());
 
-            roles.add(role);
+                Role role = roleRepository.findByName("FUNCIONARIO");
+                roles.add(role);
 
-            usuario.get().setRoles(roles);
+                empresas.add(empresa.get());
 
+                usuario.get().setRoles(roles);
+                usuario.get().setEmpresas(empresas);
+            } else {
+                Role role = roleRepository.findByName("CLIENTE");
+                roles.add(role);
+
+                usuario.get().setRoles(roles);
+                usuario.get().setEmpresas(null);
+            }
+
+            usuario.get().setPermissaoFuncionario(usuarioDTO.getPermissaoFuncionario());
             usuarioRepository.saveAndFlush(usuario.get());
             return new ReturnData<>(true, "Permissão concedida com sucesso.");
         } catch (BusinessException busEx) {
@@ -212,6 +227,17 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
             return new ReturnData<>(false, "Ocorreu um erro ao conceder permissão",
                     ex.getMessage() + "\nMotivo: " + ex.getCause());
         }
+    }
+
+    @Override
+    public ReturnData<Object> buscarFuncionarios(String emailAdministrativo) {
+        Optional<Empresa> empresa = empresaRepository.findByUsuarioAdministradorEmail(emailAdministrativo);
+
+        if (empresa.isEmpty()) {
+            return new ReturnData<>(false, "Empresa não encontrada",
+                    "Não foi possível encontrar empresa pelo email " + emailAdministrativo);
+        }
+        return new ReturnData<>(true, "", empresaMapper.toDto(empresa.get()).getUsuarios());
     }
 
     @Override
