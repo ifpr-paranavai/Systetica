@@ -1,11 +1,15 @@
 package com.frfs.systetica.service;
 
+import com.frfs.systetica.dto.EmpresaDTO;
 import com.frfs.systetica.dto.RoleDTO;
 import com.frfs.systetica.dto.UsuarioDTO;
 import com.frfs.systetica.dto.response.ReturnData;
+import com.frfs.systetica.entity.Empresa;
 import com.frfs.systetica.entity.Role;
 import com.frfs.systetica.entity.Usuario;
+import com.frfs.systetica.mapper.EmpresaMapper;
 import com.frfs.systetica.mapper.UsuarioMapper;
+import com.frfs.systetica.repository.EmpresaRepository;
 import com.frfs.systetica.repository.RoleRepository;
 import com.frfs.systetica.repository.UsuarioRepository;
 import org.junit.jupiter.api.DisplayName;
@@ -49,6 +53,12 @@ public class UsuarioServiceTest {
 
     @Autowired
     private UsuarioServiceImpl usuarioService;
+
+    @MockBean
+    private EmpresaRepository empresaRepository;
+
+    @MockBean
+    private EmpresaMapper empresaMapper;
 
     @Mock
     private PasswordEncoder passwordEncoder;
@@ -201,7 +211,7 @@ public class UsuarioServiceTest {
 
         Mockito.when(usuarioRepository.saveAndFlush(ArgumentMatchers.any(Usuario.class))).thenReturn(usuario);
 
-        ReturnData<String> returnData = new ReturnData<>(true, "Senhar alterada com sucesso");
+        ReturnData<String> returnData = new ReturnData<>(true, "Senha alterada com sucesso");
         assertEquals(usuarioService.alterarSenha(usuarioDTO), returnData);
     }
 
@@ -223,7 +233,7 @@ public class UsuarioServiceTest {
         ReturnData<String> returnData = new ReturnData<>(true, "Usuário atualizado com sucesso.");
         assertEquals(usuarioService.atualizar(usuarioDTO), returnData);
     }
-//TODO - rodar os testes
+
     @Test
     @DisplayName("Deve carregar/retorna usuáriolo pelo email")
     public void deveCarregarUsuarioPorEmail() {
@@ -257,6 +267,9 @@ public class UsuarioServiceTest {
         UsuarioDTO usuarioDTO = Mockito.mock(UsuarioDTO.class);
         Optional<Usuario> usuarioOptional = Optional.of(usuario);
 
+        Empresa empresa = Mockito.mock(Empresa.class);
+        Optional<Empresa> empresaOptional = Optional.of(empresa);
+
         Role roleCliente = Mockito.mock(Role.class);
         Mockito.when(roleCliente.getId()).thenReturn(1L);
         Mockito.when(roleCliente.getName()).thenReturn("CLIENTE");
@@ -271,13 +284,92 @@ public class UsuarioServiceTest {
         Mockito.when(usuarioOptional.get().getRoles()).thenReturn(roles);
 
         Mockito.when(usuarioDTO.getEmail()).thenReturn(email);
+        Mockito.when(usuarioDTO.getPermissaoFuncionario()).thenReturn(true);
+        Mockito.when(usuarioDTO.getEmailAdministrativo()).thenReturn("systetica@gmail.com");
 
         Mockito.when(usuarioRepository.findByEmail(email)).thenReturn(usuarioOptional);
+        Mockito.when(empresaRepository.findByUsuarioAdministradorEmail(usuarioDTO.getEmailAdministrativo()))
+                .thenReturn(empresaOptional);
         Mockito.when(roleRepository.findByName("FUNCIONARIO")).thenReturn(roleFuncionario);
         Mockito.when(usuarioRepository.saveAndFlush(ArgumentMatchers.any(Usuario.class))).thenReturn(usuario);
 
         ReturnData<String> returnData = new ReturnData<>(true, "Permissão concedida com sucesso.");
         assertEquals(usuarioService.concederPermissaoFuncionairo(usuarioDTO), returnData);
+    }
+
+    @Test
+    @DisplayName("Deve remover permissão de funcionário")
+    public void deveRemoverrPermissaoFuncionario() {
+        String email = "usuario@gmail.com";
+        Collection<Role> roles = new ArrayList<>();
+
+        Usuario usuario = Mockito.mock(Usuario.class);
+        UsuarioDTO usuarioDTO = Mockito.mock(UsuarioDTO.class);
+        Optional<Usuario> usuarioOptional = Optional.of(usuario);
+
+        Role roleCliente = Mockito.mock(Role.class);
+        Mockito.when(roleCliente.getId()).thenReturn(1L);
+        Mockito.when(roleCliente.getName()).thenReturn("CLIENTE");
+
+        Role roleFuncionario = Mockito.mock(Role.class);
+        Mockito.when(roleFuncionario.getId()).thenReturn(2L);
+        Mockito.when(roleFuncionario.getName()).thenReturn("FUNCIONARIO");
+
+        roles.add(roleFuncionario);
+
+        Mockito.when(usuarioOptional.get().getId()).thenReturn(1L);
+        Mockito.when(usuarioOptional.get().getRoles()).thenReturn(roles);
+
+        Mockito.when(usuarioDTO.getEmail()).thenReturn(email);
+        Mockito.when(usuarioDTO.getPermissaoFuncionario()).thenReturn(false);
+        Mockito.when(usuarioDTO.getEmailAdministrativo()).thenReturn("systetica@gmail.com");
+
+        Mockito.when(usuarioRepository.findByEmail(email)).thenReturn(usuarioOptional);
+        Mockito.when(roleRepository.findByName("CLIENTE")).thenReturn(roleCliente);
+        Mockito.when(usuarioRepository.saveAndFlush(ArgumentMatchers.any(Usuario.class))).thenReturn(usuario);
+
+        ReturnData<String> returnData = new ReturnData<>(true, "Permissão concedida com sucesso.");
+        assertEquals(usuarioService.concederPermissaoFuncionairo(usuarioDTO), returnData);
+    }
+
+    @Test
+    @DisplayName("Buscar funcionários por empra")
+    public void deveBuscarFuncionariosPorEmpresa() {
+        List<UsuarioDTO> usuariosDtos = new ArrayList<>();
+        List<Usuario> usuarios = new ArrayList<>();
+        String email = "mock@gmail.com";
+
+        Usuario usuario = Mockito.mock(Usuario.class);
+        UsuarioDTO usuarioDTO = Mockito.mock(UsuarioDTO.class);
+
+        Empresa empresa = Mockito.mock(Empresa.class);
+        EmpresaDTO empresaDTO = Mockito.mock(EmpresaDTO.class);
+        Optional<Empresa> empresaOptional = Optional.of(empresa);
+
+        Mockito.when(usuario.getId()).thenReturn(1L);
+        Mockito.when(usuario.getNome()).thenReturn("teste nome");
+
+        Mockito.when(usuarioDTO.getId()).thenReturn(1L);
+        Mockito.when(usuarioDTO.getNome()).thenReturn("teste nome");
+
+        usuarios.add(usuario);
+        usuariosDtos.add(usuarioDTO);
+
+        Mockito.when(empresa.getId()).thenReturn(1L);
+        Mockito.when(empresa.getNome()).thenReturn("Systetica");
+        Mockito.when(empresa.getUsuarios()).thenReturn(usuarios);
+
+        Mockito.when(empresaDTO.getId()).thenReturn(1L);
+        Mockito.when(empresaDTO.getNome()).thenReturn("Systetica");
+        Mockito.when(empresaDTO.getUsuarios()).thenReturn(usuariosDtos);
+
+        Mockito.when(empresaRepository.findByUsuarioAdministradorEmail(ArgumentMatchers.eq(email)))
+                .thenReturn(empresaOptional);
+        Mockito.when(empresaMapper.toDto(empresa)).thenReturn(empresaDTO);
+
+        ReturnData<Object> returnData = new ReturnData<>(true, "", usuariosDtos);
+
+        assertEquals(usuarioService.buscarFuncionarios(email), returnData);
     }
 
     // Testes para ReturnData false
@@ -428,5 +520,18 @@ public class UsuarioServiceTest {
         ReturnData<String> returnData = new ReturnData<>(false, "Email ou código são inválidos");
 
         assertEquals(usuarioService.alterarSenha(usuarioDTO), returnData);
+    }
+
+    @Test
+    @DisplayName("Deve informa que empresa não foi encontrada")
+    public void deveInformaEmpresaNaoEncontrada() {
+        String email = "mock@gmail.com";
+
+        Optional<Empresa> empresaOptional = Optional.empty();
+        Mockito.when(empresaRepository.findByUsuarioAdministradorEmail(email)).thenReturn(empresaOptional);
+
+        ReturnData<Object> returnData = new ReturnData<>(false, "Empresa não encontrada",
+                "Não foi possível encontrar empresa pelo email " + email);
+        assertEquals(usuarioService.buscarFuncionarios(email), returnData);
     }
 }

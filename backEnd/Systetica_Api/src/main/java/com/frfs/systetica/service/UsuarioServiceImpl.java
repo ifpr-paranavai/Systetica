@@ -1,6 +1,5 @@
 package com.frfs.systetica.service;
 
-import com.frfs.systetica.dto.EmpresaDTO;
 import com.frfs.systetica.dto.UsuarioDTO;
 import com.frfs.systetica.dto.response.ReturnData;
 import com.frfs.systetica.entity.Empresa;
@@ -203,16 +202,14 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
                 Optional<Empresa> empresa = empresaRepository
                         .findByUsuarioAdministradorEmail(usuarioDTO.getEmailAdministrativo());
 
-                Role role = roleRepository.findByName("FUNCIONARIO");
-                roles.add(role);
-
                 empresas.add(empresa.get());
+
+                roles.add(roleRepository.findByName("FUNCIONARIO"));
 
                 usuario.get().setRoles(roles);
                 usuario.get().setEmpresas(empresas);
             } else {
-                Role role = roleRepository.findByName("CLIENTE");
-                roles.add(role);
+                roles.add(roleRepository.findByName("CLIENTE"));
 
                 usuario.get().setRoles(roles);
                 usuario.get().setEmpresas(null);
