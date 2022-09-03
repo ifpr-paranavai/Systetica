@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:systetica/components/alert_dialog_widget.dart';
 import 'package:systetica/components/loading/show_loading_widget.dart';
 import 'package:systetica/components/page_transition.dart';
 import 'package:systetica/components/texto_erro_widget.dart';
@@ -15,9 +16,8 @@ class AtivarFuncionarController {
   late List<Usuario> usuarios;
   late Usuario usuario;
 
-  Future<Info?> buscarFuncionarios({
-    required BuildContext context,
-  }) async {
+  Future<Info?> buscarFuncionarios(BuildContext context
+  ) async {
     Info info = Info(success: true);
 
     try {
@@ -71,6 +71,20 @@ class AtivarFuncionarController {
 
         // Finaliza o loading na tela
         Navigator.pop(contextLoading, loading);
+
+        var alertDialogOk = AlertDialogWidget();
+        if (_info.success!) {
+          return;
+        } else {
+          alertDialogOk.alertDialog(
+            showModalOk: true,
+            context: context,
+            titulo: "Erro",
+            descricao: _info.message!,
+            buttonText: "OK",
+            onPressedOk: () => Navigator.pop(context),
+          );
+        }
       } catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(

@@ -47,7 +47,7 @@ class AtivarFuncionarioWidget extends State<AtivarFuncionarioPage> {
   }
 
   Future<void> buscarFuncionarios() async {
-    await _controller.buscarFuncionarios(context: context).then(
+    await _controller.buscarFuncionarios(context).then(
           (value) => setState(
             () {
               info = value;
@@ -130,6 +130,7 @@ class AtivarFuncionarioWidget extends State<AtivarFuncionarioPage> {
             ),
             contentPadding: EdgeInsets.zero,
           ),
+
           onChanged: (value) {
             _controller.usuarios = [];
             _controller.buscarUsuarios(context: context, usuario: value).then(
@@ -169,12 +170,18 @@ class AtivarFuncionarioWidget extends State<AtivarFuncionarioPage> {
               infoNome: usuarios[index].nome!,
               numero: index + 1,
               onTap: () {
-                Navigator.of(context).push(
+                Navigator.of(context)
+                    .push(
                   _controller.myPageTransition.pageTransition(
                     child: AtivarFuncionarioFormPage(usuario: usuarios[index]),
                     childCurrent: widget,
                     buttoToTop: true,
                   ),
+                )
+                    .then(
+                      (value) => setState(() {
+                    buscarFuncionarios();
+                  }),
                 );
               },
             );
@@ -202,13 +209,11 @@ class AtivarFuncionarioWidget extends State<AtivarFuncionarioPage> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      _imagemErro(listaVazia: listaVazia),
-                      _textoErro(largura: largura, listaVazia: listaVazia),
-                    ],
-                  ),
+                Column(
+                  children: [
+                    _imagemErro(listaVazia: listaVazia),
+                    _textoErro(largura: largura, listaVazia: listaVazia),
+                  ],
                 ),
               ],
             ),
@@ -235,7 +240,7 @@ class AtivarFuncionarioWidget extends State<AtivarFuncionarioPage> {
     return TextAutenticacoesWidget(
       paddingLeft: largura * (listaVazia ? 0.18 : 0.15),
       paddingRight: largura * 0.10,
-      fontSize: 33,
+      fontSize: 30,
       text: listaVazia
           ? "Nenhum funcionário cadastrado"
           : "Oopss...ocorreu algum erro. \nTente novamente mais tarde.",

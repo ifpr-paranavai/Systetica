@@ -248,19 +248,19 @@ class ProdutoWidget extends State<ProdutoPage> {
     return Expanded(
       child: Container(
           color: Colors.grey.withOpacity(0.2),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SingleChildScrollView(
-                child: Column(
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Column(
                   children: [
                     _imagemErro(listaVazia: listaVazia),
                     _textoErro(largura: largura, listaVazia: listaVazia),
                   ],
                 ),
-              ),
-            ],
+              ],
+            ),
           )),
     );
   }
@@ -282,7 +282,7 @@ class ProdutoWidget extends State<ProdutoPage> {
     return TextAutenticacoesWidget(
       paddingLeft: largura * (listaVazia ? 0.18 : 0.15),
       paddingRight: largura * 0.10,
-      fontSize: 33,
+      fontSize: 30,
       text: listaVazia
           ? "Nenhum produto cadastrado."
           : "Oopss...ocorreu algum erro. \nTente novamente mais tarde.",
