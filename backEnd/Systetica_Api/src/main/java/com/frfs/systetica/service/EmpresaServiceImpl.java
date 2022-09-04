@@ -12,6 +12,7 @@ import com.frfs.systetica.repository.EmpresaRepository;
 import com.frfs.systetica.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -26,7 +27,6 @@ public class EmpresaServiceImpl implements EmpresaService {
     private final EmpresaMapper empresaMapper;
     private final UsuarioRepository usuarioRepository;
     private final UsuarioMapper usuarioMapper;
-    private final CidadeMapper cidadeMapper;
     private final FileBase64Service fileBase64Service;
 
     @Override
@@ -100,5 +100,15 @@ public class EmpresaServiceImpl implements EmpresaService {
         empresaDTO.setNomeUsuario(empresa.get().getUsuarioAdministrador().getNome().split(" ")[0]);
 
         return new ReturnData<>(true, "", empresaDTO);
+    }
+
+    @Override
+    public ReturnData<Object> buscarTodasEmpresasPaginado(String search, Pageable page) {
+        return new ReturnData<>(true, "", empresaMapper.toListDto(empresaRepository.findAllFields(search, page).getContent()));
+    }
+
+    @Override
+    public ReturnData<Object> buscarTodasEmpresas(Pageable page) {
+        return new ReturnData<>(true, "", empresaMapper.toListDto(empresaRepository.findAll(page).getContent()));
     }
 }

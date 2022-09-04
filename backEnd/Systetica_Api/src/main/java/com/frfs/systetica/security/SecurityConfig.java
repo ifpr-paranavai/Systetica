@@ -40,8 +40,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 "/usuario/ativar/**",
                 "/usuario/gerar-codigo/**",
                 "/usuario/alterar-senha/**",
-                "/servico/buscar-todos/**",
-                "/produto/buscar-todos/**",
                 "/cidade/**").permitAll();
 
         http.authorizeRequests().antMatchers(
@@ -52,7 +50,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 "/buscar-funcionarios/{email}**",
                 "/usuario/permissao-funcionario/**").hasAnyAuthority("ADMINISTRADOR");
 
-        http.authorizeRequests().antMatchers("*", "/usuario/**")
+        http.authorizeRequests().antMatchers(
+                        "*",
+                        "/usuario/**",
+                        "/servico/buscar-todos/**",
+                        "/produto/buscar-todos/**",
+                        "/empresa/buscar-todos/")
                 .hasAnyAuthority("ADMINISTRADOR, FUNCIONARIO, CLIENTE");
 
         http.authorizeRequests().anyRequest().authenticated();

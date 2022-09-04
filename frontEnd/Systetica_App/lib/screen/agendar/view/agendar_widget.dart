@@ -62,6 +62,12 @@ class AgendarlWidget extends State<AgendarPage> {
           altura: altura,
           largura: largura,
         ),
+        _infoGerais(
+          altura: altura,
+          largura: largura,
+          titulo: "Para agendar um serviço, selecione uma barbearia.",
+          widthSize: largura,
+        ),
         empresas.isEmpty
             ? ErroWidget().erroRequisicao(
                 largura: largura,
@@ -127,6 +133,47 @@ class AgendarlWidget extends State<AgendarPage> {
             );
           },
         ),
+      ),
+    );
+  }
+
+  Container _infoGerais({
+    required String titulo,
+    required double widthSize,
+    required double largura,
+    required double altura,
+  }) {
+    return Container(
+      color: Colors.grey.withOpacity(0.2),
+      width: largura,
+      height: altura * 0.10,
+      alignment: Alignment.topLeft,
+      padding: EdgeInsets.only(
+        left: widthSize * 0.07,
+        top: widthSize * 0.02,
+        bottom: widthSize * 0.02,
+      ),
+      child: _tituloSystetica(
+        text: titulo,
+        opacity: 0.6,
+        fontWeight: FontWeight.w700,
+      ),
+    );
+  }
+
+  Text _tituloSystetica({
+    required String text,
+    required double opacity,
+    required FontWeight? fontWeight,
+  }) {
+    return Text(
+      text,
+      maxLines: 2,
+      overflow: TextOverflow.ellipsis,
+      style: TextStyle(
+        fontSize: 19,
+        color: Colors.black.withOpacity(opacity),
+        fontWeight: fontWeight,
       ),
     );
   }

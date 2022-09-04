@@ -7,6 +7,8 @@ import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 import org.mapstruct.ReportingPolicy;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, uses = EstadoMapper.class)
 public interface EmpresaMapper {
 
@@ -15,6 +17,8 @@ public interface EmpresaMapper {
             @Mapping(target = "usuarioAdministrador", ignore = true),
     })
     EmpresaDTO toDto(Empresa entity);
+
+    List<EmpresaDTO> toListDto(List<Empresa> entities);
 
     Empresa toEntity(EmpresaDTO dto);
 }

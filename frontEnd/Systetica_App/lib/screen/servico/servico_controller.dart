@@ -156,7 +156,7 @@ class ServicoController {
       Token _token = await TokenRepository.findToken();
       info = await ServicoService.buscarServicos(
         servico: servico,
-        emailAdministrativo: _token.email,
+        token: _token,
       );
     } catch (e) {
       info.success = false;

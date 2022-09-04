@@ -159,7 +159,7 @@ class ProdutoController {
       Token _token = await TokenRepository.findToken();
       info = await ProdutoService.buscarProdutos(
         produto: produto,
-        emailAdministrativo: _token.email,
+        token: _token,
       );
     } catch (e) {
       info.success = false;

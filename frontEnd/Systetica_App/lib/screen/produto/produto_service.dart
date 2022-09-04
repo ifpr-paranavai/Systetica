@@ -66,12 +66,14 @@ class ProdutoService {
   static Future<Info> buscarProdutos({
     int? size = 1000,
     String? produto,
-    String? emailAdministrativo,
+    required Token token,
   }) async {
     String path =
-        "produto/buscar-todos?search=$produto&size=$size&sort=nome&email=$emailAdministrativo";
+        "produto/buscar-todos?search=$produto&size=$size&sort=nome&email=${token.email}";
 
     Dio dio = DioConfigApi.builderConfig();
+
+    dio.options.headers["Authorization"] = "Bearer ${token.accessToken}";
 
     var response = await dio.post(path);
 
