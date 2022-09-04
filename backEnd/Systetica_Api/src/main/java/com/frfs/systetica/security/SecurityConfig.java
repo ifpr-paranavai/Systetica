@@ -43,20 +43,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 "/cidade/**").permitAll();
 
         http.authorizeRequests().antMatchers(
+                        "*",
+                        "/usuario/**",
+                        "/servico/buscar-todos/**",
+                        "/produto/buscar-todos/**",
+                        "/empresa/buscar-todos/**")
+                .hasAnyAuthority("ADMINISTRADOR, FUNCIONARIO, CLIENTE");
+
+        http.authorizeRequests().antMatchers(
                 "*",
                 "/empresa/**",
                 "/servico/**",
                 "/produto/**",
                 "/buscar-funcionarios/{email}**",
                 "/usuario/permissao-funcionario/**").hasAnyAuthority("ADMINISTRADOR");
-
-        http.authorizeRequests().antMatchers(
-                        "*",
-                        "/usuario/**",
-                        "/servico/buscar-todos/**",
-                        "/produto/buscar-todos/**",
-                        "/empresa/buscar-todos/")
-                .hasAnyAuthority("ADMINISTRADOR, FUNCIONARIO, CLIENTE");
 
         http.authorizeRequests().anyRequest().authenticated();
         http.addFilter(customAuthenticationFilter);

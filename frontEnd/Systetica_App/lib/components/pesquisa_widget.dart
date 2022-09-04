@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 
 class PesquisaWidget extends StatefulWidget {
@@ -7,12 +9,14 @@ class PesquisaWidget extends StatefulWidget {
     required this.hintText,
     required this.onChanged,
     this.paddingLeft = 0.22,
+    this.paddingRight = 0.037,
     Key? key,
   }) : super(key: key);
 
   double altura;
   double largura;
   double paddingLeft;
+  double paddingRight;
   String hintText;
   ValueChanged<String> onChanged;
 
@@ -29,7 +33,7 @@ class _PesquisaWidget extends State<PesquisaWidget> {
       padding: EdgeInsets.only(
         top: widget.largura * 0.040,
         bottom: widget.largura * 0.030,
-        right: widget.largura * 0.037,
+        right: widget.largura * widget.paddingRight,
         left: widget.largura * widget.paddingLeft,
       ),
       child: Container(

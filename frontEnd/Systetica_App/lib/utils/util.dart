@@ -27,4 +27,8 @@ class Util {
     var din = double.parse(dinheiro.replaceAll(',', '.'));
     return din;
   }
+
+  static String toSplitNome(String nome) {
+    return nome.split(" ")[0];
+  }
 }

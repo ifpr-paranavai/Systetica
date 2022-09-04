@@ -1,11 +1,11 @@
 import 'dart:convert';
 import 'dart:io';
-import 'dart:typed_data';
 
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:systetica/components/foto/foto_widget.dart';
 import 'package:systetica/components/icon_arrow_widget.dart';
 import 'package:systetica/components/item_list.dart';
 import 'package:systetica/components/loading/loading_animation.dart';
@@ -87,7 +87,9 @@ class EmpresaWidget extends State<EmpresaPage> {
             child: Column(
               children: [
                 _sizedBox(height: altura * 0.08),
-                _boxFoto(logoBase64),
+                FotoWidget().boxFoto(
+                  imagemUsuario: logoBase64,
+                ),
                 _sizedBox(height: altura * 0.06),
                 _textoEmpresa(),
                 _cardInfoEmpresa(
@@ -116,7 +118,11 @@ class EmpresaWidget extends State<EmpresaPage> {
           child: Column(
             children: [
               _sizedBox(height: altura * 0.08),
-              _boxFoto(_controller.logoBase64),
+              FotoWidget().boxFoto(
+                imagemUsuario: _controller.logoBase64,
+                iconErroAdd: true,
+                onPressed: () => _adicionarImagem(),
+              ),
               _sizedBox(height: altura * 0.07),
               _inputEmpresa.textoCadastrarEmpresa(),
               _inputEmpresa.inputNomeEmpresa(
@@ -212,44 +218,6 @@ class EmpresaWidget extends State<EmpresaPage> {
       ],
     );
     return _croppedFile!;
-  }
-
-  Container _boxFoto(dynamic imagemUsuario) {
-    return Container(
-      width: 160,
-      height: 160,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        boxShadow: [
-          BoxShadow(
-            blurRadius: 5,
-            color: Colors.black.withOpacity(0.6),
-            spreadRadius: 2,
-          )
-        ],
-      ),
-      child: _imgPerfil(imagemUsuario),
-    );
-  }
-
-  Widget _imgPerfil(dynamic image) {
-    if (image == null || image == "") {
-      return _iconErroFoto();
-    } else {
-      image = base64Decode(image);
-      if (image is Uint8List) {
-        return _circleAvatar(backgroundImage: MemoryImage(image));
-      } else {
-        return _circleAvatar(backgroundImage: FileImage(image));
-      }
-    }
-  }
-
-  CircleAvatar _circleAvatar({required ImageProvider backgroundImage}) {
-    return CircleAvatar(
-      backgroundColor: Colors.black,
-      backgroundImage: backgroundImage,
-    );
   }
 
   // Opções para info empresa
@@ -399,33 +367,6 @@ class EmpresaWidget extends State<EmpresaPage> {
     return SizedBox(
       height: height,
       width: width,
-    );
-  }
-
-  // Widgets de erro
-  Widget _iconErroFoto() {
-    return Container(
-      width: 160,
-      height: 160,
-      decoration: BoxDecoration(
-        color: AppColors.redPrincipal,
-        shape: BoxShape.circle,
-        boxShadow: [
-          BoxShadow(
-            blurRadius: 5,
-            color: Colors.black.withOpacity(0.6),
-            spreadRadius: 2,
-          )
-        ],
-      ),
-      child: IconButton(
-        icon: const Icon(
-          Icons.edit,
-          size: 100,
-          color: Colors.white,
-        ),
-        onPressed: () => _adicionarImagem(),
-      ),
     );
   }
 }

@@ -1,9 +1,7 @@
-import 'dart:convert';
-import 'dart:typed_data';
-
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:systetica/components/alert_dialog_widget.dart';
+import 'package:systetica/components/foto/foto_widget.dart';
 import 'package:systetica/components/imagens_widget.dart';
 import 'package:systetica/components/item_list.dart';
 import 'package:systetica/components/loading/loading_animation.dart';
@@ -54,7 +52,9 @@ class PerfilWidget extends State<PerfilPage> {
                       child: Column(
                         children: [
                           _sizedBox(height: _altura * 0.08),
-                          _boxFoto(_controller.usuario.imagemBase64),
+                          FotoWidget().boxFoto(
+                            imagemUsuario: _controller.usuario.imagemBase64,
+                          ),
                           _sizedBox(height: _altura * 0.07),
                           _textoPerfil(),
                           _cardInfoUsuario(
@@ -166,44 +166,6 @@ class PerfilWidget extends State<PerfilPage> {
     );
   }
 
-  Container _boxFoto(dynamic imagemUsuario) {
-    return Container(
-      width: 160,
-      height: 160,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        boxShadow: [
-          BoxShadow(
-            blurRadius: 5,
-            color: Colors.black.withOpacity(0.6),
-            spreadRadius: 2,
-          )
-        ],
-      ),
-      child: _imgPerfil(imagemUsuario),
-    );
-  }
-
-  Widget _imgPerfil(dynamic image) {
-    if (image == null || image == "") {
-      return _iconErroFoto();
-    } else {
-      image = base64Decode(image);
-      if (image is Uint8List) {
-        return _circleAvatar(backgroundImage: MemoryImage(image));
-      } else {
-        return _circleAvatar(backgroundImage: FileImage(image));
-      }
-    }
-  }
-
-  CircleAvatar _circleAvatar({required ImageProvider backgroundImage}) {
-    return CircleAvatar(
-      backgroundColor: Colors.black,
-      backgroundImage: backgroundImage,
-    );
-  }
-
   Padding _cardInfoUsuario({required Usuario usuario}) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 18),
@@ -287,27 +249,6 @@ class PerfilWidget extends State<PerfilPage> {
       paddingRight: _largura * 0.10,
       fontSize: 30,
       text: "Oopss...ocorreu algum erro. \nTente novamente mais tarde.",
-    );
-  }
-
-  Container _iconErroFoto() {
-    return Container(
-      decoration: BoxDecoration(
-        color: AppColors.redPrincipal,
-        shape: BoxShape.circle,
-        boxShadow: [
-          BoxShadow(
-            blurRadius: 5,
-            color: Colors.black.withOpacity(0.6),
-            spreadRadius: 2,
-          )
-        ],
-      ),
-      child: const Icon(
-        Icons.person,
-        size: 100,
-        color: Colors.white,
-      ),
     );
   }
 }

@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:systetica/components/erro/erro_widget.dart';
+import 'package:systetica/components/foto/foto_widget.dart';
 import 'package:systetica/components/list_view/list_view_funcionario_component.dart';
 import 'package:systetica/components/loading/loading_animation.dart';
 import 'package:systetica/components/pesquisa_widget.dart';
 import 'package:systetica/model/Empresa.dart';
 import 'package:systetica/model/Info.dart';
+import 'package:systetica/model/Usuario.dart';
 import 'package:systetica/screen/agendar/agendar_controller.dart';
 import 'package:systetica/screen/agendar/view/agendar_page.dart';
+import 'package:systetica/screen/perfil/perfil_controller.dart';
+import 'package:systetica/utils/util.dart';
 
 class AgendarlWidget extends State<AgendarPage> {
   final AgendarController _controller = AgendarController();
+  final PerfilController _perfilController = PerfilController();
   final ScrollController _scrollController = ScrollController();
   Info? info = Info(success: true);
   bool loading = true;
@@ -18,6 +23,7 @@ class AgendarlWidget extends State<AgendarPage> {
   void initState() {
     super.initState();
     _controller.empresas = [];
+    _perfilController.usuario = Usuario();
     buscarEmpresas();
   }
 
@@ -34,12 +40,19 @@ class AgendarlWidget extends State<AgendarPage> {
                 largura: _largura,
                 altura: _altura,
                 empresas: _controller.empresas,
+                usuario: _perfilController.usuario,
               ),
       ),
     );
   }
 
   Future<void> buscarEmpresas() async {
+    await _perfilController
+        .buscarUsuarioEmail(context)
+        .then((value) => setState(() {
+              _perfilController.usuario = value!.object;
+            }));
+
     await _controller.buscarEmpresas(context: context, nomeEmpresa: "").then(
           (value) => setState(
             () {
@@ -55,18 +68,39 @@ class AgendarlWidget extends State<AgendarPage> {
     required double altura, //width
     required double largura,
     required List<Empresa> empresas,
+    required Usuario usuario,
   }) {
     return Column(
       children: [
+        Row(
+          children: [
+            _infoGerais(
+              altura: altura,
+              largura: largura,
+              titulo: "Bem vindo" +
+                  (usuario.nome == null
+                      ? "!"
+                      : " " + Util.toSplitNome(usuario.nome!) + "!"),
+              widthSize: largura,
+            ),
+            Container(
+              padding: EdgeInsets.only(
+                top: 10,
+                right: largura * 0.060,
+              ),
+              width: largura * 0.40,
+              color: Colors.grey.withOpacity(0.2),
+              alignment: Alignment.centerRight,
+              child: FotoWidget().boxFoto(
+                imagemUsuario: usuario.imagemBase64!,
+                cirulo: 70,
+              ),
+            ),
+          ],
+        ),
         _pesquisarEmpresaPorNome(
           altura: altura,
           largura: largura,
-        ),
-        _infoGerais(
-          altura: altura,
-          largura: largura,
-          titulo: "Para agendar um serviço, selecione uma barbearia.",
-          widthSize: largura,
         ),
         empresas.isEmpty
             ? ErroWidget().erroRequisicao(
@@ -92,7 +126,8 @@ class AgendarlWidget extends State<AgendarPage> {
       altura: altura,
       largura: largura,
       hintText: 'Buscar empresa...',
-      paddingLeft: 0.037,
+      paddingLeft: 0.050,
+      paddingRight: 0.050,
       onChanged: (value) async {
         _controller.empresas = [];
         _controller.buscarEmpresas(context: context, nomeEmpresa: value).then(
@@ -116,6 +151,7 @@ class AgendarlWidget extends State<AgendarPage> {
           controller: _scrollController,
           shrinkWrap: true,
           padding: EdgeInsets.only(
+            top: 4,
             left: largura * 0.04,
             right: largura * 0.04,
           ),
@@ -144,14 +180,13 @@ class AgendarlWidget extends State<AgendarPage> {
     required double altura,
   }) {
     return Container(
+      height: 80,
+      width: largura * 0.60,
       color: Colors.grey.withOpacity(0.2),
-      width: largura,
-      height: altura * 0.10,
-      alignment: Alignment.topLeft,
+      alignment: Alignment.centerLeft,
       padding: EdgeInsets.only(
         left: widthSize * 0.07,
-        top: widthSize * 0.02,
-        bottom: widthSize * 0.02,
+        top: widthSize * 0.06,
       ),
       child: _tituloSystetica(
         text: titulo,
@@ -171,7 +206,7 @@ class AgendarlWidget extends State<AgendarPage> {
       maxLines: 2,
       overflow: TextOverflow.ellipsis,
       style: TextStyle(
-        fontSize: 19,
+        fontSize: 21,
         color: Colors.black.withOpacity(opacity),
         fontWeight: fontWeight,
       ),

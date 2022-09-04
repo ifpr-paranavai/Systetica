@@ -18,6 +18,11 @@ public interface EmpresaMapper {
     })
     EmpresaDTO toDto(Empresa entity);
 
+    @Mappings({
+            @Mapping(target = "dataCadastro", ignore = true),
+            @Mapping(target = "usuarioAdministrador", ignore = true),
+            @Mapping(target = "logoBase64", ignore = true),
+    })
     List<EmpresaDTO> toListDto(List<Empresa> entities);
 
     Empresa toEntity(EmpresaDTO dto);
