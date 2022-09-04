@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:systetica/components/icon_arrow_widget.dart';
-import 'package:systetica/components/imagens_widget.dart';
+import 'package:systetica/components/erro/erro_widget.dart';
 import 'package:systetica/components/list_view/list_view_funcionario_component.dart';
 import 'package:systetica/components/loading/loading_animation.dart';
 import 'package:systetica/components/pesquisa_widget.dart';
-import 'package:systetica/components/text_autenticacoes_widget.dart';
 import 'package:systetica/model/Empresa.dart';
 import 'package:systetica/model/Info.dart';
 import 'package:systetica/screen/agendar/agendar_controller.dart';
 import 'package:systetica/screen/agendar/view/agendar_page.dart';
-import 'package:animated_text_kit/animated_text_kit.dart';
 
 class AgendarlWidget extends State<AgendarPage> {
   final AgendarController _controller = AgendarController();
@@ -67,10 +64,11 @@ class AgendarlWidget extends State<AgendarPage> {
           largura: largura,
         ),
         empresas.isEmpty
-            ? _erroRequisicao(
+            ? ErroWidget().erroRequisicao(
                 largura: largura,
                 listaVazia: true,
                 altura: altura,
+                nenhumItem: "Nenhuma empresa encontrada",
               )
             : _listView(
                 altura: altura,
@@ -124,63 +122,6 @@ class AgendarlWidget extends State<AgendarPage> {
           },
         ),
       ),
-    );
-  }
-
-  // Widgets de erro
-  Widget _erroRequisicao({
-    required bool listaVazia,
-    required double largura,
-    required double altura,
-  }) {
-    return Expanded(
-      child: Container(
-        color: Colors.grey.withOpacity(0.2),
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.only(
-              top: altura * 0.14,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Column(
-                  children: [
-                    _imagemErro(listaVazia: listaVazia),
-                    _textoErro(largura: largura, listaVazia: listaVazia),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  ImagensWidget _imagemErro({
-    required bool listaVazia,
-  }) {
-    return ImagensWidget(
-      paddingLeft: 0,
-      image: listaVazia ? "list-vazia.png" : "erro.png",
-      widthImagem: 320,
-    );
-  }
-
-  TextAutenticacoesWidget _textoErro({
-    required double largura,
-    required bool listaVazia,
-  }) {
-    return TextAutenticacoesWidget(
-      alignment: Alignment.center,
-      paddingLeft: largura * (listaVazia ? 0.10 : 0.15),
-      paddingRight: largura * 0.10,
-      fontSize: 30,
-      text: listaVazia
-          ? "Nenhuma empresa encontrada"
-          : "Oopss...ocorreu algum erro. \nTente novamente mais tarde.",
     );
   }
 }
