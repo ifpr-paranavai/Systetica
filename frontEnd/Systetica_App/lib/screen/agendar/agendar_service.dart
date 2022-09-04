@@ -9,11 +9,10 @@ import 'package:systetica/utils/dio/dio_config_api.dart';
 class AgendarService {
   static Future<Info> buscarEmpresas({
     int? size = 1000,
-    String? usuarioBusca,
+    String? nomeEmpresa,
     required Token token,
   }) async {
-    String path =
-        "empresa/buscar-nome?search=$usuarioBusca&size=$size&sort=nome";
+    String path = "empresa/buscar-todos?search=$nomeEmpresa&size=$size";
 
     Dio dio = DioConfigApi.builderConfig();
 

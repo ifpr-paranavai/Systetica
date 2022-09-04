@@ -40,16 +40,15 @@ class AgendarlWidget extends State<AgendarPage> {
   }
 
   Future<void> buscarEmpresas() async {
-    loading = false; // TODO REMOVER
-    // await _controller.buscarEmpresas(context).then(
-    //       (value) => setState(
-    //         () {
-    //           info = value;
-    //           _controller.empresas = value!.object;
-    //           loading = false;
-    //         },
-    //       ),
-    //     );
+    await _controller.buscarEmpresas(context: context, nomeEmpresa: "").then(
+          (value) => setState(
+            () {
+              info = value;
+              _controller.empresas = value!.object;
+              loading = false;
+            },
+          ),
+        );
   }
 
   Widget _body({
@@ -88,7 +87,14 @@ class AgendarlWidget extends State<AgendarPage> {
       largura: largura,
       hintText: 'Buscar empresa...',
       paddingLeft: 0.037,
-      onChanged: (value) async {},
+      onChanged: (value) async {
+        _controller.empresas = [];
+        _controller.buscarEmpresas(context: context, nomeEmpresa: value).then(
+              (value) => setState(() {
+                _controller.empresas = value!.object;
+              }),
+            );
+      },
     );
   }
 

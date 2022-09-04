@@ -155,7 +155,6 @@ class ProdutoController {
     required String produto,
   }) async {
     Info info = Info(success: true);
-
     try {
       Token _token = await TokenRepository.findToken();
       info = await ProdutoService.buscarProdutos(

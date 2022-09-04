@@ -12,13 +12,17 @@ class AgendarController {
   late List<Empresa> empresas;
   late Empresa empresa;
 
-  Future<Info?> buscarEmpresas(BuildContext context) async {
+  Future<Info?> buscarEmpresas({
+    required BuildContext context,
+    required String nomeEmpresa,
+  }) async {
     Info info = Info(success: true);
 
     try {
       Token _token = await TokenRepository.findToken();
       info = await AgendarService.buscarEmpresas(
         token: _token,
+        nomeEmpresa: nomeEmpresa,
       );
     } catch (e) {
       info.success = false;
