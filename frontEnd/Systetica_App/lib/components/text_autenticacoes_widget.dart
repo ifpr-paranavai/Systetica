@@ -12,6 +12,7 @@ class TextAutenticacoesWidget extends StatefulWidget {
     this.paddingLeft = 35,
     this.paddingRight = 0,
     this.fontSize = 37,
+    this.alignment = Alignment.centerLeft,
   }) : super(key: key);
 
   String text;
@@ -20,6 +21,7 @@ class TextAutenticacoesWidget extends StatefulWidget {
   double paddingLeft;
   double paddingRight;
   double fontSize;
+  AlignmentGeometry alignment;
 
   @override
   _TextAutenticacoesWidget createState() => _TextAutenticacoesWidget();
@@ -29,7 +31,7 @@ class _TextAutenticacoesWidget extends State<TextAutenticacoesWidget> {
   @override
   Widget build(BuildContext context) {
     return Align(
-      alignment: Alignment.centerLeft,
+      alignment: widget.alignment,
       child: Padding(
         padding: EdgeInsets.only(
           left: widget.paddingLeft,

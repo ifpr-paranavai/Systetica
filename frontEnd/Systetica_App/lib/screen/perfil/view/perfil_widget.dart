@@ -282,9 +282,10 @@ class PerfilWidget extends State<PerfilPage> {
 
   TextAutenticacoesWidget _textoErro(double _largura) {
     return TextAutenticacoesWidget(
-      paddingLeft: _largura * 0.10,
+      alignment: Alignment.center,
+      paddingLeft: _largura * 0.15,
       paddingRight: _largura * 0.10,
-      fontSize: 33,
+      fontSize: 30,
       text: "Oopss...ocorreu algum erro. \nTente novamente mais tarde.",
     );
   }

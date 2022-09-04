@@ -3,6 +3,7 @@ import 'package:systetica/components/icon_arrow_widget.dart';
 import 'package:systetica/components/imagens_widget.dart';
 import 'package:systetica/components/list_view/list_view_component.dart';
 import 'package:systetica/components/loading/loading_animation.dart';
+import 'package:systetica/components/pesquisa_widget.dart';
 import 'package:systetica/components/text_autenticacoes_widget.dart';
 import 'package:systetica/model/Info.dart';
 import 'package:systetica/model/Servico.dart';
@@ -69,7 +70,7 @@ class ServicoWidget extends State<ServicoPage> {
       children: [
         Column(
           children: [
-            _pesquisaServico(
+            _pesquisarServico(
               altura: altura,
               largura: largura,
             ),
@@ -93,62 +94,22 @@ class ServicoWidget extends State<ServicoPage> {
     );
   }
 
-  Widget _pesquisaServico({
-    required double altura, //width
-    required double largura, //height
+  Widget _pesquisarServico({
+    required double altura,
+    required double largura,
   }) {
-    return Container(
-      height: 70,
-      color: Colors.grey.withOpacity(0.2),
-      padding: EdgeInsets.only(
-        top: largura * 0.040,
-        bottom: largura * 0.030,
-        right: largura * 0.037,
-        left: largura * 0.22,
-      ),
-      child: Container(
-        alignment: Alignment.center,
-        padding: EdgeInsets.symmetric(horizontal: largura / 60),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(
-            color: Colors.black,
-            // width: 0.15,
-            width: 1,
-          ),
-        ),
-        child: TextFormField(
-          maxLines: 1,
-          decoration: InputDecoration(
-            fillColor: Colors.transparent,
-            filled: true,
-            hintStyle: TextStyle(
-              color: Colors.black.withOpacity(.4),
-              fontWeight: FontWeight.w600,
-              fontSize: largura / 22,
-            ),
-            prefixIcon: Icon(
-              Icons.search,
-              color: Colors.black.withOpacity(.6),
-            ),
-            hintText: 'Buscar serviço...',
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
-              borderSide: BorderSide.none,
-            ),
-            contentPadding: EdgeInsets.zero,
-          ),
-          onChanged: (value) async {
-            _controller.servicos = [];
-            _controller.buscarServico(context: context, servico: value).then(
-                  (value) => setState(() {
-                    _controller.servicos = value!.object;
-                  }),
-                );
-          },
-        ),
-      ),
+    return PesquisaWidget(
+      altura: altura,
+      largura: largura,
+      hintText: 'Buscar serviço...',
+      onChanged: (value) async {
+        _controller.servicos = [];
+        _controller.buscarServico(context: context, servico: value).then(
+              (value) => setState(() {
+                _controller.servicos = value!.object;
+              }),
+            );
+      },
     );
   }
 
@@ -279,7 +240,8 @@ class ServicoWidget extends State<ServicoPage> {
     required bool listaVazia,
   }) {
     return TextAutenticacoesWidget(
-      paddingLeft: largura * (listaVazia ? 0.18 : 0.15),
+      alignment: Alignment.center,
+      paddingLeft: largura * (listaVazia ? 0.10 : 0.15),
       paddingRight: largura * 0.10,
       fontSize: 30,
       text: listaVazia

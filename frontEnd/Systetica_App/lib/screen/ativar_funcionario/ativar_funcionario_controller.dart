@@ -16,8 +16,7 @@ class AtivarFuncionarController {
   late List<Usuario> usuarios;
   late Usuario usuario;
 
-  Future<Info?> buscarFuncionarios(BuildContext context
-  ) async {
+  Future<Info?> buscarFuncionarios(BuildContext context) async {
     Info info = Info(success: true);
 
     try {

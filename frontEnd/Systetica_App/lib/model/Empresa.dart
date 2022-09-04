@@ -55,6 +55,10 @@ class Empresa {
     nomeUsuario = json['nome_usuario'];
   }
 
+  static List<Empresa> fromJsonList(List json) {
+    return json.map((item) => Empresa.fromJson(item)).toList();
+  }
+
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};
     _data['id'] = id;
