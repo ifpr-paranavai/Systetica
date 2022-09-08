@@ -1,0 +1,26 @@
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+spring.datasource.username=$usuario
+spring.datasource.password=$senha
+spring.datasource.url=jdbc:mysql://localhost:3306/$banco?useTimezone=true&serverTimezone=America/Sao_Paulo
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL5InnoDBDialect
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+server.address=192.168.1.100
+server.port=8090
+server.error.include-message=always
+server.error.include-binding-errors=always
+spring.web.resources.add-mappings=false
+timezone
+
+# Configuracao para envio de email
+spring.mail.protocol=smtp
+spring.mail.host=$dominio
+spring.mail.port=$portaEmail
+spring.mail.username=$email
+spring.mail.password=$senhaEmail
+spring.mail.properties.mail.smtp.auth=true
+spring.mail.properties.mail.smtp.starttls.enable=true
+mail.smtp.starttls.enable=false
+spring.mail.properties.mail.smtp.starttls.required=true
+spring.mail.properties.mail.smtp.ssl.enable=true
+spring.mail.test-connection=false
