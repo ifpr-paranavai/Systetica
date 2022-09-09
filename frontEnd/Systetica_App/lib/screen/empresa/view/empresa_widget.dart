@@ -299,6 +299,8 @@ class EmpresaWidget extends State<EmpresaPage> {
                 : empresa.telefone2!),
             _itemEndereco(empresa.endereco!, empresa.numero!.toString()),
             _itemBairro(empresa.bairro!),
+            _itemAbertura(empresa.horarioAbertura!),
+            _itemFechamento(empresa.horarioFechamento!),
             _itemCep(empresa.cep.toString()),
             _itemCidade(empresa.cidade!.nome!, empresa.cidade!.estado!.uf),
           ],
@@ -346,6 +348,20 @@ class EmpresaWidget extends State<EmpresaPage> {
     return ItemLista(
       titulo: "Bairro",
       descricao: bairro,
+    );
+  }
+
+  ItemLista _itemAbertura(String abertura) {
+    return ItemLista(
+      titulo: "Abertura",
+      descricao: abertura,
+    );
+  }
+
+  ItemLista _itemFechamento(String fechamento) {
+    return ItemLista(
+      titulo: "Fechamento",
+      descricao: fechamento,
     );
   }
 

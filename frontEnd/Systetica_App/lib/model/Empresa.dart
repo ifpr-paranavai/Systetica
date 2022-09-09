@@ -20,6 +20,8 @@ class Empresa {
     this.cidade,
     this.usuarioAdministrador,
     this.nomeUsuario,
+    this.horarioAbertura,
+    this.horarioFechamento,
   });
 
   int? id;
@@ -37,6 +39,8 @@ class Empresa {
   Cidade? cidade;
   Usuario? usuarioAdministrador;
   String? nomeUsuario;
+  String? horarioAbertura;
+  String? horarioFechamento;
 
   Empresa.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -53,6 +57,8 @@ class Empresa {
     logoBase64 = json['logo_base64'];
     cidade = Cidade.fromJson(json['cidade']);
     nomeUsuario = json['nome_usuario'];
+    horarioAbertura = json['horario_abertura'];
+    horarioFechamento = json['horario_fechamento'];
   }
 
   static List<Empresa> fromJsonList(List json) {
@@ -76,6 +82,8 @@ class Empresa {
     _data['cidade'] = cidade?.toJson();
     _data['usuario_administrador'] = usuarioAdministrador?.toJson();
     _data['nome_usuario'] = nomeUsuario;
+    _data['horario_abertura'] = horarioAbertura;
+    _data['horario_fechamento'] = horarioFechamento;
     return _data;
   }
 }

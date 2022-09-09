@@ -1,5 +1,11 @@
 package com.frfs.systetica.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
 import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,6 +13,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -85,4 +92,14 @@ public class Empresa implements Serializable {
             joinColumns = @JoinColumn(name = "id_empresa"),
             inverseJoinColumns = @JoinColumn(name = "id_usuario"))
     private List<Usuario> usuarios = new ArrayList<>();
+
+    @NotNull
+    @Column(name = "horario_abertura")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm")
+    private LocalTime horarioAbertura;
+
+    @NotNull
+    @Column(name = "horario_fechamento")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm")
+    private LocalTime horarioFechamento;
 }
