@@ -6,16 +6,18 @@ class ItemLista extends StatelessWidget {
     Key? key,
     required this.descricao,
     required this.titulo,
+    this.paddingHorizonta = 18,
   }) : super(key: key);
 
   final String titulo;
   final String descricao;
+  final double paddingHorizonta;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 18,
+      padding: EdgeInsets.symmetric(
+        horizontal: paddingHorizonta,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

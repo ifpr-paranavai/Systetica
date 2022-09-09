@@ -9,6 +9,7 @@ import 'package:systetica/model/Info.dart';
 import 'package:systetica/model/Usuario.dart';
 import 'package:systetica/screen/agendar/agendar_controller.dart';
 import 'package:systetica/screen/agendar/view/agendar_page.dart';
+import 'package:systetica/screen/agendar/view/detalhes_empresa/detalhes_empresa_page.dart';
 import 'package:systetica/screen/perfil/perfil_controller.dart';
 import 'package:systetica/utils/util.dart';
 
@@ -165,7 +166,21 @@ class AgendarlWidget extends State<AgendarPage> {
               altura: altura,
               infoNome: empresas[index].nome!,
               foto: empresas[index].logoBase64!,
-              onTap: () {},
+              onTap: () {
+                Navigator.of(context)
+                    .push(
+                      _controller.myPageTransition.pageTransition(
+                        child: DetalhaEmpresaPage(empresa: empresas[index]),
+                        childCurrent: widget,
+                        buttoToTop: true,
+                      ),
+                    )
+                    .then(
+                      (value) => setState(() {
+                        buscarEmpresas();
+                      }),
+                    );
+              },
             );
           },
         ),

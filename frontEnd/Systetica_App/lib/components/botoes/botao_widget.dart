@@ -53,14 +53,6 @@ class _BotaoWidget extends State<BotaoWidget> {
 
   TextButton _textButton() {
     return TextButton(
-      child: Text(
-        widget.labelText,
-        style: TextStyle(
-          color: widget.corTexto,
-          fontWeight: widget.fontWeight,
-          fontSize: widget.fontSize,
-        ),
-      ),
       style: ButtonStyle(
         overlayColor: MaterialStateProperty.all(widget.overlayColor),
         backgroundColor: MaterialStateProperty.all(widget.corBotao),
@@ -74,6 +66,14 @@ class _BotaoWidget extends State<BotaoWidget> {
               width: 1,
             ),
           ),
+        ),
+      ),
+      child: Text(
+        widget.labelText,
+        style: TextStyle(
+          color: widget.corTexto,
+          fontWeight: widget.fontWeight,
+          fontSize: widget.fontSize,
         ),
       ),
       onPressed: widget.onPressed,
