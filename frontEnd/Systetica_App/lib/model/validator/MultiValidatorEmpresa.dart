@@ -60,4 +60,16 @@ class MultiValidatorEmpresa {
       RequiredValidator(errorText: 'Campo obrigatório'),
     ]);
   }
+
+  MultiValidator get aberturaValidator {
+    return MultiValidator([
+      RequiredValidator(errorText: 'Campo obrigatório'),
+    ]);
+  }
+
+  MultiValidator get fechamentoValidator {
+    return MultiValidator([
+      RequiredValidator(errorText: 'Campo obrigatório'),
+    ]);
+  }
 }

@@ -144,6 +144,16 @@ class EmpresaWidget extends State<EmpresaPage> {
                 paddingHorizontal: largura,
                 controller: _controller,
               ),
+              _inputEmpresa.inputHorarioAbertura(
+                paddingHorizontal: largura,
+                controller: _controller,
+                validatorEmpresa: _multiValidatorEmpresa,
+              ),
+              _inputEmpresa.inputHorarioFechamento(
+                paddingHorizontal: largura,
+                controller: _controller,
+                validatorEmpresa: _multiValidatorEmpresa,
+              ),
               _inputEmpresa.inputCep(
                 paddingHorizontal: largura,
                 controller: _controller,

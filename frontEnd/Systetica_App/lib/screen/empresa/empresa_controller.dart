@@ -28,6 +28,8 @@ class EmpresaController {
   final longitudeController = TextEditingController();
   final latitudeController = TextEditingController();
   final logoBase64Controller = TextEditingController();
+  final horarioAberturaController = TextEditingController();
+  final horarioFechamentoController = TextEditingController();
   final formKey = GlobalKey<FormState>();
 
   late Empresa empresa;
@@ -142,6 +144,8 @@ class EmpresaController {
         empresa.numero = int.parse(numeroController.text);
         empresa.cep = cepController.text;
         empresa.bairro = bairroController.text;
+        empresa.horarioAbertura = horarioAberturaController.text;
+        empresa.horarioFechamento = horarioFechamentoController.text;
         empresa.logoBase64 = logoBase64;
         empresa.cidade = cidade;
 

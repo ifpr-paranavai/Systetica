@@ -33,6 +33,8 @@ class EmpresaFormWidget extends State<EmpresaFormPage> {
     _controller.cepController.text = _controller.empresa.cep!;
     _controller.bairroController.text = _controller.empresa.bairro!;
     _controller.logoBase64 = _controller.empresa.logoBase64;
+    _controller.horarioAberturaController.text = _controller.empresa.horarioAbertura!;
+    _controller.horarioFechamentoController.text = _controller.empresa.horarioFechamento!;
     _controller.cidade = _controller.empresa.cidade!;
   }
 
@@ -78,6 +80,16 @@ class EmpresaFormWidget extends State<EmpresaFormPage> {
                   _inputEmpresa.inputTelefone2(
                     paddingHorizontal: _largura,
                     controller: _controller,
+                  ),
+                  _inputEmpresa.inputHorarioAbertura(
+                    paddingHorizontal: _largura,
+                    controller: _controller,
+                    validatorEmpresa: _multiValidatorEmpresa,
+                  ),
+                  _inputEmpresa.inputHorarioFechamento(
+                    paddingHorizontal: _largura,
+                    controller: _controller,
+                    validatorEmpresa: _multiValidatorEmpresa,
                   ),
                   _inputEmpresa.inputCep(
                     paddingHorizontal: _largura,

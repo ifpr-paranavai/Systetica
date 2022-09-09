@@ -216,6 +216,52 @@ class InputEmpresa {
     );
   }
 
+  CampoTextoWidget inputHorarioAbertura({
+    required double paddingHorizontal,
+    required EmpresaController controller,
+    required MultiValidatorEmpresa validatorEmpresa,
+  }) {
+    return CampoTextoWidget(
+      labelText: "Horário Abertura",
+      paddingHorizontal: paddingHorizontal * 0.08,
+      keyboardType: TextInputType.number,
+      mask: "##:##",
+      paddingBottom: 0,
+      maxLength: 5,
+      paddingTop: 8,
+      isIconDate: true,
+      icon: const Icon(
+        Icons.timer,
+        color: Colors.black87,
+      ),
+      controller: controller.horarioAberturaController,
+      validator: validatorEmpresa.aberturaValidator,
+    );
+  }
+
+  CampoTextoWidget inputHorarioFechamento({
+    required double paddingHorizontal,
+    required EmpresaController controller,
+    required MultiValidatorEmpresa validatorEmpresa,
+  }) {
+    return CampoTextoWidget(
+      labelText: "Horário Fechamento",
+      paddingHorizontal: paddingHorizontal * 0.08,
+      keyboardType: TextInputType.number,
+      mask: "##:##",
+      paddingBottom: 0,
+      maxLength: 5,
+      paddingTop: 8,
+      isIconDate: true,
+      icon: const Icon(
+        Icons.timer,
+        color: Colors.black87,
+      ),
+      controller: controller.horarioFechamentoController,
+      validator: validatorEmpresa.fechamentoValidator,
+    );
+  }
+
   BotaoWidget botaoCadastrar({
     required String label,
     required VoidCallback onPressed,
