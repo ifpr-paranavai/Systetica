@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:systetica/components/erro/erro_widget.dart';
 import 'package:systetica/components/foto/foto_widget.dart';
-import 'package:systetica/components/list_view/list_view_funcionario_component.dart';
+import 'package:systetica/components/list_view/list_view_foto_component.dart';
 import 'package:systetica/components/loading/loading_animation.dart';
 import 'package:systetica/components/pesquisa_widget.dart';
 import 'package:systetica/model/Empresa.dart';
@@ -160,11 +160,11 @@ class AgendarlWidget extends State<AgendarPage> {
           ),
           itemCount: empresas.length,
           itemBuilder: (BuildContext context, int index) {
-            return ListViewFuncionarioComponent(
+            return ListViewFotoOrNumeroComponent(
               largura: largura,
               altura: altura,
               infoNome: empresas[index].nome!,
-              numero: index + 1,
+              foto: empresas[index].logoBase64!,
               onTap: () {},
             );
           },

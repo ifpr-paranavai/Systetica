@@ -1,28 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:systetica/components/foto/foto_widget.dart';
 
-class ListViewFuncionarioComponent extends StatefulWidget {
-  const ListViewFuncionarioComponent({
+class ListViewFotoOrNumeroComponent extends StatefulWidget {
+  const ListViewFotoOrNumeroComponent({
     Key? key,
     required this.largura,
     required this.altura,
     required this.infoNome,
     required this.onTap,
-    required this.numero,
+    this.numero,
+    this.foto,
+    this.widgetFoto = true,
   }) : super(key: key);
 
   final double largura;
   final double altura;
   final String infoNome;
-  final int numero;
+  final int? numero;
+  final String? foto;
+  final bool widgetFoto;
   final GestureTapCallback onTap;
 
   @override
-  State<ListViewFuncionarioComponent> createState() =>
-      _ListViewFuncionarioComponent();
+  State<ListViewFotoOrNumeroComponent> createState() => _ListViewFotooComponent();
 }
 
-class _ListViewFuncionarioComponent
-    extends State<ListViewFuncionarioComponent> {
+class _ListViewFotooComponent extends State<ListViewFotoOrNumeroComponent> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -50,9 +53,18 @@ class _ListViewFuncionarioComponent
           ),
           child: Row(
             children: [
-              info(
-                informacao: widget.numero.toString(),
-              ),
+              widget.widgetFoto
+                  ? Container(
+                      width: widget.largura * 0.18,
+                      alignment: Alignment.centerLeft,
+                      child: FotoWidget().boxFoto(
+                        imagemUsuario: widget.foto,
+                        cirulo: 75,
+                      ),
+                    )
+                  : info(
+                      informacao: widget.numero.toString(),
+                    ),
               Expanded(
                 child: Container(
                   padding: const EdgeInsets.only(left: 10),

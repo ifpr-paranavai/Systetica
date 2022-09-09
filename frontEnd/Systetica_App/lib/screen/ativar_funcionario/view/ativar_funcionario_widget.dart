@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:systetica/components/erro/erro_widget.dart';
 import 'package:systetica/components/icon_arrow_widget.dart';
-import 'package:systetica/components/list_view/list_view_funcionario_component.dart';
+import 'package:systetica/components/list_view/list_view_foto_component.dart';
 import 'package:systetica/components/loading/loading_animation.dart';
 import 'package:systetica/components/pesquisa_widget.dart';
 import 'package:systetica/model/Info.dart';
@@ -133,10 +133,11 @@ class AtivarFuncionarioWidget extends State<AtivarFuncionarioPage> {
           ),
           itemCount: usuarios.length,
           itemBuilder: (BuildContext context, int index) {
-            return ListViewFuncionarioComponent(
+            return ListViewFotoOrNumeroComponent(
               largura: largura,
               altura: altura,
               infoNome: usuarios[index].nome!,
+              foto: usuarios[index].imagemBase64,
               numero: index + 1,
               onTap: () {
                 Navigator.of(context)
