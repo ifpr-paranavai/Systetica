@@ -8,12 +8,12 @@ import 'package:systetica/model/Empresa.dart';
 import 'package:systetica/model/Info.dart';
 import 'package:systetica/model/Usuario.dart';
 import 'package:systetica/screen/agendar/agendar_controller.dart';
-import 'package:systetica/screen/agendar/view/agendar_page.dart';
 import 'package:systetica/screen/agendar/view/detalhes_empresa/detalhes_empresa_page.dart';
+import 'package:systetica/screen/agendar/view/empresas/empresa_agendar_page.dart';
 import 'package:systetica/screen/perfil/perfil_controller.dart';
 import 'package:systetica/utils/util.dart';
 
-class AgendarlWidget extends State<AgendarPage> {
+class EmpresaAgendarlWidget extends State<EmpresaAgendarPage> {
   final AgendarController _controller = AgendarController();
   final PerfilController _perfilController = PerfilController();
   final ScrollController _scrollController = ScrollController();

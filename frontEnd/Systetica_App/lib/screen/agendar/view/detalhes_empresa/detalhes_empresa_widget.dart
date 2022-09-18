@@ -10,6 +10,7 @@ import 'package:systetica/components/single_child_scroll_component.dart';
 import 'package:systetica/components/text_autenticacoes_widget.dart';
 import 'package:systetica/model/Empresa.dart';
 import 'package:systetica/screen/agendar/view/detalhes_empresa/detalhes_empresa_page.dart';
+import 'package:systetica/screen/empresa/empresa_controller.dart';
 import 'package:systetica/style/app_colors..dart';
 import 'package:systetica/utils/util.dart';
 
@@ -61,7 +62,7 @@ class DetalhaEmpresaWidget extends State<DetalhaEmpresaPage> {
                     _sizedBox(height: _altura * 0.02),
                     _infoHorariosEmpresa(),
                     _cardHorarioEmpresa(empresa: widget.empresa),
-                    _sizedBox(height: _altura * 0.05),
+                    _sizedBox(height: _altura * 0.12),
                   ],
                 ),
               ),
@@ -208,12 +209,11 @@ class DetalhaEmpresaWidget extends State<DetalhaEmpresaPage> {
       width: width,
     );
   }
-
+EmpresaController empresaController = EmpresaController();
   Widget _botaoAgendar() {
     return Container(
       padding: EdgeInsets.only(
         bottom: _altura * 0.03,
-        right: _altura * 0.04,
       ),
       alignment: Alignment.bottomCenter,
       child: BotaoWidget(

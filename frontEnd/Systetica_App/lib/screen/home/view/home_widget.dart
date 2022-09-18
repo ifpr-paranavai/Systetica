@@ -3,7 +3,7 @@ import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:systetica/database/repository/token_repository.dart';
 import 'package:systetica/screen/administrador/view/administrador_page.dart';
 import 'package:systetica/screen/agendamentos/view/agendamento_page.dart';
-import 'package:systetica/screen/agendar/view/agendar_page.dart';
+import 'package:systetica/screen/agendar/view/empresas/empresa_agendar_page.dart';
 import 'package:systetica/screen/home/view/home_page.dart';
 import 'package:systetica/screen/pagamentos/view/pagamento_page.dart';
 import 'package:systetica/screen/perfil/view/perfil_page.dart';
@@ -95,7 +95,7 @@ class HomeWidget extends State<HomePage> {
 
   List<Widget> get _widgetOpcoesCliente {
     List<Widget> widgets = <Widget>[
-      const AgendarPage(),
+      const EmpresaAgendarPage(),
       const AgendamentoPage(),
       const PerfilPage(),
     ];
@@ -104,7 +104,7 @@ class HomeWidget extends State<HomePage> {
 
   List<Widget> get _widgetOpcoesFuncionario {
     List<Widget> widgets = <Widget>[
-      const AgendarPage(),
+      const EmpresaAgendarPage(),
       const PagamentoPage(),
       const AgendamentoPage(),
       const PerfilPage(),
@@ -114,7 +114,7 @@ class HomeWidget extends State<HomePage> {
 
   List<Widget> get _widgetOpcoesAdministrador {
     List<Widget> widgets = <Widget>[
-      const AgendarPage(),
+      const EmpresaAgendarPage(),
       const PagamentoPage(),
       const AgendamentoPage(),
       const CadastroAdministradorPage(),
