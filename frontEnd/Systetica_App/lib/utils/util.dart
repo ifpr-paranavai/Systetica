@@ -31,4 +31,19 @@ class Util {
   static String toSplitNome(String nome) {
     return nome.split(" ")[0];
   }
+
+  static Map<String, String> diasHorarioFuncionamento(
+    String horaAbertura,
+    String horaFechamento,
+  ) {
+    return {
+      'Segunda-Feira': horaAbertura + ' - ' + horaFechamento,
+      'Terça-Feira': horaAbertura + ' - ' + horaFechamento,
+      'Quarta-Feira': horaAbertura + ' - ' + horaFechamento,
+      'Quinta-Feira': horaAbertura + ' - ' + horaFechamento,
+      'Sexta-Feira': horaAbertura + ' - ' + horaFechamento,
+      'Sábado': horaAbertura + ' - ' + horaFechamento,
+      'Domingo': 'Fechado',
+    };
+  }
 }

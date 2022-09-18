@@ -7,11 +7,13 @@ class ItemLista extends StatelessWidget {
     required this.descricao,
     required this.titulo,
     this.paddingHorizonta = 18,
+    this.colorDescricao = Colors.black,
   }) : super(key: key);
 
   final String titulo;
   final String descricao;
   final double paddingHorizonta;
+  final Color colorDescricao;
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +32,7 @@ class ItemLista extends StatelessWidget {
             fontSize: 16.5,
             opacity: 0.6,
             fontWeight: FontWeight.w700,
+            colorDescricao: Colors.black,
           ),
           sizedBox(
             height: 3,
@@ -39,6 +42,7 @@ class ItemLista extends StatelessWidget {
             fontSize: 15.5,
             opacity: 0.5,
             fontWeight: FontWeight.normal,
+            colorDescricao: colorDescricao,
           ),
           Divider(
             color: AppColors.redPrincipal.withOpacity(0.3),
@@ -53,6 +57,7 @@ class ItemLista extends StatelessWidget {
     required double fontSize,
     required double opacity,
     required FontWeight fontWeight,
+    required Color colorDescricao,
   }) {
     return Text(
       text,
@@ -61,7 +66,7 @@ class ItemLista extends StatelessWidget {
       style: TextStyle(
         fontSize: fontSize,
         fontWeight: fontWeight,
-        color: Colors.black.withOpacity(opacity),
+        color: colorDescricao.withOpacity(opacity),
       ),
     );
   }

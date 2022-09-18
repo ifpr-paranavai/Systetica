@@ -1,21 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:maps_launcher/maps_launcher.dart';
+import 'package:systetica/components/botoes/botao_widget.dart';
+import 'package:systetica/components/card_component.dart';
 import 'package:systetica/components/foto/foto_widget.dart';
 import 'package:systetica/components/icon_arrow_widget.dart';
 import 'package:systetica/components/item_list.dart';
+import 'package:systetica/components/list_view/list_view_horarios_component.dart';
 import 'package:systetica/components/single_child_scroll_component.dart';
 import 'package:systetica/components/text_autenticacoes_widget.dart';
 import 'package:systetica/model/Empresa.dart';
 import 'package:systetica/screen/agendar/view/detalhes_empresa/detalhes_empresa_page.dart';
+import 'package:systetica/style/app_colors..dart';
 import 'package:systetica/utils/util.dart';
 
 class DetalhaEmpresaWidget extends State<DetalhaEmpresaPage> {
   late ScrollController _scrollController;
+  late Map<String, String> diasTrabalhoEmpresa;
 
   @override
   void initState() {
     super.initState();
     _scrollController = ScrollController();
+    diasTrabalhoEmpresa = Util.diasHorarioFuncionamento(
+      widget.empresa.horarioAbertura!,
+      widget.empresa.horarioFechamento!,
+    );
   }
 
   double _altura = 0;
@@ -45,19 +54,19 @@ class DetalhaEmpresaWidget extends State<DetalhaEmpresaPage> {
                     ),
                     _sizedBox(height: _altura * 0.04),
                     _infoEmpresa(),
-                    _cardInfoEmpresa(
-                      empresa: widget.empresa,
-                    ),
+                    _cardInfoEmpresa(empresa: widget.empresa),
                     _sizedBox(height: _altura * 0.02),
                     _infoEnderecoEmpresa(),
-                    _cardInfoEnderecoEmpresa(
-                      empresa: widget.empresa,
-                    ),
-                    _sizedBox(height: _altura * 0.07),
+                    _cardInfoEnderecoEmpresa(empresa: widget.empresa),
+                    _sizedBox(height: _altura * 0.02),
+                    _infoHorariosEmpresa(),
+                    _cardHorarioEmpresa(empresa: widget.empresa),
+                    _sizedBox(height: _altura * 0.05),
                   ],
                 ),
               ),
             ),
+            _botaoAgendar(),
           ],
         ),
       ),
@@ -72,28 +81,18 @@ class DetalhaEmpresaWidget extends State<DetalhaEmpresaPage> {
     );
   }
 
-  Padding _cardInfoEmpresa({required Empresa empresa}) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 18),
-      child: Card(
-        shape: RoundedRectangleBorder(
-          side: const BorderSide(
-            color: Colors.black,
-            width: 0.1,
-          ),
-          borderRadius: BorderRadius.circular(10),
+  Widget _cardInfoEmpresa({required Empresa empresa}) {
+    return CardComponent(
+      children: [
+        _sizedBox(height: 5),
+        _itemNome(empresa.nome!),
+        _itemTelefone1(empresa.telefone1!),
+        _itemTelefone2(
+          Util.isEmptOrNull(empresa.telefone2)
+              ? "Não cadastrado"
+              : empresa.telefone2!,
         ),
-        child: Column(
-          children: [
-            _sizedBox(height: 5),
-            _itemNome(empresa.nome!),
-            _itemTelefone1(empresa.telefone1!),
-            _itemTelefone2(Util.isEmptOrNull(empresa.telefone2)
-                ? "Não cadastrado"
-                : empresa.telefone2!),
-          ],
-        ),
-      ),
+      ],
     );
   }
 
@@ -126,29 +125,16 @@ class DetalhaEmpresaWidget extends State<DetalhaEmpresaPage> {
     );
   }
 
-  Padding _cardInfoEnderecoEmpresa({required Empresa empresa}) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 18),
-      child: Card(
-        shape: RoundedRectangleBorder(
-          side: const BorderSide(
-            color: Colors.black,
-            width: 0.1,
-          ),
-          borderRadius: BorderRadius.circular(10),
+  Widget _cardInfoEnderecoEmpresa({required Empresa empresa}) {
+    return CardComponent(
+      children: [
+        _sizedBox(height: 5),
+        _itemEndereco(empresa.endereco!, empresa.numero!.toString()),
+        _abrirLocalizacao(
+          latitude: double.parse(empresa.latitude!),
+          longitude: double.parse(empresa.longitude!),
         ),
-        child: Column(
-          children: [
-            _sizedBox(height: 5),
-            _itemEndereco(empresa.endereco!, empresa.numero!.toString()),
-            _itemBairro(empresa.bairro!),
-            _abrirLocalizacao(
-              latitude: double.parse(empresa.latitude!),
-              longitude: double.parse(empresa.longitude!),
-            ),
-          ],
-        ),
-      ),
+      ],
     );
   }
 
@@ -156,13 +142,6 @@ class DetalhaEmpresaWidget extends State<DetalhaEmpresaPage> {
     return ItemLista(
       titulo: "Endereço",
       descricao: endereco + " -  Nº " + numero,
-    );
-  }
-
-  ItemLista _itemBairro(String bairro) {
-    return ItemLista(
-      titulo: "Bairro",
-      descricao: bairro,
     );
   }
 
@@ -184,6 +163,7 @@ class DetalhaEmpresaWidget extends State<DetalhaEmpresaPage> {
             titulo: "Localização",
             descricao: "Clique aqui",
             paddingHorizonta: 0,
+            colorDescricao: AppColors.redPrincipal,
           ),
         ),
         onPressed: () => MapsLauncher.launchCoordinates(
@@ -194,10 +174,57 @@ class DetalhaEmpresaWidget extends State<DetalhaEmpresaPage> {
     );
   }
 
+  TextAutenticacoesWidget _infoHorariosEmpresa() {
+    return TextAutenticacoesWidget(
+      text: "Horários",
+      fontSize: 30,
+      paddingBottom: 6,
+    );
+  }
+
+  Widget _cardHorarioEmpresa({required Empresa empresa}) {
+    return CardComponent(
+      children: [
+        _sizedBox(height: 5),
+        ListView.builder(
+          controller: _scrollController, // TODO -CORRIGIR E VERIFICAR SCROLL
+          shrinkWrap: true,
+          itemCount: diasTrabalhoEmpresa.length,
+          itemBuilder: (BuildContext context, int index) {
+            String key = diasTrabalhoEmpresa.keys.elementAt(index);
+            return ListViewHorariosComponent(
+              dia: key,
+              horario: diasTrabalhoEmpresa[key]!,
+            );
+          },
+        ),
+      ],
+    );
+  }
+
   SizedBox _sizedBox({double? height = 40, double? width = 0}) {
     return SizedBox(
       height: height,
       width: width,
+    );
+  }
+
+  Widget _botaoAgendar() {
+    return Container(
+      padding: EdgeInsets.only(
+        bottom: _altura * 0.03,
+        right: _altura * 0.04,
+      ),
+      alignment: Alignment.bottomCenter,
+      child: BotaoWidget(
+        paddingTop: 10,
+        paddingBottom: 0,
+        labelText: "AGENDAR",
+        largura: _largura * 0.6,
+        corBotao: Colors.black87.withOpacity(0.9),
+        corTexto: Colors.white,
+        onPressed: () {},
+      ),
     );
   }
 }
