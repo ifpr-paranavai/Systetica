@@ -11,10 +11,8 @@ import 'package:systetica/components/single_child_scroll_component.dart';
 import 'package:systetica/components/text_autenticacoes_widget.dart';
 import 'package:systetica/model/Empresa.dart';
 import 'package:systetica/screen/agendar/view/detalhes_empresa/detalhes_empresa_page.dart';
-import 'package:systetica/screen/agendar/view/selecionar_servico/selecionar_servico_page.dart';
 import 'package:systetica/screen/agendar/view/selecionar_servico/selecionar_servico_widget2.dart';
 import 'package:systetica/screen/empresa/empresa_controller.dart';
-import 'package:systetica/screen/home/view/home_page.dart';
 import 'package:systetica/style/app_colors..dart';
 import 'package:systetica/utils/util.dart';
 
