@@ -6,17 +6,22 @@ import 'package:systetica/components/foto/foto_widget.dart';
 import 'package:systetica/components/icon_arrow_widget.dart';
 import 'package:systetica/components/item_list.dart';
 import 'package:systetica/components/list_view/list_view_horarios_component.dart';
+import 'package:systetica/components/page_transition.dart';
 import 'package:systetica/components/single_child_scroll_component.dart';
 import 'package:systetica/components/text_autenticacoes_widget.dart';
 import 'package:systetica/model/Empresa.dart';
 import 'package:systetica/screen/agendar/view/detalhes_empresa/detalhes_empresa_page.dart';
+import 'package:systetica/screen/agendar/view/selecionar_servico/selecionar_servico_page.dart';
+import 'package:systetica/screen/agendar/view/selecionar_servico/selecionar_servico_widget2.dart';
 import 'package:systetica/screen/empresa/empresa_controller.dart';
+import 'package:systetica/screen/home/view/home_page.dart';
 import 'package:systetica/style/app_colors..dart';
 import 'package:systetica/utils/util.dart';
 
 class DetalhaEmpresaWidget extends State<DetalhaEmpresaPage> {
   late ScrollController _scrollController;
   late Map<String, String> diasTrabalhoEmpresa;
+  var myPageTransition = MyPageTransition();
 
   @override
   void initState() {
@@ -61,7 +66,7 @@ class DetalhaEmpresaWidget extends State<DetalhaEmpresaPage> {
                     _cardInfoEnderecoEmpresa(empresa: widget.empresa),
                     _sizedBox(height: _altura * 0.02),
                     _infoHorariosEmpresa(),
-                    _cardHorarioEmpresa(empresa: widget.empresa),
+                    _cardHorarioEmpresa(),
                     _sizedBox(height: _altura * 0.12),
                   ],
                 ),
@@ -183,21 +188,27 @@ class DetalhaEmpresaWidget extends State<DetalhaEmpresaPage> {
     );
   }
 
-  Widget _cardHorarioEmpresa({required Empresa empresa}) {
+  Widget _cardHorarioEmpresa() {
     return CardComponent(
       children: [
         _sizedBox(height: 5),
-        ListView.builder(
-          controller: _scrollController, // TODO -CORRIGIR E VERIFICAR SCROLL
-          shrinkWrap: true,
-          itemCount: diasTrabalhoEmpresa.length,
-          itemBuilder: (BuildContext context, int index) {
-            String key = diasTrabalhoEmpresa.keys.elementAt(index);
-            return ListViewHorariosComponent(
-              dia: key,
-              horario: diasTrabalhoEmpresa[key]!,
-            );
-          },
+        Padding(
+          padding: const EdgeInsets.only(
+            top: 8,
+            bottom: 8,
+          ),
+          child: ListView.builder(
+            controller: _scrollController,
+            shrinkWrap: true,
+            itemCount: diasTrabalhoEmpresa.length,
+            itemBuilder: (BuildContext context, int index) {
+              String key = diasTrabalhoEmpresa.keys.elementAt(index);
+              return ListViewHorariosComponent(
+                dia: key,
+                horario: diasTrabalhoEmpresa[key]!,
+              );
+            },
+          ),
         ),
       ],
     );
@@ -209,7 +220,9 @@ class DetalhaEmpresaWidget extends State<DetalhaEmpresaPage> {
       width: width,
     );
   }
-EmpresaController empresaController = EmpresaController();
+
+  EmpresaController empresaController = EmpresaController();
+
   Widget _botaoAgendar() {
     return Container(
       padding: EdgeInsets.only(
@@ -223,7 +236,12 @@ EmpresaController empresaController = EmpresaController();
         largura: _largura * 0.6,
         corBotao: Colors.black87.withOpacity(0.9),
         corTexto: Colors.white,
-        onPressed: () {},
+        onPressed: () => Navigator.of(context).push(
+          myPageTransition.pageTransition(
+            child: SingleSelectionExample(),
+            childCurrent: widget,
+          ),
+        ),
       ),
     );
   }

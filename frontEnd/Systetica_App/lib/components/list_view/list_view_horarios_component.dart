@@ -21,26 +21,30 @@ class _ListViewHorarioComponent extends State<ListViewHorariosComponent> {
     return Padding(
       padding: const EdgeInsets.only(
         left: 18,
-        top: 10,
-        bottom: 10,
+        top: 4,
+        bottom: 4,
         right: 18,
       ),
-      child: Row(
+      child: Column(
         children: [
-          info(
-            informacao: widget.dia,
-          ),
-          Expanded(
-            child: Container(
-              alignment: Alignment.centerRight,
-              child: info(
-                informacao: widget.horario,
+          Row(
+            children: [
+              info(
+                informacao: widget.dia,
               ),
-            ),
+              Expanded(
+                child: Container(
+                  alignment: Alignment.centerRight,
+                  child: info(
+                    informacao: widget.horario,
+                  ),
+                ),
+              ),
+            ],
           ),
           Divider(
-            color: AppColors.redPrincipal.withOpacity(0.3), //TODO -VÊ SOBRE LINHA
-          )
+            color: AppColors.redPrincipal.withOpacity(0.3),
+          ),
         ],
       ),
     );
@@ -54,7 +58,7 @@ class _ListViewHorarioComponent extends State<ListViewHorariosComponent> {
       maxLines: 1,
       style: const TextStyle(
         fontWeight: FontWeight.normal,
-        fontSize: 19,
+        fontSize: 16.5,
         overflow: TextOverflow.ellipsis,
       ),
     );
