@@ -26,6 +26,7 @@ class Usuario {
   String? imagemBase64;
   bool? permissaoFuncionario;
   String? emailAdministrativo;
+  bool selecionado = false;
 
   Usuario.fromJson(Map<String, dynamic> json) {
     id = json['id'];

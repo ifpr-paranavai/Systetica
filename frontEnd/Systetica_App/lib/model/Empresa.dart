@@ -22,6 +22,7 @@ class Empresa {
     this.nomeUsuario,
     this.horarioAbertura,
     this.horarioFechamento,
+    this.usuariosFuncionario,
   });
 
   int? id;
@@ -41,6 +42,7 @@ class Empresa {
   String? nomeUsuario;
   String? horarioAbertura;
   String? horarioFechamento;
+  List<Usuario>? usuariosFuncionario;
 
   Empresa.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -59,6 +61,7 @@ class Empresa {
     nomeUsuario = json['nome_usuario'];
     horarioAbertura = json['horario_abertura'];
     horarioFechamento = json['horario_fechamento'];
+    usuariosFuncionario = Usuario.fromJsonList(json['usuarios']);
   }
 
   static List<Empresa> fromJsonList(List json) {

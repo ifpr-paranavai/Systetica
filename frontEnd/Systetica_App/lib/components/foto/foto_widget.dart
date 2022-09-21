@@ -10,6 +10,7 @@ class FotoWidget {
     double cirulo = 160,
     bool iconErroAdd = false,
     VoidCallback? onPressed,
+    double iconSizeErro = 100
   }) {
     return Container(
       width: cirulo,
@@ -28,19 +29,20 @@ class FotoWidget {
         image: imagemUsuario,
         iconErroAdd: iconErroAdd,
         onPressed: onPressed,
+        iconSizeErro: iconSizeErro,
       ),
     );
   }
 
-  Widget _imgPerfil({
-    required dynamic image,
-    bool? iconErroAdd,
-    VoidCallback? onPressed,
-  }) {
+  Widget _imgPerfil(
+      {required dynamic image,
+      bool? iconErroAdd,
+      VoidCallback? onPressed,
+      required double iconSizeErro}) {
     if (image == null || image == "") {
       return iconErroAdd == true
           ? _iconErroFotoAdd(onPressed: onPressed!)
-          : _iconErroFoto();
+          : _iconErroFoto(iconSizeErro: iconSizeErro);
     } else {
       image = base64Decode(image);
       if (image is Uint8List) {
@@ -58,7 +60,7 @@ class FotoWidget {
     );
   }
 
-  Container _iconErroFoto() {
+  Container _iconErroFoto({required double iconSizeErro}) {
     return Container(
       decoration: BoxDecoration(
         color: AppColors.redPrincipal,
@@ -71,9 +73,9 @@ class FotoWidget {
           )
         ],
       ),
-      child: const Icon(
+      child: Icon(
         Icons.person,
-        size: 100,
+        size: iconSizeErro,
         color: Colors.white,
       ),
     );

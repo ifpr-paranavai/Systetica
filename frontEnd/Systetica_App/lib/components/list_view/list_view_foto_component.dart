@@ -59,7 +59,7 @@ class _ListViewFotooComponent extends State<ListViewFotoOrNumeroComponent> {
                       alignment: Alignment.centerLeft,
                       child: FotoWidget().boxFoto(
                         imagemUsuario: widget.foto,
-                        cirulo: 75,
+                        cirulo: 50,
                       ),
                     )
                   : info(
@@ -67,7 +67,7 @@ class _ListViewFotooComponent extends State<ListViewFotoOrNumeroComponent> {
                     ),
               Expanded(
                 child: Container(
-                  padding: const EdgeInsets.only(left: 10),
+                  padding: const EdgeInsets.only(left: 5),
                   child: info(
                     informacao: widget.infoNome,
                   ),

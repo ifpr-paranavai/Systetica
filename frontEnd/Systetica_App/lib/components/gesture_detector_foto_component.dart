@@ -1,33 +1,38 @@
 import 'package:flutter/material.dart';
+import 'package:systetica/components/foto/foto_widget.dart';
 import 'package:systetica/style/app_colors..dart';
 
-class GestureDetectorComponent extends StatefulWidget {
-  const GestureDetectorComponent({
+class GestureDetectorFotoComponent extends StatefulWidget {
+  const GestureDetectorFotoComponent({
     Key? key,
     required this.largura,
     required this.altura,
     required this.textNome,
-    required this.precoMinuto,
-    required this.servicoSelecionado,
+    required this.funcionarioSelecionado,
     required this.onChanged,
     required this.onTap,
-    required this.paddingBottom,
+    this.numero,
+    this.foto,
+    this.widgetFoto = true,
   }) : super(key: key);
 
   final double largura;
   final double altura;
   final String textNome;
-  final String precoMinuto;
-  final bool servicoSelecionado;
+  final bool funcionarioSelecionado;
   final ValueChanged<dynamic>? onChanged;
   final GestureTapCallback? onTap;
-  final double paddingBottom;
+  final int? numero;
+  final String? foto;
+  final bool widgetFoto;
 
   @override
-  State<GestureDetectorComponent> createState() => _GestureDetectorComponent();
+  State<GestureDetectorFotoComponent> createState() =>
+      _GestureDetectorFotoComponent();
 }
 
-class _GestureDetectorComponent extends State<GestureDetectorComponent> {
+class _GestureDetectorFotoComponent
+    extends State<GestureDetectorFotoComponent> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -36,7 +41,7 @@ class _GestureDetectorComponent extends State<GestureDetectorComponent> {
         margin: EdgeInsets.only(
           right: 15,
           left: 15,
-          bottom: widget.largura * widget.paddingBottom,
+          bottom: widget.largura * 0.04,
         ),
         height: widget.altura * 0.10,
         decoration: BoxDecoration(
@@ -51,8 +56,17 @@ class _GestureDetectorComponent extends State<GestureDetectorComponent> {
         ),
         child: Row(
           children: [
+            Container(
+              width: widget.largura * 0.18,
+              alignment: Alignment.center,
+              child: FotoWidget().boxFoto(
+                imagemUsuario: widget.foto,
+                cirulo: 40,
+                iconSizeErro: 25
+              ),
+            ),
             _container(
-              paddingLeft: 15,
+              paddingLeft: 2,
               paddingRight: 0,
               widget: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -66,24 +80,20 @@ class _GestureDetectorComponent extends State<GestureDetectorComponent> {
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
-                  Text(
-                    widget.precoMinuto,
-                    style: const TextStyle(
-                      fontSize: 18,
-                    ),
-                  ),
                 ],
               ),
             ),
-            _container(
-              paddingLeft: 0,
-              paddingRight: 15,
-              alignment: Alignment.centerRight,
-              widget: Checkbox(
-                value: widget.servicoSelecionado,
-                onChanged: widget.onChanged,
-                shape: const CircleBorder(),
-                fillColor: MaterialStateProperty.all(AppColors.bluePrincipal),
+            Container(
+              child: _container(
+                paddingLeft: 0,
+                paddingRight: 15,
+                alignment: Alignment.centerRight,
+                widget: Checkbox(
+                  value: widget.funcionarioSelecionado,
+                  onChanged: widget.onChanged,
+                  shape: const CircleBorder(),
+                  fillColor: MaterialStateProperty.all(AppColors.bluePrincipal),
+                ),
               ),
             ),
           ],
@@ -111,4 +121,6 @@ class _GestureDetectorComponent extends State<GestureDetectorComponent> {
       ),
     );
   }
+
+
 }
