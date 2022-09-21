@@ -4,18 +4,19 @@ import 'package:flutter/material.dart';
 import 'package:systetica/components/botoes/botao_widget.dart';
 import 'package:systetica/components/gesture_detector_foto_component.dart';
 import 'package:systetica/components/icon_arrow_widget.dart';
+import 'package:systetica/components/page_transition.dart';
 import 'package:systetica/components/text_autenticacoes_widget.dart';
-import 'package:systetica/model/Servico.dart';
 import 'package:systetica/model/Usuario.dart';
 import 'package:systetica/screen/agendar/agendar_controller.dart';
 import 'package:systetica/screen/agendar/view/selecionar_funcionario/selecionar_funcionario_page.dart';
+import 'package:systetica/screen/agendar/view/selecionar_horario/selecionar_horario_page.dart';
 import 'package:systetica/style/app_colors..dart';
 
 class SelecionarFuncionarioWidget extends State<SelecionarFuncionarioPage> {
   final ScrollController _scrollController = ScrollController();
   final AgendarController _controller = AgendarController();
+  var myPageTransition = MyPageTransition();
 
-  Usuario? _funcionarioSelecionado;
   List<Usuario> funcionarios = [];
   double _largura = 0;
   double _altura = 0;
@@ -26,7 +27,7 @@ class SelecionarFuncionarioWidget extends State<SelecionarFuncionarioPage> {
   @override
   void initState() {
     super.initState();
-    funcionarios = widget.empresa.usuariosFuncionario!;
+    funcionarios = widget.agendamento.empresa.usuariosFuncionario!;
   }
 
   @override
@@ -41,16 +42,12 @@ class SelecionarFuncionarioWidget extends State<SelecionarFuncionarioPage> {
           paddingTop: _altura * 0.011,
           onPressed: () => Navigator.pop(context),
         ),
-        body: _body(
-          servicos: _controller.servicos,
-        ),
+        body: _body(),
       ),
     );
   }
 
-  Widget _body({
-    required List<Servico> servicos,
-  }) {
+  Widget _body() {
     return Stack(
       children: [
         Column(
@@ -141,19 +138,18 @@ class SelecionarFuncionarioWidget extends State<SelecionarFuncionarioPage> {
         corBotao: corBotao,
         corTexto: Colors.white,
         overlayColor: overlayCorBotao,
-        onPressed: () => {},
-        // onPressed: () => {
-        //   funcionarioSelecionado == true
-        //       ? Navigator.of(context).push(
-        //     myPageTransition.pageTransition(
-        //       child: SelecionarFuncionarioPage(
-        //         empresa: widget.empresa,
-        //       ),
-        //       childCurrent: widget,
-        //     ),
-        //   )
-        //       : null,
-        // },
+        onPressed: () => {
+          selecionadoUmFuncionario == true
+              ? Navigator.of(context).push(
+                  myPageTransition.pageTransition(
+                    child: SelecionarHorarioPage(
+                      agendamento: widget.agendamento,
+                    ),
+                    childCurrent: widget,
+                  ),
+                )
+              : null,
+        },
       ),
     );
   }
@@ -166,12 +162,12 @@ class SelecionarFuncionarioWidget extends State<SelecionarFuncionarioPage> {
 
   void selecionarFuncionario(int index) {
     funcionarios[index].selecionado == true
-        ? _funcionarioSelecionado = funcionarios[index]
-        : _funcionarioSelecionado = null;
+        ? widget.agendamento.funcionario = funcionarios[index]
+        : widget.agendamento.funcionario = Usuario();
   }
 
   void ativarDesativarBotao() {
-    if (_funcionarioSelecionado == null) {
+    if (widget.agendamento.funcionario.id == null) {
       selecionadoUmFuncionario = false;
       corBotao = Colors.grey.withOpacity(0.9);
       overlayCorBotao = Colors.transparent;

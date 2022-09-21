@@ -8,6 +8,7 @@ import 'package:systetica/components/loading/loading_animation.dart';
 import 'package:systetica/components/page_transition.dart';
 import 'package:systetica/components/text_autenticacoes_widget.dart';
 import 'package:systetica/model/Servico.dart';
+import 'package:systetica/model/Usuario.dart';
 import 'package:systetica/model/agendamento.dart';
 import 'package:systetica/screen/agendar/agendar_controller.dart';
 import 'package:systetica/screen/agendar/view/selecionar_funcionario/selecionar_funcionario_page.dart';
@@ -22,8 +23,8 @@ class SelecionarServicoWidget extends State<SelecionarServicoPage> {
   final ServicoController _servicoController = ServicoController();
   var myPageTransition = MyPageTransition();
 
-  final List<Servico> _servicosSelecionados = [];
-  Agendamento agendamento = Agendamento();
+  late Agendamento agendamento;
+  List<Servico> servicos = [];
   double _largura = 0;
   double _altura = 0;
   bool loading = true;
@@ -35,7 +36,11 @@ class SelecionarServicoWidget extends State<SelecionarServicoPage> {
   void initState() {
     super.initState();
     buscarServicos();
-    agendamento.empresa = widget.empresa;
+    agendamento = Agendamento(
+      servicosSelecionados: [],
+      funcionario: Usuario(),
+      empresa: widget.empresa,
+    );
   }
 
   Future<void> buscarServicos() async {
@@ -47,7 +52,7 @@ class SelecionarServicoWidget extends State<SelecionarServicoPage> {
         .then(
           (value) => setState(
             () {
-              _controller.servicos = value!.object;
+              servicos = value!.object;
               loading = false;
             },
           ),
@@ -66,24 +71,18 @@ class SelecionarServicoWidget extends State<SelecionarServicoPage> {
           paddingTop: _altura * 0.011,
           onPressed: () => Navigator.pop(context),
         ),
-        body: loading
-            ? const LoadingAnimation()
-            : _body(
-                servicos: _controller.servicos,
-              ),
+        body: loading ? const LoadingAnimation() : _body(),
       ),
     );
   }
 
-  Widget _body({
-    required List<Servico> servicos,
-  }) {
+  Widget _body() {
     return Stack(
       children: [
         Column(
           children: [
             _infoSelecionarServico(),
-            _checkboxSelect(servicos: servicos),
+            _checkboxSelect(),
           ],
         ),
         _botaoSelecinarServico(),
@@ -106,9 +105,7 @@ class SelecionarServicoWidget extends State<SelecionarServicoPage> {
     );
   }
 
-  Widget _checkboxSelect({
-    required List<Servico> servicos,
-  }) {
+  Widget _checkboxSelect() {
     return Expanded(
       child: Container(
         padding: const EdgeInsets.only(top: 15),
@@ -136,11 +133,7 @@ class SelecionarServicoWidget extends State<SelecionarServicoPage> {
               onChanged: (selecao) {
                 servicos[index].servicoSelecionado = selecao;
 
-                servicos[index].servicoSelecionado == true
-                    ? _servicosSelecionados.add(servicos[index])
-                    : _servicosSelecionados.removeWhere(
-                        (servico) => servico.id == servicos[index].id,
-                      );
+                adicionarRemoverServico(index);
 
                 servicoSelecionado = true;
                 corBotao = Colors.black87.withOpacity(0.9);
@@ -152,11 +145,8 @@ class SelecionarServicoWidget extends State<SelecionarServicoPage> {
                     ? servicos[index].servicoSelecionado = false
                     : servicos[index].servicoSelecionado = true;
 
-                servicos[index].servicoSelecionado == true
-                    ? _servicosSelecionados.add(servicos[index])
-                    : _servicosSelecionados.removeWhere(
-                        (servico) => servico.id == servicos[index].id,
-                      );
+                adicionarRemoverServico(index);
+
                 ativarDesativarBotao();
                 setState(() {});
               },
@@ -186,7 +176,7 @@ class SelecionarServicoWidget extends State<SelecionarServicoPage> {
               ? Navigator.of(context).push(
                   myPageTransition.pageTransition(
                     child: SelecionarFuncionarioPage(
-                      empresa: widget.empresa,
+                      agendamento: agendamento,
                     ),
                     childCurrent: widget,
                   ),
@@ -198,7 +188,7 @@ class SelecionarServicoWidget extends State<SelecionarServicoPage> {
   }
 
   void ativarDesativarBotao() {
-    if (_servicosSelecionados.isEmpty) {
+    if (agendamento.servicosSelecionados.isEmpty) {
       servicoSelecionado = false;
       corBotao = Colors.grey.withOpacity(0.9);
       overlayCorBotao = Colors.transparent;
@@ -207,5 +197,13 @@ class SelecionarServicoWidget extends State<SelecionarServicoPage> {
       corBotao = Colors.black87.withOpacity(0.9);
       overlayCorBotao = AppColors.blue5;
     }
+  }
+
+  void adicionarRemoverServico(int index) {
+    servicos[index].servicoSelecionado == true
+        ? agendamento.servicosSelecionados.add(servicos[index])
+        : agendamento.servicosSelecionados.removeWhere(
+            (servico) => servico.id == servicos[index].id,
+          );
   }
 }

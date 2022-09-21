@@ -6,21 +6,21 @@ import 'package:systetica/model/Usuario.dart';
 
 class Agendamento {
   Agendamento({
-    this.empresa,
-    this.servicos,
-    this.funcionario,
+    required this.empresa,
+    required this.servicosSelecionados,
+    required this.funcionario,
     this.usuario,
   });
 
-  Empresa? empresa;
-  List<Servico>? servicos;
-  Usuario? funcionario;
+  Empresa empresa;
+  List<Servico> servicosSelecionados;
+  Usuario funcionario;
   Usuario? usuario;
 
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};
     _data['empresa'] = empresa;
-    _data['servicos'] = servicos;
+    _data['servicosSelecionados'] = servicosSelecionados;
     _data['funcionario'] = funcionario;
     _data['usuario'] = usuario;
     return _data;
