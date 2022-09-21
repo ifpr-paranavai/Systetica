@@ -11,6 +11,7 @@ import 'package:systetica/model/Servico.dart';
 import 'package:systetica/model/Usuario.dart';
 import 'package:systetica/model/agendamento.dart';
 import 'package:systetica/screen/agendar/agendar_controller.dart';
+import 'package:systetica/screen/agendar/component/agendar_componente.dart';
 import 'package:systetica/screen/agendar/view/selecionar_funcionario/selecionar_funcionario_page.dart';
 import 'package:systetica/screen/agendar/view/selecionar_servico/selecionar_servico_page.dart';
 import 'package:systetica/screen/servico/servico_controller.dart';
@@ -81,107 +82,79 @@ class SelecionarServicoWidget extends State<SelecionarServicoPage> {
       children: [
         Column(
           children: [
-            _infoSelecionarServico(),
+            AgendarComponente.info(
+              altura: _altura,
+              largura: _largura,
+              text: "SELECIONE O SERVIÇO",
+            ),
             _checkboxSelect(),
           ],
         ),
-        _botaoSelecinarServico(),
+        AgendarComponente.botaoSelecinar(
+          altura: _altura,
+          largura: _largura,
+          corBotao: corBotao,
+          overlayCorBotao: overlayCorBotao,
+          onPressed: () => {
+            servicoSelecionado == true
+                ? Navigator.of(context).push(
+                    myPageTransition.pageTransition(
+                      child: SelecionarFuncionarioPage(
+                        agendamento: agendamento,
+                      ),
+                      childCurrent: widget,
+                    ),
+                  )
+                : null,
+          },
+        ),
       ],
     );
   }
 
-  Widget _infoSelecionarServico() {
-    return Container(
-      padding: EdgeInsets.only(
-        left: _largura * 0.1,
-        top: _altura * 0.017,
-      ),
-      color: Colors.grey.withOpacity(0.2),
-      child: TextAutenticacoesWidget(
-        text: "Selecione o serviço",
-        fontSize: 30,
-        paddingBottom: 6,
-      ),
-    );
-  }
-
   Widget _checkboxSelect() {
-    return Expanded(
-      child: Container(
-        padding: const EdgeInsets.only(top: 15),
-        color: Colors.grey.withOpacity(0.2),
-        child: ListView.builder(
-          controller: _scrollController,
-          shrinkWrap: true,
-          itemCount: servicos.length,
-          physics: const BouncingScrollPhysics(
-            parent: AlwaysScrollableScrollPhysics(),
-          ),
-          itemBuilder: (context, index) {
-            String precoMinuto =
-                "${UtilBrasilFields.obterReal(servicos[index].preco!)} - "
-                "${servicos[index].tempoServico!} min";
-            int totalList = servicos.length - 1;
-
-            return GestureDetectorComponent(
-              paddingBottom: index == totalList ? 0.3 : 0.04,
-              largura: _largura,
-              altura: _altura,
-              textNome: servicos[index].nome!,
-              precoMinuto: precoMinuto,
-              servicoSelecionado: servicos[index].servicoSelecionado,
-              onChanged: (selecao) {
-                servicos[index].servicoSelecionado = selecao;
-
-                adicionarRemoverServico(index);
-
-                servicoSelecionado = true;
-                corBotao = Colors.black87.withOpacity(0.9);
-                ativarDesativarBotao();
-                setState(() {});
-              },
-              onTap: () {
-                servicos[index].servicoSelecionado == true
-                    ? servicos[index].servicoSelecionado = false
-                    : servicos[index].servicoSelecionado = true;
-
-                adicionarRemoverServico(index);
-
-                ativarDesativarBotao();
-                setState(() {});
-              },
-            );
-          },
+    return AgendarComponente.containerGeral(
+      listView: ListView.builder(
+        controller: _scrollController,
+        shrinkWrap: true,
+        itemCount: servicos.length,
+        physics: const BouncingScrollPhysics(
+          parent: AlwaysScrollableScrollPhysics(),
         ),
-      ),
-    );
-  }
+        itemBuilder: (context, index) {
+          String precoMinuto =
+              "${UtilBrasilFields.obterReal(servicos[index].preco!)} - "
+              "${servicos[index].tempoServico!} min";
+          int totalList = servicos.length - 1;
 
-  Widget _botaoSelecinarServico() {
-    return Container(
-      padding: EdgeInsets.only(
-        bottom: _altura * 0.03,
-      ),
-      alignment: Alignment.bottomCenter,
-      child: BotaoWidget(
-        paddingTop: 10,
-        paddingBottom: 0,
-        labelText: "CONTINUAR",
-        largura: _largura * 0.6,
-        corBotao: corBotao,
-        corTexto: Colors.white,
-        overlayColor: overlayCorBotao,
-        onPressed: () => {
-          servicoSelecionado == true
-              ? Navigator.of(context).push(
-                  myPageTransition.pageTransition(
-                    child: SelecionarFuncionarioPage(
-                      agendamento: agendamento,
-                    ),
-                    childCurrent: widget,
-                  ),
-                )
-              : null,
+          return GestureDetectorComponent(
+            paddingBottom: index == totalList ? 0.3 : 0.04,
+            largura: _largura,
+            altura: _altura,
+            textNome: servicos[index].nome!,
+            precoMinuto: precoMinuto,
+            servicoSelecionado: servicos[index].servicoSelecionado,
+            onChanged: (selecao) {
+              servicos[index].servicoSelecionado = selecao;
+
+              adicionarRemoverServico(index);
+
+              servicoSelecionado = true;
+              corBotao = Colors.black87.withOpacity(0.9);
+              ativarDesativarBotao();
+              setState(() {});
+            },
+            onTap: () {
+              servicos[index].servicoSelecionado == true
+                  ? servicos[index].servicoSelecionado = false
+                  : servicos[index].servicoSelecionado = true;
+
+              adicionarRemoverServico(index);
+
+              ativarDesativarBotao();
+              setState(() {});
+            },
+          );
         },
       ),
     );
