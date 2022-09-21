@@ -18,6 +18,7 @@ class Servico {
   double? preco;
   bool? status;
   String? emailAdministrativo;
+  bool servicoSelecionado = false;
 
   Servico.fromJson(Map<String, dynamic> json) {
     id = json['id'];

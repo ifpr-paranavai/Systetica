@@ -8,6 +8,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface ServicoRepository extends JpaRepository<Servico, Long> {
 
@@ -23,4 +25,7 @@ public interface ServicoRepository extends JpaRepository<Servico, Long> {
                     upper(u.empresa.usuarioAdministrador.email) like upper(CONCAT('%',:emailAdministrador,'%'))
             """)
     Page<Servico> findAll(Pageable page, String emailAdministrador);
+
+
+    List<Servico> findAllByEmpresaId(long id);
 }

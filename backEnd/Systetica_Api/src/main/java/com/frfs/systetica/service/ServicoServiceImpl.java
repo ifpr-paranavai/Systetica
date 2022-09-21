@@ -30,7 +30,8 @@ public class ServicoServiceImpl implements ServicoService {
     @Override
     public ReturnData<String> salvar(ServicoDTO servicoDTO) {
         try {
-            Optional<Empresa> empresa = empresaRepository.findByUsuarioAdministradorEmail(servicoDTO.getEmailAdministrativo());
+            Optional<Empresa> empresa = empresaRepository.findByUsuarioAdministradorEmail(servicoDTO
+                    .getEmailAdministrativo());
             if (empresa.isEmpty()) {
                 return new ReturnData<>(false, "Empresa não encontrada",
                         "Não foi possível encontrar empresa cadastrada para salvar serviço");
@@ -77,5 +78,11 @@ public class ServicoServiceImpl implements ServicoService {
     public ReturnData<Object> buscarTodos(Pageable page, String emailAdministrativo) {
         return new ReturnData<>(true, "", servicoMapper.toListDto(servicoRepository
                 .findAll(page, emailAdministrativo).getContent()));
+    }
+
+    @Override
+    public ReturnData<Object> buscarTodosPorIdEmpresa(long id) {
+        return new ReturnData<>(true, "", servicoMapper.toListDto(servicoRepository
+                .findAllByEmpresaId(id)));
     }
 }

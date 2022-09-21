@@ -1,3 +1,5 @@
+// ignore_for_file: unused_field
+
 import 'package:flutter/material.dart';
 import 'package:systetica/components/botoes/botao_widget.dart';
 import 'package:systetica/components/gesture_detector_component.dart';
@@ -8,12 +10,16 @@ import 'package:systetica/model/Servico.dart';
 import 'package:systetica/screen/agendar/agendar_controller.dart';
 import 'package:systetica/screen/agendar/view/selecionar_servico/selecionar_servico_page.dart';
 import 'package:systetica/screen/servico/servico_controller.dart';
+import 'package:brasil_fields/brasil_fields.dart';
 
 class SelecionarServicoWidget extends State<SelecionarServicoPage> {
   final ScrollController _scrollController = ScrollController();
   final AgendarController _controller = AgendarController();
   final ServicoController _servicoController = ServicoController();
 
+  final List<Servico> _servicosSelecionados = [];
+  double _largura = 0;
+  double _altura = 0;
   bool loading = true;
 
   @override
@@ -37,10 +43,6 @@ class SelecionarServicoWidget extends State<SelecionarServicoPage> {
           ),
         );
   }
-
-  String nome = '';
-  double _largura = 0;
-  double _altura = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +73,7 @@ class SelecionarServicoWidget extends State<SelecionarServicoPage> {
         Column(
           children: [
             _infoSelecionarServico(),
-            _checkboSelect(servicos: servicos),
+            _checkboxSelect(servicos: servicos),
           ],
         ),
         _botaoSelecinarServico(),
@@ -94,11 +96,12 @@ class SelecionarServicoWidget extends State<SelecionarServicoPage> {
     );
   }
 
-  Widget _checkboSelect({
+  Widget _checkboxSelect({
     required List<Servico> servicos,
   }) {
     return Expanded(
       child: Container(
+        padding: const EdgeInsets.only(top: 15),
         color: Colors.grey.withOpacity(0.2),
         child: ListView.builder(
           controller: _scrollController,
@@ -107,17 +110,38 @@ class SelecionarServicoWidget extends State<SelecionarServicoPage> {
           physics: const BouncingScrollPhysics(
             parent: AlwaysScrollableScrollPhysics(),
           ),
-          itemBuilder: (ctx, index) {
+          itemBuilder: (context, index) {
+            String precoMinuto =
+                "${UtilBrasilFields.obterReal(servicos[index].preco!)} - "
+                "${servicos[index].tempoServico!} min";
             return GestureDetectorComponent(
               largura: _largura,
+              altura: _altura,
               textNome: servicos[index].nome!,
-              groupValue: nome,
-              onChanged: (s) {
-                nome = s.toString();
+              precoMinuto: precoMinuto,
+              servicoSelecionado: servicos[index].servicoSelecionado,
+              onChanged: (selecao) {
+                servicos[index].servicoSelecionado = selecao;
+
+                servicos[index].servicoSelecionado == true
+                    ? _servicosSelecionados.add(servicos[index])
+                    : _servicosSelecionados.removeWhere(
+                        (servico) => servico.id == servicos[index].id,
+                      );
+
                 setState(() {});
               },
               onTap: () {
-                nome = servicos[index].nome!;
+                servicos[index].servicoSelecionado == true
+                    ? servicos[index].servicoSelecionado = false
+                    : servicos[index].servicoSelecionado = true;
+
+                servicos[index].servicoSelecionado == true
+                    ? _servicosSelecionados.add(servicos[index])
+                    : _servicosSelecionados.removeWhere(
+                        (servico) => servico.id == servicos[index].id,
+                      );
+
                 setState(() {});
               },
             );
@@ -145,5 +169,3 @@ class SelecionarServicoWidget extends State<SelecionarServicoPage> {
     );
   }
 }
-
-// https://medium.flutterdevs.com/modal-bottom-sheet-in-flutter-dae05debbed2 TODO

@@ -48,4 +48,11 @@ public class ServicoController {
         return new ResponseEntity<>(result, result.getSuccess() ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    @PostMapping("/buscar-todos/{id}")
+    @ResponseBody
+    public ResponseEntity<Object> buscarTodosPorIdEmpresa(@PathVariable long id) {
+        ReturnData<Object> result = servicoService.buscarTodosPorIdEmpresa(id);
+
+        return new ResponseEntity<>(result, result.getSuccess() ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 }

@@ -12,4 +12,6 @@ public interface ServicoService {
     ReturnData<Object> buscarTodosPaginado(String search, Pageable page, String emailAdministrativo);
 
     ReturnData<Object> buscarTodos(Pageable page, String emailAdministrativo);
+
+    ReturnData<Object> buscarTodosPorIdEmpresa(long id);
 }
