@@ -7,6 +7,7 @@ class AgendarComponente {
     return Expanded(
       child: Container(
         padding: const EdgeInsets.only(top: 15),
+        alignment: Alignment.topCenter,
         decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,

@@ -1,3 +1,4 @@
+import 'package:calendar_timeline/calendar_timeline.dart';
 import 'package:flutter/material.dart';
 import 'package:systetica/components/botoes/botao_widget.dart';
 import 'package:systetica/components/icon_arrow_widget.dart';
@@ -50,42 +51,31 @@ class SelecionarHorarioWidget extends State<SelecionarHorarioPage> {
             _checkboxSelect(),
           ],
         ),
-        _botaoSelecinarDia()
+        AgendarComponente.botaoSelecinar(
+          altura: _altura,
+          largura: _largura,
+          corBotao: corBotao,
+          overlayCorBotao: overlayCorBotao,
+          onPressed: () => {},
+        ),
       ],
     );
   }
 
   Widget _checkboxSelect() {
-    return AgendarComponente.containerGeral(listView: Text(""));
-  }
-
-  Widget _botaoSelecinarDia() {
-    return Container(
-      padding: EdgeInsets.only(
-        bottom: _altura * 0.03,
-      ),
-      alignment: Alignment.bottomCenter,
-      child: BotaoWidget(
-        paddingTop: 10,
-        paddingBottom: 0,
-        labelText: "CONTINUAR",
-        largura: _largura * 0.6,
-        corBotao: corBotao,
-        corTexto: Colors.white,
-        overlayColor: overlayCorBotao,
-        onPressed: () => {},
-        // onPressed: () => {
-        //   selecionadoUmDia == true
-        //       ? Navigator.of(context).push(
-        //     myPageTransition.pageTransition(
-        //       child: SelecionarHorarioPage(
-        //         agendamento: widget.agendamento,
-        //       ),
-        //       childCurrent: widget,
-        //     ),
-        //   )
-        //       : null,
-        // },
+    return AgendarComponente.containerGeral(
+      listView: CalendarTimeline(
+        initialDate: DateTime.now(),
+        firstDate: DateTime(2019, 1, 15),
+        lastDate: DateTime(2100, 11, 20),
+        leftMargin: 20,
+        monthColor: Colors.blueGrey,
+        dayColor: Colors.teal[200],
+        activeDayColor: Colors.white,
+        activeBackgroundDayColor: Colors.redAccent[100],
+        dotsColor: const Color(0xFF333A47),
+        selectableDayPredicate: (date) => date.day != 23,
+        onDateSelected: (date) => print(date),
       ),
     );
   }

@@ -1,11 +1,9 @@
 // ignore_for_file: unused_field, avoid_function_literals_in_foreach_calls
 
 import 'package:flutter/material.dart';
-import 'package:systetica/components/botoes/botao_widget.dart';
 import 'package:systetica/components/gesture_detector_foto_component.dart';
 import 'package:systetica/components/icon_arrow_widget.dart';
 import 'package:systetica/components/page_transition.dart';
-import 'package:systetica/components/text_autenticacoes_widget.dart';
 import 'package:systetica/model/Usuario.dart';
 import 'package:systetica/screen/agendar/agendar_controller.dart';
 import 'package:systetica/screen/agendar/component/agendar_componente.dart';
@@ -23,12 +21,15 @@ class SelecionarFuncionarioWidget extends State<SelecionarFuncionarioPage> {
   double _altura = 0;
   Color corBotao = Colors.grey.withOpacity(0.9);
   Color overlayCorBotao = Colors.transparent;
-  bool selecionadoUmFuncionario = false;
+  late bool selecionadoUmFuncionario;
 
   @override
   void initState() {
     super.initState();
     funcionarios = widget.agendamento.empresa.usuariosFuncionario!;
+    widget.agendamento.funcionario.selecionado == true
+        ? ativarDesativarBotao()
+        : selecionadoUmFuncionario = false;
   }
 
   @override
