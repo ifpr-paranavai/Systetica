@@ -138,8 +138,9 @@ class ProdutoWidget extends State<ProdutoPage> {
               largura: largura,
               altura: altura,
               infoNome: produtos[index].nome!,
-              infoPreco:
-                  UtilBrasilFields.obterReal(produtos[index].precoVenda!),
+              infoPreco: UtilBrasilFields.obterReal(
+                produtos[index].precoVenda!,
+              ),
               numero: index + 1,
               maxLinesInfo: 2,
               onTap: () {

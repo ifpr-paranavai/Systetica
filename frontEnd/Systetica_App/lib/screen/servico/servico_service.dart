@@ -84,4 +84,24 @@ class ServicoService {
 
     return info;
   }
+
+  static Future<Info> buscarServicosPorId({
+    required int id,
+    required Token token,
+  }) async {
+    String path = "servico/buscar-todos/$id";
+
+    Dio dio = DioConfigApi.builderConfig();
+
+    dio.options.headers["Authorization"] = "Bearer ${token.accessToken}";
+
+    var response = await dio.post(path);
+
+    Info info = Info();
+
+    info.success = true;
+    info.object = Servico.fromJsonList(response.data['response']);
+
+    return info;
+  }
 }

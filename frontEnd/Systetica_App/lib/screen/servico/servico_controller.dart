@@ -164,4 +164,23 @@ class ServicoController {
     }
     return info;
   }
+
+  Future<Info?> buscarServicoPorId({
+    required BuildContext context,
+    required int id,
+  }) async {
+    Info info = Info(success: true);
+
+    try {
+      Token _token = await TokenRepository.findToken();
+      info = await ServicoService.buscarServicosPorId(
+        id: id,
+        token: _token,
+      );
+    } catch (e) {
+      info.success = false;
+      return info;
+    }
+    return info;
+  }
 }
