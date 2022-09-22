@@ -239,6 +239,7 @@ class DetalhaEmpresaWidget extends State<DetalhaEmpresaPage> {
             child: SelecionarServicoPage(
               empresa: widget.empresa,
             ),
+            buttoToTop: true,
             childCurrent: widget,
           ),
         ),

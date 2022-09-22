@@ -3,7 +3,7 @@ import 'package:systetica/components/botoes/botao_widget.dart';
 import 'package:systetica/components/text_autenticacoes_widget.dart';
 
 class AgendarComponente {
-  static Widget containerGeral({required Widget listView}) {
+  static Widget containerGeral({required Widget widget}) {
     return Expanded(
       child: Container(
         padding: const EdgeInsets.only(top: 15),
@@ -15,7 +15,7 @@ class AgendarComponente {
             colors: [Colors.grey.withOpacity(0.2), Colors.white],
           ),
         ),
-        child: listView,
+        child: widget,
       ),
     );
   }

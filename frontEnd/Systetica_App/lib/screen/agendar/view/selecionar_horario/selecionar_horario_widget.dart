@@ -1,11 +1,10 @@
 import 'package:calendar_timeline/calendar_timeline.dart';
 import 'package:flutter/material.dart';
-import 'package:systetica/components/botoes/botao_widget.dart';
 import 'package:systetica/components/icon_arrow_widget.dart';
 import 'package:systetica/components/loading/loading_animation.dart';
-import 'package:systetica/components/text_autenticacoes_widget.dart';
 import 'package:systetica/screen/agendar/component/agendar_componente.dart';
 import 'package:systetica/screen/agendar/view/selecionar_horario/selecionar_horario_page.dart';
+import 'package:systetica/style/app_colors..dart';
 
 class SelecionarHorarioWidget extends State<SelecionarHorarioPage> {
   double _largura = 0;
@@ -64,19 +63,35 @@ class SelecionarHorarioWidget extends State<SelecionarHorarioPage> {
 
   Widget _checkboxSelect() {
     return AgendarComponente.containerGeral(
-      listView: CalendarTimeline(
-        initialDate: DateTime.now(),
-        firstDate: DateTime(2019, 1, 15),
-        lastDate: DateTime(2100, 11, 20),
-        leftMargin: 20,
-        monthColor: Colors.blueGrey,
-        dayColor: Colors.teal[200],
-        activeDayColor: Colors.white,
-        activeBackgroundDayColor: Colors.redAccent[100],
-        dotsColor: const Color(0xFF333A47),
-        selectableDayPredicate: (date) => date.day != 23,
-        onDateSelected: (date) => print(date),
+      widget: Column(
+        children: [
+          _calendarTimeLine(),
+        ],
       ),
+    );
+  }
+
+  Widget _calendarTimeLine() {
+    DateTime dateTime = DateTime.now();
+    return CalendarTimeline(
+      initialDate: dateTime,
+      firstDate: DateTime(
+        dateTime.year - 1,
+        dateTime.month,
+        dateTime.day,
+      ),
+      lastDate: DateTime(
+        dateTime.year + 2,
+        dateTime.month,
+        dateTime.day,
+      ),
+      leftMargin: 20,
+      monthColor: Colors.black,
+      dayColor: AppColors.bluePrincipal,
+      activeDayColor: Colors.white,
+      activeBackgroundDayColor: AppColors.redPrincipal,
+      dotsColor: Colors.white,
+      onDateSelected: (date) => print(date),
     );
   }
 }

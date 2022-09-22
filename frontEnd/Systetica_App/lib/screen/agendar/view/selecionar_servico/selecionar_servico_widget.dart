@@ -1,12 +1,10 @@
 // ignore_for_file: unused_field
 
 import 'package:flutter/material.dart';
-import 'package:systetica/components/botoes/botao_widget.dart';
 import 'package:systetica/components/gesture_detector_component.dart';
 import 'package:systetica/components/icon_arrow_widget.dart';
 import 'package:systetica/components/loading/loading_animation.dart';
 import 'package:systetica/components/page_transition.dart';
-import 'package:systetica/components/text_autenticacoes_widget.dart';
 import 'package:systetica/model/Servico.dart';
 import 'package:systetica/model/Usuario.dart';
 import 'package:systetica/model/agendamento.dart';
@@ -103,6 +101,7 @@ class SelecionarServicoWidget extends State<SelecionarServicoPage> {
                         agendamento: agendamento,
                       ),
                       childCurrent: widget,
+                      buttoToTop: true,
                     ),
                   )
                 : null,
@@ -114,7 +113,7 @@ class SelecionarServicoWidget extends State<SelecionarServicoPage> {
 
   Widget _checkboxSelect() {
     return AgendarComponente.containerGeral(
-      listView: ListView.builder(
+      widget: ListView.builder(
         controller: _scrollController,
         shrinkWrap: true,
         itemCount: servicos.length,

@@ -74,6 +74,7 @@ class SelecionarFuncionarioWidget extends State<SelecionarFuncionarioPage> {
                       child: SelecionarHorarioPage(
                         agendamento: widget.agendamento,
                       ),
+                      buttoToTop: true,
                       childCurrent: widget,
                     ),
                   )
@@ -86,7 +87,7 @@ class SelecionarFuncionarioWidget extends State<SelecionarFuncionarioPage> {
 
   Widget _checkboxSelect() {
     return AgendarComponente.containerGeral(
-      listView: ListView.builder(
+      widget: ListView.builder(
         controller: _scrollController,
         shrinkWrap: true,
         itemCount: funcionarios.length,

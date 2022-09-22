@@ -64,6 +64,7 @@ class _GestureDetectorComponent extends State<GestureDetectorComponent> {
                     style: const TextStyle(
                       fontSize: 18,
                       overflow: TextOverflow.ellipsis,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
                   Text(
