@@ -46,32 +46,38 @@ class DetalhaEmpresaWidget extends State<DetalhaEmpresaPage> {
           paddingTop: _altura * 0.01,
           onPressed: () => Navigator.pop(context),
         ),
-        body: Stack(
-          children: [
-            SingleChildScrollComponent(
-              widgetComponent: Center(
-                child: Column(
-                  children: [
-                    _sizedBox(height: _altura * 0.08),
-                    FotoWidget().boxFoto(
-                      imagemUsuario: widget.empresa.logoBase64,
-                    ),
-                    _sizedBox(height: _altura * 0.04),
-                    _infoEmpresa(),
-                    _cardInfoEmpresa(empresa: widget.empresa),
-                    _sizedBox(height: _altura * 0.02),
-                    _infoEnderecoEmpresa(),
-                    _cardInfoEnderecoEmpresa(empresa: widget.empresa),
-                    _sizedBox(height: _altura * 0.02),
-                    _infoHorariosEmpresa(),
-                    _cardHorarioEmpresa(),
-                    _sizedBox(height: _altura * 0.12),
-                  ],
+        body: NotificationListener<OverscrollIndicatorNotification>(
+          onNotification: (overScroll) {
+            overScroll.disallowIndicator();
+            return false;
+          },
+          child: Stack(
+            children: [
+              SingleChildScrollComponent(
+                widgetComponent: Center(
+                  child: Column(
+                    children: [
+                      _sizedBox(height: _altura * 0.08),
+                      FotoWidget().boxFoto(
+                        imagemUsuario: widget.empresa.logoBase64,
+                      ),
+                      _sizedBox(height: _altura * 0.04),
+                      _infoEmpresa(),
+                      _cardInfoEmpresa(empresa: widget.empresa),
+                      _sizedBox(height: _altura * 0.02),
+                      _infoEnderecoEmpresa(),
+                      _cardInfoEnderecoEmpresa(empresa: widget.empresa),
+                      _sizedBox(height: _altura * 0.02),
+                      _infoHorariosEmpresa(),
+                      _cardHorarioEmpresa(),
+                      _sizedBox(height: _altura * 0.12),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            _botaoAgendar(),
-          ],
+              _botaoAgendar(),
+            ],
+          ),
         ),
       ),
     );

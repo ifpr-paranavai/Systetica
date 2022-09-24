@@ -7,12 +7,43 @@ import 'package:systetica/screen/agendar/view/selecionar_horario/selecionar_hora
 import 'package:systetica/style/app_colors..dart';
 
 class SelecionarHorarioWidget extends State<SelecionarHorarioPage> {
+
   double _largura = 0;
   double _altura = 0;
   bool loading = true;
   Color corBotao = Colors.grey.withOpacity(0.9);
   Color overlayCorBotao = Colors.transparent;
   bool selecionadoUmDia = false;
+  List<bool> isSelected = [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+  ];
+  List<String> horarios = [
+    '08:00',
+    '09:00',
+    '10:00',
+    '11:00',
+    '12:00',
+    '13:00',
+    '14:00',
+    '15:00',
+    '16:00',
+    '17:00',
+    '18:00',
+    '19:00',
+    '20:00',
+  ];
 
   @override
   void initState() {
@@ -38,26 +69,32 @@ class SelecionarHorarioWidget extends State<SelecionarHorarioPage> {
   }
 
   Widget _body() {
-    return Stack(
-      children: [
-        Column(
-          children: [
-            AgendarComponente.info(
-              altura: _altura,
-              largura: _largura,
-              text: "SELECIONE O DIA",
-            ),
-            _checkboxSelect(),
-          ],
-        ),
-        AgendarComponente.botaoSelecinar(
-          altura: _altura,
-          largura: _largura,
-          corBotao: corBotao,
-          overlayCorBotao: overlayCorBotao,
-          onPressed: () => {},
-        ),
-      ],
+    return NotificationListener<OverscrollIndicatorNotification>(
+      onNotification: (overScroll) {
+        overScroll.disallowIndicator();
+        return false;
+      },
+      child: Stack(
+        children: [
+          Column(
+            children: [
+              AgendarComponente.info(
+                altura: _altura,
+                largura: _largura,
+                text: "SELECIONE O DIA",
+              ),
+              _checkboxSelect(),
+            ],
+          ),
+          AgendarComponente.botaoSelecinar(
+            altura: _altura,
+            largura: _largura,
+            corBotao: corBotao,
+            overlayCorBotao: overlayCorBotao,
+            onPressed: () => {},
+          ),
+        ],
+      ),
     );
   }
 
@@ -66,6 +103,7 @@ class SelecionarHorarioWidget extends State<SelecionarHorarioPage> {
       widget: Column(
         children: [
           _calendarTimeLine(),
+          _horariosLivres(),
         ],
       ),
     );
@@ -92,6 +130,72 @@ class SelecionarHorarioWidget extends State<SelecionarHorarioPage> {
       activeBackgroundDayColor: AppColors.redPrincipal,
       dotsColor: Colors.white,
       onDateSelected: (date) => print(date),
+    );
+  }
+
+  Widget _horariosLivres() {
+    var quantSelecao = isSelected.length;
+    return Expanded(
+      child: Container(
+        margin: const EdgeInsets.only(
+          top: 30,
+          bottom: 70,
+          left: 20,
+          right: 20,
+        ),
+        child: GridView.count(
+          crossAxisCount: 3,
+          childAspectRatio: 2.5,
+          mainAxisSpacing: 18,
+          crossAxisSpacing: 30,
+          shrinkWrap: true,
+          physics: const BouncingScrollPhysics(
+            parent: AlwaysScrollableScrollPhysics(),
+          ),
+          children: List.generate(
+            quantSelecao,
+            (index) {
+              return InkWell(
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: isSelected[index]
+                        ? AppColors.redPrincipal
+                        : Colors.white,
+                    borderRadius: BorderRadius.circular(15),
+                    border: Border.all(
+                      color: Colors.black,
+                      width: 1,
+                    ),
+                  ),
+                  child: Center(
+                    child: Text(
+                      horarios[index],
+                      maxLines: 1,
+                      style: TextStyle(
+                        fontSize: 19,
+                        fontWeight: FontWeight.w500,
+                        color: isSelected[index]
+                            ? Colors.white
+                            : AppColors.bluePrincipal,
+                      ),
+                    ),
+                  ),
+                ),
+                onTap: () {
+                  for (int indexBtn = 0; indexBtn < quantSelecao; indexBtn++) {
+                    if (indexBtn == index) {
+                      isSelected[indexBtn] = true;
+                    } else {
+                      isSelected[indexBtn] = false;
+                    }
+                  }
+                  setState(() {});
+                },
+              );
+            },
+          ),
+        ),
+      ),
     );
   }
 }

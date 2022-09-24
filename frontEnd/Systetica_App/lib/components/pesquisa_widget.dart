@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 class PesquisaWidget extends StatefulWidget {
   PesquisaWidget({
+    this.cor = Colors.grey,
     required this.altura,
     required this.largura,
     required this.hintText,
@@ -13,6 +14,7 @@ class PesquisaWidget extends StatefulWidget {
     Key? key,
   }) : super(key: key);
 
+  Color cor;
   double altura;
   double largura;
   double paddingLeft;
@@ -29,7 +31,7 @@ class _PesquisaWidget extends State<PesquisaWidget> {
   Widget build(BuildContext context) {
     return Container(
       height: 70,
-      color: Colors.grey.withOpacity(0.2),
+      color: widget.cor.withOpacity(0.2),
       padding: EdgeInsets.only(
         top: widget.largura * 0.040,
         bottom: widget.largura * 0.030,

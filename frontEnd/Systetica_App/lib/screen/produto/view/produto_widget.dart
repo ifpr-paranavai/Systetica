@@ -133,7 +133,7 @@ class ProdutoWidget extends State<ProdutoPage> {
             parent: AlwaysScrollableScrollPhysics(),
           ),
           itemCount: produtos.length,
-          itemBuilder: (BuildContext context, int index) {
+          itemBuilder: (context, index) {
             return ListViewComponent(
               largura: largura,
               altura: altura,

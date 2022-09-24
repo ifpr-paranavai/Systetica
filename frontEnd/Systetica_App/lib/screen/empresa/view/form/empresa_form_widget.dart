@@ -55,74 +55,80 @@ class EmpresaFormWidget extends State<EmpresaFormPage> {
           paddingTop: _altura * 0.01,
           onPressed: () => Navigator.pop(context),
         ),
-        body: SingleChildScrollView(
-          controller: _scrollController,
-          child: Form(
-            autovalidateMode: AutovalidateMode.onUserInteraction,
-            key: _controller.formKey,
-            child: Center(
-              child: Column(
-                children: [
-                  _sizedBox(height: _altura * 0.08),
-                  _boxFoto(_controller.logoBase64),
-                  _sizedBox(height: _altura * 0.07),
-                  _textoEditarEmpresa(),
-                  _inputEmpresa.inputNomeEmpresa(
-                    paddingHorizontal: _largura,
-                    controller: _controller,
-                    validatorEmpresa: _multiValidatorEmpresa,
-                  ),
-                  _inputEmpresa.inputTelefone(
-                    paddingHorizontal: _largura,
-                    controller: _controller,
-                    validatorEmpresa: _multiValidatorEmpresa,
-                  ),
-                  _inputEmpresa.inputTelefone2(
-                    paddingHorizontal: _largura,
-                    controller: _controller,
-                  ),
-                  _inputEmpresa.inputHorarioAbertura(
-                    paddingHorizontal: _largura,
-                    controller: _controller,
-                    validatorEmpresa: _multiValidatorEmpresa,
-                  ),
-                  _inputEmpresa.inputHorarioFechamento(
-                    paddingHorizontal: _largura,
-                    controller: _controller,
-                    validatorEmpresa: _multiValidatorEmpresa,
-                  ),
-                  _inputEmpresa.inputCep(
-                    paddingHorizontal: _largura,
-                    controller: _controller,
-                    validatorEmpresa: _multiValidatorEmpresa,
-                  ),
-                  _inputEmpresa.inputEndereco(
-                    paddingHorizontal: _largura,
-                    controller: _controller,
-                    validatorEmpresa: _multiValidatorEmpresa,
-                  ),
-                  _inputEmpresa.inputBairro(
-                    paddingHorizontal: _largura,
-                    controller: _controller,
-                    validatorEmpresa: _multiValidatorEmpresa,
-                  ),
-                  _inputEmpresa.inputNumero(
-                    paddingHorizontal: _largura,
-                    controller: _controller,
-                    validatorEmpresa: _multiValidatorEmpresa,
-                  ),
-                  _inputEmpresa.inputCidade(
-                    cidadeEditar: _controller.cidade,
-                    paddingHorizontal: _largura,
-                    controller: _controller,
-                  ),
-                  _inputEmpresa.botaoCadastrar(
-                    label: "SALVAR",
-                    onPressed: () => _controller.atualizarEmpresa(context).then(
-                          (value) => setState(() {}),
-                        ),
-                  ),
-                ],
+        body: NotificationListener<OverscrollIndicatorNotification>(
+          onNotification: (overScroll) {
+            overScroll.disallowIndicator();
+            return false;
+          },
+          child: SingleChildScrollView(
+            controller: _scrollController,
+            child: Form(
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              key: _controller.formKey,
+              child: Center(
+                child: Column(
+                  children: [
+                    _sizedBox(height: _altura * 0.08),
+                    _boxFoto(_controller.logoBase64),
+                    _sizedBox(height: _altura * 0.07),
+                    _textoEditarEmpresa(),
+                    _inputEmpresa.inputNomeEmpresa(
+                      paddingHorizontal: _largura,
+                      controller: _controller,
+                      validatorEmpresa: _multiValidatorEmpresa,
+                    ),
+                    _inputEmpresa.inputTelefone(
+                      paddingHorizontal: _largura,
+                      controller: _controller,
+                      validatorEmpresa: _multiValidatorEmpresa,
+                    ),
+                    _inputEmpresa.inputTelefone2(
+                      paddingHorizontal: _largura,
+                      controller: _controller,
+                    ),
+                    _inputEmpresa.inputHorarioAbertura(
+                      paddingHorizontal: _largura,
+                      controller: _controller,
+                      validatorEmpresa: _multiValidatorEmpresa,
+                    ),
+                    _inputEmpresa.inputHorarioFechamento(
+                      paddingHorizontal: _largura,
+                      controller: _controller,
+                      validatorEmpresa: _multiValidatorEmpresa,
+                    ),
+                    _inputEmpresa.inputCep(
+                      paddingHorizontal: _largura,
+                      controller: _controller,
+                      validatorEmpresa: _multiValidatorEmpresa,
+                    ),
+                    _inputEmpresa.inputEndereco(
+                      paddingHorizontal: _largura,
+                      controller: _controller,
+                      validatorEmpresa: _multiValidatorEmpresa,
+                    ),
+                    _inputEmpresa.inputBairro(
+                      paddingHorizontal: _largura,
+                      controller: _controller,
+                      validatorEmpresa: _multiValidatorEmpresa,
+                    ),
+                    _inputEmpresa.inputNumero(
+                      paddingHorizontal: _largura,
+                      controller: _controller,
+                      validatorEmpresa: _multiValidatorEmpresa,
+                    ),
+                    _inputEmpresa.inputCidade(
+                      cidadeEditar: _controller.cidade,
+                      paddingHorizontal: _largura,
+                      controller: _controller,
+                    ),
+                    _inputEmpresa.botaoCadastrar(
+                      label: "SALVAR",
+                      onPressed: () => _controller.atualizarEmpresa(context).then(
+                            (value) => setState(() {}),
+                          ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

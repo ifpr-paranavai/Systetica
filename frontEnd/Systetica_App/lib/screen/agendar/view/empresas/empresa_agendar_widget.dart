@@ -90,7 +90,7 @@ class EmpresaAgendarlWidget extends State<EmpresaAgendarPage> {
                 right: largura * 0.060,
               ),
               width: largura * 0.40,
-              color: Colors.grey.withOpacity(0.2),
+              color: Colors.white,
               alignment: Alignment.centerRight,
               child: FotoWidget().boxFoto(
                 imagemUsuario: usuario.imagemBase64!,
@@ -124,6 +124,7 @@ class EmpresaAgendarlWidget extends State<EmpresaAgendarPage> {
     required double largura, //height
   }) {
     return PesquisaWidget(
+      cor: Colors.white,
       altura: altura,
       largura: largura,
       hintText: 'Buscar empresa...',
@@ -147,7 +148,7 @@ class EmpresaAgendarlWidget extends State<EmpresaAgendarPage> {
   }) {
     return Expanded(
       child: Container(
-        color: Colors.grey.withOpacity(0.2),
+        color: Colors.white,
         child: ListView.builder(
           controller: _scrollController,
           shrinkWrap: true,
@@ -197,7 +198,7 @@ class EmpresaAgendarlWidget extends State<EmpresaAgendarPage> {
     return Container(
       height: 80,
       width: largura * 0.60,
-      color: Colors.grey.withOpacity(0.2),
+      color: Colors.white,
       alignment: Alignment.centerLeft,
       padding: EdgeInsets.only(
         left: widthSize * 0.07,

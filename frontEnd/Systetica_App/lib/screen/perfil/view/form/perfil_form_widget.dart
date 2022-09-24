@@ -48,21 +48,27 @@ class PerfilFormWidget extends State<PerfilFormPage> {
           paddingTop: _altura * 0.01,
           onPressed: () => Navigator.pop(context),
         ),
-        body: SingleChildScrollView(
-          controller: _scrollController,
-          child: Form(
-            autovalidateMode: AutovalidateMode.onUserInteraction,
-            key: _controller.formKey,
-            child: Column(
-              children: [
-                _sizedBox(height: _altura * 0.08),
-                _boxFoto(_controller.imagemBase64),
-                _sizedBox(height: _altura * 0.07),
-                _textoEditarPerfil(),
-                _inputNome(paddingHorizontal: _largura),
-                _inputTelefone(paddingHorizontal: _largura),
-                _botaoCadastrar(),
-              ],
+        body: NotificationListener<OverscrollIndicatorNotification>(
+          onNotification: (overScroll) {
+            overScroll.disallowIndicator();
+            return false;
+          },
+          child: SingleChildScrollView(
+            controller: _scrollController,
+            child: Form(
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              key: _controller.formKey,
+              child: Column(
+                children: [
+                  _sizedBox(height: _altura * 0.08),
+                  _boxFoto(_controller.imagemBase64),
+                  _sizedBox(height: _altura * 0.07),
+                  _textoEditarPerfil(),
+                  _inputNome(paddingHorizontal: _largura),
+                  _inputTelefone(paddingHorizontal: _largura),
+                  _botaoCadastrar(),
+                ],
+              ),
             ),
           ),
         ),

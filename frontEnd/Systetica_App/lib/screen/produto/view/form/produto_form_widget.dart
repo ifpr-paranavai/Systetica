@@ -44,67 +44,73 @@ class ProdutoFormWidget extends State<ProdutoFormPage> {
           paddingTop: _altura * 0.01,
           onPressed: () => Navigator.pop(context),
         ),
-        body: SingleChildScrollView(
-          controller: _scrollController,
-          child: Form(
-            autovalidateMode: AutovalidateMode.onUserInteraction,
-            key: _controller.formKey,
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  _sizedBox(height: _altura * 0.15),
-                  _inputProduto.textoCadastrarProduto(
-                      texto: "Cadastrar Produto"),
-                  _inputProduto.inputNomeProduto(
+        body: NotificationListener<OverscrollIndicatorNotification>(
+          onNotification: (overScroll) {
+            overScroll.disallowIndicator();
+            return false;
+          },
+          child: SingleChildScrollView(
+            controller: _scrollController,
+            child: Form(
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              key: _controller.formKey,
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    _sizedBox(height: _altura * 0.15),
+                    _inputProduto.textoCadastrarProduto(
+                        texto: "Cadastrar Produto"),
+                    _inputProduto.inputNomeProduto(
+                        paddingHorizontal: _largura,
+                        controller: _controller,
+                        validatorProduto: _validatorProduto,
+                    ),
+                    _inputProduto.inputMarcaProduto(
                       paddingHorizontal: _largura,
                       controller: _controller,
                       validatorProduto: _validatorProduto,
-                  ),
-                  _inputProduto.inputMarcaProduto(
-                    paddingHorizontal: _largura,
-                    controller: _controller,
-                    validatorProduto: _validatorProduto,
-                  ),
-                  _inputProduto.inputPrecoCompra(
-                    paddingHorizontal: _largura,
-                    controller: _controller,
-                    validatorProduto: _validatorProduto,
-                  ),
-                  _inputProduto.inputPrecoVenda(
-                    paddingHorizontal: _largura,
-                    controller: _controller,
-                    validatorProduto: _validatorProduto,
-                  ),
-                  _inputProduto.inputQuantidadeEstoqueProduto(
-                    paddingHorizontal: _largura,
-                    controller: _controller,
-                    validatorProduto: _validatorProduto,
-                  ),
+                    ),
+                    _inputProduto.inputPrecoCompra(
+                      paddingHorizontal: _largura,
+                      controller: _controller,
+                      validatorProduto: _validatorProduto,
+                    ),
+                    _inputProduto.inputPrecoVenda(
+                      paddingHorizontal: _largura,
+                      controller: _controller,
+                      validatorProduto: _validatorProduto,
+                    ),
+                    _inputProduto.inputQuantidadeEstoqueProduto(
+                      paddingHorizontal: _largura,
+                      controller: _controller,
+                      validatorProduto: _validatorProduto,
+                    ),
 
-                  edicao
-                      ? _inputProduto.customSwitch(
-                          paddingHorizontal: _largura,
-                          controller: _controller,
-                          onChanged: (bool value) {
-                            setState(() {
-                              _controller.status = value;
-                            });
-                          },
-                        )
-                      : Container(),
-                  _inputProduto.botaoCadastrar(
-                    label: edicao ? "SALVAR" : "CADASTRAR",
-                    onPressed: () => edicao
-                        ? _controller.atualizarProduto(context).then(
-                              (value) => Navigator.pop(context),
-                            )
-                        : _controller.cadastrarProduto(context).then(
-                              (value) => Navigator.pop(context),
-                            ),
-                  ),
-                ],
+                    edicao
+                        ? _inputProduto.customSwitch(
+                            paddingHorizontal: _largura,
+                            controller: _controller,
+                            onChanged: (bool value) {
+                              setState(() {
+                                _controller.status = value;
+                              });
+                            },
+                          )
+                        : Container(),
+                    _inputProduto.botaoCadastrar(
+                      label: edicao ? "SALVAR" : "CADASTRAR",
+                      onPressed: () => edicao
+                          ? _controller.atualizarProduto(context).then(
+                                (value) => Navigator.pop(context),
+                              )
+                          : _controller.cadastrarProduto(context).then(
+                                (value) => Navigator.pop(context),
+                              ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

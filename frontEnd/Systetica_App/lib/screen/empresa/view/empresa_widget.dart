@@ -75,33 +75,39 @@ class EmpresaWidget extends State<EmpresaPage> {
     );
   }
 
-  Stack widgetInfoEmpresa({
+  Widget widgetInfoEmpresa({
     required double altura,
     required Empresa empresa,
     String? logoBase64,
   }) {
-    return Stack(
-      children: [
-        SingleChildScrollComponent(
-          widgetComponent: Center(
-            child: Column(
-              children: [
-                _sizedBox(height: altura * 0.08),
-                FotoWidget().boxFoto(
-                  imagemUsuario: logoBase64,
-                ),
-                _sizedBox(height: altura * 0.06),
-                _textoEmpresa(),
-                _cardInfoEmpresa(
-                  empresa: empresa,
-                ),
-                _sizedBox(height: altura * 0.05),
-              ],
+    return NotificationListener<OverscrollIndicatorNotification>(
+      onNotification: (overScroll) {
+        overScroll.disallowIndicator();
+        return false;
+      },
+      child: Stack(
+        children: [
+          SingleChildScrollComponent(
+            widgetComponent: Center(
+              child: Column(
+                children: [
+                  _sizedBox(height: altura * 0.08),
+                  FotoWidget().boxFoto(
+                    imagemUsuario: logoBase64,
+                  ),
+                  _sizedBox(height: altura * 0.06),
+                  _textoEmpresa(),
+                  _cardInfoEmpresa(
+                    empresa: empresa,
+                  ),
+                  _sizedBox(height: altura * 0.05),
+                ],
+              ),
             ),
           ),
-        ),
-        _dropDownButton(empresa: empresa, altura: altura),
-      ],
+          _dropDownButton(empresa: empresa, altura: altura),
+        ],
+      ),
     );
   }
 

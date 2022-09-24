@@ -45,31 +45,37 @@ class PerfilWidget extends State<PerfilPage> {
               return const LoadingAnimation();
             } else if (snapShot.hasData && snapShot.data!.success!) {
               _controller.usuario = snapShot.data!.object;
-              return Stack(
-                children: [
-                  SingleChildScrollComponent(
-                    widgetComponent: Center(
-                      child: Column(
-                        children: [
-                          _sizedBox(height: _altura * 0.08),
-                          FotoWidget().boxFoto(
-                            imagemUsuario: _controller.usuario.imagemBase64,
-                          ),
-                          _sizedBox(height: _altura * 0.07),
-                          _textoPerfil(),
-                          _cardInfoUsuario(
-                            usuario: _controller.usuario,
-                          ),
-                          _sizedBox(height: _altura * 0.05),
-                        ],
+              return NotificationListener<OverscrollIndicatorNotification>(
+                onNotification: (overScroll) {
+                  overScroll.disallowIndicator();
+                  return false;
+                },
+                child: Stack(
+                  children: [
+                    SingleChildScrollComponent(
+                      widgetComponent: Center(
+                        child: Column(
+                          children: [
+                            _sizedBox(height: _altura * 0.08),
+                            FotoWidget().boxFoto(
+                              imagemUsuario: _controller.usuario.imagemBase64,
+                            ),
+                            _sizedBox(height: _altura * 0.07),
+                            _textoPerfil(),
+                            _cardInfoUsuario(
+                              usuario: _controller.usuario,
+                            ),
+                            _sizedBox(height: _altura * 0.05),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                  _dropDownButton(
-                    usuario: _controller.usuario,
-                    altura: _altura,
-                  ),
-                ],
+                    _dropDownButton(
+                      usuario: _controller.usuario,
+                      altura: _altura,
+                    ),
+                  ],
+                ),
               );
             } else {
               return _erroRequisicao(_largura);

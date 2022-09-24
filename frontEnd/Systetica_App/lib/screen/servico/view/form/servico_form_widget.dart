@@ -44,61 +44,67 @@ class ServicoFormWidget extends State<ServicoFormPage> {
           paddingTop: _altura * 0.01,
           onPressed: () => Navigator.pop(context),
         ),
-        body: SingleChildScrollView(
-          controller: _scrollController,
-          child: Form(
-            autovalidateMode: AutovalidateMode.onUserInteraction,
-            key: _controller.formKey,
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  _sizedBox(height: _altura * 0.15),
-                  _inputServico.textoCadastrarServico(
-                      texto: "Cadastrar Serviço"),
-                  _inputServico.inputNomeServico(
-                    paddingHorizontal: _largura,
-                    controller: _controller,
-                    validatorServico: _validatorServico,
-                  ),
-                  _inputServico.inputTempoServico(
-                    paddingHorizontal: _largura,
-                    controller: _controller,
-                    validatorServico: _validatorServico,
-                  ),
-                  _inputServico.inputPreco(
-                    paddingHorizontal: _largura,
-                    controller: _controller,
-                    validatorServico: _validatorServico,
-                  ),
-                  _inputServico.inputDescricao(
-                    paddingHorizontal: _largura,
-                    controller: _controller,
-                    validatorServico: _validatorServico,
-                  ),
-                  edicao
-                      ? _inputServico.customSwitch(
-                          paddingHorizontal: _largura,
-                          controller: _controller,
-                          onChanged: (bool value) {
-                            setState(() {
-                              _controller.status = value;
-                            });
-                          },
-                        )
-                      : Container(),
-                  _inputServico.botaoCadastrar(
-                    label: edicao ? "SALVAR" : "CADASTRAR",
-                    onPressed: () => edicao
-                        ? _controller.atualizarServico(context).then(
-                              (value) => Navigator.pop(context),
-                            )
-                        : _controller.cadastrarServico(context).then(
-                              (value) => Navigator.pop(context),
-                            ),
-                  ),
-                ],
+        body: NotificationListener<OverscrollIndicatorNotification>(
+          onNotification: (overScroll) {
+            overScroll.disallowIndicator();
+            return false;
+          },
+          child: SingleChildScrollView(
+            controller: _scrollController,
+            child: Form(
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              key: _controller.formKey,
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    _sizedBox(height: _altura * 0.15),
+                    _inputServico.textoCadastrarServico(
+                        texto: "Cadastrar Serviço"),
+                    _inputServico.inputNomeServico(
+                      paddingHorizontal: _largura,
+                      controller: _controller,
+                      validatorServico: _validatorServico,
+                    ),
+                    _inputServico.inputTempoServico(
+                      paddingHorizontal: _largura,
+                      controller: _controller,
+                      validatorServico: _validatorServico,
+                    ),
+                    _inputServico.inputPreco(
+                      paddingHorizontal: _largura,
+                      controller: _controller,
+                      validatorServico: _validatorServico,
+                    ),
+                    _inputServico.inputDescricao(
+                      paddingHorizontal: _largura,
+                      controller: _controller,
+                      validatorServico: _validatorServico,
+                    ),
+                    edicao
+                        ? _inputServico.customSwitch(
+                            paddingHorizontal: _largura,
+                            controller: _controller,
+                            onChanged: (bool value) {
+                              setState(() {
+                                _controller.status = value;
+                              });
+                            },
+                          )
+                        : Container(),
+                    _inputServico.botaoCadastrar(
+                      label: edicao ? "SALVAR" : "CADASTRAR",
+                      onPressed: () => edicao
+                          ? _controller.atualizarServico(context).then(
+                                (value) => Navigator.pop(context),
+                              )
+                          : _controller.cadastrarServico(context).then(
+                                (value) => Navigator.pop(context),
+                              ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
