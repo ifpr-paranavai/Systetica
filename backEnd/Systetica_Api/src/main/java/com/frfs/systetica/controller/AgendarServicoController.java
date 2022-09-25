@@ -19,8 +19,8 @@ public class AgendarServicoController {
 
     @PostMapping("/buscar-todos-por-dia/{dia}")
     @ResponseBody
-    public ResponseEntity<Object> buscarTodosPorDia(@PathVariable String dia) {
-        ReturnData<Object> result = agendarServicoService.buscarTodosPorDia(dia);
+    public ResponseEntity<Object> buscarTodosAgendamentoPorDia(@PathVariable String dia) {
+        ReturnData<Object> result = agendarServicoService.buscarTodosAgendamentoPorDia(dia);
 
         return new ResponseEntity<>(result, result.getSuccess() ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
     }

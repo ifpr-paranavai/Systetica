@@ -4,5 +4,5 @@ import com.frfs.systetica.dto.response.ReturnData;
 
 
 public interface AgendarServicoService {
-    ReturnData<Object> buscarTodosPorDia(String dia);
+    ReturnData<Object> buscarTodosAgendamentoPorDia(String dia);
 }

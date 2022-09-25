@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -19,13 +21,17 @@ public class AgendarServicoServiceImpl implements AgendarServicoService {
     private final AgendarServicoMapper agendarServicoMapper;
 
     @Override
-    public ReturnData<Object> buscarTodosPorDia(String dataAgendamento) {
+    public ReturnData<Object> buscarTodosAgendamentoPorDia(String dataAgendamento) {
+        List<String> listaDeHorarios = new ArrayList<>();
         List<AgendarServico> servicosAgendados = agendarServicoRepository.findByDataAgendamento(dataAgendamento);
 
         if (servicosAgendados.isEmpty()) {
-            return new ReturnData<>(false, "Nenhum serviço encontrada",
-                    "Não foi possível encontrar nenhuma serviço pela data " + dataAgendamento);
+            return new ReturnData<>(true, "", listaDeHorarios);
         }
-        return new ReturnData<>(true, "", agendarServicoMapper.toListDto(servicosAgendados));
+
+        servicosAgendados.forEach(servico -> {
+            listaDeHorarios.add(servico.getHorarioAgendamento().toString());
+        });
+        return new ReturnData<>(true, "", listaDeHorarios);
     }
 }

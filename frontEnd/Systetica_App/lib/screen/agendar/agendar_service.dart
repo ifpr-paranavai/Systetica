@@ -27,4 +27,24 @@ class AgendarService {
 
     return info;
   }
+
+  static Future<Info> buscarTodosAgendamentoPorDia({
+    String? dataAgendamento,
+    required Token token,
+  }) async {
+    String path = "agendar-servico/buscar-todos-por-dia/$dataAgendamento";
+
+    Dio dio = DioConfigApi.builderConfig();
+
+    dio.options.headers["Authorization"] = "Bearer ${token.accessToken}";
+
+    var response = await dio.post(path);
+
+    Info info = Info();
+
+    info.success = true;
+    info.object = response.data['response'];
+
+    return info;
+  }
 }
