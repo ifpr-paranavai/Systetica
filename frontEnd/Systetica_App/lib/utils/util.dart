@@ -55,7 +55,7 @@ class Util {
   }
 
   static String toHorario(int horario) {
-    var hora;
+    String hora;
     if (horario.toString().length == 1) {
       hora = "0" + horario.toString() + ":00";
     } else {

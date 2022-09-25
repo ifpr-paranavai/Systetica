@@ -1,8 +1,9 @@
+// ignore_for_file: avoid_function_literals_in_foreach_calls
+
 import 'package:calendar_timeline/calendar_timeline.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:systetica/components/icon_arrow_widget.dart';
-import 'package:systetica/components/loading/loading_animation.dart';
 import 'package:systetica/model/HorarioAgendamento.dart';
 import 'package:systetica/screen/agendar/agendar_controller.dart';
 import 'package:systetica/screen/agendar/component/agendar_componente.dart';
@@ -12,6 +13,7 @@ import 'package:systetica/style/app_colors..dart';
 class SelecionarHorarioWidget extends State<SelecionarHorarioPage> {
   final AgendarController _controller = AgendarController();
 
+  DateTime? dateTime;
   double _largura = 0;
   double _altura = 0;
   bool loading = true;
@@ -22,8 +24,9 @@ class SelecionarHorarioWidget extends State<SelecionarHorarioPage> {
   @override
   void initState() {
     super.initState();
+    dateTime = DateTime.now();
     buscarTodosAgendamentoDisponiveis(
-      DateFormat('yyyy-MM-dd').format(DateTime.now()),
+      DateFormat('yyyy-MM-dd').format(dateTime!),
     );
     loading = false;
   }
@@ -39,6 +42,7 @@ class SelecionarHorarioWidget extends State<SelecionarHorarioPage> {
             () {
               horariosAgendamento = value!.object!;
               loading = false;
+              dateTime = DateTime.parse(data);
             },
           ),
         );
@@ -103,18 +107,17 @@ class SelecionarHorarioWidget extends State<SelecionarHorarioPage> {
   }
 
   Widget _calendarTimeLine() {
-    DateTime dateTime = DateTime.now();
     return CalendarTimeline(
-      initialDate: dateTime,
+      initialDate: dateTime!,
       firstDate: DateTime(
-        dateTime.year - 1,
-        dateTime.month,
-        dateTime.day,
+        dateTime!.year - 1,
+        dateTime!.month,
+        dateTime!.day,
       ),
       lastDate: DateTime(
-        dateTime.year + 2,
-        dateTime.month,
-        dateTime.day,
+        dateTime!.year + 1,
+        dateTime!.month,
+        dateTime!.day,
       ),
       leftMargin: 20,
       monthColor: Colors.black,
