@@ -1,6 +1,5 @@
 package com.frfs.systetica.repository;
 
-import com.frfs.systetica.entity.Cidade;
 import com.frfs.systetica.entity.Empresa;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

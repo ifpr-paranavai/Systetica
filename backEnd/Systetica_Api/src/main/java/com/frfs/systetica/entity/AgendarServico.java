@@ -1,5 +1,6 @@
 package com.frfs.systetica.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,6 +9,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -25,38 +27,30 @@ public class AgendarServico implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
-    @Column(name = "nome", length = 100)
-    private String nome;
-
-    @NotNull
-    @Column(name = "data_agendamento_servico")
-    private Date dataAgendamentoServico;
-
-    @NotNull
-    @Column(name = "data_finalizacao_servico")
-    private Date dataFinalizacaoServico;
-
-    @NotNull
-    @Column(name = "data_cadastro_servico")
-    private Date dataCadastroServico;
-
-    @Column(name = "situacao", length = 300)
-    private String situacao;
-
-    @Column(name = "observacao", length = 300)
-    private String observacao;
-
-    @NotNull
-    @Column(name = "status", length = 1)
-    private String status = String.valueOf('A');
-
     @Column(name = "nome_cliente", length = 300)
     private String nomeCliente;
 
+    @NotNull
+    @Column(name = "data_agendamento")
+    private String dataAgendamento;
+
+    @NotNull
+    @Column(name = "horario_agendamento")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm")
+    private LocalTime horarioAgendamento;
+
+    @NotNull
+    @Column(name = "data_cadastro")
+    private Date dataCadastro;
+
+    @NotNull
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "situacao")
+    private Situacao situacao;
+
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_cliente")
-    private Usuario idUsuario;
+    @JoinColumn(name = "cliente")
+    private Usuario cliente;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
