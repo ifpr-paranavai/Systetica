@@ -49,8 +49,11 @@ class Util {
     };
   }
 
-  static int toIntHorario(String horario) {
-    return int.parse(horario.split(':')[0]);
+  static int toIntHorario({
+    required String horario,
+    int contador = 0,
+  }) {
+    return int.parse(horario.split(':')[0]) + contador;
   }
 
   static String toHorario(int horario) {
@@ -68,15 +71,23 @@ class Util {
     List<HorarioAgendamento> horariosAgendamento = [];
     int contador = 0;
 
-    int totalHorario = (toIntHorario(empresa.horarioFechamento!) -
-            toIntHorario(empresa.horarioAbertura!)) -
-        1;
+    int totalHorario = toIntHorario(
+          horario: empresa.horarioFechamento!,
+        ) -
+        toIntHorario(
+          horario: empresa.horarioAbertura!,
+          contador: 1,
+        );
 
     for (int x = 0; x <= totalHorario; x++) {
       HorarioAgendamento hora = HorarioAgendamento();
 
-      hora.horario =
-          (toIntHorario(empresa.horarioAbertura!) + contador).toString();
+      hora.horario = toHorario(
+        toIntHorario(
+          horario: empresa.horarioAbertura!,
+          contador: contador,
+        ),
+      );
 
       bool existeHorarioAgendado = false;
       for (var horario in horariosMarcados) {
