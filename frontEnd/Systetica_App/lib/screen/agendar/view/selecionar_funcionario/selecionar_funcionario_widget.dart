@@ -113,13 +113,10 @@ class SelecionarFuncionarioWidget extends State<SelecionarFuncionarioPage> {
             },
             onTap: () {
               desmarcarFuncionario();
-
               funcionarios[index].selecionado == true
                   ? funcionarios[index].selecionado = false
                   : funcionarios[index].selecionado = true;
-
               selecionarFuncionario(index);
-
               ativarDesativarBotao();
               setState(() {});
             },

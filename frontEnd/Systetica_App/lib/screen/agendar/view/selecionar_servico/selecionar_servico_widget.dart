@@ -5,6 +5,7 @@ import 'package:systetica/components/gesture_detector_component.dart';
 import 'package:systetica/components/icon_arrow_widget.dart';
 import 'package:systetica/components/loading/loading_animation.dart';
 import 'package:systetica/components/page_transition.dart';
+import 'package:systetica/model/HorarioAgendamento.dart';
 import 'package:systetica/model/Servico.dart';
 import 'package:systetica/model/Usuario.dart';
 import 'package:systetica/model/agendamento.dart';
@@ -39,6 +40,7 @@ class SelecionarServicoWidget extends State<SelecionarServicoPage> {
       servicosSelecionados: [],
       funcionario: Usuario(),
       empresa: widget.empresa,
+      horarioAgendamento: HorarioAgendamento(),
     );
   }
 

@@ -49,18 +49,15 @@ class Util {
     };
   }
 
-  static int toInt(String horario) {
-    var hora = int.parse(horario.replaceAll(':00', ''));
-    return hora;
+  static int toIntHorario(String horario) {
+    return int.parse(horario.split(':')[0]);
   }
 
   static String toHorario(int horario) {
-    String hora;
-    if (horario.toString().length == 1) {
-      hora = "0" + horario.toString() + ":00";
-    } else {
-      hora = horario.toString() + ":00";
-    }
+    String hora = horario.toString() + ":00";
+    horario.toString().length == 1
+        ? hora = "0" + horario.toString() + ":00"
+        : null;
     return hora;
   }
 
@@ -69,21 +66,21 @@ class Util {
     required List<dynamic> horariosMarcados,
   }) {
     List<HorarioAgendamento> horariosAgendamento = [];
-
-    int totalHorario =
-        (toInt(empresa.horarioFechamento!) - toInt(empresa.horarioAbertura!)) -
-            1;
-
     int contador = 0;
+
+    int totalHorario = (toIntHorario(empresa.horarioFechamento!) -
+            toIntHorario(empresa.horarioAbertura!)) -
+        1;
 
     for (int x = 0; x <= totalHorario; x++) {
       HorarioAgendamento hora = HorarioAgendamento();
 
-      hora.horario = toHorario((toInt(empresa.horarioAbertura!) + contador));
+      hora.horario =
+          (toIntHorario(empresa.horarioAbertura!) + contador).toString();
 
       bool existeHorarioAgendado = false;
-      for (var element in horariosMarcados) {
-        if (element == hora.horario) {
+      for (var horario in horariosMarcados) {
+        if (horario == hora.horario) {
           existeHorarioAgendado = true;
           break;
         }

@@ -20,21 +20,20 @@ class SelecionarHorarioWidget extends State<SelecionarHorarioPage> {
   Color corBotao = Colors.grey.withOpacity(0.9);
   Color overlayCorBotao = Colors.transparent;
   List<HorarioAgendamento> horariosAgendamento = [];
+  bool horarioSelecionado = false;
 
   @override
   void initState() {
     super.initState();
     dateTime = DateTime.now();
-    buscarTodosAgendamentoDisponiveis(
-      DateFormat('yyyy-MM-dd').format(dateTime!),
-    );
+    buscarTodosAgendamentoDisponiveis(dateTime!);
     loading = false;
   }
 
-  Future<void> buscarTodosAgendamentoDisponiveis(String data) async {
+  Future<void> buscarTodosAgendamentoDisponiveis(DateTime data) async {
     await _controller
         .buscarTodosAgendamentoPorDia(
-          dataAgendamento: data,
+          dataAgendamento: DateFormat('yyyy-MM-dd').format(data),
           empresa: widget.agendamento.empresa,
         )
         .then(
@@ -42,7 +41,7 @@ class SelecionarHorarioWidget extends State<SelecionarHorarioPage> {
             () {
               horariosAgendamento = value!.object!;
               loading = false;
-              dateTime = DateTime.parse(data);
+              dateTime = data;
             },
           ),
         );
@@ -80,7 +79,7 @@ class SelecionarHorarioWidget extends State<SelecionarHorarioPage> {
                 largura: _largura,
                 text: "SELECIONE O DIA",
               ),
-             _checkboxSelect(), //TODO - Loading
+              _checkboxSelect(), //TODO - Loading
             ],
           ),
           AgendarComponente.botaoSelecinar(
@@ -127,7 +126,7 @@ class SelecionarHorarioWidget extends State<SelecionarHorarioPage> {
       dotsColor: Colors.white,
       onDateSelected: (dataSelecionada) async => {
         buscarTodosAgendamentoDisponiveis(
-         DateFormat('yyyy-MM-dd').format(dataSelecionada),
+          dataSelecionada,
         )
       },
     );
@@ -183,10 +182,9 @@ class SelecionarHorarioWidget extends State<SelecionarHorarioPage> {
                 ),
                 onTap: () {
                   desmarcarHorario();
-                  horariosAgendamento[index].selecionado == true
-                      ? horariosAgendamento[index].selecionado = false
-                      : horariosAgendamento[index].selecionado = true;
-
+                  marcarhorario(index);
+                  selecionarHorario(index);
+                  ativarDesativarBotao();
                   setState(() {});
                 },
               );
@@ -203,4 +201,27 @@ class SelecionarHorarioWidget extends State<SelecionarHorarioPage> {
     });
   }
 
+  void marcarhorario(int index) {
+    horariosAgendamento[index].selecionado == true
+        ? horariosAgendamento[index].selecionado = false
+        : horariosAgendamento[index].selecionado = true;
+  }
+
+  void selecionarHorario(int index) {
+    horariosAgendamento[index].selecionado == true
+        ? widget.agendamento.horarioAgendamento = horariosAgendamento[index]
+        : widget.agendamento.horarioAgendamento = HorarioAgendamento();
+  }
+
+  void ativarDesativarBotao() {
+    if (widget.agendamento.horarioAgendamento.horario == null) {
+      horarioSelecionado = false;
+      corBotao = Colors.grey.withOpacity(0.9);
+      overlayCorBotao = Colors.transparent;
+    } else {
+      horarioSelecionado = true;
+      corBotao = Colors.black87.withOpacity(0.9);
+      overlayCorBotao = AppColors.blue5;
+    }
+  }
 }
