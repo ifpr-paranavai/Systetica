@@ -26,11 +26,11 @@ class SelecionarHorarioWidget extends State<SelecionarHorarioPage> {
   void initState() {
     super.initState();
     dateTime = DateTime.now();
-    buscarTodosAgendamentoDisponiveis(dateTime!);
+    _buscarTodosAgendamentoDisponiveis(dateTime!);
     loading = false;
   }
 
-  Future<void> buscarTodosAgendamentoDisponiveis(DateTime data) async {
+  Future<void> _buscarTodosAgendamentoDisponiveis(DateTime data) async {
     await _controller
         .buscarTodosAgendamentoPorDia(
           dataAgendamento: DateFormat('yyyy-MM-dd').format(data),
@@ -79,7 +79,14 @@ class SelecionarHorarioWidget extends State<SelecionarHorarioPage> {
                 largura: _largura,
                 text: "SELECIONE O DIA",
               ),
-              _checkboxSelect(), //TODO - Loading
+              AgendarComponente.containerGeral(
+                widget: Column(
+                  children: [
+                    _calendarTimeLine(),
+                    _horariosLivres(),
+                  ],
+                ),
+              ),
             ],
           ),
           AgendarComponente.botaoSelecinar(
@@ -89,17 +96,6 @@ class SelecionarHorarioWidget extends State<SelecionarHorarioPage> {
             overlayCorBotao: overlayCorBotao,
             onPressed: () => {},
           ),
-        ],
-      ),
-    );
-  }
-
-  Widget _checkboxSelect() {
-    return AgendarComponente.containerGeral(
-      widget: Column(
-        children: [
-          _calendarTimeLine(),
-          _horariosLivres(),
         ],
       ),
     );
@@ -125,7 +121,7 @@ class SelecionarHorarioWidget extends State<SelecionarHorarioPage> {
       activeBackgroundDayColor: AppColors.redPrincipal,
       dotsColor: Colors.white,
       onDateSelected: (dataSelecionada) async => {
-        buscarTodosAgendamentoDisponiveis(
+        _buscarTodosAgendamentoDisponiveis(
           dataSelecionada,
         )
       },
@@ -133,7 +129,6 @@ class SelecionarHorarioWidget extends State<SelecionarHorarioPage> {
   }
 
   Widget _horariosLivres() {
-    var quantHorarios = horariosAgendamento.length;
     return Expanded(
       child: Container(
         margin: const EdgeInsets.only(
@@ -151,69 +146,74 @@ class SelecionarHorarioWidget extends State<SelecionarHorarioPage> {
           physics: const BouncingScrollPhysics(
             parent: AlwaysScrollableScrollPhysics(),
           ),
-          children: List.generate(
-            quantHorarios,
-            (index) {
-              return InkWell(
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: horariosAgendamento[index].selecionado
-                        ? AppColors.redPrincipal
-                        : Colors.white,
-                    borderRadius: BorderRadius.circular(15),
-                    border: Border.all(
-                      color: Colors.black,
-                      width: 1,
-                    ),
-                  ),
-                  child: Center(
-                    child: Text(
-                      horariosAgendamento[index].horario!,
-                      maxLines: 1,
-                      style: TextStyle(
-                        fontSize: 19,
-                        fontWeight: FontWeight.w500,
-                        color: horariosAgendamento[index].selecionado
-                            ? Colors.white
-                            : AppColors.bluePrincipal,
-                      ),
-                    ),
-                  ),
-                ),
-                onTap: () {
-                  desmarcarHorario();
-                  marcarhorario(index);
-                  selecionarHorario(index);
-                  ativarDesativarBotao();
-                  setState(() {});
-                },
-              );
-            },
-          ),
+          children: _listaDeHorario(),
         ),
       ),
     );
   }
 
-  void desmarcarHorario() {
+  List<Widget> _listaDeHorario() {
+    var quantHorarios = horariosAgendamento.length;
+    return List.generate(
+      quantHorarios,
+      (index) {
+        return InkWell(
+          child: Container(
+            decoration: BoxDecoration(
+              color: horariosAgendamento[index].selecionado
+                  ? AppColors.redPrincipal
+                  : Colors.white,
+              borderRadius: BorderRadius.circular(15),
+              border: Border.all(
+                color: Colors.black,
+                width: 1,
+              ),
+            ),
+            child: Center(
+              child: Text(
+                horariosAgendamento[index].horario!,
+                maxLines: 1,
+                style: TextStyle(
+                  fontSize: 19,
+                  fontWeight: FontWeight.w500,
+                  color: horariosAgendamento[index].selecionado
+                      ? Colors.white
+                      : AppColors.bluePrincipal,
+                ),
+              ),
+            ),
+          ),
+          onTap: () {
+            _desmarcarHorario();
+            _marcarHorarioSelecionado(index);
+            _selecionarHorario(index);
+            _ativarDesativarBotao();
+            setState(() {});
+          },
+        );
+      },
+    );
+  }
+
+  void _desmarcarHorario() {
     horariosAgendamento.forEach((horario) {
       horario.selecionado == true ? horario.selecionado = false : null;
     });
   }
 
-  void marcarhorario(int index) {
+  void _marcarHorarioSelecionado(int index) {
     horariosAgendamento[index].selecionado == true
         ? horariosAgendamento[index].selecionado = false
         : horariosAgendamento[index].selecionado = true;
   }
 
-  void selecionarHorario(int index) {
+  void _selecionarHorario(int index) {
     horariosAgendamento[index].selecionado == true
         ? widget.agendamento.horarioAgendamento = horariosAgendamento[index]
         : widget.agendamento.horarioAgendamento = HorarioAgendamento();
   }
 
-  void ativarDesativarBotao() {
+  void _ativarDesativarBotao() {
     if (widget.agendamento.horarioAgendamento.horario == null) {
       horarioSelecionado = false;
       corBotao = Colors.grey.withOpacity(0.9);

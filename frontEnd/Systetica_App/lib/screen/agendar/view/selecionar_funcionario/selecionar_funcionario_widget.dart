@@ -28,7 +28,7 @@ class SelecionarFuncionarioWidget extends State<SelecionarFuncionarioPage> {
     super.initState();
     funcionarios = widget.agendamento.empresa.usuariosFuncionario!;
     widget.agendamento.funcionario.selecionado == true
-        ? ativarDesativarBotao()
+        ? _ativarDesativarBotao()
         : selecionadoUmFuncionario = false;
   }
 
@@ -102,22 +102,20 @@ class SelecionarFuncionarioWidget extends State<SelecionarFuncionarioPage> {
             textNome: funcionarios[index].nome!,
             funcionarioSelecionado: funcionarios[index].selecionado,
             onChanged: (selecao) {
-              desmarcarFuncionario();
+              _desmarcarFuncionario();
 
               funcionarios[index].selecionado = selecao;
 
-              selecionarFuncionario(index);
+              _selecionarFuncionario(index);
 
-              ativarDesativarBotao();
+              _ativarDesativarBotao();
               setState(() {});
             },
             onTap: () {
-              desmarcarFuncionario();
-              funcionarios[index].selecionado == true
-                  ? funcionarios[index].selecionado = false
-                  : funcionarios[index].selecionado = true;
-              selecionarFuncionario(index);
-              ativarDesativarBotao();
+              _desmarcarFuncionario();
+              _marcarFuncionarioSelecionado(index);
+              _selecionarFuncionario(index);
+              _ativarDesativarBotao();
               setState(() {});
             },
           );
@@ -126,19 +124,25 @@ class SelecionarFuncionarioWidget extends State<SelecionarFuncionarioPage> {
     );
   }
 
-  void desmarcarFuncionario() {
+  void _desmarcarFuncionario() {
     funcionarios.forEach((funcionario) {
       funcionario.selecionado == true ? funcionario.selecionado = false : null;
     });
   }
 
-  void selecionarFuncionario(int index) {
+  void _marcarFuncionarioSelecionado(int index){
+    funcionarios[index].selecionado == true
+        ? funcionarios[index].selecionado = false
+        : funcionarios[index].selecionado = true;
+  }
+
+  void _selecionarFuncionario(int index) {
     funcionarios[index].selecionado == true
         ? widget.agendamento.funcionario = funcionarios[index]
         : widget.agendamento.funcionario = Usuario();
   }
 
-  void ativarDesativarBotao() {
+  void _ativarDesativarBotao() {
     if (widget.agendamento.funcionario.id == null) {
       selecionadoUmFuncionario = false;
       corBotao = Colors.grey.withOpacity(0.9);

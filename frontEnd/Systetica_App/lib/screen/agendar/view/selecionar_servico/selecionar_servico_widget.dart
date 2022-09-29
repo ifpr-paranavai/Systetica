@@ -137,22 +137,14 @@ class SelecionarServicoWidget extends State<SelecionarServicoPage> {
             servicoSelecionado: servicos[index].servicoSelecionado,
             onChanged: (selecao) {
               servicos[index].servicoSelecionado = selecao;
-
-              adicionarRemoverServico(index);
-
-              servicoSelecionado = true;
-              corBotao = Colors.black87.withOpacity(0.9);
-              ativarDesativarBotao();
+              _adicionarRemoverServico(index);
+              _ativarDesativarBotao();
               setState(() {});
             },
             onTap: () {
-              servicos[index].servicoSelecionado == true
-                  ? servicos[index].servicoSelecionado = false
-                  : servicos[index].servicoSelecionado = true;
-
-              adicionarRemoverServico(index);
-
-              ativarDesativarBotao();
+              _selecionarHorario(index);
+              _adicionarRemoverServico(index);
+              _ativarDesativarBotao();
               setState(() {});
             },
           );
@@ -161,7 +153,13 @@ class SelecionarServicoWidget extends State<SelecionarServicoPage> {
     );
   }
 
-  void ativarDesativarBotao() {
+  void _selecionarHorario(int index) {
+    servicos[index].servicoSelecionado == true
+        ? servicos[index].servicoSelecionado = false
+        : servicos[index].servicoSelecionado = true;
+  }
+
+  void _ativarDesativarBotao() {
     if (agendamento.servicosSelecionados.isEmpty) {
       servicoSelecionado = false;
       corBotao = Colors.grey.withOpacity(0.9);
@@ -173,7 +171,7 @@ class SelecionarServicoWidget extends State<SelecionarServicoPage> {
     }
   }
 
-  void adicionarRemoverServico(int index) {
+  void _adicionarRemoverServico(int index) {
     servicos[index].servicoSelecionado == true
         ? agendamento.servicosSelecionados.add(servicos[index])
         : agendamento.servicosSelecionados.removeWhere(
