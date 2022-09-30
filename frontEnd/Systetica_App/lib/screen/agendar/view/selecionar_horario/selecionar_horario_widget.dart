@@ -2,16 +2,18 @@
 
 import 'package:calendar_timeline/calendar_timeline.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:systetica/components/icon_arrow_widget.dart';
+import 'package:systetica/components/page_transition.dart';
 import 'package:systetica/model/HorarioAgendamento.dart';
 import 'package:systetica/screen/agendar/agendar_controller.dart';
 import 'package:systetica/screen/agendar/component/agendar_componente.dart';
+import 'package:systetica/screen/agendar/view/resumo_agendamento/resumo_agenda_page.dart';
 import 'package:systetica/screen/agendar/view/selecionar_horario/selecionar_horario_page.dart';
 import 'package:systetica/style/app_colors..dart';
 
 class SelecionarHorarioWidget extends State<SelecionarHorarioPage> {
   final AgendarController _controller = AgendarController();
+  var myPageTransition = MyPageTransition();
 
   DateTime? dateTime;
   double _largura = 0;
@@ -21,6 +23,8 @@ class SelecionarHorarioWidget extends State<SelecionarHorarioPage> {
   Color overlayCorBotao = Colors.transparent;
   List<HorarioAgendamento> horariosAgendamento = [];
   bool horarioSelecionado = false;
+
+  // TODO - MOSTRAR APENAS HORÁRIO A PARTIR DE UMA HORA NO FUTURO
 
   @override
   void initState() {
@@ -33,7 +37,7 @@ class SelecionarHorarioWidget extends State<SelecionarHorarioPage> {
   Future<void> _buscarTodosAgendamentoDisponiveis(DateTime data) async {
     await _controller
         .buscarTodosAgendamentoPorDia(
-          dataAgendamento: DateFormat('yyyy-MM-dd').format(data),
+          dataAgendamento: data,
           empresa: widget.agendamento.empresa,
         )
         .then(
@@ -77,7 +81,7 @@ class SelecionarHorarioWidget extends State<SelecionarHorarioPage> {
               AgendarComponente.info(
                 altura: _altura,
                 largura: _largura,
-                text: "SELECIONE O DIA",
+                text: "DATA DO AGENDAMENTO",
               ),
               AgendarComponente.containerGeral(
                 widget: Column(
@@ -94,7 +98,20 @@ class SelecionarHorarioWidget extends State<SelecionarHorarioPage> {
             largura: _largura,
             corBotao: corBotao,
             overlayCorBotao: overlayCorBotao,
-            onPressed: () => {},
+            labelText: "AGENDAR",
+            onPressed: () => {
+              horarioSelecionado == true
+                  ? Navigator.of(context).push(
+                myPageTransition.pageTransition(
+                  child: ResumoAgendaPage(
+                    agendamento: widget.agendamento,
+                  ),
+                  buttoToTop: true,
+                  childCurrent: widget,
+                ),
+              )
+                  : null,
+            },
           ),
         ],
       ),
@@ -105,7 +122,7 @@ class SelecionarHorarioWidget extends State<SelecionarHorarioPage> {
     return CalendarTimeline(
       initialDate: dateTime!,
       firstDate: DateTime(
-        dateTime!.year - 1,
+        dateTime!.year,
         dateTime!.month,
         dateTime!.day,
       ),

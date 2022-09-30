@@ -28,7 +28,7 @@ class AgendarComponente {
     return Container(
       padding: EdgeInsets.only(
         left: largura * 0.1,
-        top: altura * 0.017,
+        top: altura * 0.019,
       ),
       color: Colors.grey.withOpacity(0.2),
       child: TextAutenticacoesWidget(
@@ -45,6 +45,7 @@ class AgendarComponente {
     required Color corBotao,
     required Color overlayCorBotao,
     required VoidCallback? onPressed,
+    String labelText = "CONTINUAR",
   }) {
     return Container(
       padding: EdgeInsets.only(
@@ -54,7 +55,7 @@ class AgendarComponente {
       child: BotaoWidget(
         paddingTop: 10,
         paddingBottom: 0,
-        labelText: "CONTINUAR",
+        labelText: labelText,
         largura: largura * 0.6,
         corBotao: corBotao,
         corTexto: Colors.white,

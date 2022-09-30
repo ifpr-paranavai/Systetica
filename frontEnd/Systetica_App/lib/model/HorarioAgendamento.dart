@@ -2,10 +2,12 @@
 
 class HorarioAgendamento {
   HorarioAgendamento({
+    this.dateTime,
     this.horario,
     this.selecionado = false,
   });
 
+  DateTime? dateTime;
   String? horario;
   bool selecionado;
 }

@@ -1,6 +1,9 @@
+// ignore_for_file: avoid_function_literals_in_foreach_calls
+
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:systetica/model/Empresa.dart';
 import 'package:systetica/model/HorarioAgendamento.dart';
+import 'package:intl/intl.dart';
 
 class Util {
   static bool isEmptOrNull(String? obj) {
@@ -67,6 +70,7 @@ class Util {
   static List<HorarioAgendamento> criarTodoHorarioAgendamento({
     required Empresa empresa,
     required List<dynamic> horariosMarcados,
+    required DateTime diaAgendamento,
   }) {
     List<HorarioAgendamento> horariosAgendamento = [];
     int contador = 0;
@@ -98,10 +102,17 @@ class Util {
       }
 
       existeHorarioAgendado == false ? horariosAgendamento.add(hora) : null;
+      hora.dateTime = diaAgendamento;
 
       contador += 1;
     }
 
     return horariosAgendamento;
+  }
+
+  static String dataEscrito(DateTime dateTime) {
+    return DateFormat("d 'de' MMMM 'de' y", "pt_BR").format(
+      dateTime,
+    );
   }
 }

@@ -6,6 +6,7 @@ import 'package:systetica/model/Info.dart';
 import 'package:systetica/model/Token.dart';
 import 'package:systetica/screen/agendar/agendar_service.dart';
 import 'package:systetica/utils/util.dart';
+import 'package:intl/intl.dart';
 
 class AgendarController {
   final myPageTransition = MyPageTransition();
@@ -33,7 +34,7 @@ class AgendarController {
   }
 
   Future<Info?> buscarTodosAgendamentoPorDia({
-    required String dataAgendamento,
+    required DateTime dataAgendamento,
     required Empresa empresa,
   }) async {
     Info info = Info(success: true);
@@ -41,7 +42,7 @@ class AgendarController {
     try {
       Token _token = await TokenRepository.findToken();
       info = await AgendarService.buscarTodosAgendamentoPorDia(
-        dataAgendamento: dataAgendamento,
+        dataAgendamento: DateFormat('yyyy-MM-dd').format(dataAgendamento),
         token: _token,
       );
     } catch (e) {
@@ -51,6 +52,7 @@ class AgendarController {
     info.object = Util.criarTodoHorarioAgendamento(
       empresa: empresa,
       horariosMarcados: info.object,
+      diaAgendamento: dataAgendamento,
     );
 
     return info;
