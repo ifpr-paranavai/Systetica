@@ -34,7 +34,7 @@ class AgendarController {
   }
 
   Future<Info?> buscarTodosAgendamentoPorDia({
-    required DateTime dataAgendamento,
+    required DateTime dataSelecionada,
     required Empresa empresa,
   }) async {
     Info info = Info(success: true);
@@ -42,7 +42,7 @@ class AgendarController {
     try {
       Token _token = await TokenRepository.findToken();
       info = await AgendarService.buscarTodosAgendamentoPorDia(
-        dataAgendamento: DateFormat('yyyy-MM-dd').format(dataAgendamento),
+        dataAgendamento: DateFormat('yyyy-MM-dd').format(dataSelecionada),
         token: _token,
       );
     } catch (e) {
@@ -52,7 +52,7 @@ class AgendarController {
     info.object = Util.criarTodoHorarioAgendamento(
       empresa: empresa,
       horariosMarcados: info.object,
-      diaAgendamento: dataAgendamento,
+      dataSelecionada: dataSelecionada,
     );
 
     return info;

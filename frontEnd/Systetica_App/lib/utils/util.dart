@@ -70,11 +70,21 @@ class Util {
   static List<HorarioAgendamento> criarTodoHorarioAgendamento({
     required Empresa empresa,
     required List<dynamic> horariosMarcados,
-    required DateTime diaAgendamento,
+    required DateTime dataSelecionada,
   }) {
+    DateTime dataAtual = DateTime.now();
     List<HorarioAgendamento> horariosAgendamento = [];
     int contador = 0;
 
+    // Verificação se é o mesmo dia para
+    // mostrar apenas horários disponíveis acima do horário atual
+    if (dataAtual.day == dataSelecionada.day &&
+        dataAtual.month == dataSelecionada.month &&
+        dataAtual.year == dataSelecionada.year) {
+      dataSelecionada = dataAtual;
+    }
+
+    // Verificar o total de horários a serem gerados
     int totalHorario = toIntHorario(
           horario: empresa.horarioFechamento!,
         ) -
@@ -86,24 +96,28 @@ class Util {
     for (int x = 0; x <= totalHorario; x++) {
       HorarioAgendamento hora = HorarioAgendamento();
 
-      hora.horario = toHorario(
-        toIntHorario(
-          horario: empresa.horarioAbertura!,
-          contador: contador,
-        ),
+      int horario = toIntHorario(
+        horario: empresa.horarioAbertura!,
+        contador: contador,
       );
+      hora.horario = toHorario(horario);
 
-      bool existeHorarioAgendado = false;
-      for (var horario in horariosMarcados) {
-        if (horario == hora.horario) {
-          existeHorarioAgendado = true;
-          break;
+      if (horario <= dataSelecionada.hour) {
+        continue;
+      } else if (dataSelecionada.isBefore(dataAtual)) {
+        continue;
+      } else {
+        bool existeHorarioAgendado = false;
+        for (var horario in horariosMarcados) {
+          if (horario == hora.horario) {
+            existeHorarioAgendado = true;
+            break;
+          }
         }
+        existeHorarioAgendado == false ? horariosAgendamento.add(hora) : null;
       }
 
-      existeHorarioAgendado == false ? horariosAgendamento.add(hora) : null;
-      hora.dateTime = diaAgendamento;
-
+      hora.dateTime = dataSelecionada;
       contador += 1;
     }
 

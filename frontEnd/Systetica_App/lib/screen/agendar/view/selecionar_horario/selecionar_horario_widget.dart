@@ -3,7 +3,9 @@
 import 'package:calendar_timeline/calendar_timeline.dart';
 import 'package:flutter/material.dart';
 import 'package:systetica/components/icon_arrow_widget.dart';
+import 'package:systetica/components/imagens_widget.dart';
 import 'package:systetica/components/page_transition.dart';
+import 'package:systetica/components/text_autenticacoes_widget.dart';
 import 'package:systetica/model/HorarioAgendamento.dart';
 import 'package:systetica/screen/agendar/agendar_controller.dart';
 import 'package:systetica/screen/agendar/component/agendar_componente.dart';
@@ -24,8 +26,6 @@ class SelecionarHorarioWidget extends State<SelecionarHorarioPage> {
   List<HorarioAgendamento> horariosAgendamento = [];
   bool horarioSelecionado = false;
 
-  // TODO - MOSTRAR APENAS HORÁRIO A PARTIR DE UMA HORA NO FUTURO
-
   @override
   void initState() {
     super.initState();
@@ -37,7 +37,7 @@ class SelecionarHorarioWidget extends State<SelecionarHorarioPage> {
   Future<void> _buscarTodosAgendamentoDisponiveis(DateTime data) async {
     await _controller
         .buscarTodosAgendamentoPorDia(
-          dataAgendamento: data,
+          dataSelecionada: data,
           empresa: widget.agendamento.empresa,
         )
         .then(
@@ -102,14 +102,14 @@ class SelecionarHorarioWidget extends State<SelecionarHorarioPage> {
             onPressed: () => {
               horarioSelecionado == true
                   ? Navigator.of(context).push(
-                myPageTransition.pageTransition(
-                  child: ResumoAgendaPage(
-                    agendamento: widget.agendamento,
-                  ),
-                  buttoToTop: true,
-                  childCurrent: widget,
-                ),
-              )
+                      myPageTransition.pageTransition(
+                        child: ResumoAgendaPage(
+                          agendamento: widget.agendamento,
+                        ),
+                        buttoToTop: true,
+                        childCurrent: widget,
+                      ),
+                    )
                   : null,
             },
           ),
@@ -122,7 +122,7 @@ class SelecionarHorarioWidget extends State<SelecionarHorarioPage> {
     return CalendarTimeline(
       initialDate: dateTime!,
       firstDate: DateTime(
-        dateTime!.year,
+        dateTime!.year - 1,
         dateTime!.month,
         dateTime!.day,
       ),
@@ -146,25 +146,33 @@ class SelecionarHorarioWidget extends State<SelecionarHorarioPage> {
   }
 
   Widget _horariosLivres() {
+    var horarioVazio = horariosAgendamento.isEmpty;
     return Expanded(
       child: Container(
-        margin: const EdgeInsets.only(
-          top: 30,
+        margin: EdgeInsets.only(
+          top: horarioVazio == true ? 0 : 30,
           bottom: 70,
           left: 20,
           right: 20,
         ),
-        child: GridView.count(
-          crossAxisCount: 3,
-          childAspectRatio: 2.5,
-          mainAxisSpacing: 18,
-          crossAxisSpacing: 30,
-          shrinkWrap: true,
-          physics: const BouncingScrollPhysics(
-            parent: AlwaysScrollableScrollPhysics(),
-          ),
-          children: _listaDeHorario(),
-        ),
+        child: horarioVazio
+            ? Column(
+                children: [
+                  _imagemErro(),
+                  _textoErro(),
+                ],
+              )
+            : GridView.count(
+                crossAxisCount: 3,
+                childAspectRatio: 2.5,
+                mainAxisSpacing: 18,
+                crossAxisSpacing: 30,
+                shrinkWrap: true,
+                physics: const BouncingScrollPhysics(
+                  parent: AlwaysScrollableScrollPhysics(),
+                ),
+                children: _listaDeHorario(),
+              ),
       ),
     );
   }
@@ -240,5 +248,21 @@ class SelecionarHorarioWidget extends State<SelecionarHorarioPage> {
       corBotao = Colors.black87.withOpacity(0.9);
       overlayCorBotao = AppColors.blue5;
     }
+  }
+
+  ImagensWidget _imagemErro() {
+    return ImagensWidget(
+      image: "calendario.png",
+      widthImagem: 300,
+    );
+  }
+
+  TextAutenticacoesWidget _textoErro() {
+    return TextAutenticacoesWidget(
+      alignment: Alignment.center,
+      paddingTop: 0,
+      fontSize: 30,
+      text: "Nenhum horário disponível. \nSelecione outro dia.",
+    );
   }
 }
