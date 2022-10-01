@@ -62,4 +62,18 @@ class Usuario {
     _data['email_administrativo'] = emailAdministrativo;
     return _data;
   }
+
+  Map<String, dynamic> toJsonFuncionario() {
+    final _data = <String, dynamic>{};
+    _data['id'] = id ?? "";
+    _data['nome'] = nome;
+    _data['telefone'] = telefone;
+    _data['email'] = email;
+    _data['codigo_aleatorio'] = codigoAleatorio;
+    _data['roles'] = null;
+    _data['imagem_base64'] = imagemBase64;
+    _data['permissao_funcionario'] = permissaoFuncionario;
+    _data['email_administrativo'] = emailAdministrativo;
+    return _data;
+  }
 }

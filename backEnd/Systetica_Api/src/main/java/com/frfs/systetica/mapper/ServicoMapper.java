@@ -20,4 +20,6 @@ public interface ServicoMapper {
     List<ServicoDTO> toListDto(List<Servico> entities);
 
     Servico toEntity(ServicoDTO dto);
+
+    List<Servico> toListEntity(List<ServicoDTO> dtos);
 }

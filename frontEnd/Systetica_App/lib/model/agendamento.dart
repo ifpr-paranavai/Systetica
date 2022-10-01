@@ -7,26 +7,26 @@ import 'package:systetica/model/Usuario.dart';
 
 class Agendamento {
   Agendamento({
-    required this.empresa,
-    required this.servicosSelecionados,
+    required this.cliente,
     required this.funcionario,
-    this.usuario,
+    required this.empresa,
     required this.horarioAgendamento,
+    required this.servicosSelecionados,
   });
 
-  Empresa empresa;
-  List<Servico> servicosSelecionados;
+  Usuario cliente;
   Usuario funcionario;
-  Usuario? usuario;
+  Empresa empresa;
   HorarioAgendamento horarioAgendamento;
+  List<Servico> servicosSelecionados;
 
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};
-    _data['empresa'] = empresa;
-    _data['servicos_selecionados'] = servicosSelecionados;
-    _data['funcionario'] = funcionario;
-    _data['usuario'] = usuario;
-    _data['horario_agendamento'] = horarioAgendamento;
+    _data['cliente_email'] = cliente.email;
+    _data['funcionario_id'] = funcionario.id;
+    _data['empresa_id'] = empresa.id;
+    _data['horario_agendamento'] = horarioAgendamento.toJson();
+    _data['servicos_selecionados'] = servicosSelecionados.map((i) => i.toJson()).toList();
     return _data;
   }
 }

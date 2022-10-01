@@ -196,7 +196,7 @@ class SelecionarHorarioWidget extends State<SelecionarHorarioPage> {
             ),
             child: Center(
               child: Text(
-                horariosAgendamento[index].horario!,
+                horariosAgendamento[index].horarioAgendamento!,
                 maxLines: 1,
                 style: TextStyle(
                   fontSize: 19,
@@ -239,7 +239,7 @@ class SelecionarHorarioWidget extends State<SelecionarHorarioPage> {
   }
 
   void _ativarDesativarBotao() {
-    if (widget.agendamento.horarioAgendamento.horario == null) {
+    if (widget.agendamento.horarioAgendamento.horarioAgendamento == null) {
       horarioSelecionado = false;
       corBotao = Colors.grey.withOpacity(0.9);
       overlayCorBotao = Colors.transparent;

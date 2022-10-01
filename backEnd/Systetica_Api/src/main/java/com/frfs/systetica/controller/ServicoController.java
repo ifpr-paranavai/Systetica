@@ -19,7 +19,6 @@ public class ServicoController {
 
     private final ServicoService servicoService;
 
-
     @PostMapping(value = "/salvar")
     @ResponseBody
     public ResponseEntity<Object> salvar(@Validated @RequestBody ServicoDTO servicoDTO) {

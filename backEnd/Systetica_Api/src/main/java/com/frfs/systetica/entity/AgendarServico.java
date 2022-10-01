@@ -52,7 +52,17 @@ public class AgendarServico implements Serializable {
     @JoinColumn(name = "cliente")
     private Usuario cliente;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @NotNull
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "funcionario")
+    private Usuario funcionario;
+
+    @NotNull
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "empresa")
+    private Empresa empresa;
+
+    @ManyToMany()
     @JoinTable(
             name = "ass_servico_agendado",
             uniqueConstraints = @UniqueConstraint(columnNames = {"id_agendar_servico", "id_servico"}),

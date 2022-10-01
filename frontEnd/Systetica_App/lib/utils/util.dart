@@ -100,7 +100,7 @@ class Util {
         horario: empresa.horarioAbertura!,
         contador: contador,
       );
-      hora.horario = toHorario(horario);
+      hora.horarioAgendamento = toHorario(horario);
 
       if (horario <= dataSelecionada.hour) {
         continue;
@@ -109,7 +109,7 @@ class Util {
       } else {
         bool existeHorarioAgendado = false;
         for (var horario in horariosMarcados) {
-          if (horario == hora.horario) {
+          if (horario == hora.horarioAgendamento) {
             existeHorarioAgendado = true;
             break;
           }
@@ -117,7 +117,7 @@ class Util {
         existeHorarioAgendado == false ? horariosAgendamento.add(hora) : null;
       }
 
-      hora.dateTime = dataSelecionada;
+      hora.dataAgendamento = dataSelecionada;
       contador += 1;
     }
 

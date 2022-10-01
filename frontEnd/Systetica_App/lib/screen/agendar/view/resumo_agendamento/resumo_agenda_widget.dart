@@ -49,6 +49,7 @@ class ResumoAgendaWidget extends State<ResumoAgendaPage> {
               text: "RESUMO DO AGENDAMENTO",
             ),
             _checkboxSelect(),
+            _sizedBox(height: _altura * 0.08),
           ],
         ),
         AgendarComponente.botaoSelecinar(
@@ -57,7 +58,10 @@ class ResumoAgendaWidget extends State<ResumoAgendaPage> {
           corBotao: Colors.black87.withOpacity(0.9),
           overlayCorBotao: AppColors.blue5,
           labelText: "AGENDAR",
-          onPressed: () => {},
+          onPressed: () => _controller.agendarHorario(
+            agendamento: widget.agendamento,
+            context: context,
+          ),
         ),
       ],
     );
@@ -65,45 +69,52 @@ class ResumoAgendaWidget extends State<ResumoAgendaPage> {
 
   Widget _checkboxSelect() {
     int itemCount = widget.agendamento.servicosSelecionados.length;
-    return AgendarComponente.containerGeral(
-      widget: SingleChildScrollView(
-        controller: _scrollController,
-        child: Column(
-          children: [
-            _titulo(
-              texto: itemCount > 1 ? "Serviços" : "Serviço",
-            ),
-            ListView.builder(
-              controller: _scrollController,
-              shrinkWrap: true,
-              itemCount: itemCount,
-              itemBuilder: (BuildContext context, int index) {
-                return _listSelecao(
-                  nome: widget.agendamento.servicosSelecionados[index].nome!,
-                  subTitulo: widget
-                          .agendamento.servicosSelecionados[index].tempoServico
-                          .toString() +
-                      ' min',
-                  icon: CupertinoIcons.scissors_alt,
-                  maxLines: widget.agendamento.servicosSelecionados.length,
-                );
-              },
-            ),
-            _titulo(texto: "Barbeiro"),
-            _listSelecao(
-              nome: widget.agendamento.funcionario.nome!,
-              terSubTituulo: false,
-              icon: Icons.person,
-            ),
-            _titulo(texto: "Data e horário"),
-            _listSelecao(
-              nome: Util.dataEscrito(
-                widget.agendamento.horarioAgendamento.dateTime!,
+    return NotificationListener<OverscrollIndicatorNotification>(
+      onNotification: (overScroll) {
+        overScroll.disallowIndicator();
+        return false;
+      },
+      child: AgendarComponente.containerGeral(
+        widget: SingleChildScrollView(
+          controller: _scrollController,
+          child: Column(
+            children: [
+              _titulo(
+                texto: itemCount > 1 ? "Serviços" : "Serviço",
               ),
-              subTitulo: widget.agendamento.horarioAgendamento.horario!,
-              icon: Icons.calendar_month,
-            ),
-          ],
+              ListView.builder(
+                controller: _scrollController,
+                shrinkWrap: true,
+                itemCount: itemCount,
+                itemBuilder: (BuildContext context, int index) {
+                  return _listSelecao(
+                    nome: widget.agendamento.servicosSelecionados[index].nome!,
+                    subTitulo: widget
+                            .agendamento.servicosSelecionados[index].tempoServico
+                            .toString() +
+                        ' min',
+                    icon: CupertinoIcons.scissors_alt,
+                    maxLines: widget.agendamento.servicosSelecionados.length,
+                  );
+                },
+              ),
+              _titulo(texto: "Barbeiro"),
+              _listSelecao(
+                nome: widget.agendamento.funcionario.nome!,
+                terSubTituulo: false,
+                icon: Icons.person,
+              ),
+              _titulo(texto: "Data e horário"),
+              _listSelecao(
+                nome: Util.dataEscrito(
+                  widget.agendamento.horarioAgendamento.dataAgendamento!,
+                ),
+                subTitulo:
+                    widget.agendamento.horarioAgendamento.horarioAgendamento!,
+                icon: Icons.calendar_month,
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -209,6 +220,13 @@ class ResumoAgendaWidget extends State<ResumoAgendaPage> {
         fontSize: fontSize,
         overflow: TextOverflow.ellipsis,
       ),
+    );
+  }
+
+  SizedBox _sizedBox({double? height = 40, double? width = 0}) {
+    return SizedBox(
+      height: height,
+      width: width,
     );
   }
 }

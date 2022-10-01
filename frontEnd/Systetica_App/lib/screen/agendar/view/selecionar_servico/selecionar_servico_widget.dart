@@ -37,10 +37,11 @@ class SelecionarServicoWidget extends State<SelecionarServicoPage> {
     super.initState();
     buscarServicos();
     agendamento = Agendamento(
-      servicosSelecionados: [],
+      cliente: Usuario(),
       funcionario: Usuario(),
       empresa: widget.empresa,
       horarioAgendamento: HorarioAgendamento(),
+      servicosSelecionados: [],
     );
   }
 

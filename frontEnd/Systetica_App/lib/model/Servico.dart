@@ -1,4 +1,4 @@
-// ignore_for_file: file_names
+// ignore_for_file: file_names, avoid_function_literals_in_foreach_calls
 
 class Servico {
   Servico({
@@ -30,10 +30,6 @@ class Servico {
     emailAdministrativo = json['email_administrativo'];
   }
 
-  static List<Servico> fromJsonList(List json) {
-    return json.map((item) => Servico.fromJson(item)).toList();
-  }
-
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};
     _data['id'] = id;
@@ -45,4 +41,8 @@ class Servico {
     _data['email_administrativo'] = emailAdministrativo;
     return _data;
   }
-}
+
+  static List<Servico> fromJsonList(List json) {
+    return json.map((item) => Servico.fromJson(item)).toList();
+  }
+  }

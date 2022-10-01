@@ -35,6 +35,7 @@ public class EmpresaServiceImpl implements EmpresaService {
             if (empresaRepository.findByCnpj(empresaDTO.getCnpj()).isPresent()) {
                 return new ReturnData<>(false, "Cnpj já esta cadastrado no sistema.");
             }
+            // TODO - NÃO ESTA PEGANDO HORARIO DE FEHCAR A ABRIR
 
             if (empresaDTO.getLogoBase64() != null) {
                 var returnDataConverteBase64 = fileBase64Service.converteFileBase64(empresaDTO.getLogoBase64());
