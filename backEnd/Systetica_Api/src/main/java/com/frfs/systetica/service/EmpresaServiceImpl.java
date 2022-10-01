@@ -35,8 +35,6 @@ public class EmpresaServiceImpl implements EmpresaService {
             if (empresaRepository.findByCnpj(empresaDTO.getCnpj()).isPresent()) {
                 return new ReturnData<>(false, "Cnpj já esta cadastrado no sistema.");
             }
-            // TODO - NÃO ESTA PEGANDO HORARIO DE FEHCAR A ABRIR
-
             if (empresaDTO.getLogoBase64() != null) {
                 var returnDataConverteBase64 = fileBase64Service.converteFileBase64(empresaDTO.getLogoBase64());
                 if (!returnDataConverteBase64.getSuccess()) {
@@ -45,10 +43,8 @@ public class EmpresaServiceImpl implements EmpresaService {
                 empresaDTO.setLogoBase64(returnDataConverteBase64.getMessage());
             }
 
-
             UsuarioDTO usuarioDTO = usuarioMapper.toDto(usuarioRepository.findByEmail(
                     empresaDTO.getUsuarioAdministrador().getEmail()).get());
-
 
             empresaDTO.setUsuarioAdministrador(usuarioDTO);
             empresaDTO.setDataCadastro(new Date());

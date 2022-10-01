@@ -48,7 +48,7 @@ class InputServico {
       paddingHorizontal: paddingHorizontal * 0.08,
       keyboardType: TextInputType.number,
       paddingBottom: 0,
-      maxLength: 4,
+      maxLength: 3,
       paddingTop: 8,
       isIconDate: true,
       icon: const Icon(

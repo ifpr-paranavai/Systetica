@@ -103,9 +103,7 @@ class Util {
       hora.horarioAgendamento = toHorario(horario);
 
       if (horario <= dataSelecionada.hour) {
-        continue;
       } else if (dataSelecionada.isBefore(dataAtual)) {
-        continue;
       } else {
         bool existeHorarioAgendado = false;
         for (var horario in horariosMarcados) {

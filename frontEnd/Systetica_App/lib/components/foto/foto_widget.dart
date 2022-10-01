@@ -10,7 +10,7 @@ class FotoWidget {
     double cirulo = 160,
     bool iconErroAdd = false,
     VoidCallback? onPressed,
-    double iconSizeErro = 100
+    double iconSizeErro = 100,
   }) {
     return Container(
       width: cirulo,
@@ -34,11 +34,12 @@ class FotoWidget {
     );
   }
 
-  Widget _imgPerfil(
-      {required dynamic image,
-      bool? iconErroAdd,
-      VoidCallback? onPressed,
-      required double iconSizeErro}) {
+  Widget _imgPerfil({
+    required dynamic image,
+    bool? iconErroAdd,
+    VoidCallback? onPressed,
+    required double iconSizeErro,
+  }) {
     if (image == null || image == "") {
       return iconErroAdd == true
           ? _iconErroFotoAdd(onPressed: onPressed!)

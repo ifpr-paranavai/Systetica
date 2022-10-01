@@ -74,6 +74,8 @@ class EmpresaController {
             empresa.longitude = longitudeController.text;
             empresa.bairro = bairroController.text;
             empresa.logoBase64 = logoBase64;
+            empresa.horarioAbertura = horarioAberturaController.text;
+            empresa.horarioFechamento = horarioFechamentoController.text;
             empresa.cidade = cidade;
             empresa.usuarioAdministrador = Usuario(email: _token.email);
 

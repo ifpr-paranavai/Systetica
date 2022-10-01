@@ -12,11 +12,11 @@ class ErroWidget {
   }) {
     return Expanded(
       child: Container(
-        color: Colors.grey.withOpacity(0.2),
+        color: Colors.white,
         child: SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.only(
-              top: altura * 0.14,
+              top: altura * 0.06,
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,

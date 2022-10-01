@@ -66,7 +66,7 @@ class EmpresaAgendarlWidget extends State<EmpresaAgendarPage> {
   }
 
   Widget _body({
-    required double altura, //width
+    required double altura,
     required double largura,
     required List<Empresa> empresas,
     required Usuario usuario,
@@ -93,8 +93,9 @@ class EmpresaAgendarlWidget extends State<EmpresaAgendarPage> {
               color: Colors.white,
               alignment: Alignment.centerRight,
               child: FotoWidget().boxFoto(
-                imagemUsuario: usuario.imagemBase64!,
+                imagemUsuario: usuario.imagemBase64,
                 cirulo: 70,
+                iconSizeErro: 50,
               ),
             ),
           ],
