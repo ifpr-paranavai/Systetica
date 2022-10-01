@@ -61,7 +61,7 @@ class AgendarService {
 
       var response = await dio.post("agendar-servico/salvar", data: agendamento.toJson());
 
-      // info = Info.fromJson(response.data);
+      info = Info.fromJson(response.data);
 
       return info;
     } on DioError catch (e) {
@@ -69,8 +69,7 @@ class AgendarService {
         if (e.type == DioErrorType.connectTimeout) {
           throw Exception("Erro de requisição: ${e.message}");
         }
-        info.success = false;
-        info.message = "Ocorreu algum erro ao tentar salvar um agendamento";
+        info = Info.fromJson(e.response?.data);
         return info;
       } catch (e) {
         throw Exception(e.runtimeType);

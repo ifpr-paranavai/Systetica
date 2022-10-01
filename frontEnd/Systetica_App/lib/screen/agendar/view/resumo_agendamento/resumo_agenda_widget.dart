@@ -58,10 +58,16 @@ class ResumoAgendaWidget extends State<ResumoAgendaPage> {
           corBotao: Colors.black87.withOpacity(0.9),
           overlayCorBotao: AppColors.blue5,
           labelText: "AGENDAR",
-          onPressed: () => _controller.agendarHorario(
-            agendamento: widget.agendamento,
-            context: context,
-          ),
+          onPressed: () => _controller
+              .agendarHorario(
+                agendamento: widget.agendamento,
+                context: context,
+              )
+              .then(
+                (value) => setState(
+                  () {},
+                ),
+              ),
         ),
       ],
     );
@@ -89,8 +95,8 @@ class ResumoAgendaWidget extends State<ResumoAgendaPage> {
                 itemBuilder: (BuildContext context, int index) {
                   return _listSelecao(
                     nome: widget.agendamento.servicosSelecionados[index].nome!,
-                    subTitulo: widget
-                            .agendamento.servicosSelecionados[index].tempoServico
+                    subTitulo: widget.agendamento.servicosSelecionados[index]
+                            .tempoServico
                             .toString() +
                         ' min',
                     icon: CupertinoIcons.scissors_alt,

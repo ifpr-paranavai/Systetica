@@ -58,33 +58,40 @@ public class AgendarServicoServiceImpl implements AgendarServicoService {
     @Override
     public ReturnData<String> salvar(AgendamentoDTO agendamentoDTO) {
         try {
-            // TODO - VERIFICAR SE JÁ FOI AGENDADO ALGO PARA AQUELE DIA
-            Optional<Empresa> empresa = empresaRepository.findById(agendamentoDTO.getEmpresaId());
-            Optional<Usuario> cliente = usuarioRepository.findByEmail(agendamentoDTO.getClienteEmail());
-            Optional<Usuario> funcionario = usuarioRepository.findById(agendamentoDTO.getFuncionarioId());
+            Optional<AgendarServico> agendarServicoBancoDeDados =
+                    agendarServicoRepository.findByDataAgendamentoAndHorarioAgendamento(
+                            agendamentoDTO.getHorarioAgendamento().getDataAgendamento(),
+                            agendamentoDTO.getHorarioAgendamento().getHorarioAgendamento());
 
-            AgendarServicoDTO agendarServicoDTO = new AgendarServicoDTO();
-            agendarServicoDTO.setDataCadastro(new Date());
-            agendarServicoDTO.setDataAgendamento(agendamentoDTO.getHorarioAgendamento().getDataAgendamento());
-            agendarServicoDTO.setHorarioAgendamento(agendamentoDTO.getHorarioAgendamento().getHorarioAgendamento());
+            if (agendarServicoBancoDeDados.isEmpty()) {
+                Optional<Empresa> empresa = empresaRepository.findById(agendamentoDTO.getEmpresaId());
+                Optional<Usuario> cliente = usuarioRepository.findByEmail(agendamentoDTO.getClienteEmail());
+                Optional<Usuario> funcionario = usuarioRepository.findById(agendamentoDTO.getFuncionarioId());
 
-            agendarServicoDTO.setSituacao(situacaoRepository.findByName("AGENDADO").get());
+                AgendarServicoDTO agendarServicoDTO = new AgendarServicoDTO();
+                agendarServicoDTO.setDataCadastro(new Date());
+                agendarServicoDTO.setDataAgendamento(agendamentoDTO.getHorarioAgendamento().getDataAgendamento());
+                agendarServicoDTO.setHorarioAgendamento(agendamentoDTO.getHorarioAgendamento().getHorarioAgendamento());
 
-            agendarServicoDTO.setCliente(usuarioMapper.toDto(cliente.get()));
-            agendarServicoDTO.setFuncionario(usuarioMapper.toDto(funcionario.get()));
-            agendarServicoDTO.setEmpresa(empresaMapper.toDto(empresa.get()));
+                agendarServicoDTO.setSituacao(situacaoRepository.findByName("AGENDADO").get());
 
-            AgendarServico agendarServico = agendarServicoMapper.toEntity(agendarServicoDTO);
-            agendarServico.setServicos(servicoMapper.toListEntity(agendamentoDTO.getServicosSelecionados()));
+                agendarServicoDTO.setCliente(usuarioMapper.toDto(cliente.get()));
+                agendarServicoDTO.setFuncionario(usuarioMapper.toDto(funcionario.get()));
+                agendarServicoDTO.setEmpresa(empresaMapper.toDto(empresa.get()));
 
-            agendarServicoRepository.saveAndFlush(agendarServico);
+                AgendarServico agendarServico = agendarServicoMapper.toEntity(agendarServicoDTO);
+                agendarServico.setServicos(servicoMapper.toListEntity(agendamentoDTO.getServicosSelecionados()));
 
-            return new ReturnData<>(true, "Serviço agendado com com sucesso", "");
+                agendarServicoRepository.saveAndFlush(agendarServico);
+
+                return new ReturnData<>(true, "Serviço agendado com com sucesso.", "");
+            }
+
+            return new ReturnData<>(false, "Já foi agendado um serviço para o horário selecionado.", "");
         } catch (BusinessException busEx) {
             return new ReturnData<>(false, "Ocorreu um erro ao salvar um serviço", busEx.getMessage());
         } catch (Exception ex) {
-            return new ReturnData<>(false, "Ocorreu um erro ao salvar um serviço",
-                    ex.getMessage() + "\nMotivo: " + ex.getCause());
+            return new ReturnData<>(false, "Ocorreu um erro ao salvar um serviço", ex.getMessage() + "\nMotivo: " + ex.getCause());
         }
     }
 }
