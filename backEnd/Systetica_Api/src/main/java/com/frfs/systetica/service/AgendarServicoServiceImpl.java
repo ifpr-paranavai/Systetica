@@ -69,20 +69,17 @@ public class AgendarServicoServiceImpl implements AgendarServicoService {
                 Optional<Usuario> funcionario = usuarioRepository.findById(agendamentoDTO.getFuncionarioId());
 
                 AgendarServicoDTO agendarServicoDTO = new AgendarServicoDTO();
+
                 agendarServicoDTO.setDataCadastro(new Date());
                 agendarServicoDTO.setDataAgendamento(agendamentoDTO.getHorarioAgendamento().getDataAgendamento());
                 agendarServicoDTO.setHorarioAgendamento(agendamentoDTO.getHorarioAgendamento().getHorarioAgendamento());
-
+                agendarServicoDTO.setServicos(agendamentoDTO.getServicosSelecionados());
                 agendarServicoDTO.setSituacao(situacaoRepository.findByName("AGENDADO").get());
-
                 agendarServicoDTO.setCliente(usuarioMapper.toDto(cliente.get()));
                 agendarServicoDTO.setFuncionario(usuarioMapper.toDto(funcionario.get()));
                 agendarServicoDTO.setEmpresa(empresaMapper.toDto(empresa.get()));
 
-                AgendarServico agendarServico = agendarServicoMapper.toEntity(agendarServicoDTO);
-                agendarServico.setServicos(servicoMapper.toListEntity(agendamentoDTO.getServicosSelecionados()));
-
-                agendarServicoRepository.saveAndFlush(agendarServico);
+                agendarServicoRepository.saveAndFlush(agendarServicoMapper.toEntity(agendarServicoDTO));
 
                 return new ReturnData<>(true, "Serviço agendado com sucesso.", "");
             }

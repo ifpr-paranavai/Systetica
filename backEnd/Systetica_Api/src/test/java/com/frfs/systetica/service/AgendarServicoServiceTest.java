@@ -1,7 +1,8 @@
 package com.frfs.systetica.service;
 
+import com.frfs.systetica.dto.*;
 import com.frfs.systetica.dto.response.ReturnData;
-import com.frfs.systetica.entity.AgendarServico;
+import com.frfs.systetica.entity.*;
 import com.frfs.systetica.mapper.AgendarServicoMapper;
 import com.frfs.systetica.mapper.EmpresaMapper;
 import com.frfs.systetica.mapper.ServicoMapper;
@@ -22,6 +23,7 @@ import org.springframework.test.context.ActiveProfiles;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -61,6 +63,72 @@ public class AgendarServicoServiceTest {
     }
 
     @Test
+    @DisplayName("Deve salvar um agendamento")
+    public void deveSalvarUmAgendamento() {
+        List<ServicoDTO> servicosSelecionadosDto = new ArrayList<>();
+        List<Servico> servicosSelecionadosService = new ArrayList<>();
+
+        AgendamentoDTO agendamentoDTO = Mockito.mock(AgendamentoDTO.class);
+        HorarioAgendamentoDTO horarioAgendamentoDTO = Mockito.mock(HorarioAgendamentoDTO.class);
+
+        Servico servico = Mockito.mock(Servico.class);
+        ServicoDTO servicoDTO = Mockito.mock(ServicoDTO.class);
+
+        AgendarServico agendarServico = Mockito.mock(AgendarServico.class);
+        Optional<AgendarServico> agendarServicoOptional = Optional.empty();
+        AgendarServicoDTO agendarServicoDTO = Mockito.mock(AgendarServicoDTO.class);
+
+        Empresa empresa = Mockito.mock(Empresa.class);
+        Optional<Empresa> empresaOptional = Optional.of(empresa);
+        EmpresaDTO empresaDTO = Mockito.mock(EmpresaDTO.class);
+
+        Usuario cliente = Mockito.mock(Usuario.class);
+        Optional<Usuario> clienteOptional = Optional.of(cliente);
+        UsuarioDTO clienteDto = Mockito.mock(UsuarioDTO.class);
+
+        Usuario funcionario = Mockito.mock(Usuario.class);
+        Optional<Usuario> funcionarioOptional = Optional.of(funcionario);
+        UsuarioDTO funcionarioDto = Mockito.mock(UsuarioDTO.class);
+
+        Situacao situacao = Mockito.mock(Situacao.class);
+        Optional<Situacao> situacaoOptional = Optional.of(situacao);
+
+        Mockito.when(horarioAgendamentoDTO.getDataAgendamento()).thenReturn("01-01-2022");
+        Mockito.when(horarioAgendamentoDTO.getHorarioAgendamento()).thenReturn(LocalTime.now());
+
+        servicosSelecionadosDto.add(servicoDTO);
+        servicosSelecionadosService.add(servico);
+
+        Mockito.when(agendamentoDTO.getHorarioAgendamento()).thenReturn(horarioAgendamentoDTO);
+        Mockito.when(agendamentoDTO.getServicosSelecionados()).thenReturn(servicosSelecionadosDto);
+
+        Mockito.when(agendarServico.getId()).thenReturn(1L);
+        Mockito.when(agendarServico.getServicos()).thenReturn(servicosSelecionadosService);
+
+        Mockito.when(agendarServicoRepository
+                .findByDataAgendamentoAndHorarioAgendamento(
+                        horarioAgendamentoDTO.getDataAgendamento(),
+                        horarioAgendamentoDTO.getHorarioAgendamento())).thenReturn(agendarServicoOptional);
+
+        Mockito.when(empresaRepository.findById(agendamentoDTO.getEmpresaId())).thenReturn(empresaOptional);
+        Mockito.when(usuarioRepository.findByEmail(agendamentoDTO.getClienteEmail())).thenReturn(clienteOptional);
+        Mockito.when(usuarioRepository.findById(agendamentoDTO.getFuncionarioId())).thenReturn(funcionarioOptional);
+        Mockito.when(situacaoRepository.findByName("AGENDADO")).thenReturn(situacaoOptional);
+
+        Mockito.when(empresaMapper.toDto(empresa)).thenReturn(empresaDTO);
+        Mockito.when(usuarioMapper.toDto(cliente)).thenReturn(clienteDto);
+        Mockito.when(usuarioMapper.toDto(funcionario)).thenReturn(funcionarioDto);
+        Mockito.when(agendarServicoMapper.toEntity(agendarServicoDTO)).thenReturn(agendarServico);
+        Mockito.when(servicoMapper.toListEntity(agendamentoDTO.getServicosSelecionados()))
+                .thenReturn(servicosSelecionadosService);
+
+        Mockito.when(agendarServicoRepository.saveAndFlush(agendarServico)).thenReturn(agendarServico);
+
+        ReturnData<Object> returnData = new ReturnData<>(true, "Serviço agendado com sucesso.", "");
+        assertEquals(agendarServicoService.salvar(agendamentoDTO), returnData);
+    }
+
+    @Test
     @DisplayName("Deve busca todos os agendamento por dia")
     public void deveBuscarTodosAgendamentoPorDia() {
         String dataAgendamento = "01-01-2022";
@@ -96,5 +164,30 @@ public class AgendarServicoServiceTest {
 
         ReturnData<Object> returnData = new ReturnData<>(true, "", listaDeHorarios);
         assertEquals(agendarServicoService.buscarTodosAgendamentoPorDia(dataAgendamento), returnData);
+    }
+
+    @Test
+    @DisplayName("Deve informar que já foi agendado um serviço para aquele horário")
+    public void deveInformarQueJaFoiAgendadoUmServico() {
+        List<ServicoDTO> servicosSelecionadosDto = new ArrayList<>();
+        AgendamentoDTO agendamentoDTO = Mockito.mock(AgendamentoDTO.class);
+        HorarioAgendamentoDTO horarioAgendamentoDTO = Mockito.mock(HorarioAgendamentoDTO.class);
+
+        AgendarServico agendarServico = Mockito.mock(AgendarServico.class);
+        Optional<AgendarServico> agendarServicoOptional = Optional.of(agendarServico);
+
+        Mockito.when(horarioAgendamentoDTO.getDataAgendamento()).thenReturn("01-01-2022");
+        Mockito.when(horarioAgendamentoDTO.getHorarioAgendamento()).thenReturn(LocalTime.now());
+
+        Mockito.when(agendamentoDTO.getHorarioAgendamento()).thenReturn(horarioAgendamentoDTO);
+        Mockito.when(agendamentoDTO.getServicosSelecionados()).thenReturn(servicosSelecionadosDto);
+
+        Mockito.when(agendarServicoRepository
+                .findByDataAgendamentoAndHorarioAgendamento(
+                        horarioAgendamentoDTO.getDataAgendamento(),
+                        horarioAgendamentoDTO.getHorarioAgendamento())).thenReturn(agendarServicoOptional);
+
+        ReturnData<Object> returnData = new ReturnData<>(false, "Já foi agendado um serviço para o horário selecionado.", "");
+        assertEquals(agendarServicoService.salvar(agendamentoDTO), returnData);
     }
 }
