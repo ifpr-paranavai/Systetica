@@ -84,7 +84,7 @@ public class AgendarServicoServiceImpl implements AgendarServicoService {
 
                 agendarServicoRepository.saveAndFlush(agendarServico);
 
-                return new ReturnData<>(true, "Serviço agendado com com sucesso.", "");
+                return new ReturnData<>(true, "Serviço agendado com sucesso.", "");
             }
 
             return new ReturnData<>(false, "Já foi agendado um serviço para o horário selecionado.", "");
