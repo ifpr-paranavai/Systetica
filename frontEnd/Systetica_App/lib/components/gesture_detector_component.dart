@@ -46,7 +46,7 @@ class _GestureDetectorComponent extends State<GestureDetectorComponent> {
           ),
           border: Border.all(
             color: Colors.black,
-            width: 0.1,
+            width: 0.15,
           ),
         ),
         child: Row(
@@ -76,11 +76,9 @@ class _GestureDetectorComponent extends State<GestureDetectorComponent> {
                 ],
               ),
             ),
-            _container(
-              paddingLeft: 0,
-              paddingRight: 15,
-              alignment: Alignment.centerRight,
-              widget: Checkbox(
+            Container(
+              padding: const EdgeInsets.only(right: 10),
+              child: Checkbox(
                 value: widget.servicoSelecionado,
                 onChanged: widget.onChanged,
                 shape: const CircleBorder(),

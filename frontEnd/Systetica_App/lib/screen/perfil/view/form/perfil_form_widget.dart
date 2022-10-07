@@ -43,6 +43,7 @@ class PerfilFormWidget extends State<PerfilFormPage> {
     double _largura = MediaQuery.of(context).size.width;
     return SafeArea(
       child: Scaffold(
+        backgroundColor: AppColors.branco,
         floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
         floatingActionButton: IconArrowWidget(
           paddingTop: _altura * 0.01,

@@ -45,7 +45,7 @@ class EmpresaWidget extends State<EmpresaPage> {
     double _largura = MediaQuery.of(context).size.width;
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.branco,
         floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
         floatingActionButton: IconArrowWidget(
           paddingTop: _altura * 0.01,
@@ -300,7 +300,7 @@ class EmpresaWidget extends State<EmpresaPage> {
         shape: RoundedRectangleBorder(
           side: const BorderSide(
             color: Colors.black,
-            width: 0.1,
+            width: 0.15,
           ),
           borderRadius: BorderRadius.circular(10),
         ),

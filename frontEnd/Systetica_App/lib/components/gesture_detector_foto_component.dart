@@ -60,10 +60,7 @@ class _GestureDetectorFotoComponent
               width: widget.largura * 0.18,
               alignment: Alignment.center,
               child: FotoWidget().boxFoto(
-                imagemUsuario: widget.foto,
-                cirulo: 40,
-                iconSizeErro: 25
-              ),
+                  imagemUsuario: widget.foto, cirulo: 40, iconSizeErro: 25),
             ),
             _container(
               paddingLeft: 2,
@@ -84,16 +81,12 @@ class _GestureDetectorFotoComponent
               ),
             ),
             Container(
-              child: _container(
-                paddingLeft: 0,
-                paddingRight: 15,
-                alignment: Alignment.centerRight,
-                widget: Checkbox(
-                  value: widget.funcionarioSelecionado,
-                  onChanged: widget.onChanged,
-                  shape: const CircleBorder(),
-                  fillColor: MaterialStateProperty.all(AppColors.bluePrincipal),
-                ),
+              padding: const EdgeInsets.only(right: 10),
+              child: Checkbox(
+                value: widget.funcionarioSelecionado,
+                onChanged: widget.onChanged,
+                shape: const CircleBorder(),
+                fillColor: MaterialStateProperty.all(AppColors.bluePrincipal),
               ),
             ),
           ],
@@ -121,6 +114,4 @@ class _GestureDetectorFotoComponent
       ),
     );
   }
-
-
 }

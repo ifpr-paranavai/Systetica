@@ -57,7 +57,7 @@ class SelecionarHorarioWidget extends State<SelecionarHorarioPage> {
     _altura = MediaQuery.of(context).size.height;
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.branco,
         floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
         floatingActionButton: IconArrowWidget(
           paddingTop: _altura * 0.011,

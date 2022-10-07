@@ -9,6 +9,7 @@ import 'package:systetica/model/Usuario.dart';
 import 'package:systetica/screen/ativar_funcionario/ativar_funcionario_controller.dart';
 import 'package:systetica/screen/ativar_funcionario/view/ativar_funcionario_page.dart';
 import 'package:systetica/screen/ativar_funcionario/view/form/ativar_funcionario_form_page.dart';
+import 'package:systetica/style/app_colors..dart';
 
 class AtivarFuncionarioWidget extends State<AtivarFuncionarioPage> {
   final AtivarFuncionarController _controller = AtivarFuncionarController();
@@ -25,14 +26,8 @@ class AtivarFuncionarioWidget extends State<AtivarFuncionarioPage> {
 
   @override
   Widget build(BuildContext context) {
-    double _altura = MediaQuery
-        .of(context)
-        .size
-        .height;
-    double _largura = MediaQuery
-        .of(context)
-        .size
-        .width;
+    double _altura = MediaQuery.of(context).size.height;
+    double _largura = MediaQuery.of(context).size.width;
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
@@ -44,25 +39,24 @@ class AtivarFuncionarioWidget extends State<AtivarFuncionarioPage> {
         body: loading
             ? const LoadingAnimation()
             : _body(
-          largura: _largura,
-          altura: _altura,
-          usuarios: _controller.usuarios,
-        ),
+                largura: _largura,
+                altura: _altura,
+                usuarios: _controller.usuarios,
+              ),
       ),
     );
   }
 
   Future<void> buscarFuncionarios() async {
     await _controller.buscarFuncionarios(context).then(
-          (value) =>
-          setState(
-                () {
+          (value) => setState(
+            () {
               info = value;
               _controller.usuarios = value!.object;
               loading = false;
             },
           ),
-    );
+        );
   }
 
   Widget _body({
@@ -78,17 +72,17 @@ class AtivarFuncionarioWidget extends State<AtivarFuncionarioPage> {
         ),
         usuarios.isEmpty
             ? ErroWidget().erroRequisicao(
-            largura: largura,
-            listaVazia: true,
-            altura: altura,
-            nenhumItem: "Nenhum funcionário encontrado",
-            imagem: "buscar.png",
-        )
+                largura: largura,
+                listaVazia: true,
+                altura: altura,
+                nenhumItem: "Nenhum funcionário encontrado",
+                imagem: "buscar.png",
+              )
             : _listView(
-          altura: altura,
-          largura: largura,
-          usuarios: usuarios,
-        ),
+                altura: altura,
+                largura: largura,
+                usuarios: usuarios,
+              ),
       ],
     );
   }
@@ -104,11 +98,10 @@ class AtivarFuncionarioWidget extends State<AtivarFuncionarioPage> {
       onChanged: (value) {
         _controller.usuarios = [];
         _controller.buscarUsuarios(context: context, usuario: value).then(
-              (value) =>
-              setState(() {
+              (value) => setState(() {
                 _controller.usuarios = value!.object;
               }),
-        );
+            );
       },
     );
   }
@@ -120,7 +113,7 @@ class AtivarFuncionarioWidget extends State<AtivarFuncionarioPage> {
   }) {
     return Expanded(
       child: Container(
-        color: Colors.grey.withOpacity(0.2),
+        color: AppColors.branco,
         child: ListView.builder(
           controller: _scrollController,
           shrinkWrap: true,
@@ -142,18 +135,18 @@ class AtivarFuncionarioWidget extends State<AtivarFuncionarioPage> {
               onTap: () {
                 Navigator.of(context)
                     .push(
-                  _controller.myPageTransition.pageTransition(
-                    child: AtivarFuncionarioFormPage(usuario: usuarios[index]),
-                    childCurrent: widget,
-                    buttoToTop: true,
-                  ),
-                )
+                      _controller.myPageTransition.pageTransition(
+                        child:
+                            AtivarFuncionarioFormPage(usuario: usuarios[index]),
+                        childCurrent: widget,
+                        buttoToTop: true,
+                      ),
+                    )
                     .then(
-                      (value) =>
-                      setState(() {
+                      (value) => setState(() {
                         buscarFuncionarios();
                       }),
-                );
+                    );
               },
             );
           },

@@ -21,7 +21,7 @@ class _CardComponent extends State<CardComponent> {
         shape: RoundedRectangleBorder(
           side: const BorderSide(
             color: Colors.black,
-            width: 0.1,
+            width: 0.15,
           ),
           borderRadius: BorderRadius.circular(10),
         ),

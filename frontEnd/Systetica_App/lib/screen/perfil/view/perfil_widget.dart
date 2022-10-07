@@ -38,6 +38,7 @@ class PerfilWidget extends State<PerfilPage> {
     double _largura = MediaQuery.of(context).size.width;
     return SafeArea(
       child: Scaffold(
+        backgroundColor: AppColors.branco,
         body: FutureBuilder<Info?>(
           future: _controller.buscarUsuarioEmail(context),
           builder: (context, snapShot) {
@@ -179,7 +180,7 @@ class PerfilWidget extends State<PerfilPage> {
         shape: RoundedRectangleBorder(
           side: const BorderSide(
             color: Colors.black,
-            width: 0.1,
+            width: 0.15,
           ),
           borderRadius: BorderRadius.circular(10),
         ),

@@ -9,6 +9,7 @@ import 'package:systetica/model/validator/MultiValidatorUsuario.dart';
 import 'package:systetica/screen/login/login_controller.dart';
 import 'package:systetica/screen/login/view/gerar_codigo/gerar_codigo_page.dart';
 import 'package:systetica/screen/login/view/login/login_page.dart';
+import 'package:systetica/style/app_colors..dart';
 
 class LoginWidget extends State<LoginPage> {
   LoginController controller = LoginController();
@@ -21,7 +22,7 @@ class LoginWidget extends State<LoginPage> {
     double _largura = MediaQuery.of(context).size.width;
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.branco,
         floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
         floatingActionButton: Visibility(
           visible: widget.inicioApp,
@@ -30,19 +31,25 @@ class LoginWidget extends State<LoginPage> {
             onPressed: () => Navigator.pop(context),
           ),
         ),
-        body: SingleChildScrollView(
-          child: Form(
-            autovalidateMode: AutovalidateMode.onUserInteraction,
-            key: controller.formKey,
-            child: Column(
-              children: [
-                _imagemLogin(paddinTop: _altura * 0.03),
-                _textoLogin(),
-                _inputEmail(paddingHorizontal: _largura * 0.08),
-                _inputSenha(paddingHorizontal: _largura * 0.08),
-                _botaoLogin(),
-                _botaoEsqueciSenha(),
-              ],
+        body: NotificationListener<OverscrollIndicatorNotification>(
+          onNotification: (overScroll) {
+            overScroll.disallowIndicator();
+            return false;
+          },
+          child: SingleChildScrollView(
+            child: Form(
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              key: controller.formKey,
+              child: Column(
+                children: [
+                  _imagemLogin(paddinTop: _altura * 0.03),
+                  _textoLogin(),
+                  _inputEmail(paddingHorizontal: _largura * 0.08),
+                  _inputSenha(paddingHorizontal: _largura * 0.08),
+                  _botaoLogin(),
+                  _botaoEsqueciSenha(),
+                ],
+              ),
             ),
           ),
         ),

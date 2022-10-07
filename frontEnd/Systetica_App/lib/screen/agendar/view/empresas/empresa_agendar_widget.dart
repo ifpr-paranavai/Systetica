@@ -11,6 +11,7 @@ import 'package:systetica/screen/agendar/agendar_controller.dart';
 import 'package:systetica/screen/agendar/view/detalhes_empresa/detalhes_empresa_page.dart';
 import 'package:systetica/screen/agendar/view/empresas/empresa_agendar_page.dart';
 import 'package:systetica/screen/perfil/perfil_controller.dart';
+import 'package:systetica/style/app_colors..dart';
 import 'package:systetica/utils/util.dart';
 
 class EmpresaAgendarlWidget extends State<EmpresaAgendarPage> {
@@ -34,7 +35,7 @@ class EmpresaAgendarlWidget extends State<EmpresaAgendarPage> {
     double _largura = MediaQuery.of(context).size.width;
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.branco,
         body: loading
             ? const LoadingAnimation()
             : _body(
@@ -90,7 +91,7 @@ class EmpresaAgendarlWidget extends State<EmpresaAgendarPage> {
                 right: largura * 0.060,
               ),
               width: largura * 0.40,
-              color: Colors.white,
+              color: AppColors.branco,
               alignment: Alignment.centerRight,
               child: FotoWidget().boxFoto(
                 imagemUsuario: usuario.imagemBase64,
@@ -125,7 +126,7 @@ class EmpresaAgendarlWidget extends State<EmpresaAgendarPage> {
     required double largura, //height
   }) {
     return PesquisaWidget(
-      cor: Colors.white,
+      cor: AppColors.branco,
       altura: altura,
       largura: largura,
       hintText: 'Buscar empresa...',
@@ -149,7 +150,7 @@ class EmpresaAgendarlWidget extends State<EmpresaAgendarPage> {
   }) {
     return Expanded(
       child: Container(
-        color: Colors.white,
+        color: AppColors.branco,
         child: ListView.builder(
           controller: _scrollController,
           shrinkWrap: true,
@@ -199,7 +200,7 @@ class EmpresaAgendarlWidget extends State<EmpresaAgendarPage> {
     return Container(
       height: 80,
       width: largura * 0.60,
-      color: Colors.white,
+      color: AppColors.branco,
       alignment: Alignment.centerLeft,
       padding: EdgeInsets.only(
         left: widthSize * 0.07,

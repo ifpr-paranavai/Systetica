@@ -1,10 +1,11 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
+import 'package:systetica/style/app_colors..dart';
 
 class PesquisaWidget extends StatefulWidget {
   PesquisaWidget({
-    this.cor = Colors.grey,
+    this.cor = AppColors.branco,
     required this.altura,
     required this.largura,
     required this.hintText,

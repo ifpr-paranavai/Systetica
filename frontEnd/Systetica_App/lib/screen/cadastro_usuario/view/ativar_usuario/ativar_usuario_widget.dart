@@ -9,6 +9,7 @@ import 'package:systetica/model/validator/MultiValidatorUsuario.dart';
 import 'package:systetica/screen/cadastro_usuario/cadastro_controller.dart';
 import 'package:systetica/screen/cadastro_usuario/view/ativar_usuario/ativar_usuario_page.dart';
 import 'package:systetica/screen/login/view/gerar_codigo/gerar_codigo_page.dart';
+import 'package:systetica/style/app_colors..dart';
 
 class AtivarUsuarioWidget extends State<AtivarUsuarioPage> {
   final CadastroController _controller = CadastroController();
@@ -21,25 +22,31 @@ class AtivarUsuarioWidget extends State<AtivarUsuarioPage> {
     double largura = MediaQuery.of(context).size.width;
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.branco,
         floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
         floatingActionButton: IconArrowWidget(
           paddingTop: altura * 0.01,
           onPressed: () => Navigator.pop(context),
         ),
-        body: SingleChildScrollView(
-          child: Form(
-            autovalidateMode: AutovalidateMode.onUserInteraction,
-            key: _controller.formKey,
-            child: Column(
-              children: [
-                _imageAtivarUsuario(paddinTop: altura * 0.03),
-                _textAtivar(),
-                _inputEmail(paddingHorizontal: largura * 0.08),
-                _inputCodigo(paddingHorizontal: largura * 0.08),
-                _botaoAtivaUsuario(),
-                _botaoReenviarCodigo(),
-              ],
+        body: NotificationListener<OverscrollIndicatorNotification>(
+          onNotification: (overScroll) {
+            overScroll.disallowIndicator();
+            return false;
+          },
+          child: SingleChildScrollView(
+            child: Form(
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              key: _controller.formKey,
+              child: Column(
+                children: [
+                  _imageAtivarUsuario(paddinTop: altura * 0.03),
+                  _textAtivar(),
+                  _inputEmail(paddingHorizontal: largura * 0.08),
+                  _inputCodigo(paddingHorizontal: largura * 0.08),
+                  _botaoAtivaUsuario(),
+                  _botaoReenviarCodigo(),
+                ],
+              ),
             ),
           ),
         ),

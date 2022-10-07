@@ -28,7 +28,7 @@ class HomeWidget extends State<HomePage> {
     double screenWidth = MediaQuery.of(context).size.width;
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.branco,
         body: Center(
           child: _widgetOpcoes.elementAt(_selectedIndex),
         ),
@@ -36,11 +36,10 @@ class HomeWidget extends State<HomePage> {
           margin: const EdgeInsets.all(10),
           height: screenWidth * .159,
           decoration: BoxDecoration(
-            color: Colors.white,
             borderRadius: BorderRadius.circular(50),
             border: Border.all(
               color: Colors.black,
-              width: 0.15,
+              width: 0.17,
             ),
             boxShadow: [
               BoxShadow(

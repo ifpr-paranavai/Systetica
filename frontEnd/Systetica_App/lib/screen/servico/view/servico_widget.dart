@@ -31,7 +31,7 @@ class ServicoWidget extends State<ServicoPage> {
     double _largura = MediaQuery.of(context).size.width;
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.branco,
         floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
         floatingActionButton: IconArrowWidget(
           paddingTop: _altura * 0.011,
@@ -121,7 +121,7 @@ class ServicoWidget extends State<ServicoPage> {
   }) {
     return Expanded(
       child: Container(
-        color: Colors.grey.withOpacity(0.2),
+        color: AppColors.branco,
         child: ListView.builder(
           controller: _scrollController,
           shrinkWrap: true,

@@ -1,6 +1,7 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
+import 'package:systetica/style/app_colors..dart';
 
 class IconArrowWidget extends StatefulWidget {
   IconArrowWidget({
@@ -20,6 +21,7 @@ class _IconArrowWidget extends State<IconArrowWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      color: AppColors.branco,
       padding: EdgeInsets.only(
         top: widget.paddingTop,
       ),

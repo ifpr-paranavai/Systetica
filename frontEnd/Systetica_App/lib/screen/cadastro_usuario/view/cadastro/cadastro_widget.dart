@@ -9,6 +9,7 @@ import 'package:systetica/model/validator/MultiValidatorUsuario.dart';
 import 'package:systetica/screen/cadastro_usuario/cadastro_controller.dart';
 import 'package:systetica/screen/cadastro_usuario/view/ativar_usuario/ativar_usuario_page.dart';
 import 'package:systetica/screen/cadastro_usuario/view/cadastro/cadastro_page.dart';
+import 'package:systetica/style/app_colors..dart';
 
 class CadastroWidget extends State<CadastroPage> {
   final CadastroController _controller = CadastroController();
@@ -36,29 +37,35 @@ class CadastroWidget extends State<CadastroPage> {
     double _largura = MediaQuery.of(context).size.width;
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.branco,
         floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
         floatingActionButton: IconArrowWidget(
           paddingTop: _altura * 0.01,
           onPressed: () => Navigator.pop(context),
         ),
-        body: SingleChildScrollView(
-          controller: _scrollController,
-          child: Form(
-            autovalidateMode: AutovalidateMode.onUserInteraction,
-            key: _controller.formKey,
-            child: Column(
-              children: [
-                _imageRegistro(paddinTop: _altura),
-                _textoAutenticacao(),
-                _inputNome(paddingHorizontal: _largura),
-                _inputTelefone(paddingHorizontal: _largura),
-                _inputEmail(paddingHorizontal: _largura),
-                _inputSenha(paddingHorizontal: _largura),
-                _inputConfirmaSenha(paddingHorizontal: _largura),
-                _botaoCadastrar(),
-                _botaoAtivar(),
-              ],
+        body: NotificationListener<OverscrollIndicatorNotification>(
+          onNotification: (overScroll) {
+            overScroll.disallowIndicator();
+            return false;
+          },
+          child: SingleChildScrollView(
+            controller: _scrollController,
+            child: Form(
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              key: _controller.formKey,
+              child: Column(
+                children: [
+                  _imageRegistro(paddinTop: _altura),
+                  _textoAutenticacao(),
+                  _inputNome(paddingHorizontal: _largura),
+                  _inputTelefone(paddingHorizontal: _largura),
+                  _inputEmail(paddingHorizontal: _largura),
+                  _inputSenha(paddingHorizontal: _largura),
+                  _inputConfirmaSenha(paddingHorizontal: _largura),
+                  _botaoCadastrar(),
+                  _botaoAtivar(),
+                ],
+              ),
             ),
           ),
         ),

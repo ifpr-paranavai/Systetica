@@ -37,7 +37,7 @@ class _ListViewComponent extends State<ListViewComponent> {
         ),
         border: Border.all(
           color: Colors.black,
-          width: 0.1,
+          width: 0.15,
         ),
       ),
       child: InkWell(

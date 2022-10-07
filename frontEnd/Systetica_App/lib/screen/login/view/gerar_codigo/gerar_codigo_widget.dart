@@ -7,6 +7,7 @@ import 'package:systetica/components/text_autenticacoes_widget.dart';
 import 'package:systetica/model/validator/MultiValidatorUsuario.dart';
 import 'package:systetica/screen/login/login_controller.dart';
 import 'package:systetica/screen/login/view/gerar_codigo/gerar_codigo_page.dart';
+import 'package:systetica/style/app_colors..dart';
 
 class GerarCodigoWidget extends State<GerarCodigoPage> {
   final LoginController _controller = LoginController();
@@ -19,23 +20,29 @@ class GerarCodigoWidget extends State<GerarCodigoPage> {
     double largura = MediaQuery.of(context).size.width;
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.branco,
         floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
         floatingActionButton: IconArrowWidget(
           paddingTop: altura * 0.01,
           onPressed: () => Navigator.pop(context),
         ),
-        body: SingleChildScrollView(
-          child: Form(
-            autovalidateMode: AutovalidateMode.onUserInteraction,
-            key: _controller.formKey,
-            child: Column(
-              children: [
-                _imagemGerarCodigo(paddinTop: altura * 0.03),
-                _textoGerarCodigo(),
-                _inputEmail(paddingHorizontal: largura * 0.08),
-                _botaoGerarCodigo(),
-              ],
+        body: NotificationListener<OverscrollIndicatorNotification>(
+          onNotification: (overScroll) {
+            overScroll.disallowIndicator();
+            return false;
+          },
+          child: SingleChildScrollView(
+            child: Form(
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              key: _controller.formKey,
+              child: Column(
+                children: [
+                  _imagemGerarCodigo(paddinTop: altura * 0.03),
+                  _textoGerarCodigo(),
+                  _inputEmail(paddingHorizontal: largura * 0.08),
+                  _botaoGerarCodigo(),
+                ],
+              ),
             ),
           ),
         ),

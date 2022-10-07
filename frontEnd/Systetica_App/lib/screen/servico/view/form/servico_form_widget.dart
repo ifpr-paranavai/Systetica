@@ -5,6 +5,7 @@ import 'package:systetica/model/validator/MultiValidatorServico.dart';
 import 'package:systetica/screen/servico/component/input_servico.dart';
 import 'package:systetica/screen/servico/servico_controller.dart';
 import 'package:systetica/screen/servico/view/form/servico_form_page.dart';
+import 'package:systetica/style/app_colors..dart';
 
 class ServicoFormWidget extends State<ServicoFormPage> {
   final ServicoController _controller = ServicoController();
@@ -38,7 +39,7 @@ class ServicoFormWidget extends State<ServicoFormPage> {
     double _largura = MediaQuery.of(context).size.width;
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.branco,
         floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
         floatingActionButton: IconArrowWidget(
           paddingTop: _altura * 0.01,
@@ -61,7 +62,8 @@ class ServicoFormWidget extends State<ServicoFormPage> {
                   children: [
                     _sizedBox(height: _altura * 0.15),
                     _inputServico.textoCadastrarServico(
-                        texto: "Cadastrar Serviço"),
+                      texto: "Cadastrar Serviço",
+                    ),
                     _inputServico.inputNomeServico(
                       paddingHorizontal: _largura,
                       controller: _controller,

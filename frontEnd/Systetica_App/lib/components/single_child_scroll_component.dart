@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:systetica/style/app_colors..dart';
 
 class SingleChildScrollComponent extends StatefulWidget {
   const SingleChildScrollComponent({
@@ -17,13 +18,7 @@ class _SingleChildScrollComponentState extends State<SingleChildScrollComponent>
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: const Alignment(0.3, 0.05),
-          colors: [Colors.grey.withOpacity(0.4), Colors.white],
-        ),
-      ),
+      color: AppColors.branco,
       child: Column(
         children: [
           Expanded(

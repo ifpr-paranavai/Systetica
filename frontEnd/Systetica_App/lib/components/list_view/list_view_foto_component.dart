@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:systetica/components/foto/foto_widget.dart';
+import 'package:systetica/style/app_colors..dart';
 
 class ListViewFotoOrNumeroComponent extends StatefulWidget {
   const ListViewFotoOrNumeroComponent({
@@ -32,13 +33,13 @@ class _ListViewFotooComponent extends State<ListViewFotoOrNumeroComponent> {
       margin: EdgeInsets.only(bottom: widget.largura * 0.05),
       height: widget.altura * 0.10,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.branco,
         borderRadius: const BorderRadius.all(
           Radius.circular(15),
         ),
         border: Border.all(
           color: Colors.black,
-          width: 0.1,
+          width: 0.15,
         ),
       ),
       child: InkWell(

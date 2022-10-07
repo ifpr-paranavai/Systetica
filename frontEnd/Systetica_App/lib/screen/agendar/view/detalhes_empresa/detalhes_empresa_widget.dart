@@ -40,7 +40,7 @@ class DetalhaEmpresaWidget extends State<DetalhaEmpresaPage> {
     _largura = MediaQuery.of(context).size.width;
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.redPrincipal,
         floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
         floatingActionButton: IconArrowWidget(
           paddingTop: _altura * 0.01,

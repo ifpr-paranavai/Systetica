@@ -5,6 +5,7 @@ import 'package:systetica/model/validator/MultiValidatorProduto.dart';
 import 'package:systetica/screen/produto/component/input_produto.dart';
 import 'package:systetica/screen/produto/produto_controller.dart';
 import 'package:systetica/screen/produto/view/form/produto_form_page.dart';
+import 'package:systetica/style/app_colors..dart';
 
 class ProdutoFormWidget extends State<ProdutoFormPage> {
   final ProdutoController _controller = ProdutoController();
@@ -38,7 +39,7 @@ class ProdutoFormWidget extends State<ProdutoFormPage> {
     double _largura = MediaQuery.of(context).size.width;
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.branco,
         floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
         floatingActionButton: IconArrowWidget(
           paddingTop: _altura * 0.01,

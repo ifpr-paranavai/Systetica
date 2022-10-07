@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:systetica/style/app_colors..dart';
 
 class TextAutenticacoesWidget extends StatefulWidget {
   TextAutenticacoesWidget({
@@ -30,8 +31,9 @@ class TextAutenticacoesWidget extends StatefulWidget {
 class _TextAutenticacoesWidget extends State<TextAutenticacoesWidget> {
   @override
   Widget build(BuildContext context) {
-    return Align(
+    return Container(
       alignment: widget.alignment,
+      color: AppColors.branco,
       child: Padding(
         padding: EdgeInsets.only(
           left: widget.paddingLeft,

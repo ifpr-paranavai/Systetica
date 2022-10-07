@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:systetica/components/botoes/botao_widget.dart';
 import 'package:systetica/components/text_autenticacoes_widget.dart';
+import 'package:systetica/style/app_colors..dart';
 
 class AgendarComponente {
   static Widget containerGeral({required Widget widget}) {
@@ -8,13 +9,7 @@ class AgendarComponente {
       child: Container(
         padding: const EdgeInsets.only(top: 15),
         alignment: Alignment.topCenter,
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: const Alignment(0.2, 0.03),
-            colors: [Colors.grey.withOpacity(0.2), Colors.white],
-          ),
-        ),
+        color: AppColors.branco,
         child: widget,
       ),
     );
@@ -30,7 +25,7 @@ class AgendarComponente {
         left: largura * 0.1,
         top: altura * 0.019,
       ),
-      color: Colors.grey.withOpacity(0.2),
+      color: AppColors.branco,
       child: TextAutenticacoesWidget(
         text: text,
         fontSize: 30,
