@@ -19,6 +19,10 @@ class AgendarController {
   final formKey = GlobalKey<FormState>();
   late List<Empresa> empresas = [];
   late Empresa empresa;
+  Color corBotao = Colors.grey.withOpacity(0.9);
+  Color overlayCorBotao = Colors.transparent;
+  double largura = 0;
+  double altura = 0;
 
   Future<Info?> buscarEmpresas({
     required BuildContext context,

@@ -18,11 +18,7 @@ class SelecionarHorarioWidget extends State<SelecionarHorarioPage> {
   var myPageTransition = MyPageTransition();
 
   DateTime? dateTime;
-  double _largura = 0;
-  double _altura = 0;
   bool loading = true;
-  Color corBotao = Colors.grey.withOpacity(0.9);
-  Color overlayCorBotao = Colors.transparent;
   List<HorarioAgendamento> horariosAgendamento = [];
   bool horarioSelecionado = false;
 
@@ -53,14 +49,14 @@ class SelecionarHorarioWidget extends State<SelecionarHorarioPage> {
 
   @override
   Widget build(BuildContext context) {
-    _largura = MediaQuery.of(context).size.width;
-    _altura = MediaQuery.of(context).size.height;
+    _controller.largura = MediaQuery.of(context).size.width;
+    _controller.altura = MediaQuery.of(context).size.height;
     return SafeArea(
       child: Scaffold(
         backgroundColor: AppColors.branco,
         floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
         floatingActionButton: IconArrowWidget(
-          paddingTop: _altura * 0.011,
+          paddingTop: _controller.altura * 0.011,
           onPressed: () => Navigator.pop(context),
         ),
         body: _body(),
@@ -79,8 +75,8 @@ class SelecionarHorarioWidget extends State<SelecionarHorarioPage> {
           Column(
             children: [
               AgendarComponente.info(
-                altura: _altura,
-                largura: _largura,
+                altura: _controller.altura,
+                largura: _controller.largura,
                 text: "DATA DO AGENDAMENTO",
               ),
               AgendarComponente.containerGeral(
@@ -94,10 +90,10 @@ class SelecionarHorarioWidget extends State<SelecionarHorarioPage> {
             ],
           ),
           AgendarComponente.botaoSelecinar(
-            altura: _altura,
-            largura: _largura,
-            corBotao: corBotao,
-            overlayCorBotao: overlayCorBotao,
+            altura: _controller.altura,
+            largura: _controller.largura,
+            corBotao: _controller.corBotao,
+            overlayCorBotao: _controller.overlayCorBotao,
             labelText: "AGENDAR",
             onPressed: () => {
               horarioSelecionado == true
@@ -241,12 +237,12 @@ class SelecionarHorarioWidget extends State<SelecionarHorarioPage> {
   void _ativarDesativarBotao() {
     if (widget.agendamento.horarioAgendamento.horarioAgendamento == null) {
       horarioSelecionado = false;
-      corBotao = Colors.grey.withOpacity(0.9);
-      overlayCorBotao = Colors.transparent;
+      _controller.corBotao = Colors.grey.withOpacity(0.9);
+      _controller.overlayCorBotao = Colors.transparent;
     } else {
       horarioSelecionado = true;
-      corBotao = Colors.black87.withOpacity(0.9);
-      overlayCorBotao = AppColors.blue5;
+      _controller.corBotao = Colors.black87.withOpacity(0.9);
+      _controller.overlayCorBotao = AppColors.blue5;
     }
   }
 

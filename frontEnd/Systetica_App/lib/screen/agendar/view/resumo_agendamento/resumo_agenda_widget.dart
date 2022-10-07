@@ -12,8 +12,6 @@ class ResumoAgendaWidget extends State<ResumoAgendaPage> {
   final ScrollController _scrollController = ScrollController();
   final AgendarController _controller = AgendarController();
   var myPageTransition = MyPageTransition();
-  double _largura = 0;
-  double _altura = 0;
 
   @override
   void initState() {
@@ -23,14 +21,14 @@ class ResumoAgendaWidget extends State<ResumoAgendaPage> {
 
   @override
   Widget build(BuildContext context) {
-    _largura = MediaQuery.of(context).size.width;
-    _altura = MediaQuery.of(context).size.height;
+    _controller.largura = MediaQuery.of(context).size.width;
+    _controller.altura = MediaQuery.of(context).size.height;
     return SafeArea(
       child: Scaffold(
         backgroundColor: AppColors.branco,
         floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
         floatingActionButton: IconArrowWidget(
-          paddingTop: _altura * 0.011,
+          paddingTop: _controller.altura * 0.011,
           onPressed: () => Navigator.pop(context),
         ),
         body: _body(),
@@ -44,17 +42,17 @@ class ResumoAgendaWidget extends State<ResumoAgendaPage> {
         Column(
           children: [
             AgendarComponente.info(
-              altura: _altura,
-              largura: _largura,
+              altura: _controller.altura,
+              largura: _controller.largura,
               text: "RESUMO DO AGENDAMENTO",
             ),
             _checkboxSelect(),
-            _sizedBox(height: _altura * 0.08),
+            _sizedBox(height: _controller.altura * 0.08),
           ],
         ),
         AgendarComponente.botaoSelecinar(
-          altura: _altura,
-          largura: _largura,
+          altura: _controller.altura,
+          largura: _controller.largura,
           corBotao: Colors.black87.withOpacity(0.9),
           overlayCorBotao: AppColors.blue5,
           labelText: "AGENDAR",
@@ -156,11 +154,11 @@ class ResumoAgendaWidget extends State<ResumoAgendaPage> {
   }) {
     return Container(
       margin: EdgeInsets.only(
-        bottom: _largura * 0.05,
+        bottom: _controller.largura * 0.05,
         left: 10,
         right: 10,
       ),
-      width: _largura,
+      width: _controller.largura,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: const BorderRadius.all(
