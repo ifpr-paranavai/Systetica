@@ -5,6 +5,7 @@ import com.frfs.systetica.dto.AgendarServicoDTO;
 import com.frfs.systetica.dto.response.ReturnData;
 import com.frfs.systetica.entity.AgendarServico;
 import com.frfs.systetica.entity.Empresa;
+import com.frfs.systetica.entity.Role;
 import com.frfs.systetica.entity.Usuario;
 import com.frfs.systetica.exception.BusinessException;
 import com.frfs.systetica.mapper.AgendarServicoMapper;
@@ -19,10 +20,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -40,30 +38,48 @@ public class AgendarServicoServiceImpl implements AgendarServicoService {
     private final ServicoMapper servicoMapper;
 
     @Override
-    public ReturnData<Object> buscarTodosAgendamentoPorDia(String dataAgendamento, String email) {
+    public ReturnData<Object> buscarTodosAgendamentoPorDia(String dataAgendamento) {
         List<String> listaDeHorarios = new ArrayList<>();
+        List<AgendarServico> servicosAgendados = agendarServicoRepository
+                .findByDataAgendamentoOrderByHorarioAgendamento(dataAgendamento);
+
+        if (servicosAgendados.isEmpty()) {
+            return new ReturnData<>(true, "", listaDeHorarios);
+        }
+
+        servicosAgendados.forEach(servico ->
+                listaDeHorarios.add(servico.getHorarioAgendamento().toString())
+        );
+
+        return new ReturnData<>(true, "", listaDeHorarios);
+    }
+
+    @Override
+    public ReturnData<Object> buscarTodosAgendamentoPorDiaUsuario(String dataAgendamento, String email) {
+        Optional<Usuario> usuario = usuarioRepository.findByEmail(email);
         List<AgendarServico> servicosAgendados;
 
-        if (email == null) {
-            servicosAgendados = agendarServicoRepository.findByDataAgendamento(dataAgendamento);
+        Role role = new Role();
 
-            if (servicosAgendados.isEmpty()) {
-                return new ReturnData<>(true, "", listaDeHorarios);
-            }
+        usuario.get().getRoles().forEach(element -> {
+            role.setId(element.getId());
+            role.setName(element.getName());
+        });
 
-            servicosAgendados.forEach(servico -> {
-                listaDeHorarios.add(servico.getHorarioAgendamento().toString());
-            });
+        if (Objects.equals(role.getName(), "CLIENTE")) {
+            servicosAgendados = agendarServicoRepository
+                    .findByDataAgendamentoAndClienteOrderByHorarioAgendamento(dataAgendamento, usuario.get());
 
-            return new ReturnData<>(true, "", listaDeHorarios);
+        } else if (Objects.equals(role.getName(), "FUNCIONARIO")) {
+            servicosAgendados = agendarServicoRepository
+                    .findByDataAgendamentoAndFuncionarioOrderByHorarioAgendamento(dataAgendamento, usuario.get());
 
         } else {
-            Optional<Usuario> cliente = usuarioRepository.findByEmail(email);
-
-            servicosAgendados = agendarServicoRepository.findByDataAgendamentoAndCliente(dataAgendamento, cliente.get());
-
-            return new ReturnData<>(true, "", agendarServicoMapper.toListDto(servicosAgendados));
+            servicosAgendados = agendarServicoRepository
+                    .findByDataAgendamentoOrderByHorarioAgendamento(dataAgendamento);
         }
+
+        return new ReturnData<>(true, "", agendarServicoMapper.toListDto(servicosAgendados));
     }
 
     @Override

@@ -50,7 +50,7 @@ class AgendamentolWidget extends State<AgendamentoPage> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: AppColors.branco,
-        body: loading ? const LoadingAnimation() : _body(),
+        body: _body(),
       ),
     );
   }
@@ -86,7 +86,11 @@ class AgendamentolWidget extends State<AgendamentoPage> {
                   child: Column(
                     children: [
                       _calendarTimeLine(),
-                      _agendamentoDoDia(),
+                      loading
+                          ? const Expanded(
+                              child: LoadingAnimation(),
+                            )
+                          : _agendamentoDoDia(),
                     ],
                   ),
                 ),
@@ -117,10 +121,11 @@ class AgendamentolWidget extends State<AgendamentoPage> {
       activeDayColor: Colors.white,
       activeBackgroundDayColor: AppColors.redPrincipal,
       dotsColor: Colors.white,
-      onDateSelected: (dataSelecionada) async => {
+      onDateSelected: (dataSelecionada) {
+        loading = true;
         _buscarTodosAgendamentoPorDia(
           dataSelecionada,
-        )
+        );
       },
     );
   }

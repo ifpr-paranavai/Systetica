@@ -10,7 +10,7 @@ import 'package:systetica/model/Token.dart';
 import 'package:systetica/model/agendamento.dart';
 import 'package:systetica/request/dio_config.dart';
 import 'package:systetica/screen/agendar/agendar_service.dart';
-import 'package:systetica/screen/agendar/view/empresas/empresa_agendar_page.dart';
+import 'package:systetica/screen/home/view/home_page.dart';
 import 'package:systetica/utils/util.dart';
 import 'package:intl/intl.dart';
 
@@ -105,7 +105,7 @@ class AgendarController {
             onPressedOk: () => Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(
-                builder: (context) => const EmpresaAgendarPage(),
+                builder: (context) => const HomePage(),
               ),
                   (route) => false,
             ),

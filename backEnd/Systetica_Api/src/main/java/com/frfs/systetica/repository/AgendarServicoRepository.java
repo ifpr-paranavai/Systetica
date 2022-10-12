@@ -11,10 +11,14 @@ import java.util.Optional;
 
 @Repository
 public interface AgendarServicoRepository extends JpaRepository<AgendarServico, Long> {
-    List<AgendarServico> findByDataAgendamento(String dataAgendamento);
+    List<AgendarServico> findByDataAgendamentoOrderByHorarioAgendamento(String dataAgendamento);
 
     Optional<AgendarServico> findByDataAgendamentoAndHorarioAgendamento(String dataAgendamento,
                                                                         LocalTime horarioAgendamento);
 
-    List<AgendarServico> findByDataAgendamentoAndCliente(String dataAgendamento, Usuario cliente);
+    List<AgendarServico> findByDataAgendamentoAndClienteOrderByHorarioAgendamento(String dataAgendamento,
+                                                                                  Usuario cliente);
+
+    List<AgendarServico> findByDataAgendamentoAndFuncionarioOrderByHorarioAgendamento(String dataAgendamento,
+                                                                                      Usuario funcionario);
 }
