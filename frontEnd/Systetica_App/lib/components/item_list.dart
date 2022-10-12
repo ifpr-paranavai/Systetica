@@ -8,12 +8,14 @@ class ItemLista extends StatelessWidget {
     required this.titulo,
     this.paddingHorizonta = 18,
     this.colorDescricao = Colors.black,
+    this.maxLines = 2,
   }) : super(key: key);
 
   final String titulo;
   final String descricao;
   final double paddingHorizonta;
   final Color colorDescricao;
+  final int maxLines;
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +35,7 @@ class ItemLista extends StatelessWidget {
             opacity: 0.6,
             fontWeight: FontWeight.w700,
             colorDescricao: Colors.black,
+            maxLines: 2,
           ),
           sizedBox(
             height: 3,
@@ -43,6 +46,7 @@ class ItemLista extends StatelessWidget {
             opacity: 0.5,
             fontWeight: FontWeight.normal,
             colorDescricao: colorDescricao,
+            maxLines: maxLines,
           ),
           Divider(
             color: AppColors.redPrincipal.withOpacity(0.3),
@@ -58,10 +62,11 @@ class ItemLista extends StatelessWidget {
     required double opacity,
     required FontWeight fontWeight,
     required Color colorDescricao,
+    required int maxLines,
   }) {
     return Text(
       text,
-      maxLines: 2,
+      maxLines: maxLines,
       overflow: TextOverflow.ellipsis,
       style: TextStyle(
         fontSize: fontSize,

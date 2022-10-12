@@ -1,22 +1,25 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:systetica/components/icon_arrow_widget.dart';
-import 'package:systetica/components/page_transition.dart';
-import 'package:systetica/screen/agendar/agendar_controller.dart';
+import 'package:systetica/screen/agendamentos/agendamento_controller.dart';
+import 'package:systetica/screen/agendamentos/view/detalhes_agendamento/detalhes_agendamento_page.dart';
 import 'package:systetica/screen/agendar/component/agendar_componente.dart';
-import 'package:systetica/screen/agendar/view/resumo_agendamento/resumo_agenda_page.dart';
 import 'package:systetica/style/app_colors..dart';
 import 'package:systetica/utils/util.dart';
+import 'package:brasil_fields/brasil_fields.dart';
 
-class ResumoAgendaWidget extends State<ResumoAgendaPage> {
+class DetalhesAgendamentoWidget extends State<DetalhesAgendamentoPage> {
   final ScrollController _scrollController = ScrollController();
-  final AgendarController _controller = AgendarController();
-  var myPageTransition = MyPageTransition();
+  final AgendamentoController _controller = AgendamentoController();
+
+  double total = 0;
 
   @override
   void initState() {
     super.initState();
-    widget.agendamento;
+    widget.agendamentoServico.servicos!.forEach((element) {
+      total += element.preco!;
+    });
   }
 
   @override
@@ -50,29 +53,24 @@ class ResumoAgendaWidget extends State<ResumoAgendaPage> {
             _sizedBox(height: _controller.altura * 0.08),
           ],
         ),
-        AgendarComponente.botaoSelecinar(
-          altura: _controller.altura,
-          largura: _controller.largura,
-          corBotao: Colors.black87.withOpacity(0.9),
-          overlayCorBotao: AppColors.blue5,
-          labelText: "AGENDAR",
-          onPressed: () => _controller
-              .agendarHorario(
-                agendamento: widget.agendamento,
-                context: context,
+        widget.agendamentoServico.situacao!.name == "AGENDADO"
+            ? AgendarComponente.botaoSelecinar(
+                altura: _controller.altura,
+                largura: _controller.largura,
+                corBotao: Colors.black87.withOpacity(0.9),
+                overlayCorBotao: AppColors.blue5,
+                labelText: "DESMARCAR",
+                onPressed: () {},
               )
-              .then(
-                (value) => setState(
-                  () {},
-                ),
-              ),
-        ),
+            : const SizedBox(),
       ],
     );
   }
 
   Widget _checkboxSelect() {
-    int itemCount = widget.agendamento.servicosSelecionados.length;
+    int itemCount = widget.agendamentoServico.servicos!.length;
+    String titulo;
+    itemCount > 1 ? titulo = "Serviços" : titulo = "Serviço";
     return NotificationListener<OverscrollIndicatorNotification>(
       onNotification: (overScroll) {
         overScroll.disallowIndicator();
@@ -84,7 +82,7 @@ class ResumoAgendaWidget extends State<ResumoAgendaPage> {
           child: Column(
             children: [
               _titulo(
-                texto: itemCount > 1 ? "Serviços" : "Serviço",
+                texto: titulo,
               ),
               ListView.builder(
                 controller: _scrollController,
@@ -92,30 +90,45 @@ class ResumoAgendaWidget extends State<ResumoAgendaPage> {
                 itemCount: itemCount,
                 itemBuilder: (BuildContext context, int index) {
                   return _listSelecao(
-                    nome: widget.agendamento.servicosSelecionados[index].nome!,
-                    subTitulo: widget.agendamento.servicosSelecionados[index]
-                            .tempoServico
+                    nome: widget.agendamentoServico.servicos![index].nome!,
+                    subTitulo: widget
+                            .agendamentoServico.servicos![index].tempoServico
                             .toString() +
                         ' min',
                     icon: CupertinoIcons.scissors_alt,
-                    maxLines: widget.agendamento.servicosSelecionados.length,
+                    maxLines: widget.agendamentoServico.servicos!.length,
                   );
                 },
               ),
+              _titulo(texto: "Total"),
+              _listSelecao(
+                nome: UtilBrasilFields.obterReal(
+                  total,
+                ),
+                terSubTituulo: false,
+                icon: Icons.phone_android,
+              ),
               _titulo(texto: "Barbeiro"),
               _listSelecao(
-                nome: widget.agendamento.funcionario.nome!,
+                nome: widget.agendamentoServico.funcionario!.nome!,
                 terSubTituulo: false,
                 icon: Icons.person,
               ),
               _titulo(texto: "Data e horário"),
               _listSelecao(
                 nome: Util.dataEscrito(
-                  widget.agendamento.horarioAgendamento.dataAgendamento!,
+                  DateTime.parse(
+                    widget.agendamentoServico.dataAgendamento!,
+                  ),
                 ),
-                subTitulo:
-                    widget.agendamento.horarioAgendamento.horarioAgendamento!,
+                subTitulo: widget.agendamentoServico.horarioAgendamento!,
                 icon: Icons.calendar_month,
+              ),
+              _titulo(texto: "Status"),
+              _listSelecao(
+                nome: widget.agendamentoServico.situacao!.name,
+                terSubTituulo: false,
+                icon: Icons.phone_android,
               ),
             ],
           ),

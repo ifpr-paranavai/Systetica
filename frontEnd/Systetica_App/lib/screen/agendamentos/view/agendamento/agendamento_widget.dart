@@ -5,7 +5,8 @@ import 'package:systetica/components/item_list.dart';
 import 'package:systetica/components/loading/loading_animation.dart';
 import 'package:systetica/components/text_autenticacoes_widget.dart';
 import 'package:systetica/screen/agendamentos/agendamento_controller.dart';
-import 'package:systetica/screen/agendamentos/view/agendamento_page.dart';
+import 'package:systetica/screen/agendamentos/view/agendamento/agendamento_page.dart';
+import 'package:systetica/screen/agendamentos/view/detalhes_agendamento/detalhes_agendamento_page.dart';
 import 'package:systetica/style/app_colors..dart';
 import 'package:systetica/utils/util.dart';
 
@@ -146,21 +147,16 @@ class AgendamentolWidget extends State<AgendamentoPage> {
                   _textoErro(),
                 ],
               )
-            : InkWell(
-                child: GridView.count(
-                  crossAxisCount: 1,
-                  childAspectRatio: _controller.altura * 0.002,
-                  mainAxisSpacing: 18,
-                  crossAxisSpacing: 0,
-                  shrinkWrap: true,
-                  physics: const BouncingScrollPhysics(
-                    parent: AlwaysScrollableScrollPhysics(),
-                  ),
-                  children: _listaDeHorarios(),
+            : GridView.count(
+                crossAxisCount: 1,
+                childAspectRatio: _controller.altura * 0.002,
+                mainAxisSpacing: 18,
+                crossAxisSpacing: 0,
+                shrinkWrap: true,
+                physics: const BouncingScrollPhysics(
+                  parent: AlwaysScrollableScrollPhysics(),
                 ),
-                onTap: () {
-                  print("clicado");
-                },
+                children: _listaDeHorarios(),
               ),
       ),
     );
@@ -176,29 +172,60 @@ class AgendamentolWidget extends State<AgendamentoPage> {
   }
 
   Widget _cardInfoUsuario(int index) {
-    return Card(
-      shape: RoundedRectangleBorder(
-        side: const BorderSide(
-          color: Colors.black,
-          width: 0.15,
-        ),
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Column(
-        children: [
-          _sizedBox(height: 5),
-          _itemNome(_controller.agendamentos[index].cliente!.nome!),
-          _itemDataHorario(
-            Util.dataEscrito(
-                  DateTime.parse(
-                      _controller.agendamentos[index].dataAgendamento!),
-                ) +
-                ' ás ' +
-                _controller.agendamentos[index].horarioAgendamento!,
+    return InkWell(
+      child: Card(
+        shape: RoundedRectangleBorder(
+          side: const BorderSide(
+            color: Colors.black,
+            width: 0.15,
           ),
-          _itemStatus(_controller.agendamentos[index].situacao!.name),
-        ],
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Column(
+          children: [
+            _sizedBox(height: 5),
+            Row(
+              children: [
+                SizedBox(
+                  width: _controller.largura * 0.74,
+                  child: _itemNome(
+                    _controller.agendamentos[index].cliente!.nome!,
+                  ),
+                ),
+                const Icon(
+                  Icons.keyboard_arrow_right_outlined,
+                  size: 32,
+                ),
+              ],
+            ),
+            _itemDataHorario(
+              Util.dataEscrito(
+                    DateTime.parse(
+                        _controller.agendamentos[index].dataAgendamento!),
+                  ) +
+                  ' ás ' +
+                  _controller.agendamentos[index].horarioAgendamento!,
+            ),
+            _itemStatus(_controller.agendamentos[index].situacao!.name),
+          ],
+        ),
       ),
+      onTap: () {
+        Navigator.of(context)
+            .push(
+              _controller.myPageTransition.pageTransition(
+                child: DetalhesAgendamentoPage(
+                    agendamentoServico: _controller.agendamentos[index]),
+                childCurrent: widget,
+                buttoToTop: true,
+              ),
+            )
+            .then(
+              (value) => setState(() {
+                _buscarTodosAgendamentoPorDia(dateTime!);
+              }),
+            );
+      },
     );
   }
 
@@ -206,6 +233,7 @@ class AgendamentolWidget extends State<AgendamentoPage> {
     return ItemLista(
       titulo: "Nome",
       descricao: nome,
+      maxLines: 1,
     );
   }
 
