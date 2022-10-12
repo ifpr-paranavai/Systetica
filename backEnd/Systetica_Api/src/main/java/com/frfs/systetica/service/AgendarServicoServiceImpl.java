@@ -111,11 +111,31 @@ public class AgendarServicoServiceImpl implements AgendarServicoService {
                 return new ReturnData<>(true, "Serviço agendado com sucesso.", "");
             }
 
-            return new ReturnData<>(false, "Já foi agendado um serviço para o horário selecionado.", "");
+            return new ReturnData<>(false, "Já foi agendado um serviço para o horário selecionado.",
+                    "");
         } catch (BusinessException busEx) {
             return new ReturnData<>(false, "Ocorreu um erro ao salvar um serviço", busEx.getMessage());
         } catch (Exception ex) {
-            return new ReturnData<>(false, "Ocorreu um erro ao salvar um serviço", ex.getMessage() + "\nMotivo: " + ex.getCause());
+            return new ReturnData<>(false, "Ocorreu um erro ao salvar um serviço",
+                    ex.getMessage() + "\nMotivo: " + ex.getCause());
+        }
+    }
+
+    @Override
+    public ReturnData<String> cancelar(AgendarServicoDTO agendarServicoDTO) {
+        try {
+            Optional<AgendarServico> agendarServico = agendarServicoRepository.findById(agendarServicoDTO.getId());
+
+            agendarServico.get().setSituacao(situacaoRepository.findByName("CANCELADO").get());
+
+            agendarServicoRepository.saveAndFlush(agendarServico.get());
+
+            return new ReturnData<>(false, "Serviço cancelado com sucesso.", "");
+        } catch (BusinessException busEx) {
+            return new ReturnData<>(false, "Ocorreu um erro ao cancelar o serviço", busEx.getMessage());
+        } catch (Exception ex) {
+            return new ReturnData<>(false, "Ocorreu um erro ao cancelar o um serviço",
+                    ex.getMessage() + "\nMotivo: " + ex.getCause());
         }
     }
 }

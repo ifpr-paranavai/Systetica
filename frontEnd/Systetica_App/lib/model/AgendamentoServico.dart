@@ -31,7 +31,8 @@ class AgendamentoServico {
     dataAgendamento = json['data_agendamento'];
     horarioAgendamento = json['horario_agendamento'];
     servicos = json['ass_servico_agendado'] != null
-        ? (json['ass_servico_agendado'].map<Servico>((e) => Servico.fromJson(e))).toList()
+        ? (json['ass_servico_agendado']
+            .map<Servico>((e) => Servico.fromJson(e))).toList()
         : [];
     situacao = Situacao.fromJson(json['situacao']);
     cliente = Usuario.fromJson(json['cliente']);
@@ -45,11 +46,6 @@ class AgendamentoServico {
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};
     _data['id'] = id;
-    _data['nome_cliente'] = nomeCliente;
-    _data['data_agendamento'] = dataAgendamento;
-    _data['horario_agendamento'] = horarioAgendamento;
-    _data['situacao'] = situacao;
-    _data['cliente'] = cliente;
     return _data;
   }
 }

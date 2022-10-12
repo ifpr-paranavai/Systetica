@@ -50,6 +50,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/produto/buscar-todos/**",
                         "/agendar-servico/buscar-todos-por-dia/**",
                         "/agendar-servico/salvar/**",
+                        "/agendar-servico/cancelar/**",
                         "/empresa/buscar-todos/**")
                 .hasAnyAuthority("ADMINISTRADOR, FUNCIONARIO, CLIENTE");
 

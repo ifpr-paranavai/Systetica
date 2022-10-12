@@ -1,5 +1,8 @@
+// ignore_for_file: avoid_function_literals_in_foreach_calls
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:systetica/components/alert_dialog_widget.dart';
 import 'package:systetica/components/icon_arrow_widget.dart';
 import 'package:systetica/screen/agendamentos/agendamento_controller.dart';
 import 'package:systetica/screen/agendamentos/view/detalhes_agendamento/detalhes_agendamento_page.dart';
@@ -60,8 +63,9 @@ class DetalhesAgendamentoWidget extends State<DetalhesAgendamentoPage> {
                 corBotao: Colors.black87.withOpacity(0.9),
                 overlayCorBotao: AppColors.blue5,
                 labelText: "DESMARCAR",
-                onPressed: () {},
-              )
+                onPressed: () {
+                  confirmaCancelamento();
+                })
             : const SizedBox(),
       ],
     );
@@ -134,6 +138,31 @@ class DetalhesAgendamentoWidget extends State<DetalhesAgendamentoPage> {
           ),
         ),
       ),
+    );
+  }
+
+  void confirmaCancelamento() {
+    var alertDialog = AlertDialogWidget();
+    alertDialog.alertDialog(
+      showModalOk: false,
+      context: context,
+      titulo: "Atenção!",
+      descricao: "Tem certeza que dejesa cancelar o serviço?",
+      onPressedNao: () => Navigator.pop(context),
+      onPressedOk: () async {
+        Navigator.pop(context);
+        await _controller
+            .cancelarAgendamento(
+              agendamentoServico: widget.agendamentoServico,
+              context: context,
+            )
+            .then(
+              (value) => setState(
+                () {},
+              ),
+            );
+        Navigator.pop(context);
+      },
     );
   }
 
