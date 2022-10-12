@@ -5,7 +5,6 @@ import com.frfs.systetica.dto.AgendarServicoDTO;
 import com.frfs.systetica.dto.response.ReturnData;
 import com.frfs.systetica.entity.AgendarServico;
 import com.frfs.systetica.entity.Empresa;
-import com.frfs.systetica.entity.Situacao;
 import com.frfs.systetica.entity.Usuario;
 import com.frfs.systetica.exception.BusinessException;
 import com.frfs.systetica.mapper.AgendarServicoMapper;
@@ -41,18 +40,30 @@ public class AgendarServicoServiceImpl implements AgendarServicoService {
     private final ServicoMapper servicoMapper;
 
     @Override
-    public ReturnData<Object> buscarTodosAgendamentoPorDia(String dataAgendamento) {
+    public ReturnData<Object> buscarTodosAgendamentoPorDia(String dataAgendamento, String email) {
         List<String> listaDeHorarios = new ArrayList<>();
-        List<AgendarServico> servicosAgendados = agendarServicoRepository.findByDataAgendamento(dataAgendamento);
+        List<AgendarServico> servicosAgendados;
 
-        if (servicosAgendados.isEmpty()) {
+        if (email == null) {
+            servicosAgendados = agendarServicoRepository.findByDataAgendamento(dataAgendamento);
+
+            if (servicosAgendados.isEmpty()) {
+                return new ReturnData<>(true, "", listaDeHorarios);
+            }
+
+            servicosAgendados.forEach(servico -> {
+                listaDeHorarios.add(servico.getHorarioAgendamento().toString());
+            });
+
             return new ReturnData<>(true, "", listaDeHorarios);
-        }
 
-        servicosAgendados.forEach(servico -> {
-            listaDeHorarios.add(servico.getHorarioAgendamento().toString());
-        });
-        return new ReturnData<>(true, "", listaDeHorarios);
+        } else {
+            Optional<Usuario> cliente = usuarioRepository.findByEmail(email);
+
+            servicosAgendados = agendarServicoRepository.findByDataAgendamentoAndCliente(dataAgendamento, cliente.get());
+
+            return new ReturnData<>(true, "", agendarServicoMapper.toListDto(servicosAgendados));
+        }
     }
 
     @Override

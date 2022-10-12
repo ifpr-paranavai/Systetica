@@ -45,7 +45,7 @@ public class ServicoDTO implements Serializable {
     private EmpresaDTO empresa;
 
     @JsonProperty("agendar_servicos")
-    private List<AgendarServicoDTO> agendarServicosDTO = new ArrayList<>();
+    private List<AgendarServicoDTO> agendarServicos = new ArrayList<>();
 
     @JsonProperty("email_administrativo")
     private String emailAdministrativo;

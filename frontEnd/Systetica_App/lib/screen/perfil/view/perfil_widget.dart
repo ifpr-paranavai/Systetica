@@ -198,8 +198,7 @@ class PerfilWidget extends State<PerfilPage> {
 
   ItemLista _itemNome(String nome) {
     return ItemLista(
-      titulo: "Nome"
-          "",
+      titulo: "Nome",
       descricao: nome,
     );
   }

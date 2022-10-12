@@ -14,6 +14,7 @@ public interface ServicoMapper {
 
     @Mappings({
             @Mapping(target = "empresa", ignore = true),
+            @Mapping(target = "agendarServicos", ignore = true),
     })
     ServicoDTO toDto(Servico entity);
 

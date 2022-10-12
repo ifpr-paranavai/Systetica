@@ -69,5 +69,4 @@ public class AgendarServico implements Serializable {
             joinColumns = @JoinColumn(name = "id_agendar_servico"),
             inverseJoinColumns = @JoinColumn(name = "id_servico"))
     private List<Servico> servicos = new ArrayList<>();
-
 }
