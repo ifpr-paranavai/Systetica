@@ -101,7 +101,7 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
                 usuarioDTO.getCodigoAleatorio());
 
         if (usuario.isEmpty()) {
-            return new ReturnData<>(false, "Email ou código informado inválido");
+            return new ReturnData<>(false, "Email ou Código inválido");
         }
         var tempoExpiracao = new Date().getTime() - usuario.get().getDataCadastro().getTime();
 
@@ -146,7 +146,7 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
                     usuarioDTO.getCodigoAleatorio());
 
             if (usuario.isEmpty()) {
-                return new ReturnData<>(false, "Email ou código são inválidos");
+                return new ReturnData<>(false, "Email ou Código inválido");
             }
             usuario.get().setCodigoAleatorio(null);
             usuario.get().setDataCodigo(null);

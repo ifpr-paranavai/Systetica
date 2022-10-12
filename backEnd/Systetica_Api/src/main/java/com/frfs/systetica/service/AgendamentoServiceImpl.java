@@ -8,11 +8,11 @@ import com.frfs.systetica.entity.Empresa;
 import com.frfs.systetica.entity.Role;
 import com.frfs.systetica.entity.Usuario;
 import com.frfs.systetica.exception.BusinessException;
-import com.frfs.systetica.mapper.AgendarServicoMapper;
+import com.frfs.systetica.mapper.AgendamentoMapper;
 import com.frfs.systetica.mapper.EmpresaMapper;
 import com.frfs.systetica.mapper.ServicoMapper;
 import com.frfs.systetica.mapper.UsuarioMapper;
-import com.frfs.systetica.repository.AgendarServicoRepository;
+import com.frfs.systetica.repository.AgendamentoRepository;
 import com.frfs.systetica.repository.EmpresaRepository;
 import com.frfs.systetica.repository.SituacaoRepository;
 import com.frfs.systetica.repository.UsuarioRepository;
@@ -25,14 +25,14 @@ import java.util.*;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class AgendarServicoServiceImpl implements AgendarServicoService {
+public class AgendamentoServiceImpl implements AgendamentoService {
 
-    private final AgendarServicoRepository agendarServicoRepository;
+    private final AgendamentoRepository agendamentoRepository;
     private final UsuarioRepository usuarioRepository;
     private final EmpresaRepository empresaRepository;
     private final SituacaoRepository situacaoRepository;
 
-    private final AgendarServicoMapper agendarServicoMapper;
+    private final AgendamentoMapper agendamentoMapper;
     private final UsuarioMapper usuarioMapper;
     private final EmpresaMapper empresaMapper;
     private final ServicoMapper servicoMapper;
@@ -40,7 +40,7 @@ public class AgendarServicoServiceImpl implements AgendarServicoService {
     @Override
     public ReturnData<Object> buscarTodosAgendamentoPorDia(String dataAgendamento) {
         List<String> listaDeHorarios = new ArrayList<>();
-        List<Agendamento> servicosAgendados = agendarServicoRepository
+        List<Agendamento> servicosAgendados = agendamentoRepository
                 .findByDataAgendamentoOrderByHorarioAgendamento(dataAgendamento);
 
         if (servicosAgendados.isEmpty()) {
@@ -67,26 +67,26 @@ public class AgendarServicoServiceImpl implements AgendarServicoService {
         });
 
         if (Objects.equals(role.getName(), "CLIENTE")) {
-            servicosAgendados = agendarServicoRepository
+            servicosAgendados = agendamentoRepository
                     .findByDataAgendamentoAndClienteOrderByHorarioAgendamento(dataAgendamento, usuario.get());
 
         } else if (Objects.equals(role.getName(), "FUNCIONARIO")) {
-            servicosAgendados = agendarServicoRepository
+            servicosAgendados = agendamentoRepository
                     .findByDataAgendamentoAndFuncionarioOrderByHorarioAgendamento(dataAgendamento, usuario.get());
 
         } else {
-            servicosAgendados = agendarServicoRepository
+            servicosAgendados = agendamentoRepository
                     .findByDataAgendamentoOrderByHorarioAgendamento(dataAgendamento);
         }
 
-        return new ReturnData<>(true, "", agendarServicoMapper.toListDto(servicosAgendados));
+        return new ReturnData<>(true, "", agendamentoMapper.toListDto(servicosAgendados));
     }
 
     @Override
     public ReturnData<String> salvar(DadosAgendamentoDTO dadosAgendamentoDTO) {
         try {
             Optional<Agendamento> agendarServicoBancoDeDados =
-                    agendarServicoRepository.findByDataAgendamentoAndHorarioAgendamento(
+                    agendamentoRepository.findByDataAgendamentoAndHorarioAgendamento(
                             dadosAgendamentoDTO.getHorarioAgendamento().getDataAgendamento(),
                             dadosAgendamentoDTO.getHorarioAgendamento().getHorarioAgendamento());
 
@@ -106,7 +106,7 @@ public class AgendarServicoServiceImpl implements AgendarServicoService {
                 agendamentoDTO.setFuncionario(usuarioMapper.toDto(funcionario.get()));
                 agendamentoDTO.setEmpresa(empresaMapper.toDto(empresa.get()));
 
-                agendarServicoRepository.saveAndFlush(agendarServicoMapper.toEntity(agendamentoDTO));
+                agendamentoRepository.saveAndFlush(agendamentoMapper.toEntity(agendamentoDTO));
 
                 return new ReturnData<>(true, "Serviço agendado com sucesso.", "");
             }
@@ -124,11 +124,11 @@ public class AgendarServicoServiceImpl implements AgendarServicoService {
     @Override
     public ReturnData<String> cancelar(AgendamentoDTO agendamentoDTO) {
         try {
-            Optional<Agendamento> agendarServico = agendarServicoRepository.findById(agendamentoDTO.getId());
+            Optional<Agendamento> agendarServico = agendamentoRepository.findById(agendamentoDTO.getId());
 
             agendarServico.get().setSituacao(situacaoRepository.findByName("CANCELADO").get());
 
-            agendarServicoRepository.saveAndFlush(agendarServico.get());
+            agendamentoRepository.saveAndFlush(agendarServico.get());
 
             return new ReturnData<>(false, "Serviço cancelado com sucesso.", "");
         } catch (BusinessException busEx) {

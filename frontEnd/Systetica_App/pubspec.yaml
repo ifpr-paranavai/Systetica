@@ -18,6 +18,7 @@ dependencies:
   url_launcher: ^6.1.5
   maps_launcher: ^2.0.1
   calendar_timeline: ^1.0.5
+  open_mail_app: ^0.4.5
 
 dev_dependencies:
   flutter_test:

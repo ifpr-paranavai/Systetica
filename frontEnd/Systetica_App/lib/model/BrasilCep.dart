@@ -8,8 +8,8 @@ class BrasilCep {
   Local? local;
 
   BrasilCep.fromJson(Map<String, dynamic> json) {
-    rua = json['street'];
-    bairro = json['neighborhood'];
+    rua = json['street'] ?? '';
+    bairro = json['neighborhood'] ?? '';
     local = Local.fromJson(json['location']);
   }
 }
@@ -31,7 +31,7 @@ class Coordenada {
   String? latitude;
 
   Coordenada.fromJson(Map<String, dynamic> json) {
-    longitude = json['longitude'];
-    latitude = json['latitude'];
+    longitude = json['longitude'] ?? '';
+    latitude = json['latitude'] ?? '';
   }
 }

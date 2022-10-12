@@ -26,7 +26,7 @@ class LoginWidget extends State<LoginPage> {
         backgroundColor: AppColors.branco,
         floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
         floatingActionButton: Visibility(
-          visible: widget.inicioApp,
+          visible: true,
           child: IconArrowWidget(
             paddingTop: _altura * 0.01,
             onPressed: () => Navigator.pop(context),

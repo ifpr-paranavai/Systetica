@@ -90,7 +90,7 @@ class ServicoService {
     required int id,
     required Token token,
   }) async {
-    String path = "servico/buscar-todos/$id";
+    String path = "servico/buscar-por-empresa/$id";
 
     Dio dio = DioConfigApi.builderConfig();
 

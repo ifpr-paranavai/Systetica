@@ -517,7 +517,7 @@ public class UsuarioServiceTest {
                 usuarioDTO.getCodigoAleatorio()
         )).thenReturn(usuarioOptional);
 
-        ReturnData<String> returnData = new ReturnData<>(false, "Email ou código são inválidos");
+        ReturnData<String> returnData = new ReturnData<>(false, "Email ou Código inválido");
 
         assertEquals(usuarioService.alterarSenha(usuarioDTO), returnData);
     }

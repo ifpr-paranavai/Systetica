@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:systetica/screen/inicio/view/inicio_page.dart';
 
 import '../../database/repository/token_repository.dart';
 import '../../model/Token.dart';
 import '../../utils/util.dart';
 import '../home/view/home_page.dart';
-import '../login/view/login/login_page.dart';
 
 class InicioController {
   Future<void> verificarDirecionamentoUsuario(BuildContext context) async {
@@ -22,7 +22,7 @@ class InicioController {
         Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(
-            builder: (context) => const LoginPage(inicioApp: false),
+            builder: (context) => const InicioPage(),
           ),
           (route) => false,
         );

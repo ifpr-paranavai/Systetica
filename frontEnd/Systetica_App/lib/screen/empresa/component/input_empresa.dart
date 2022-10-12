@@ -60,6 +60,11 @@ class InputEmpresa {
       ),
       controller: controller.cnpjController,
       validator: validatorEmpresa.cnpjValidator,
+      onChanged: (value) async {
+        if (value.length == 18) {
+          controller.buscarCnpj(value);
+        }
+      },
     );
   }
 

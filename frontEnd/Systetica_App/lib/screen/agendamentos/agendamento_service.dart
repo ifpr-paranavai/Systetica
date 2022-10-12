@@ -14,7 +14,7 @@ class AgendamentoService {
     required Token token,
   }) async {
     String path =
-        "agendar-servico/buscar-todos-por-dia?dia=$dataAgendamento&email=${token.email}";
+        "agendamento/buscar-todos-por-dia?dia=$dataAgendamento&email=${token.email}";
 
     Dio dio = DioConfigApi.builderConfig();
 
@@ -40,7 +40,7 @@ class AgendamentoService {
 
       dio.options.headers["Authorization"] = "Bearer ${token.accessToken}";
 
-      var response = await dio.post("agendar-servico/cancelar",
+      var response = await dio.post("agendamento/cancelar",
           data: agendamento.toJson());
 
       info = Info.fromJson(response.data);

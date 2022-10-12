@@ -76,7 +76,7 @@ class AtivarFuncionarioWidget extends State<AtivarFuncionarioPage> {
                 largura: largura,
                 listaVazia: true,
                 altura: altura,
-                nenhumItem: "Nenhum funcionário encontrado",
+                nenhumItem: "Nenhum funcionário foi encontrado",
                 imagem: "buscar.png",
               )
             : _listView(

@@ -10,7 +10,7 @@ import org.mapstruct.ReportingPolicy;
 import java.util.List;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, uses = EstadoMapper.class)
-public interface AgendarServicoMapper {
+public interface AgendamentoMapper {
 
 
     @Mappings({

@@ -1,6 +1,7 @@
 // ignore_for_file: unused_catch_clause
 
 import 'package:dio/dio.dart';
+import 'package:systetica/model/BrasilCnpj.dart';
 
 import '../../model/BrasilCep.dart';
 import '../../model/Cidade.dart';
@@ -93,12 +94,28 @@ class EmpresaService {
     }
   }
 
+  static Future<BrasilCnpj> buscaCnpj(String cnpj) async {
+    BrasilCnpj brasilCnpj = BrasilCnpj();
+    try {
+      Dio dio = DioConfigApi.builderConfigJsonBrasilApi();
+
+      var response = await dio.get("cnpj/v1/$cnpj");
+
+      brasilCnpj = BrasilCnpj.fromJson(response.data);
+      return brasilCnpj;
+    } on DioError catch (e) {
+      return brasilCnpj;
+    } on Exception catch (ex) {
+      return brasilCnpj;
+    }
+  }
+
   static Future<BrasilCep> buscaCep(String cep) async {
     BrasilCep brasilCep = BrasilCep();
     try {
       Dio dio = DioConfigApi.builderConfigJsonBrasilApi();
 
-      var response = await dio.get("cep/v2/" + cep);
+      var response = await dio.get("cep/v2/$cep");
 
       brasilCep = BrasilCep.fromJson(response.data);
       return brasilCep;

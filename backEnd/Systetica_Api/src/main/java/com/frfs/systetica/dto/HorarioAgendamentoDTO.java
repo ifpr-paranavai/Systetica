@@ -24,5 +24,4 @@ public class HorarioAgendamentoDTO implements Serializable {
     @JsonProperty("horario_agendamento")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm")
     private LocalTime horarioAgendamento;
-
 }

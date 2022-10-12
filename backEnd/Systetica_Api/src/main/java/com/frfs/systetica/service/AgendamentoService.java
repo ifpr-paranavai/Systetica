@@ -5,7 +5,7 @@ import com.frfs.systetica.dto.DadosAgendamentoDTO;
 import com.frfs.systetica.dto.response.ReturnData;
 
 
-public interface AgendarServicoService {
+public interface AgendamentoService {
     ReturnData<Object> buscarTodosAgendamentoPorDia(String dia);
 
     ReturnData<Object> buscarTodosAgendamentoPorDiaUsuario(String dia, String email);

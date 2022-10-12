@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:systetica/components/texto_erro_widget.dart';
+import 'package:systetica/model/BrasilCnpj.dart';
 
 import '../../components/alert_dialog_widget.dart';
 import '../../components/loading/show_loading_widget.dart';
@@ -16,7 +17,6 @@ import '../../model/Token.dart';
 import '../../model/Usuario.dart';
 import '../../request/dio_config.dart';
 import 'empresa_service.dart';
-
 
 class EmpresaController {
   final nomeController = TextEditingController();
@@ -240,4 +240,12 @@ class EmpresaController {
     }
   }
 
+  Future<dynamic> buscarCnpj(String cnpj) async {
+    BrasilCnpj? brasilCnpj = await EmpresaService.buscaCnpj(
+      cnpj.replaceAll('.', '').replaceAll('-', '').replaceAll('/', ''),
+    );
+    if (brasilCnpj.nomeFantasia != null) {
+      nomeController.text = brasilCnpj.nomeFantasia!;
+    }
+  }
 }

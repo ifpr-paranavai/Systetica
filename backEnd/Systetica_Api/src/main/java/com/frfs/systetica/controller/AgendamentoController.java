@@ -3,7 +3,7 @@ package com.frfs.systetica.controller;
 import com.frfs.systetica.dto.DadosAgendamentoDTO;
 import com.frfs.systetica.dto.AgendamentoDTO;
 import com.frfs.systetica.dto.response.ReturnData;
-import com.frfs.systetica.service.AgendarServicoService;
+import com.frfs.systetica.service.AgendamentoService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @Slf4j
 @RestController
-@RequestMapping("agendar-servico")
-public class AgendarServicoController {
+@RequestMapping("agendamento")
+public class AgendamentoController {
 
-    private final AgendarServicoService agendarServicoService;
+    private final AgendamentoService agendarServicoService;
 
     @PostMapping("/buscar-todos-por-dia")
     @ResponseBody

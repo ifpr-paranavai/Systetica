@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface AgendarServicoRepository extends JpaRepository<Agendamento, Long> {
+public interface AgendamentoRepository extends JpaRepository<Agendamento, Long> {
     List<Agendamento> findByDataAgendamentoOrderByHorarioAgendamento(String dataAgendamento);
 
     Optional<Agendamento> findByDataAgendamentoAndHorarioAgendamento(String dataAgendamento,

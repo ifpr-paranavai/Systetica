@@ -1,6 +1,6 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
-import 'package:systetica/screen/perfil/view/perfil_page.dart';
+
 
 import '../../../components/alert_dialog_widget.dart';
 import '../../../components/foto/foto_widget.dart';
@@ -15,9 +15,10 @@ import '../../../model/MenuItem.dart';
 import '../../../model/Token.dart';
 import '../../../model/Usuario.dart';
 import '../../../style/app_colors..dart';
-import '../../login/view/login/login_page.dart';
+import '../../inicio/view/inicio_page.dart';
 import '../perfil_controller.dart';
 import 'form/perfil_form_page.dart';
+import 'perfil_page.dart';
 
 class PerfilWidget extends State<PerfilPage> {
   final PerfilController _controller = PerfilController();
@@ -151,7 +152,7 @@ class PerfilWidget extends State<PerfilPage> {
                     Navigator.pushAndRemoveUntil(
                       context,
                       _controller.myPageTransition.pageTransition(
-                        child: const LoginPage(inicioApp: false),
+                        child: const InicioPage(),
                         childCurrent: widget,
                       ),
                       (route) => false,

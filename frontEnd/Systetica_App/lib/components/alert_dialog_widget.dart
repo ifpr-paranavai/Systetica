@@ -11,6 +11,7 @@ class AlertDialogWidget {
     double fontSizedescricao = 18,
     VoidCallback? onPressedOk,
     VoidCallback? onPressedNao,
+    Color corTitulo = AppColors.redPrincipal,
   }) async {
     if (showModalOk == true) {
       return await _alertDialogOk(
@@ -29,6 +30,7 @@ class AlertDialogWidget {
         fontSizedescricao: fontSizedescricao,
         onPressedSim: onPressedOk,
         onPressedNao: onPressedNao,
+        corTitulo: corTitulo,
       );
     }
   }
@@ -71,13 +73,14 @@ class AlertDialogWidget {
     required double fontSizedescricao,
     required VoidCallback? onPressedSim,
     required VoidCallback? onPressedNao,
+    required Color corTitulo,
   }) async {
     return showDialog(
       context: context,
       builder: (BuildContext context) => _certer(
         title: _textTitulo(
           titulo: titulo,
-          colorText: AppColors.redPrincipal,
+          colorText: corTitulo,
         ),
         content: _textDescricao(
           descricao: descricao,

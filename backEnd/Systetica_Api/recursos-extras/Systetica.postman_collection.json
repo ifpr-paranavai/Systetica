@@ -554,7 +554,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJydWFudmhhMTVAZ21haWwuY29tIiwicm9sZXMiOlsiQURNSU5JU1RSQURPUiJdLCJpc3MiOiJodHRwOi8vMTkyLjE2OC4xLjEwMDo4MDkwL2xvZ2luIiwiZXhwIjoxNjYwMTcwNTgyfQ.JI3Se7OTsr679UgIIHtmfmyAmyfNk-pS8drLjWIjk60",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzeXN0ZXRpY2FAZ21haWwuY29tIiwicm9sZXMiOlsiQURNSU5JU1RSQURPUiJdLCJpc3MiOiJodHRwOi8vMTkyLjE2OC4xLjEwMDo4MDkwL2xvZ2luIiwiZXhwIjoxNjY0MjAwNzg1fQ.xbfi6Xo6aTYqwbH9VQOGy7P-K3qpX8frvTA-7gTIY2g",
 								"type": "text"
 							}
 						],
@@ -568,7 +568,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://192.168.1.100:8090/empresa/email/ruanvha15@gmail.com",
+							"raw": "http://192.168.1.100:8090/empresa/email/systetica@gmail.com",
 							"protocol": "http",
 							"host": [
 								"192",
@@ -580,7 +580,7 @@
 							"path": [
 								"empresa",
 								"email",
-								"ruanvha15@gmail.com"
+								"systetica@gmail.com"
 							]
 						}
 					},
@@ -593,13 +593,13 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJydWFudmhhMTVAZ21haWwuY29tIiwicm9sZXMiOlsiQURNSU5JU1RSQURPUiJdLCJpc3MiOiJodHRwOi8vMTkyLjE2OC4xLjEwMDo4MDkwL2xvZ2luIiwiZXhwIjoxNjYyMjI3NzczfQ.Xpfob2srrcNTPupvxapOXEtuxsE9ZxV8oW3Y_MMrVeM",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzeXN0ZXRpY2FAZ21haWwuY29tIiwicm9sZXMiOlsiQURNSU5JU1RSQURPUiJdLCJpc3MiOiJodHRwOi8vMTkyLjE2OC4xLjEwMDo4MDkwL2xvZ2luIiwiZXhwIjoxNjYyNzcwODQ4fQ.eOwVJLOSbmzATKGRociwhaHoL9Jrwe9ybreWG8RbBzA",
 								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"nome\": \"Barbearia Systetica\",\r\n    \"cnpj\": \"81.721.002/0001-71\",\r\n    \"telefone1\": \"(44) 4002-8922\",\r\n    \"endereco\": \"Rua Job Jacob de Freita\",\r\n    \"numero\": 1010,\r\n    \"cep\": \"87708-243\",\r\n    \"bairro\": \"Centro\",\r\n    \"latitude\": \"-23.098459\",\r\n    \"longitude\": \"-52.449259\",\r\n    \"usuario_administrador\": {\r\n        \"email\": \"ruanvha15@gmail.com\"\r\n    },\r\n    \"cidade\": {\r\n        \"id\": 1,\r\n        \"nome\": \"Afonso Cláudio\",\r\n        \"estado\": {\r\n            \"id\": 1\r\n        }\r\n    }\r\n}",
+							"raw": "{\r\n    \"nome\": \"Barbearia Systetica\",\r\n    \"cnpj\": \"81.721.002/0001-70\",\r\n    \"telefone1\": \"(44) 4002-8922\",\r\n    \"endereco\": \"Rua Job Jacob de Freita\",\r\n    \"numero\": 1010,\r\n    \"cep\": \"87708-243\",\r\n    \"bairro\": \"Centro\",\r\n    \"latitude\": \"-23.098459\",\r\n    \"longitude\": \"-52.449259\",\r\n    \"horario_abertura\": \"10:00\",\r\n    \"horario_fechamento\": \"23:00\",\r\n    \"usuario_administrador\": {\r\n        \"email\": \"ruanvha15@gmail.com\"\r\n    },\r\n    \"cidade\": {\r\n        \"id\": 1,\r\n        \"nome\": \"Afonso Cláudio\",\r\n        \"estado\": {\r\n            \"id\": 1\r\n        }\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -623,12 +623,97 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Busca Paginada",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJmcmFuY2llbEBnbWFpbC5jb20iLCJyb2xlcyI6WyJDTElFTlRFIl0sImlzcyI6Imh0dHA6Ly8xOTIuMTY4LjEuMTAwOjgwOTAvbG9naW4iLCJleHAiOjE2NjI0MDk3NTZ9.1Isy8KaGXb4o3qXRcD8ybpRUXHbqrCn7TimifGF7KjE",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://192.168.1.100:8090/empresa/buscar-todos?search=c&size=200&sort=nome",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"1",
+								"100"
+							],
+							"port": "8090",
+							"path": [
+								"empresa",
+								"buscar-todos"
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": "c"
+								},
+								{
+									"key": "size",
+									"value": "200"
+								},
+								{
+									"key": "sort",
+									"value": "nome"
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
 		{
 			"name": "Servico",
 			"item": [
+				{
+					"name": "Buscar por Empresa",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzeXN0ZXRpY2FAZ21haWwuY29tIiwicm9sZXMiOlsiQURNSU5JU1RSQURPUiJdLCJpc3MiOiJodHRwOi8vMTkyLjE2OC4xLjEwMDo4MDkwL2xvZ2luIiwiZXhwIjoxNjY0MjAwNzg1fQ.xbfi6Xo6aTYqwbH9VQOGy7P-K3qpX8frvTA-7gTIY2g",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "text"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://192.168.1.100:8090/servico/buscar-por-empresa/1",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"1",
+								"100"
+							],
+							"port": "8090",
+							"path": [
+								"servico",
+								"buscar-por-empresa",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
 				{
 					"name": "Atualiar",
 					"request": {
@@ -863,6 +948,135 @@
 									"key": "email",
 									"value": "ruanvha15@gmail.com"
 								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Agendamento",
+			"item": [
+				{
+					"name": "Buscar por Dia",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzeXN0ZXRpY2FAZ21haWwuY29tIiwicm9sZXMiOlsiQURNSU5JU1RSQURPUiJdLCJpc3MiOiJodHRwOi8vMTkyLjE2OC4xLjEwMDo4MDkwL2xvZ2luIiwiZXhwIjoxNjY0MjAwNzg1fQ.xbfi6Xo6aTYqwbH9VQOGy7P-K3qpX8frvTA-7gTIY2g",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "text"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://192.168.1.100:8090/agendamento/buscar-todos-por-dia?dia=2022-09-26&email=systetica@gmail.com",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"1",
+								"100"
+							],
+							"port": "8090",
+							"path": [
+								"agendamento",
+								"buscar-todos-por-dia"
+							],
+							"query": [
+								{
+									"key": "dia",
+									"value": "2022-09-26"
+								},
+								{
+									"key": "email",
+									"value": "systetica@gmail.com"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Salvar",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzeXN0ZXRpY2FAZ21haWwuY29tIiwicm9sZXMiOlsiQURNSU5JU1RSQURPUiJdLCJpc3MiOiJodHRwOi8vMTkyLjE2OC4xLjEwMDo4MDkwL2xvZ2luIiwiZXhwIjoxNjY0MjAwNzg1fQ.xbfi6Xo6aTYqwbH9VQOGy7P-K3qpX8frvTA-7gTIY2g",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"cliente_email\": \"systetica@gmail.com\",\r\n    \"funcionario_id\": 1,\r\n    \"empresa_id\": 1,\r\n    \"horario_agendamento\": {\r\n        \"data_agendamento\": \"2022-09-26\",\r\n        \"horario_agendamento\": \"22:00\"\r\n    },\r\n    \"servicos_selecionados\": [\r\n        {\r\n            \"id\": 1,\r\n            \"nome\": \"Corte de Barba\",\r\n            \"tempo_servico\": 60,\r\n            \"descricao\": \"Corte de barba realizada por Systetica\",\r\n            \"preco\": 50.00,\r\n            \"email_administrativo\": \"ruanvha15@gmail.com\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://192.168.1.100:8090/agendamento/salvar",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"1",
+								"100"
+							],
+							"port": "8090",
+							"path": [
+								"agendamento",
+								"salvar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cancelar",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzeXN0ZXRpY2FAZ21haWwuY29tIiwicm9sZXMiOlsiQURNSU5JU1RSQURPUiJdLCJpc3MiOiJodHRwOi8vMTkyLjE2OC4xLjEwMDo4MDkwL2xvZ2luIiwiZXhwIjoxNjY0MjAwNzg1fQ.xbfi6Xo6aTYqwbH9VQOGy7P-K3qpX8frvTA-7gTIY2g",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://192.168.1.100:8090/agendamento/salvar",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"1",
+								"100"
+							],
+							"port": "8090",
+							"path": [
+								"agendamento",
+								"salvar"
 							]
 						}
 					},

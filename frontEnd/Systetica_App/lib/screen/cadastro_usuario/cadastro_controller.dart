@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:systetica/screen/cadastro_usuario/view/ativar_usuario/ativar_usuario_page.dart';
+import 'package:open_mail_app/open_mail_app.dart';
 
 import '../../components/alert_dialog_widget.dart';
 import '../../components/loading/show_loading_widget.dart';
@@ -7,7 +7,9 @@ import '../../components/texto_erro_widget.dart';
 import '../../components/page_transition.dart';
 import '../../model/Usuario.dart';
 import '../../request/dio_config.dart';
-import '../login/view/login/login_page.dart';
+import '../../screen/cadastro_usuario/view/ativar_usuario/ativar_usuario_page.dart';
+import '../../style/app_colors..dart';
+import '../inicio/view/inicio_page.dart';
 import 'cadastro_service.dart';
 
 class CadastroController {
@@ -61,16 +63,39 @@ class CadastroController {
             // Finaliza o loading na tela
             Navigator.pop(contextLoading, loading);
 
-            var alertDialogOk = AlertDialogWidget();
+            var alertDialog = AlertDialogWidget();
             if (infoResponse.success!) {
-              Navigator.of(context).push(
-                myPageTransition.pageTransition(
-                  child: const AtivarUsuarioPage(),
-                  childCurrent: widget,
-                ),
+              await alertDialog.alertDialog(
+                showModalOk: false,
+                context: context,
+                titulo: "Usuário Cadastrado!",
+                corTitulo: AppColors.bluePrincipal,
+                descricao:
+                    "Um email com código de ativação foi enviado.\nDesejar abrir seu email?",
+                onPressedNao: () {
+                  Navigator.pop(context);
+                  Navigator.of(context).push(
+                    myPageTransition.pageTransition(
+                      child: const AtivarUsuarioPage(),
+                      childCurrent: widget,
+                    ),
+                  );
+                },
+                onPressedOk: () async {
+                  await OpenMailApp.openMailApp(
+                    nativePickerTitle: 'Selecione o aplicativo de email.',
+                  );
+                  Navigator.pop(context);
+                  Navigator.of(context).push(
+                    myPageTransition.pageTransition(
+                      child: const AtivarUsuarioPage(),
+                      childCurrent: widget,
+                    ),
+                  );
+                },
               );
             } else {
-              alertDialogOk.alertDialog(
+              alertDialog.alertDialog(
                 showModalOk: true,
                 context: context,
                 titulo: "Erro",
@@ -136,7 +161,7 @@ class CadastroController {
             onPressedOk: () => Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(
-                builder: (context) => const LoginPage(inicioApp: false),
+                builder: (context) => const InicioPage(),
               ),
               (route) => false,
             ),

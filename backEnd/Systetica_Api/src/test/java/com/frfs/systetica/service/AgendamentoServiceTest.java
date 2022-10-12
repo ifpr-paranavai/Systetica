@@ -3,11 +3,11 @@ package com.frfs.systetica.service;
 import com.frfs.systetica.dto.*;
 import com.frfs.systetica.dto.response.ReturnData;
 import com.frfs.systetica.entity.*;
-import com.frfs.systetica.mapper.AgendarServicoMapper;
+import com.frfs.systetica.mapper.AgendamentoMapper;
 import com.frfs.systetica.mapper.EmpresaMapper;
 import com.frfs.systetica.mapper.ServicoMapper;
 import com.frfs.systetica.mapper.UsuarioMapper;
-import com.frfs.systetica.repository.AgendarServicoRepository;
+import com.frfs.systetica.repository.AgendamentoRepository;
 import com.frfs.systetica.repository.EmpresaRepository;
 import com.frfs.systetica.repository.SituacaoRepository;
 import com.frfs.systetica.repository.UsuarioRepository;
@@ -30,10 +30,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @SpringBootTest
 @ActiveProfiles(profiles = "local")
 @AutoConfigureMockMvc
-@DisplayName("EmpresaServiceTest")
-public class AgendarServicoServiceTest {
+@DisplayName("Agendamentoest")
+public class AgendamentoServiceTest {
     @MockBean
-    private AgendarServicoRepository agendarServicoRepository;
+    private AgendamentoRepository agendamentoRepository;
 
     @MockBean
     private UsuarioRepository usuarioRepository;
@@ -45,7 +45,7 @@ public class AgendarServicoServiceTest {
     private SituacaoRepository situacaoRepository;
 
     @MockBean
-    private AgendarServicoMapper agendarServicoMapper;
+    private AgendamentoMapper agendamentoMapper;
 
     @MockBean
     private UsuarioMapper usuarioMapper;
@@ -57,9 +57,9 @@ public class AgendarServicoServiceTest {
     private ServicoMapper servicoMapper;
 
     @Autowired
-    private AgendarServicoServiceImpl agendarServicoService;
+    private AgendamentoServiceImpl agendarServicoService;
 
-    public AgendarServicoServiceTest() {
+    public AgendamentoServiceTest() {
     }
 
     @Test
@@ -105,7 +105,7 @@ public class AgendarServicoServiceTest {
         Mockito.when(agendarServico.getId()).thenReturn(1L);
         Mockito.when(agendarServico.getServicos()).thenReturn(servicosSelecionadosService);
 
-        Mockito.when(agendarServicoRepository
+        Mockito.when(agendamentoRepository
                 .findByDataAgendamentoAndHorarioAgendamento(
                         horarioAgendamentoDTO.getDataAgendamento(),
                         horarioAgendamentoDTO.getHorarioAgendamento())).thenReturn(agendarServicoOptional);
@@ -118,11 +118,11 @@ public class AgendarServicoServiceTest {
         Mockito.when(empresaMapper.toDto(empresa)).thenReturn(empresaDTO);
         Mockito.when(usuarioMapper.toDto(cliente)).thenReturn(clienteDto);
         Mockito.when(usuarioMapper.toDto(funcionario)).thenReturn(funcionarioDto);
-        Mockito.when(agendarServicoMapper.toEntity(agendamentoDTO)).thenReturn(agendarServico);
+        Mockito.when(agendamentoMapper.toEntity(agendamentoDTO)).thenReturn(agendarServico);
         Mockito.when(servicoMapper.toListEntity(dadosAgendamentoDTO.getServicosSelecionados()))
                 .thenReturn(servicosSelecionadosService);
 
-        Mockito.when(agendarServicoRepository.saveAndFlush(agendarServico)).thenReturn(agendarServico);
+        Mockito.when(agendamentoRepository.saveAndFlush(agendarServico)).thenReturn(agendarServico);
 
         ReturnData<Object> returnData = new ReturnData<>(true, "Serviço agendado com sucesso.", "");
         assertEquals(agendarServicoService.salvar(dadosAgendamentoDTO), returnData);
@@ -182,7 +182,7 @@ public class AgendarServicoServiceTest {
         Mockito.when(dadosAgendamentoDTO.getHorarioAgendamento()).thenReturn(horarioAgendamentoDTO);
         Mockito.when(dadosAgendamentoDTO.getServicosSelecionados()).thenReturn(servicosSelecionadosDto);
 
-        Mockito.when(agendarServicoRepository
+        Mockito.when(agendamentoRepository
                 .findByDataAgendamentoAndHorarioAgendamento(
                         horarioAgendamentoDTO.getDataAgendamento(),
                         horarioAgendamentoDTO.getHorarioAgendamento())).thenReturn(agendarServicoOptional);

@@ -23,7 +23,6 @@ import '../empresa_controller.dart';
 import 'empresa_page.dart';
 import 'form/empresa_form_page.dart';
 
-
 class EmpresaWidget extends State<EmpresaPage> {
   final EmpresaController _controller = EmpresaController();
   final MultiValidatorEmpresa _multiValidatorEmpresa = MultiValidatorEmpresa();
@@ -133,12 +132,12 @@ class EmpresaWidget extends State<EmpresaPage> {
               ),
               _sizedBox(height: altura * 0.07),
               _inputEmpresa.textoCadastrarEmpresa(),
-              _inputEmpresa.inputNomeEmpresa(
+              _inputEmpresa.inputCnpj(
                 paddingHorizontal: largura,
                 controller: _controller,
                 validatorEmpresa: _multiValidatorEmpresa,
               ),
-              _inputEmpresa.inputCnpj(
+              _inputEmpresa.inputNomeEmpresa(
                 paddingHorizontal: largura,
                 controller: _controller,
                 validatorEmpresa: _multiValidatorEmpresa,
