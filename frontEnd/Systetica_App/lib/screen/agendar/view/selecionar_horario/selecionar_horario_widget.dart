@@ -2,16 +2,17 @@
 
 import 'package:calendar_timeline/calendar_timeline.dart';
 import 'package:flutter/material.dart';
-import 'package:systetica/components/icon_arrow_widget.dart';
-import 'package:systetica/components/imagens_widget.dart';
-import 'package:systetica/components/page_transition.dart';
-import 'package:systetica/components/text_autenticacoes_widget.dart';
-import 'package:systetica/model/HorarioAgendamento.dart';
-import 'package:systetica/screen/agendar/agendar_controller.dart';
-import 'package:systetica/screen/agendar/component/agendar_componente.dart';
-import 'package:systetica/screen/agendar/view/resumo_agendamento/resumo_agenda_page.dart';
-import 'package:systetica/screen/agendar/view/selecionar_horario/selecionar_horario_page.dart';
-import 'package:systetica/style/app_colors..dart';
+
+import '../../../../components/icon_arrow_widget.dart';
+import '../../../../components/imagens_widget.dart';
+import '../../../../components/page_transition.dart';
+import '../../../../components/text_autenticacoes_widget.dart';
+import '../../../../model/HorarioAgendamento.dart';
+import '../../../../style/app_colors..dart';
+import '../../agendar_controller.dart';
+import '../../component/agendar_componente.dart';
+import '../resumo_agendamento/resumo_agenda_page.dart';
+import 'selecionar_horario_page.dart';
 
 class SelecionarHorarioWidget extends State<SelecionarHorarioPage> {
   final AgendarController _controller = AgendarController();

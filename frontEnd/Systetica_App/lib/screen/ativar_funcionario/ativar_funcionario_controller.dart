@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:systetica/components/alert_dialog_widget.dart';
-import 'package:systetica/components/loading/show_loading_widget.dart';
-import 'package:systetica/components/page_transition.dart';
-import 'package:systetica/components/texto_erro_widget.dart';
-import 'package:systetica/database/repository/token_repository.dart';
-import 'package:systetica/model/Info.dart';
-import 'package:systetica/model/Token.dart';
-import 'package:systetica/model/Usuario.dart';
-import 'package:systetica/request/dio_config.dart';
-import 'package:systetica/screen/ativar_funcionario/ativar_funcionario_service.dart';
+
+import '../../components/alert_dialog_widget.dart';
+import '../../components/loading/show_loading_widget.dart';
+import '../../components/page_transition.dart';
+import '../../components/texto_erro_widget.dart';
+import '../../database/repository/token_repository.dart';
+import '../../model/Info.dart';
+import '../../model/Token.dart';
+import '../../model/Usuario.dart';
+import '../../request/dio_config.dart';
+import 'ativar_funcionario_service.dart';
 
 class AtivarFuncionarController {
   final myPageTransition = MyPageTransition();

@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:systetica/components/botoes/botao_widget.dart';
-import 'package:systetica/components/icon_arrow_widget.dart';
-import 'package:systetica/components/imagens_widget.dart';
-import 'package:systetica/components/input/campo_texto_widget.dart';
-import 'package:systetica/components/page_transition.dart';
-import 'package:systetica/components/text_autenticacoes_widget.dart';
-import 'package:systetica/model/validator/MultiValidatorUsuario.dart';
-import 'package:systetica/screen/cadastro_usuario/cadastro_controller.dart';
-import 'package:systetica/screen/cadastro_usuario/view/ativar_usuario/ativar_usuario_page.dart';
-import 'package:systetica/screen/login/view/gerar_codigo/gerar_codigo_page.dart';
-import 'package:systetica/style/app_colors..dart';
+
+import '../../../../components/botoes/botao_widget.dart';
+import '../../../../components/icon_arrow_widget.dart';
+import '../../../../components/imagens_widget.dart';
+import '../../../../components/input/campo_texto_widget.dart';
+import '../../../../components/page_transition.dart';
+import '../../../../components/text_autenticacoes_widget.dart';
+import '../../../../model/validator/MultiValidatorUsuario.dart';
+import '../../../../style/app_colors..dart';
+import '../../../login/view/gerar_codigo/gerar_codigo_page.dart';
+import '../../cadastro_controller.dart';
+import 'ativar_usuario_page.dart';
 
 class AtivarUsuarioWidget extends State<AtivarUsuarioPage> {
   final CadastroController _controller = CadastroController();

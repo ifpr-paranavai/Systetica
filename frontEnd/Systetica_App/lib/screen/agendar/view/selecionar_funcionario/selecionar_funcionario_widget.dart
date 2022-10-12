@@ -1,15 +1,17 @@
 // ignore_for_file: unused_field, avoid_function_literals_in_foreach_calls
 
 import 'package:flutter/material.dart';
-import 'package:systetica/components/gesture_detector_foto_component.dart';
-import 'package:systetica/components/icon_arrow_widget.dart';
-import 'package:systetica/components/page_transition.dart';
-import 'package:systetica/model/Usuario.dart';
-import 'package:systetica/screen/agendar/agendar_controller.dart';
-import 'package:systetica/screen/agendar/component/agendar_componente.dart';
-import 'package:systetica/screen/agendar/view/selecionar_funcionario/selecionar_funcionario_page.dart';
-import 'package:systetica/screen/agendar/view/selecionar_horario/selecionar_horario_page.dart';
-import 'package:systetica/style/app_colors..dart';
+
+import '../../../../components/gesture_detector_foto_component.dart';
+import '../../../../components/icon_arrow_widget.dart';
+import '../../../../components/page_transition.dart';
+import '../../../../model/Usuario.dart';
+import '../../../../style/app_colors..dart';
+import '../../agendar_controller.dart';
+import '../../component/agendar_componente.dart';
+import '../selecionar_horario/selecionar_horario_page.dart';
+import 'selecionar_funcionario_page.dart';
+
 
 class SelecionarFuncionarioWidget extends State<SelecionarFuncionarioPage> {
   final ScrollController _scrollController = ScrollController();

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:systetica/database/repository/token_repository.dart';
-import 'package:systetica/model/Token.dart';
-import 'package:systetica/screen/home/view/home_page.dart';
-import 'package:systetica/screen/login/view/login/login_page.dart';
-import 'package:systetica/utils/util.dart';
+
+import '../../database/repository/token_repository.dart';
+import '../../model/Token.dart';
+import '../../utils/util.dart';
+import '../home/view/home_page.dart';
+import '../login/view/login/login_page.dart';
 
 class InicioController {
   Future<void> verificarDirecionamentoUsuario(BuildContext context) async {

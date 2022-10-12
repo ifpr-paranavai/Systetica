@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:systetica/components/erro/erro_widget.dart';
-import 'package:systetica/components/icon_arrow_widget.dart';
-import 'package:systetica/components/list_view/list_view_component.dart';
-import 'package:systetica/components/loading/loading_animation.dart';
-import 'package:systetica/components/pesquisa_widget.dart';
-import 'package:systetica/model/Info.dart';
-import 'package:systetica/model/Produto.dart';
-import 'package:systetica/screen/produto/produto_controller.dart';
-import 'package:systetica/screen/produto/view/form/produto_form_page.dart';
-import 'package:systetica/screen/produto/view/produto_page.dart';
-import 'package:systetica/style/app_colors..dart';
 import 'package:brasil_fields/brasil_fields.dart';
+
+import '../../../components/erro/erro_widget.dart';
+import '../../../components/icon_arrow_widget.dart';
+import '../../../components/list_view/list_view_component.dart';
+import '../../../components/loading/loading_animation.dart';
+import '../../../components/pesquisa_widget.dart';
+import '../../../model/Info.dart';
+import '../../../model/Produto.dart';
+import '../../../style/app_colors..dart';
+import '../produto_controller.dart';
+import 'form/produto_form_page.dart';
+import 'produto_page.dart';
 
 class ProdutoWidget extends State<ProdutoPage> {
   final ProdutoController _controller = ProdutoController();

@@ -1,10 +1,11 @@
 // ignore_for_file: unused_catch_clause
 
 import 'package:dio/dio.dart';
-import 'package:systetica/model/Info.dart';
-import 'package:systetica/model/Servico.dart';
-import 'package:systetica/model/Token.dart';
-import 'package:systetica/utils/dio/dio_config_api.dart';
+
+import '../../model/Info.dart';
+import '../../model/Servico.dart';
+import '../../model/Token.dart';
+import '../../utils/dio/dio_config_api.dart';
 
 class ServicoService {
   static Future<Info> cadastrarServico(Token token, Servico servico) async {

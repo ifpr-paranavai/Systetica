@@ -1,11 +1,12 @@
 // ignore_for_file: unused_catch_clause
 
 import 'package:dio/dio.dart';
-import 'package:systetica/model/Empresa.dart';
-import 'package:systetica/model/Info.dart';
-import 'package:systetica/model/Token.dart';
-import 'package:systetica/model/agendamento.dart';
-import 'package:systetica/utils/dio/dio_config_api.dart';
+
+import '../../model/Empresa.dart';
+import '../../model/Info.dart';
+import '../../model/Token.dart';
+import '../../model/agendamento.dart';
+import '../../utils/dio/dio_config_api.dart';
 
 class AgendarService {
   static Future<Info> buscarEmpresas({

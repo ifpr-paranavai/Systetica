@@ -1,11 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:systetica/components/botoes/botao_widget.dart';
-import 'package:systetica/components/input/campo_texto_widget.dart';
-import 'package:systetica/components/input/custom_switch.dart';
-import 'package:systetica/components/text_autenticacoes_widget.dart';
-import 'package:systetica/model/validator/MultiValidatorServico.dart';
-import 'package:systetica/screen/servico/servico_controller.dart';
+
+import '../../../components/botoes/botao_widget.dart';
+import '../../../components/input/campo_texto_widget.dart';
+import '../../../components/input/custom_switch.dart';
+import '../../../components/text_autenticacoes_widget.dart';
+import '../../../model/validator/MultiValidatorServico.dart';
+import '../servico_controller.dart';
 
 class InputServico {
   // Opções para cadatrar servico

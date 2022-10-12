@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:systetica/screen/pagamentos/view/pagamento_page.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:systetica/screen/pagamentos/view/pagamento_page.dart';
 
 class PagamentoWidget extends State<PagamentoPage> {
   @override

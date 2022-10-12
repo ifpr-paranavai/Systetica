@@ -1,22 +1,23 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
-import 'package:systetica/components/alert_dialog_widget.dart';
-import 'package:systetica/components/foto/foto_widget.dart';
-import 'package:systetica/components/imagens_widget.dart';
-import 'package:systetica/components/item_list.dart';
-import 'package:systetica/components/loading/loading_animation.dart';
-import 'package:systetica/components/single_child_scroll_component.dart';
-import 'package:systetica/components/text_autenticacoes_widget.dart';
-import 'package:systetica/database/repository/token_repository.dart';
-import 'package:systetica/model/Info.dart';
-import 'package:systetica/model/MenuItem.dart';
-import 'package:systetica/model/Token.dart';
-import 'package:systetica/model/Usuario.dart';
-import 'package:systetica/screen/login/view/login/login_page.dart';
-import 'package:systetica/screen/perfil/perfil_controller.dart';
-import 'package:systetica/screen/perfil/view/form/perfil_form_page.dart';
 import 'package:systetica/screen/perfil/view/perfil_page.dart';
-import 'package:systetica/style/app_colors..dart';
+
+import '../../../components/alert_dialog_widget.dart';
+import '../../../components/foto/foto_widget.dart';
+import '../../../components/imagens_widget.dart';
+import '../../../components/item_list.dart';
+import '../../../components/loading/loading_animation.dart';
+import '../../../components/single_child_scroll_component.dart';
+import '../../../components/text_autenticacoes_widget.dart';
+import '../../../database/repository/token_repository.dart';
+import '../../../model/Info.dart';
+import '../../../model/MenuItem.dart';
+import '../../../model/Token.dart';
+import '../../../model/Usuario.dart';
+import '../../../style/app_colors..dart';
+import '../../login/view/login/login_page.dart';
+import '../perfil_controller.dart';
+import 'form/perfil_form_page.dart';
 
 class PerfilWidget extends State<PerfilPage> {
   final PerfilController _controller = PerfilController();

@@ -1,14 +1,16 @@
 import 'package:calendar_timeline/calendar_timeline.dart';
 import 'package:flutter/material.dart';
-import 'package:systetica/components/imagens_widget.dart';
-import 'package:systetica/components/item_list.dart';
-import 'package:systetica/components/loading/loading_animation.dart';
-import 'package:systetica/components/text_autenticacoes_widget.dart';
-import 'package:systetica/screen/agendamentos/agendamento_controller.dart';
-import 'package:systetica/screen/agendamentos/view/agendamento/agendamento_page.dart';
-import 'package:systetica/screen/agendamentos/view/detalhes_agendamento/detalhes_agendamento_page.dart';
-import 'package:systetica/style/app_colors..dart';
-import 'package:systetica/utils/util.dart';
+
+import '../../../../components/imagens_widget.dart';
+import '../../../../components/item_list.dart';
+import '../../../../components/loading/loading_animation.dart';
+import '../../../../components/text_autenticacoes_widget.dart';
+import '../../../../style/app_colors..dart';
+import '../../../../utils/util.dart';
+import '../../agendamento_controller.dart';
+import '../detalhes_agendamento/detalhes_agendamento_page.dart';
+import 'agendamento_page.dart';
+
 
 class AgendamentolWidget extends State<AgendamentoPage> {
   final AgendamentoController _controller = AgendamentoController();

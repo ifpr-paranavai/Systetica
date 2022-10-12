@@ -5,13 +5,14 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:systetica/components/icon_arrow_widget.dart';
-import 'package:systetica/components/text_autenticacoes_widget.dart';
-import 'package:systetica/model/validator/MultiValidatorEmpresa.dart';
-import 'package:systetica/screen/empresa/component/input_empresa.dart';
-import 'package:systetica/screen/empresa/empresa_controller.dart';
-import 'package:systetica/screen/empresa/view/form/empresa_form_page.dart';
-import 'package:systetica/style/app_colors..dart';
+
+import '../../../../components/icon_arrow_widget.dart';
+import '../../../../components/text_autenticacoes_widget.dart';
+import '../../../../model/validator/MultiValidatorEmpresa.dart';
+import '../../../../style/app_colors..dart';
+import '../../component/input_empresa.dart';
+import '../../empresa_controller.dart';
+import 'empresa_form_page.dart';
 
 class EmpresaFormWidget extends State<EmpresaFormPage> {
   final EmpresaController _controller = EmpresaController();

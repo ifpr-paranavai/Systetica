@@ -1,6 +1,7 @@
 // ignore_for_file: constant_identifier_names
 
-import 'package:systetica/model/Token.dart';
+
+import '../../model/Token.dart';
 
 class TokenORM {
   static const String TABLE = "token";

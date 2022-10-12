@@ -1,14 +1,15 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:systetica/components/botoes/botao_widget.dart';
-import 'package:systetica/components/imagens_widget.dart';
-import 'package:systetica/components/page_transition.dart';
-import 'package:systetica/screen/cadastro_usuario/view/cadastro/cadastro_page.dart';
-import 'package:systetica/screen/inicio/inicio_controller.dart';
-import 'package:systetica/screen/inicio/view/inicio_page.dart';
-import 'package:systetica/screen/login/view/login/login_page.dart';
-import 'package:systetica/style/app_colors..dart';
+
+import '../../../components/botoes/botao_widget.dart';
+import '../../../components/imagens_widget.dart';
+import '../../../components/page_transition.dart';
+import '../../../style/app_colors..dart';
+import '../../cadastro_usuario/view/cadastro/cadastro_page.dart';
+import '../../login/view/login/login_page.dart';
+import '../inicio_controller.dart';
+import 'inicio_page.dart';
 
 class InicioWidget extends State<InicioPage> with TickerProviderStateMixin {
   final InicioController _controller = InicioController();

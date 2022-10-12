@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:systetica/components/loading/loading_animation.dart';
-import 'package:systetica/components/page_transition.dart';
-import 'package:systetica/model/Empresa.dart';
-import 'package:systetica/model/Info.dart';
-import 'package:systetica/screen/administrador/view/administrador_page.dart';
-import 'package:systetica/screen/ativar_funcionario/view/ativar_funcionario_page.dart';
-import 'package:systetica/screen/empresa/empresa_controller.dart';
-import 'package:systetica/screen/empresa/view/empresa_page.dart';
-import 'package:systetica/screen/produto/view/produto_page.dart';
-import 'package:systetica/screen/servico/view/servico_page.dart';
-import 'package:systetica/style/app_colors..dart';
+
+import '../../../components/loading/loading_animation.dart';
+import '../../../components/page_transition.dart';
+import '../../../model/Empresa.dart';
+import '../../../model/Info.dart';
+import '../../../style/app_colors..dart';
+import '../../ativar_funcionario/view/ativar_funcionario_page.dart';
+import '../../empresa/empresa_controller.dart';
+import '../../empresa/view/empresa_page.dart';
+import '../../produto/view/produto_page.dart';
+import '../../servico/view/servico_page.dart';
+import 'administrador_page.dart';
 
 class CadastroAdministradorWidget extends State<CadastroAdministradorPage>
     with SingleTickerProviderStateMixin {

@@ -1,11 +1,12 @@
 // ignore_for_file: unused_catch_clause
 
 import 'package:dio/dio.dart';
-import 'package:systetica/model/Info.dart';
-import 'package:systetica/model/Login.dart';
-import 'package:systetica/model/Token.dart';
-import 'package:systetica/model/Usuario.dart';
-import 'package:systetica/utils/dio/dio_config_api.dart';
+
+import '../../model/Info.dart';
+import '../../model/Login.dart';
+import '../../model/Token.dart';
+import '../../model/Usuario.dart';
+import '../../utils/dio/dio_config_api.dart';
 
 class LoginService {
   static Future<Token?> login(Login login) async {

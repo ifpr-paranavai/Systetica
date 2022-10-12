@@ -2,19 +2,21 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:systetica/components/alert_dialog_widget.dart';
-import 'package:systetica/components/loading/show_loading_widget.dart';
-import 'package:systetica/components/page_transition.dart';
 import 'package:systetica/components/texto_erro_widget.dart';
-import 'package:systetica/database/repository/token_repository.dart';
-import 'package:systetica/model/BrasilCep.dart';
-import 'package:systetica/model/Cidade.dart';
-import 'package:systetica/model/Empresa.dart';
-import 'package:systetica/model/Info.dart';
-import 'package:systetica/model/Token.dart';
-import 'package:systetica/model/Usuario.dart';
-import 'package:systetica/request/dio_config.dart';
-import 'package:systetica/screen/empresa/empresa_service.dart';
+
+import '../../components/alert_dialog_widget.dart';
+import '../../components/loading/show_loading_widget.dart';
+import '../../components/page_transition.dart';
+import '../../database/repository/token_repository.dart';
+import '../../model/BrasilCep.dart';
+import '../../model/Cidade.dart';
+import '../../model/Empresa.dart';
+import '../../model/Info.dart';
+import '../../model/Token.dart';
+import '../../model/Usuario.dart';
+import '../../request/dio_config.dart';
+import 'empresa_service.dart';
+
 
 class EmpresaController {
   final nomeController = TextEditingController();

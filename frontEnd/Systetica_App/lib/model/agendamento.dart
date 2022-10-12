@@ -1,9 +1,9 @@
 // ignore_for_file: constant_identifier_names, file_names
 
-import 'package:systetica/model/Empresa.dart';
-import 'package:systetica/model/HorarioAgendamento.dart';
-import 'package:systetica/model/Servico.dart';
-import 'package:systetica/model/Usuario.dart';
+import 'Empresa.dart';
+import 'HorarioAgendamento.dart';
+import 'Servico.dart';
+import 'Usuario.dart';
 
 class Agendamento {
   Agendamento({
@@ -26,7 +26,8 @@ class Agendamento {
     _data['funcionario_id'] = funcionario.id;
     _data['empresa_id'] = empresa.id;
     _data['horario_agendamento'] = horarioAgendamento.toJson();
-    _data['servicos_selecionados'] = servicosSelecionados.map((i) => i.toJson()).toList();
+    _data['servicos_selecionados'] =
+        servicosSelecionados.map((i) => i.toJson()).toList();
     return _data;
   }
 }

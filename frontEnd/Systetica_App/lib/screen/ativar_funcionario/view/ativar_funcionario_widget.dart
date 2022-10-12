@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:systetica/components/erro/erro_widget.dart';
-import 'package:systetica/components/icon_arrow_widget.dart';
-import 'package:systetica/components/list_view/list_view_foto_component.dart';
-import 'package:systetica/components/loading/loading_animation.dart';
-import 'package:systetica/components/pesquisa_widget.dart';
-import 'package:systetica/model/Info.dart';
-import 'package:systetica/model/Usuario.dart';
-import 'package:systetica/screen/ativar_funcionario/ativar_funcionario_controller.dart';
-import 'package:systetica/screen/ativar_funcionario/view/ativar_funcionario_page.dart';
-import 'package:systetica/screen/ativar_funcionario/view/form/ativar_funcionario_form_page.dart';
-import 'package:systetica/style/app_colors..dart';
+
+import '../../../components/erro/erro_widget.dart';
+import '../../../components/icon_arrow_widget.dart';
+import '../../../components/list_view/list_view_foto_component.dart';
+import '../../../components/loading/loading_animation.dart';
+import '../../../components/pesquisa_widget.dart';
+import '../../../model/Info.dart';
+import '../../../model/Usuario.dart';
+import '../../../style/app_colors..dart';
+import '../ativar_funcionario_controller.dart';
+import 'ativar_funcionario_page.dart';
+import 'form/ativar_funcionario_form_page.dart';
 
 class AtivarFuncionarioWidget extends State<AtivarFuncionarioPage> {
   final AtivarFuncionarController _controller = AtivarFuncionarController();
@@ -136,8 +137,9 @@ class AtivarFuncionarioWidget extends State<AtivarFuncionarioPage> {
                 Navigator.of(context)
                     .push(
                       _controller.myPageTransition.pageTransition(
-                        child:
-                            AtivarFuncionarioFormPage(usuario: usuarios[index]),
+                        child: AtivarFuncionarioFormPage(
+                          usuario: usuarios[index],
+                        ),
                         childCurrent: widget,
                         buttoToTop: true,
                       ),

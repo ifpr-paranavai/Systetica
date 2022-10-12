@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:systetica/components/alert_dialog_widget.dart';
-import 'package:systetica/components/loading/show_loading_widget.dart';
-import 'package:systetica/components/page_transition.dart';
-import 'package:systetica/components/texto_erro_widget.dart';
-import 'package:systetica/model/Usuario.dart';
-import 'package:systetica/request/dio_config.dart';
-import 'package:systetica/screen/cadastro_usuario/cadastro_service.dart';
 import 'package:systetica/screen/cadastro_usuario/view/ativar_usuario/ativar_usuario_page.dart';
-import 'package:systetica/screen/login/view/login/login_page.dart';
+
+import '../../components/alert_dialog_widget.dart';
+import '../../components/loading/show_loading_widget.dart';
+import '../../components/texto_erro_widget.dart';
+import '../../components/page_transition.dart';
+import '../../model/Usuario.dart';
+import '../../request/dio_config.dart';
+import '../login/view/login/login_page.dart';
+import 'cadastro_service.dart';
 
 class CadastroController {
   final nomeController = TextEditingController();
@@ -55,8 +56,7 @@ class CadastroController {
               "Aguarde...",
             );
 
-            var infoResponse =
-                await CadastroService.cadastrarUsuario(usuario);
+            var infoResponse = await CadastroService.cadastrarUsuario(usuario);
 
             // Finaliza o loading na tela
             Navigator.pop(contextLoading, loading);

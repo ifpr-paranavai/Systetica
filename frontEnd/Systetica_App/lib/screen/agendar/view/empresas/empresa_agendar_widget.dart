@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:systetica/components/erro/erro_widget.dart';
-import 'package:systetica/components/foto/foto_widget.dart';
-import 'package:systetica/components/list_view/list_view_foto_component.dart';
-import 'package:systetica/components/loading/loading_animation.dart';
-import 'package:systetica/components/pesquisa_widget.dart';
-import 'package:systetica/model/Empresa.dart';
-import 'package:systetica/model/Info.dart';
-import 'package:systetica/model/Usuario.dart';
-import 'package:systetica/screen/agendar/agendar_controller.dart';
-import 'package:systetica/screen/agendar/view/detalhes_empresa/detalhes_empresa_page.dart';
-import 'package:systetica/screen/agendar/view/empresas/empresa_agendar_page.dart';
-import 'package:systetica/screen/perfil/perfil_controller.dart';
-import 'package:systetica/style/app_colors..dart';
-import 'package:systetica/utils/util.dart';
+
+import '../../../../components/erro/erro_widget.dart';
+import '../../../../components/foto/foto_widget.dart';
+import '../../../../components/list_view/list_view_foto_component.dart';
+import '../../../../components/loading/loading_animation.dart';
+import '../../../../components/pesquisa_widget.dart';
+import '../../../../model/Empresa.dart';
+import '../../../../model/Info.dart';
+import '../../../../model/Usuario.dart';
+import '../../../../style/app_colors..dart';
+import '../../../../utils/util.dart';
+import '../../../perfil/perfil_controller.dart';
+import '../../agendar_controller.dart';
+import '../detalhes_empresa/detalhes_empresa_page.dart';
+import 'empresa_agendar_page.dart';
 
 class EmpresaAgendarlWidget extends State<EmpresaAgendarPage> {
   final AgendarController _controller = AgendarController();

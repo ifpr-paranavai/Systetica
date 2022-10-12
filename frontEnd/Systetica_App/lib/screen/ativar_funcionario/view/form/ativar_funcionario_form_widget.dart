@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:systetica/components/botoes/botao_widget.dart';
-import 'package:systetica/components/icon_arrow_widget.dart';
-import 'package:systetica/components/input/custom_switch.dart';
-import 'package:systetica/components/item_list.dart';
-import 'package:systetica/components/text_autenticacoes_widget.dart';
-import 'package:systetica/model/Usuario.dart';
-import 'package:systetica/screen/ativar_funcionario/ativar_funcionario_controller.dart';
-import 'package:systetica/screen/ativar_funcionario/view/form/ativar_funcionario_form_page.dart';
+
+import '../../../../components/botoes/botao_widget.dart';
+import '../../../../components/icon_arrow_widget.dart';
+import '../../../../components/input/custom_switch.dart';
+import '../../../../components/item_list.dart';
+import '../../../../components/text_autenticacoes_widget.dart';
+import '../../../../model/Usuario.dart';
+import '../../ativar_funcionario_controller.dart';
+import 'ativar_funcionario_form_page.dart';
 
 class AtivarFuncionarioFormWidget extends State<AtivarFuncionarioFormPage> {
   final AtivarFuncionarController _controller = AtivarFuncionarController();

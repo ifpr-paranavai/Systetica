@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:systetica/components/icon_arrow_widget.dart';
-import 'package:systetica/model/Produto.dart';
-import 'package:systetica/model/validator/MultiValidatorProduto.dart';
-import 'package:systetica/screen/produto/component/input_produto.dart';
-import 'package:systetica/screen/produto/produto_controller.dart';
-import 'package:systetica/screen/produto/view/form/produto_form_page.dart';
-import 'package:systetica/style/app_colors..dart';
+
+import '../../../../components/icon_arrow_widget.dart';
+import '../../../../model/Produto.dart';
+import '../../../../model/validator/MultiValidatorProduto.dart';
+import '../../../../style/app_colors..dart';
+import '../../component/input_produto.dart';
+import '../../produto_controller.dart';
+import 'produto_form_page.dart';
 
 class ProdutoFormWidget extends State<ProdutoFormPage> {
   final ProdutoController _controller = ProdutoController();

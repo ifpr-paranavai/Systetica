@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:maps_launcher/maps_launcher.dart';
-import 'package:systetica/components/botoes/botao_widget.dart';
-import 'package:systetica/components/card_component.dart';
-import 'package:systetica/components/foto/foto_widget.dart';
-import 'package:systetica/components/icon_arrow_widget.dart';
-import 'package:systetica/components/item_list.dart';
-import 'package:systetica/components/list_view/list_view_horarios_component.dart';
-import 'package:systetica/components/page_transition.dart';
-import 'package:systetica/components/single_child_scroll_component.dart';
-import 'package:systetica/components/text_autenticacoes_widget.dart';
-import 'package:systetica/model/Empresa.dart';
-import 'package:systetica/screen/agendar/view/detalhes_empresa/detalhes_empresa_page.dart';
-import 'package:systetica/screen/agendar/view/selecionar_servico/selecionar_servico_page.dart';
-import 'package:systetica/screen/empresa/empresa_controller.dart';
-import 'package:systetica/style/app_colors..dart';
-import 'package:systetica/utils/util.dart';
+
+import '../../../../components/botoes/botao_widget.dart';
+import '../../../../components/card_component.dart';
+import '../../../../components/foto/foto_widget.dart';
+import '../../../../components/icon_arrow_widget.dart';
+import '../../../../components/item_list.dart';
+import '../../../../components/list_view/list_view_horarios_component.dart';
+import '../../../../components/page_transition.dart';
+import '../../../../components/single_child_scroll_component.dart';
+import '../../../../components/text_autenticacoes_widget.dart';
+import '../../../../model/Empresa.dart';
+import '../../../../style/app_colors..dart';
+import '../../../../utils/util.dart';
+import '../../../empresa/empresa_controller.dart';
+import '../selecionar_servico/selecionar_servico_page.dart';
+import 'detalhes_empresa_page.dart';
 
 class DetalhaEmpresaWidget extends State<DetalhaEmpresaPage> {
   late ScrollController _scrollController;

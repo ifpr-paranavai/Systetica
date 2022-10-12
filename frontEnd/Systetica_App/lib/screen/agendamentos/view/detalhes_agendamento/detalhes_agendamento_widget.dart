@@ -2,14 +2,15 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:systetica/components/alert_dialog_widget.dart';
-import 'package:systetica/components/icon_arrow_widget.dart';
-import 'package:systetica/screen/agendamentos/agendamento_controller.dart';
-import 'package:systetica/screen/agendamentos/view/detalhes_agendamento/detalhes_agendamento_page.dart';
-import 'package:systetica/screen/agendar/component/agendar_componente.dart';
-import 'package:systetica/style/app_colors..dart';
-import 'package:systetica/utils/util.dart';
 import 'package:brasil_fields/brasil_fields.dart';
+
+import '../../../../components/alert_dialog_widget.dart';
+import '../../../../components/icon_arrow_widget.dart';
+import '../../../../style/app_colors..dart';
+import '../../../../utils/util.dart';
+import '../../../agendar/component/agendar_componente.dart';
+import '../../agendamento_controller.dart';
+import 'detalhes_agendamento_page.dart';
 
 class DetalhesAgendamentoWidget extends State<DetalhesAgendamentoPage> {
   final ScrollController _scrollController = ScrollController();

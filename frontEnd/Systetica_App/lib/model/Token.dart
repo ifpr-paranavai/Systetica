@@ -1,7 +1,7 @@
 // ignore_for_file: file_names
 
-import 'package:systetica/database/orm/token_orm.dart';
-import 'package:systetica/utils/util.dart';
+import '../database/ORM/token_orm.dart';
+import '../utils/util.dart';
 
 class Token {
   int? id;

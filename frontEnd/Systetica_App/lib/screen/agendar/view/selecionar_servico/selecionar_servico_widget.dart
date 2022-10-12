@@ -1,21 +1,22 @@
 // ignore_for_file: unused_field
 
 import 'package:flutter/material.dart';
-import 'package:systetica/components/gesture_detector_component.dart';
-import 'package:systetica/components/icon_arrow_widget.dart';
-import 'package:systetica/components/loading/loading_animation.dart';
-import 'package:systetica/components/page_transition.dart';
-import 'package:systetica/model/HorarioAgendamento.dart';
-import 'package:systetica/model/Servico.dart';
-import 'package:systetica/model/Usuario.dart';
-import 'package:systetica/model/agendamento.dart';
-import 'package:systetica/screen/agendar/agendar_controller.dart';
-import 'package:systetica/screen/agendar/component/agendar_componente.dart';
-import 'package:systetica/screen/agendar/view/selecionar_funcionario/selecionar_funcionario_page.dart';
-import 'package:systetica/screen/agendar/view/selecionar_servico/selecionar_servico_page.dart';
-import 'package:systetica/screen/servico/servico_controller.dart';
 import 'package:brasil_fields/brasil_fields.dart';
-import 'package:systetica/style/app_colors..dart';
+
+import '../../../../components/gesture_detector_component.dart';
+import '../../../../components/icon_arrow_widget.dart';
+import '../../../../components/loading/loading_animation.dart';
+import '../../../../components/page_transition.dart';
+import '../../../../model/HorarioAgendamento.dart';
+import '../../../../model/Servico.dart';
+import '../../../../model/Usuario.dart';
+import '../../../../model/agendamento.dart';
+import '../../../../style/app_colors..dart';
+import '../../../servico/servico_controller.dart';
+import '../../agendar_controller.dart';
+import '../../component/agendar_componente.dart';
+import '../selecionar_funcionario/selecionar_funcionario_page.dart';
+import 'selecionar_servico_page.dart';
 
 class SelecionarServicoWidget extends State<SelecionarServicoPage> {
   final ScrollController _scrollController = ScrollController();

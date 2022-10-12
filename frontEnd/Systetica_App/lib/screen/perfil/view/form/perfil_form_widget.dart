@@ -5,14 +5,15 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:systetica/components/botoes/botao_widget.dart';
-import 'package:systetica/components/icon_arrow_widget.dart';
-import 'package:systetica/components/input/campo_texto_widget.dart';
-import 'package:systetica/components/text_autenticacoes_widget.dart';
-import 'package:systetica/model/validator/MultiValidatorUsuario.dart';
-import 'package:systetica/screen/perfil/perfil_controller.dart';
-import 'package:systetica/screen/perfil/view/form/perfil_form_page.dart';
-import 'package:systetica/style/app_colors..dart';
+
+import '../../../../components/botoes/botao_widget.dart';
+import '../../../../components/icon_arrow_widget.dart';
+import '../../../../components/input/campo_texto_widget.dart';
+import '../../../../components/text_autenticacoes_widget.dart';
+import '../../../../model/validator/MultiValidatorUsuario.dart';
+import '../../../../style/app_colors..dart';
+import '../../perfil_controller.dart';
+import 'perfil_form_page.dart';
 
 class PerfilFormWidget extends State<PerfilFormPage> {
   final PerfilController _controller = PerfilController();

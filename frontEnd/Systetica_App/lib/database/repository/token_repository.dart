@@ -1,6 +1,7 @@
-import 'package:systetica/database/db_sqlite.dart';
-import 'package:systetica/database/orm/token_orm.dart';
-import 'package:systetica/model/Token.dart';
+
+import '../../model/Token.dart';
+import '../ORM/token_orm.dart';
+import '../db_sqlite.dart';
 
 class TokenRepository {
 

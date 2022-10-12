@@ -1,9 +1,10 @@
 // ignore_for_file: avoid_function_literals_in_foreach_calls
 
 import 'package:jwt_decoder/jwt_decoder.dart';
-import 'package:systetica/model/Empresa.dart';
-import 'package:systetica/model/HorarioAgendamento.dart';
 import 'package:intl/intl.dart';
+
+import '../model/Empresa.dart';
+import '../model/HorarioAgendamento.dart';
 
 class Util {
   static bool isEmptOrNull(String? obj) {

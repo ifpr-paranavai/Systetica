@@ -1,8 +1,8 @@
 // ignore_for_file: file_names
 
-import 'package:systetica/model/Servico.dart';
-import 'package:systetica/model/Usuario.dart';
-import 'package:systetica/model/Situacao.dart';
+import 'Servico.dart';
+import 'Situacao.dart';
+import 'Usuario.dart';
 
 class AgendamentoServico {
   AgendamentoServico({

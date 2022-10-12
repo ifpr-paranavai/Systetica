@@ -1,7 +1,7 @@
 // ignore_for_file: file_names
 
-import 'package:systetica/model/Cidade.dart';
-import 'package:systetica/model/Usuario.dart';
+import 'Cidade.dart';
+import 'Usuario.dart';
 
 class Empresa {
   Empresa({

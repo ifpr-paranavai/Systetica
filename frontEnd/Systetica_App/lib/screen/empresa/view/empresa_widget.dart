@@ -5,22 +5,24 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:systetica/components/foto/foto_widget.dart';
-import 'package:systetica/components/icon_arrow_widget.dart';
-import 'package:systetica/components/item_list.dart';
-import 'package:systetica/components/loading/loading_animation.dart';
-import 'package:systetica/components/single_child_scroll_component.dart';
-import 'package:systetica/components/text_autenticacoes_widget.dart';
-import 'package:systetica/model/Empresa.dart';
-import 'package:systetica/model/Info.dart';
-import 'package:systetica/model/MenuItem.dart';
-import 'package:systetica/model/validator/MultiValidatorEmpresa.dart';
-import 'package:systetica/screen/empresa/component/input_empresa.dart';
-import 'package:systetica/screen/empresa/empresa_controller.dart';
-import 'package:systetica/screen/empresa/view/empresa_page.dart';
-import 'package:systetica/screen/empresa/view/form/empresa_form_page.dart';
-import 'package:systetica/style/app_colors..dart';
-import 'package:systetica/utils/util.dart';
+
+import '../../../components/foto/foto_widget.dart';
+import '../../../components/icon_arrow_widget.dart';
+import '../../../components/item_list.dart';
+import '../../../components/loading/loading_animation.dart';
+import '../../../components/single_child_scroll_component.dart';
+import '../../../components/text_autenticacoes_widget.dart';
+import '../../../model/Empresa.dart';
+import '../../../model/Info.dart';
+import '../../../model/MenuItem.dart';
+import '../../../model/validator/MultiValidatorEmpresa.dart';
+import '../../../style/app_colors..dart';
+import '../../../utils/util.dart';
+import '../component/input_empresa.dart';
+import '../empresa_controller.dart';
+import 'empresa_page.dart';
+import 'form/empresa_form_page.dart';
+
 
 class EmpresaWidget extends State<EmpresaPage> {
   final EmpresaController _controller = EmpresaController();

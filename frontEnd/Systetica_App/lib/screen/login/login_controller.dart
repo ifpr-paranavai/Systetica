@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:systetica/components/loading/show_loading_widget.dart';
-import 'package:systetica/components/page_transition.dart';
-import 'package:systetica/components/alert_dialog_widget.dart';
-import 'package:systetica/components/texto_erro_widget.dart';
-import 'package:systetica/database/repository/token_repository.dart';
-import 'package:systetica/model/Login.dart';
-import 'package:systetica/model/Token.dart';
-import 'package:systetica/model/Usuario.dart';
-import 'package:systetica/request/dio_config.dart';
-import 'package:systetica/screen/home/view/home_page.dart';
-import 'package:systetica/screen/inicio/view/inicio_page.dart';
-import 'package:systetica/screen/login/login_service.dart';
 import 'package:systetica/screen/login/view/alterar_senha/alterar_senha_page.dart';
-import 'package:systetica/utils/util.dart';
+
+import '../../components/alert_dialog_widget.dart';
+import '../../components/loading/show_loading_widget.dart';
+import '../../components/page_transition.dart';
+import '../../components/texto_erro_widget.dart';
+import '../../database/repository/token_repository.dart';
+import '../../model/Login.dart';
+import '../../model/Token.dart';
+import '../../model/Usuario.dart';
+import '../../request/dio_config.dart';
+import '../../utils/util.dart';
+import '../home/view/home_page.dart';
+import '../inicio/view/inicio_page.dart';
+import 'login_service.dart';
 
 class LoginController {
   final emailController = TextEditingController();

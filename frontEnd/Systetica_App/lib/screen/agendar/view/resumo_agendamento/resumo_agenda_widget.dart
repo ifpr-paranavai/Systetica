@@ -1,12 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:systetica/components/icon_arrow_widget.dart';
-import 'package:systetica/components/page_transition.dart';
-import 'package:systetica/screen/agendar/agendar_controller.dart';
-import 'package:systetica/screen/agendar/component/agendar_componente.dart';
-import 'package:systetica/screen/agendar/view/resumo_agendamento/resumo_agenda_page.dart';
-import 'package:systetica/style/app_colors..dart';
-import 'package:systetica/utils/util.dart';
+
+import '../../../../components/icon_arrow_widget.dart';
+import '../../../../components/page_transition.dart';
+import '../../../../style/app_colors..dart';
+import '../../../../utils/util.dart';
+import '../../agendar_controller.dart';
+import '../../component/agendar_componente.dart';
+import 'resumo_agenda_page.dart';
 
 class ResumoAgendaWidget extends State<ResumoAgendaPage> {
   final ScrollController _scrollController = ScrollController();

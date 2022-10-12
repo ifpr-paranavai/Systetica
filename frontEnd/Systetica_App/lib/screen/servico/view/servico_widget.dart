@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:systetica/components/erro/erro_widget.dart';
-import 'package:systetica/components/icon_arrow_widget.dart';
-import 'package:systetica/components/list_view/list_view_component.dart';
-import 'package:systetica/components/loading/loading_animation.dart';
-import 'package:systetica/components/pesquisa_widget.dart';
-import 'package:systetica/model/Info.dart';
-import 'package:systetica/model/Servico.dart';
-import 'package:systetica/screen/servico/servico_controller.dart';
-import 'package:systetica/screen/servico/view/form/servico_form_page.dart';
-import 'package:systetica/screen/servico/view/servico_page.dart';
-import 'package:systetica/style/app_colors..dart';
 import 'package:brasil_fields/brasil_fields.dart';
+import 'package:systetica/screen/servico/view/servico_page.dart';
+
+import '../../../components/erro/erro_widget.dart';
+import '../../../components/icon_arrow_widget.dart';
+import '../../../components/list_view/list_view_component.dart';
+import '../../../components/loading/loading_animation.dart';
+import '../../../components/pesquisa_widget.dart';
+import '../../../model/Info.dart';
+import '../../../model/Servico.dart';
+import '../../../style/app_colors..dart';
+import '../servico_controller.dart';
+import 'form/servico_form_page.dart';
 
 class ServicoWidget extends State<ServicoPage> {
   final ServicoController _controller = ServicoController();

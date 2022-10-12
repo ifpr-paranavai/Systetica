@@ -1,6 +1,6 @@
 // ignore_for_file: file_names
 
-import 'package:systetica/model/Role.dart';
+import 'Role.dart';
 
 class Usuario {
   Usuario({

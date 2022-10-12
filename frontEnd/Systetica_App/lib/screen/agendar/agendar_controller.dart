@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:systetica/components/alert_dialog_widget.dart';
-import 'package:systetica/components/loading/show_loading_widget.dart';
-import 'package:systetica/components/page_transition.dart';
-import 'package:systetica/components/texto_erro_widget.dart';
-import 'package:systetica/database/repository/token_repository.dart';
-import 'package:systetica/model/Empresa.dart';
-import 'package:systetica/model/Info.dart';
-import 'package:systetica/model/Token.dart';
-import 'package:systetica/model/agendamento.dart';
-import 'package:systetica/request/dio_config.dart';
-import 'package:systetica/screen/agendar/agendar_service.dart';
-import 'package:systetica/screen/home/view/home_page.dart';
-import 'package:systetica/utils/util.dart';
 import 'package:intl/intl.dart';
+
+import '../../components/texto_erro_widget.dart';
+import '../../components/alert_dialog_widget.dart';
+import '../../components/loading/show_loading_widget.dart';
+import '../../components/page_transition.dart';
+import '../../database/repository/token_repository.dart';
+import '../../model/Empresa.dart';
+import '../../model/Info.dart';
+import '../../model/Token.dart';
+import '../../model/agendamento.dart';
+import '../../request/dio_config.dart';
+import '../../utils/util.dart';
+import '../home/view/home_page.dart';
+import 'agendar_service.dart';
 
 class AgendarController {
   final myPageTransition = MyPageTransition();
@@ -107,11 +108,11 @@ class AgendarController {
               MaterialPageRoute(
                 builder: (context) => const HomePage(),
               ),
-                  (route) => false,
+              (route) => false,
             ),
           );
         } else {
-         await alertDialog.alertDialog(
+          await alertDialog.alertDialog(
             showModalOk: true,
             context: context,
             titulo: "Erro",
@@ -120,7 +121,6 @@ class AgendarController {
             onPressedOk: () => Navigator.pop(context),
           );
         }
-
       } catch (e) {
         info.success = false;
       }

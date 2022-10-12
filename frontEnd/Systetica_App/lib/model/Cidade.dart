@@ -1,6 +1,7 @@
 // ignore_for_file: file_names
 
-import 'package:systetica/model/Estado.dart';
+
+import 'Estado.dart';
 
 class Cidade {
   Cidade({

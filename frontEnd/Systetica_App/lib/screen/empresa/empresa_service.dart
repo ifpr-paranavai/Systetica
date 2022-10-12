@@ -1,12 +1,13 @@
 // ignore_for_file: unused_catch_clause
 
 import 'package:dio/dio.dart';
-import 'package:systetica/model/BrasilCep.dart';
-import 'package:systetica/model/Cidade.dart';
-import 'package:systetica/model/Empresa.dart';
-import 'package:systetica/model/Info.dart';
-import 'package:systetica/model/Token.dart';
-import 'package:systetica/utils/dio/dio_config_api.dart';
+
+import '../../model/BrasilCep.dart';
+import '../../model/Cidade.dart';
+import '../../model/Empresa.dart';
+import '../../model/Info.dart';
+import '../../model/Token.dart';
+import '../../utils/dio/dio_config_api.dart';
 
 class EmpresaService {
   static Future<Info> cadastrarEmpresa(Token token, Empresa empresa) async {
