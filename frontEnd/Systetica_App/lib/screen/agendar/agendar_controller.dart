@@ -9,7 +9,7 @@ import '../../database/repository/token_repository.dart';
 import '../../model/Empresa.dart';
 import '../../model/Info.dart';
 import '../../model/Token.dart';
-import '../../model/agendamento.dart';
+import '../../model/DadosAgendamento.dart';
 import '../../request/dio_config.dart';
 import '../../utils/util.dart';
 import '../home/view/home_page.dart';
@@ -70,7 +70,7 @@ class AgendarController {
   }
 
   Future<void> agendarHorario({
-    required Agendamento agendamento,
+    required DadosAgendamento dadosAgendamento,
     required BuildContext context,
   }) async {
     Info info = Info(success: true);
@@ -85,11 +85,11 @@ class AgendarController {
         );
 
         Token _token = await TokenRepository.findToken();
-        agendamento.cliente.email = _token.email;
+        dadosAgendamento.cliente.email = _token.email;
 
         info = await AgendarService.agendarHorario(
           token: _token,
-          agendamento: agendamento,
+          dadosAgendamento: dadosAgendamento,
         );
 
         // Finaliza o loading na tela

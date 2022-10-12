@@ -2,13 +2,13 @@
 
 import 'package:flutter/material.dart';
 
-import '../../../../model/agendamento.dart';
+import '../../../../model/DadosAgendamento.dart';
 import 'selecionar_funcionario_widget.dart';
 
 class SelecionarFuncionarioPage extends StatefulWidget {
-  SelecionarFuncionarioPage({Key? key, required this.agendamento})
+  SelecionarFuncionarioPage({Key? key, required this.dadosAgendamento})
       : super(key: key);
-  Agendamento agendamento;
+  DadosAgendamento dadosAgendamento;
 
   @override
   SelecionarFuncionarioWidget createState() => SelecionarFuncionarioWidget();

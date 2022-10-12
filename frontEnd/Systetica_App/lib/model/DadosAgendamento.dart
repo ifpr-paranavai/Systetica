@@ -5,8 +5,8 @@ import 'HorarioAgendamento.dart';
 import 'Servico.dart';
 import 'Usuario.dart';
 
-class Agendamento {
-  Agendamento({
+class DadosAgendamento {
+  DadosAgendamento({
     required this.cliente,
     required this.funcionario,
     required this.empresa,

@@ -21,7 +21,7 @@ class DetalhesAgendamentoWidget extends State<DetalhesAgendamentoPage> {
   @override
   void initState() {
     super.initState();
-    widget.agendamentoServico.servicos!.forEach((element) {
+    widget.agendamento.servicos!.forEach((element) {
       total += element.preco!;
     });
   }
@@ -57,7 +57,7 @@ class DetalhesAgendamentoWidget extends State<DetalhesAgendamentoPage> {
             _sizedBox(height: _controller.altura * 0.08),
           ],
         ),
-        widget.agendamentoServico.situacao!.name == "AGENDADO"
+        widget.agendamento.situacao!.name == "AGENDADO"
             ? AgendarComponente.botaoSelecinar(
                 altura: _controller.altura,
                 largura: _controller.largura,
@@ -73,7 +73,7 @@ class DetalhesAgendamentoWidget extends State<DetalhesAgendamentoPage> {
   }
 
   Widget _checkboxSelect() {
-    int itemCount = widget.agendamentoServico.servicos!.length;
+    int itemCount = widget.agendamento.servicos!.length;
     String titulo;
     itemCount > 1 ? titulo = "Serviços" : titulo = "Serviço";
     return NotificationListener<OverscrollIndicatorNotification>(
@@ -95,13 +95,12 @@ class DetalhesAgendamentoWidget extends State<DetalhesAgendamentoPage> {
                 itemCount: itemCount,
                 itemBuilder: (BuildContext context, int index) {
                   return _listSelecao(
-                    nome: widget.agendamentoServico.servicos![index].nome!,
-                    subTitulo: widget
-                            .agendamentoServico.servicos![index].tempoServico
+                    nome: widget.agendamento.servicos![index].nome!,
+                    subTitulo: widget.agendamento.servicos![index].tempoServico
                             .toString() +
                         ' min',
                     icon: CupertinoIcons.scissors_alt,
-                    maxLines: widget.agendamentoServico.servicos!.length,
+                    maxLines: widget.agendamento.servicos!.length,
                   );
                 },
               ),
@@ -115,7 +114,7 @@ class DetalhesAgendamentoWidget extends State<DetalhesAgendamentoPage> {
               ),
               _titulo(texto: "Barbeiro"),
               _listSelecao(
-                nome: widget.agendamentoServico.funcionario!.nome!,
+                nome: widget.agendamento.funcionario!.nome!,
                 terSubTituulo: false,
                 icon: Icons.person,
               ),
@@ -123,15 +122,15 @@ class DetalhesAgendamentoWidget extends State<DetalhesAgendamentoPage> {
               _listSelecao(
                 nome: Util.dataEscrito(
                   DateTime.parse(
-                    widget.agendamentoServico.dataAgendamento!,
+                    widget.agendamento.dataAgendamento!,
                   ),
                 ),
-                subTitulo: widget.agendamentoServico.horarioAgendamento!,
+                subTitulo: widget.agendamento.horarioAgendamento!,
                 icon: Icons.calendar_month,
               ),
               _titulo(texto: "Status"),
               _listSelecao(
-                nome: widget.agendamentoServico.situacao!.name,
+                nome: widget.agendamento.situacao!.name,
                 terSubTituulo: false,
                 icon: Icons.phone_android,
               ),
@@ -154,7 +153,7 @@ class DetalhesAgendamentoWidget extends State<DetalhesAgendamentoPage> {
         Navigator.pop(context);
         await _controller
             .cancelarAgendamento(
-              agendamentoServico: widget.agendamentoServico,
+              agendamento: widget.agendamento,
               context: context,
             )
             .then(

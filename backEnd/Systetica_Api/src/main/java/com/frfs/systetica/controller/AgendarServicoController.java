@@ -1,7 +1,7 @@
 package com.frfs.systetica.controller;
 
+import com.frfs.systetica.dto.DadosAgendamentoDTO;
 import com.frfs.systetica.dto.AgendamentoDTO;
-import com.frfs.systetica.dto.AgendarServicoDTO;
 import com.frfs.systetica.dto.response.ReturnData;
 import com.frfs.systetica.service.AgendarServicoService;
 import lombok.RequiredArgsConstructor;
@@ -34,16 +34,16 @@ public class AgendarServicoController {
 
     @PostMapping(value = "/salvar")
     @ResponseBody
-    public ResponseEntity<Object> salvar(@Validated @RequestBody AgendamentoDTO agendamentoDTO) {
-        ReturnData<String> result = agendarServicoService.salvar(agendamentoDTO);
+    public ResponseEntity<Object> salvar(@Validated @RequestBody DadosAgendamentoDTO dadosAgendamentoDTO) {
+        ReturnData<String> result = agendarServicoService.salvar(dadosAgendamentoDTO);
 
         return new ResponseEntity<>(result, result.getSuccess() ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @PostMapping(value = "/cancelar")
     @ResponseBody
-    public ResponseEntity<Object> cancelar(@Validated @RequestBody AgendarServicoDTO agendarServicoDTO) {
-        ReturnData<String> result = agendarServicoService.cancelar(agendarServicoDTO);
+    public ResponseEntity<Object> cancelar(@Validated @RequestBody AgendamentoDTO agendamentoDTO) {
+        ReturnData<String> result = agendarServicoService.cancelar(agendamentoDTO);
 
         return new ResponseEntity<>(result, result.getSuccess() ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
     }

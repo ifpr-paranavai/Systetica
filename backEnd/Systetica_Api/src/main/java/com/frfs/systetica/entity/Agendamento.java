@@ -18,9 +18,9 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "agendar_servico")
+@Table(name = "agendamento")
 @EqualsAndHashCode
-public class AgendarServico implements Serializable {
+public class Agendamento implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id

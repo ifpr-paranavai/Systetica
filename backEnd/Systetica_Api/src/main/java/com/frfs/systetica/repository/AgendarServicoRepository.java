@@ -1,6 +1,6 @@
 package com.frfs.systetica.repository;
 
-import com.frfs.systetica.entity.AgendarServico;
+import com.frfs.systetica.entity.Agendamento;
 import com.frfs.systetica.entity.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -10,15 +10,15 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface AgendarServicoRepository extends JpaRepository<AgendarServico, Long> {
-    List<AgendarServico> findByDataAgendamentoOrderByHorarioAgendamento(String dataAgendamento);
+public interface AgendarServicoRepository extends JpaRepository<Agendamento, Long> {
+    List<Agendamento> findByDataAgendamentoOrderByHorarioAgendamento(String dataAgendamento);
 
-    Optional<AgendarServico> findByDataAgendamentoAndHorarioAgendamento(String dataAgendamento,
-                                                                        LocalTime horarioAgendamento);
+    Optional<Agendamento> findByDataAgendamentoAndHorarioAgendamento(String dataAgendamento,
+                                                                     LocalTime horarioAgendamento);
 
-    List<AgendarServico> findByDataAgendamentoAndClienteOrderByHorarioAgendamento(String dataAgendamento,
-                                                                                  Usuario cliente);
+    List<Agendamento> findByDataAgendamentoAndClienteOrderByHorarioAgendamento(String dataAgendamento,
+                                                                               Usuario cliente);
 
-    List<AgendarServico> findByDataAgendamentoAndFuncionarioOrderByHorarioAgendamento(String dataAgendamento,
-                                                                                      Usuario funcionario);
+    List<Agendamento> findByDataAgendamentoAndFuncionarioOrderByHorarioAgendamento(String dataAgendamento,
+                                                                                   Usuario funcionario);
 }

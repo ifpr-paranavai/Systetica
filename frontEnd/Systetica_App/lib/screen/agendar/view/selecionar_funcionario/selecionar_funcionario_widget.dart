@@ -24,8 +24,8 @@ class SelecionarFuncionarioWidget extends State<SelecionarFuncionarioPage> {
   @override
   void initState() {
     super.initState();
-    funcionarios = widget.agendamento.empresa.usuariosFuncionario!;
-    widget.agendamento.funcionario.selecionado == true
+    funcionarios = widget.dadosAgendamento.empresa.usuariosFuncionario!;
+    widget.dadosAgendamento.funcionario.selecionado == true
         ? _ativarDesativarBotao()
         : selecionadoUmFuncionario = false;
   }
@@ -70,7 +70,7 @@ class SelecionarFuncionarioWidget extends State<SelecionarFuncionarioPage> {
                 ? Navigator.of(context).push(
                     myPageTransition.pageTransition(
                       child: SelecionarHorarioPage(
-                        agendamento: widget.agendamento,
+                        dadosAgendamento: widget.dadosAgendamento,
                       ),
                       buttoToTop: true,
                       childCurrent: widget,
@@ -136,12 +136,12 @@ class SelecionarFuncionarioWidget extends State<SelecionarFuncionarioPage> {
 
   void _selecionarFuncionario(int index) {
     funcionarios[index].selecionado == true
-        ? widget.agendamento.funcionario = funcionarios[index]
-        : widget.agendamento.funcionario = Usuario();
+        ? widget.dadosAgendamento.funcionario = funcionarios[index]
+        : widget.dadosAgendamento.funcionario = Usuario();
   }
 
   void _ativarDesativarBotao() {
-    if (widget.agendamento.funcionario.id == null) {
+    if (widget.dadosAgendamento.funcionario.id == null) {
       selecionadoUmFuncionario = false;
       _controller.corBotao = Colors.grey.withOpacity(0.9);
       _controller.overlayCorBotao = Colors.transparent;

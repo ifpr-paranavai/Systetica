@@ -2,13 +2,13 @@
 
 import 'package:flutter/material.dart';
 
-import '../../../../model/agendamento.dart';
+import '../../../../model/DadosAgendamento.dart';
 import 'selecionar_horario_widget.dart';
 
 class SelecionarHorarioPage extends StatefulWidget {
-  SelecionarHorarioPage({Key? key, required this.agendamento})
+  SelecionarHorarioPage({Key? key, required this.dadosAgendamento})
       : super(key: key);
-  Agendamento agendamento;
+  DadosAgendamento dadosAgendamento;
 
   @override
   SelecionarHorarioWidget createState() => SelecionarHorarioWidget();

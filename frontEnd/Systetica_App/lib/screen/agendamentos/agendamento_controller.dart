@@ -6,7 +6,7 @@ import '../../components/loading/show_loading_widget.dart';
 import '../../components/texto_erro_widget.dart';
 import '../../components/page_transition.dart';
 import '../../database/repository/token_repository.dart';
-import '../../model/AgendamentoServico.dart';
+import '../../model/Agendamento.dart';
 import '../../model/Info.dart';
 import '../../model/Token.dart';
 import '../../request/dio_config.dart';
@@ -16,7 +16,7 @@ class AgendamentoController {
   final myPageTransition = MyPageTransition();
   final formKey = GlobalKey<FormState>();
 
-  late List<AgendamentoServico> agendamentos = [];
+  late List<Agendamento> agendamentos = [];
 
   double largura = 0;
   double altura = 0;
@@ -41,7 +41,7 @@ class AgendamentoController {
   }
 
   Future<void> cancelarAgendamento({
-    required AgendamentoServico agendamentoServico,
+    required Agendamento agendamento,
     required BuildContext context,
   }) async {
     Info info = Info(success: true);
@@ -58,7 +58,7 @@ class AgendamentoController {
         Token _token = await TokenRepository.findToken();
 
         info = await AgendamentoService.cancelarAgendamento(
-          agendamentoServico: agendamentoServico,
+          agendamento: agendamento,
           token: _token,
         );
 

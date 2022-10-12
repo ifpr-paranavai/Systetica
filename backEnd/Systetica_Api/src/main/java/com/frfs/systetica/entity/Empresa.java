@@ -1,11 +1,6 @@
 package com.frfs.systetica.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalTimeDeserializer;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
 import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -67,6 +62,16 @@ public class Empresa implements Serializable {
     @Column(name = "longitude", length = 13)
     private String longitude;
 
+    @NotNull
+    @Column(name = "horario_abertura")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm")
+    private LocalTime horarioAbertura;
+
+    @NotNull
+    @Column(name = "horario_fechamento")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm")
+    private LocalTime horarioFechamento;
+
     @Column(name = "logo_base64")
     @Lob
     private String logoBase64;
@@ -92,14 +97,4 @@ public class Empresa implements Serializable {
             joinColumns = @JoinColumn(name = "id_empresa"),
             inverseJoinColumns = @JoinColumn(name = "id_usuario"))
     private List<Usuario> usuarios = new ArrayList<>();
-
-    @NotNull
-    @Column(name = "horario_abertura")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm")
-    private LocalTime horarioAbertura;
-
-    @NotNull
-    @Column(name = "horario_fechamento")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm")
-    private LocalTime horarioFechamento;
 }

@@ -1,13 +1,18 @@
 package com.frfs.systetica.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.frfs.systetica.entity.Situacao;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -17,18 +22,34 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class AgendamentoDTO implements Serializable {
 
-    @JsonProperty("cliente_email")
-    private String clienteEmail;
+    @JsonProperty("id")
+    private Long id;
 
-    @JsonProperty("funcionario_id")
-    private Long funcionarioId;
+    @JsonProperty("nome_cliente")
+    private String nomeCliente;
 
-    @JsonProperty("empresa_id")
-    private Long empresaId;
+    @JsonProperty("data_agendamento")
+    private String dataAgendamento;
 
     @JsonProperty("horario_agendamento")
-    private HorarioAgendamentoDTO horarioAgendamento;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm")
+    private LocalTime horarioAgendamento;
 
-    @JsonProperty("servicos_selecionados")
-    private List<ServicoDTO> servicosSelecionados;
+    @JsonProperty("data_cadastro")
+    private Date dataCadastro;
+
+    @JsonProperty("situacao")
+    private Situacao situacao;
+
+    @JsonProperty("cliente")
+    private UsuarioDTO cliente;
+
+    @JsonProperty("funcionario")
+    private UsuarioDTO funcionario;
+
+    @JsonProperty("empresa")
+    private EmpresaDTO empresa;
+
+    @JsonProperty("ass_servico_agendado")
+    private List<ServicoDTO> servicos = new ArrayList<>();
 }

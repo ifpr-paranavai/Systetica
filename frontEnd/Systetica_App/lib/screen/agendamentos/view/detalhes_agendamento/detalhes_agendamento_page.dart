@@ -2,13 +2,13 @@
 
 import 'package:flutter/material.dart';
 
-import '../../../../model/AgendamentoServico.dart';
+import '../../../../model/Agendamento.dart';
 import 'detalhes_agendamento_widget.dart';
 
 class DetalhesAgendamentoPage extends StatefulWidget {
-  DetalhesAgendamentoPage({Key? key, required this.agendamentoServico})
+  DetalhesAgendamentoPage({Key? key, required this.agendamento})
       : super(key: key);
-  AgendamentoServico agendamentoServico;
+  Agendamento agendamento;
 
   @override
   DetalhesAgendamentoWidget createState() => DetalhesAgendamentoWidget();

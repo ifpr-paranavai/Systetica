@@ -59,9 +59,9 @@ public class Servico implements Serializable {
             uniqueConstraints = @UniqueConstraint(columnNames = {"id_servico", "id_agendar_servico"}),
             joinColumns = @JoinColumn(name = "id_servico"),
             inverseJoinColumns = @JoinColumn(name = "id_agendar_servico"))
-    private List<AgendarServico> agendarServicos = new ArrayList<>();
+    private List<Agendamento> agendarServicos = new ArrayList<>();
 
-    public List<AgendarServico> getAgendarServicos() {
+    public List<Agendamento> getAgendarServicos() {
         return null;
     }
 }

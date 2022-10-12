@@ -11,7 +11,6 @@ import '../../agendamento_controller.dart';
 import '../detalhes_agendamento/detalhes_agendamento_page.dart';
 import 'agendamento_page.dart';
 
-
 class AgendamentolWidget extends State<AgendamentoPage> {
   final AgendamentoController _controller = AgendamentoController();
 
@@ -217,7 +216,7 @@ class AgendamentolWidget extends State<AgendamentoPage> {
             .push(
               _controller.myPageTransition.pageTransition(
                 child: DetalhesAgendamentoPage(
-                    agendamentoServico: _controller.agendamentos[index]),
+                    agendamento: _controller.agendamentos[index]),
                 childCurrent: widget,
                 buttoToTop: true,
               ),

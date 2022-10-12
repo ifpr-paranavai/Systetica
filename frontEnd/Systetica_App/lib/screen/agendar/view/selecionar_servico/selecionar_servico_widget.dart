@@ -10,7 +10,7 @@ import '../../../../components/page_transition.dart';
 import '../../../../model/HorarioAgendamento.dart';
 import '../../../../model/Servico.dart';
 import '../../../../model/Usuario.dart';
-import '../../../../model/agendamento.dart';
+import '../../../../model/DadosAgendamento.dart';
 import '../../../../style/app_colors..dart';
 import '../../../servico/servico_controller.dart';
 import '../../agendar_controller.dart';
@@ -24,7 +24,7 @@ class SelecionarServicoWidget extends State<SelecionarServicoPage> {
   final ServicoController _servicoController = ServicoController();
   var myPageTransition = MyPageTransition();
 
-  late Agendamento agendamento;
+  late DadosAgendamento dadosAgendamento;
   List<Servico> servicos = [];
   bool loading = true;
   bool servicoSelecionado = false;
@@ -33,7 +33,7 @@ class SelecionarServicoWidget extends State<SelecionarServicoPage> {
   void initState() {
     super.initState();
     buscarServicos();
-    agendamento = Agendamento(
+    dadosAgendamento = DadosAgendamento(
       cliente: Usuario(),
       funcionario: Usuario(),
       empresa: widget.empresa,
@@ -98,7 +98,7 @@ class SelecionarServicoWidget extends State<SelecionarServicoPage> {
                 ? Navigator.of(context).push(
                     myPageTransition.pageTransition(
                       child: SelecionarFuncionarioPage(
-                        agendamento: agendamento,
+                        dadosAgendamento: dadosAgendamento,
                       ),
                       childCurrent: widget,
                       buttoToTop: true,
@@ -158,7 +158,7 @@ class SelecionarServicoWidget extends State<SelecionarServicoPage> {
   }
 
   void _ativarDesativarBotao() {
-    if (agendamento.servicosSelecionados.isEmpty) {
+    if (dadosAgendamento.servicosSelecionados.isEmpty) {
       servicoSelecionado = false;
       _controller.corBotao = Colors.grey.withOpacity(0.9);
       _controller.overlayCorBotao = Colors.transparent;
@@ -171,8 +171,8 @@ class SelecionarServicoWidget extends State<SelecionarServicoPage> {
 
   void _adicionarRemoverServico(int index) {
     servicos[index].servicoSelecionado == true
-        ? agendamento.servicosSelecionados.add(servicos[index])
-        : agendamento.servicosSelecionados.removeWhere(
+        ? dadosAgendamento.servicosSelecionados.add(servicos[index])
+        : dadosAgendamento.servicosSelecionados.removeWhere(
             (servico) => servico.id == servicos[index].id,
           );
   }

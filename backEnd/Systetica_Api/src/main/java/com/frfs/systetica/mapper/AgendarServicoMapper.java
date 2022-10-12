@@ -1,7 +1,7 @@
 package com.frfs.systetica.mapper;
 
-import com.frfs.systetica.dto.AgendarServicoDTO;
-import com.frfs.systetica.entity.AgendarServico;
+import com.frfs.systetica.dto.AgendamentoDTO;
+import com.frfs.systetica.entity.Agendamento;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
@@ -16,9 +16,9 @@ public interface AgendarServicoMapper {
     @Mappings({
             @Mapping(target = "dataCadastro", ignore = true),
     })
-    AgendarServicoDTO toDto(AgendarServico entity);
+    AgendamentoDTO toDto(Agendamento entity);
 
-    List<AgendarServicoDTO> toListDto(List<AgendarServico> entities);
+    List<AgendamentoDTO> toListDto(List<Agendamento> entities);
 
-    AgendarServico toEntity(AgendarServicoDTO dto);
+    Agendamento toEntity(AgendamentoDTO dto);
 }

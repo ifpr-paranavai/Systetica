@@ -17,7 +17,7 @@ class ResumoAgendaWidget extends State<ResumoAgendaPage> {
   @override
   void initState() {
     super.initState();
-    widget.agendamento;
+    widget.dadosAgendamento;
   }
 
   @override
@@ -59,7 +59,7 @@ class ResumoAgendaWidget extends State<ResumoAgendaPage> {
           labelText: "AGENDAR",
           onPressed: () => _controller
               .agendarHorario(
-                agendamento: widget.agendamento,
+                dadosAgendamento: widget.dadosAgendamento,
                 context: context,
               )
               .then(
@@ -73,7 +73,7 @@ class ResumoAgendaWidget extends State<ResumoAgendaPage> {
   }
 
   Widget _checkboxSelect() {
-    int itemCount = widget.agendamento.servicosSelecionados.length;
+    int itemCount = widget.dadosAgendamento.servicosSelecionados.length;
     return NotificationListener<OverscrollIndicatorNotification>(
       onNotification: (overScroll) {
         overScroll.disallowIndicator();
@@ -93,29 +93,31 @@ class ResumoAgendaWidget extends State<ResumoAgendaPage> {
                 itemCount: itemCount,
                 itemBuilder: (BuildContext context, int index) {
                   return _listSelecao(
-                    nome: widget.agendamento.servicosSelecionados[index].nome!,
-                    subTitulo: widget.agendamento.servicosSelecionados[index]
-                            .tempoServico
+                    nome: widget
+                        .dadosAgendamento.servicosSelecionados[index].nome!,
+                    subTitulo: widget.dadosAgendamento
+                            .servicosSelecionados[index].tempoServico
                             .toString() +
                         ' min',
                     icon: CupertinoIcons.scissors_alt,
-                    maxLines: widget.agendamento.servicosSelecionados.length,
+                    maxLines:
+                        widget.dadosAgendamento.servicosSelecionados.length,
                   );
                 },
               ),
               _titulo(texto: "Barbeiro"),
               _listSelecao(
-                nome: widget.agendamento.funcionario.nome!,
+                nome: widget.dadosAgendamento.funcionario.nome!,
                 terSubTituulo: false,
                 icon: Icons.person,
               ),
               _titulo(texto: "Data e horário"),
               _listSelecao(
                 nome: Util.dataEscrito(
-                  widget.agendamento.horarioAgendamento.dataAgendamento!,
+                  widget.dadosAgendamento.horarioAgendamento.dataAgendamento!,
                 ),
-                subTitulo:
-                    widget.agendamento.horarioAgendamento.horarioAgendamento!,
+                subTitulo: widget
+                    .dadosAgendamento.horarioAgendamento.horarioAgendamento!,
                 icon: Icons.calendar_month,
               ),
             ],

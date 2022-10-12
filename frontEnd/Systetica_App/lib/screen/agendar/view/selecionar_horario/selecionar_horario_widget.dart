@@ -35,7 +35,7 @@ class SelecionarHorarioWidget extends State<SelecionarHorarioPage> {
     await _controller
         .buscarTodosAgendamentoPorDia(
           dataSelecionada: data,
-          empresa: widget.agendamento.empresa,
+          empresa: widget.dadosAgendamento.empresa,
         )
         .then(
           (value) => setState(
@@ -101,7 +101,7 @@ class SelecionarHorarioWidget extends State<SelecionarHorarioPage> {
                   ? Navigator.of(context).push(
                       myPageTransition.pageTransition(
                         child: ResumoAgendaPage(
-                          agendamento: widget.agendamento,
+                          dadosAgendamento: widget.dadosAgendamento,
                         ),
                         buttoToTop: true,
                         childCurrent: widget,
@@ -231,12 +231,13 @@ class SelecionarHorarioWidget extends State<SelecionarHorarioPage> {
 
   void _selecionarHorario(int index) {
     horariosAgendamento[index].selecionado == true
-        ? widget.agendamento.horarioAgendamento = horariosAgendamento[index]
-        : widget.agendamento.horarioAgendamento = HorarioAgendamento();
+        ? widget.dadosAgendamento.horarioAgendamento =
+            horariosAgendamento[index]
+        : widget.dadosAgendamento.horarioAgendamento = HorarioAgendamento();
   }
 
   void _ativarDesativarBotao() {
-    if (widget.agendamento.horarioAgendamento.horarioAgendamento == null) {
+    if (widget.dadosAgendamento.horarioAgendamento.horarioAgendamento == null) {
       horarioSelecionado = false;
       _controller.corBotao = Colors.grey.withOpacity(0.9);
       _controller.overlayCorBotao = Colors.transparent;

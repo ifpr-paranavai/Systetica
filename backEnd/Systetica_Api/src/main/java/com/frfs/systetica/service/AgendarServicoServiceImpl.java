@@ -1,9 +1,9 @@
 package com.frfs.systetica.service;
 
 import com.frfs.systetica.dto.AgendamentoDTO;
-import com.frfs.systetica.dto.AgendarServicoDTO;
+import com.frfs.systetica.dto.DadosAgendamentoDTO;
 import com.frfs.systetica.dto.response.ReturnData;
-import com.frfs.systetica.entity.AgendarServico;
+import com.frfs.systetica.entity.Agendamento;
 import com.frfs.systetica.entity.Empresa;
 import com.frfs.systetica.entity.Role;
 import com.frfs.systetica.entity.Usuario;
@@ -40,7 +40,7 @@ public class AgendarServicoServiceImpl implements AgendarServicoService {
     @Override
     public ReturnData<Object> buscarTodosAgendamentoPorDia(String dataAgendamento) {
         List<String> listaDeHorarios = new ArrayList<>();
-        List<AgendarServico> servicosAgendados = agendarServicoRepository
+        List<Agendamento> servicosAgendados = agendarServicoRepository
                 .findByDataAgendamentoOrderByHorarioAgendamento(dataAgendamento);
 
         if (servicosAgendados.isEmpty()) {
@@ -57,7 +57,7 @@ public class AgendarServicoServiceImpl implements AgendarServicoService {
     @Override
     public ReturnData<Object> buscarTodosAgendamentoPorDiaUsuario(String dataAgendamento, String email) {
         Optional<Usuario> usuario = usuarioRepository.findByEmail(email);
-        List<AgendarServico> servicosAgendados;
+        List<Agendamento> servicosAgendados;
 
         Role role = new Role();
 
@@ -83,30 +83,30 @@ public class AgendarServicoServiceImpl implements AgendarServicoService {
     }
 
     @Override
-    public ReturnData<String> salvar(AgendamentoDTO agendamentoDTO) {
+    public ReturnData<String> salvar(DadosAgendamentoDTO dadosAgendamentoDTO) {
         try {
-            Optional<AgendarServico> agendarServicoBancoDeDados =
+            Optional<Agendamento> agendarServicoBancoDeDados =
                     agendarServicoRepository.findByDataAgendamentoAndHorarioAgendamento(
-                            agendamentoDTO.getHorarioAgendamento().getDataAgendamento(),
-                            agendamentoDTO.getHorarioAgendamento().getHorarioAgendamento());
+                            dadosAgendamentoDTO.getHorarioAgendamento().getDataAgendamento(),
+                            dadosAgendamentoDTO.getHorarioAgendamento().getHorarioAgendamento());
 
             if (agendarServicoBancoDeDados.isEmpty()) {
-                Optional<Empresa> empresa = empresaRepository.findById(agendamentoDTO.getEmpresaId());
-                Optional<Usuario> cliente = usuarioRepository.findByEmail(agendamentoDTO.getClienteEmail());
-                Optional<Usuario> funcionario = usuarioRepository.findById(agendamentoDTO.getFuncionarioId());
+                Optional<Empresa> empresa = empresaRepository.findById(dadosAgendamentoDTO.getEmpresaId());
+                Optional<Usuario> cliente = usuarioRepository.findByEmail(dadosAgendamentoDTO.getClienteEmail());
+                Optional<Usuario> funcionario = usuarioRepository.findById(dadosAgendamentoDTO.getFuncionarioId());
 
-                AgendarServicoDTO agendarServicoDTO = new AgendarServicoDTO();
+                AgendamentoDTO agendamentoDTO = new AgendamentoDTO();
 
-                agendarServicoDTO.setDataCadastro(new Date());
-                agendarServicoDTO.setDataAgendamento(agendamentoDTO.getHorarioAgendamento().getDataAgendamento());
-                agendarServicoDTO.setHorarioAgendamento(agendamentoDTO.getHorarioAgendamento().getHorarioAgendamento());
-                agendarServicoDTO.setServicos(agendamentoDTO.getServicosSelecionados());
-                agendarServicoDTO.setSituacao(situacaoRepository.findByName("AGENDADO").get());
-                agendarServicoDTO.setCliente(usuarioMapper.toDto(cliente.get()));
-                agendarServicoDTO.setFuncionario(usuarioMapper.toDto(funcionario.get()));
-                agendarServicoDTO.setEmpresa(empresaMapper.toDto(empresa.get()));
+                agendamentoDTO.setDataCadastro(new Date());
+                agendamentoDTO.setDataAgendamento(dadosAgendamentoDTO.getHorarioAgendamento().getDataAgendamento());
+                agendamentoDTO.setHorarioAgendamento(dadosAgendamentoDTO.getHorarioAgendamento().getHorarioAgendamento());
+                agendamentoDTO.setServicos(dadosAgendamentoDTO.getServicosSelecionados());
+                agendamentoDTO.setSituacao(situacaoRepository.findByName("AGENDADO").get());
+                agendamentoDTO.setCliente(usuarioMapper.toDto(cliente.get()));
+                agendamentoDTO.setFuncionario(usuarioMapper.toDto(funcionario.get()));
+                agendamentoDTO.setEmpresa(empresaMapper.toDto(empresa.get()));
 
-                agendarServicoRepository.saveAndFlush(agendarServicoMapper.toEntity(agendarServicoDTO));
+                agendarServicoRepository.saveAndFlush(agendarServicoMapper.toEntity(agendamentoDTO));
 
                 return new ReturnData<>(true, "Serviço agendado com sucesso.", "");
             }
@@ -122,9 +122,9 @@ public class AgendarServicoServiceImpl implements AgendarServicoService {
     }
 
     @Override
-    public ReturnData<String> cancelar(AgendarServicoDTO agendarServicoDTO) {
+    public ReturnData<String> cancelar(AgendamentoDTO agendamentoDTO) {
         try {
-            Optional<AgendarServico> agendarServico = agendarServicoRepository.findById(agendarServicoDTO.getId());
+            Optional<Agendamento> agendarServico = agendarServicoRepository.findById(agendamentoDTO.getId());
 
             agendarServico.get().setSituacao(situacaoRepository.findByName("CANCELADO").get());
 

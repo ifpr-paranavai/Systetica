@@ -4,8 +4,8 @@ import 'Servico.dart';
 import 'Situacao.dart';
 import 'Usuario.dart';
 
-class AgendamentoServico {
-  AgendamentoServico({
+class Agendamento {
+  Agendamento({
     this.id,
     this.nomeCliente,
     this.dataAgendamento,
@@ -25,7 +25,7 @@ class AgendamentoServico {
   Usuario? cliente;
   Usuario? funcionario;
 
-  AgendamentoServico.fromJson(Map<String, dynamic> json) {
+  Agendamento.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     nomeCliente = json['nome_cliente'];
     dataAgendamento = json['data_agendamento'];
@@ -39,8 +39,8 @@ class AgendamentoServico {
     funcionario = Usuario.fromJson(json['funcionario']);
   }
 
-  static List<AgendamentoServico> fromJsonList(List json) {
-    return json.map((item) => AgendamentoServico.fromJson(item)).toList();
+  static List<Agendamento> fromJsonList(List json) {
+    return json.map((item) => Agendamento.fromJson(item)).toList();
   }
 
   Map<String, dynamic> toJson() {

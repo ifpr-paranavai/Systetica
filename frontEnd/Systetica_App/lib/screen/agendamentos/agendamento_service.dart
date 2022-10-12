@@ -2,7 +2,7 @@
 
 import 'package:dio/dio.dart';
 
-import '../../model/AgendamentoServico.dart';
+import '../../model/Agendamento.dart';
 import '../../model/Info.dart';
 import '../../model/Token.dart';
 import '../../utils/dio/dio_config_api.dart';
@@ -25,14 +25,14 @@ class AgendamentoService {
     Info info = Info();
 
     info.success = true;
-    info.object = AgendamentoServico.fromJsonList(response.data['response']);
+    info.object = Agendamento.fromJsonList(response.data['response']);
 
     return info;
   }
 
   static Future<Info> cancelarAgendamento({
     required Token token,
-    required AgendamentoServico agendamentoServico,
+    required Agendamento agendamento,
   }) async {
     Info info = Info(success: true);
     try {
@@ -41,7 +41,7 @@ class AgendamentoService {
       dio.options.headers["Authorization"] = "Bearer ${token.accessToken}";
 
       var response = await dio.post("agendar-servico/cancelar",
-          data: agendamentoServico.toJson());
+          data: agendamento.toJson());
 
       info = Info.fromJson(response.data);
 
