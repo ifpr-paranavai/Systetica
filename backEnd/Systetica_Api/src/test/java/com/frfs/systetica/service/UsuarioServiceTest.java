@@ -456,7 +456,7 @@ public class UsuarioServiceTest {
                 codigoAleatorio
         )).thenReturn(usuarioOptional);
 
-        ReturnData<String> returnData = new ReturnData<>(false, "Email ou código informado inválido");
+        ReturnData<String> returnData = new ReturnData<>(false, "Email ou Código inválido");
 
         assertEquals(usuarioService.ativar(usuarioDTO), returnData);
     }

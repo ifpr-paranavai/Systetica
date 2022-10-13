@@ -10,7 +10,6 @@ import com.frfs.systetica.entity.Usuario;
 import com.frfs.systetica.exception.BusinessException;
 import com.frfs.systetica.mapper.AgendamentoMapper;
 import com.frfs.systetica.mapper.EmpresaMapper;
-import com.frfs.systetica.mapper.ServicoMapper;
 import com.frfs.systetica.mapper.UsuarioMapper;
 import com.frfs.systetica.repository.AgendamentoRepository;
 import com.frfs.systetica.repository.EmpresaRepository;
@@ -35,19 +34,18 @@ public class AgendamentoServiceImpl implements AgendamentoService {
     private final AgendamentoMapper agendamentoMapper;
     private final UsuarioMapper usuarioMapper;
     private final EmpresaMapper empresaMapper;
-    private final ServicoMapper servicoMapper;
 
     @Override
     public ReturnData<Object> buscarTodosAgendamentoPorDia(String dataAgendamento) {
         List<String> listaDeHorarios = new ArrayList<>();
-        List<Agendamento> servicosAgendados = agendamentoRepository
+        List<Agendamento> agendamentos = agendamentoRepository
                 .findByDataAgendamentoOrderByHorarioAgendamento(dataAgendamento);
 
-        if (servicosAgendados.isEmpty()) {
+        if (agendamentos.isEmpty()) {
             return new ReturnData<>(true, "", listaDeHorarios);
         }
 
-        servicosAgendados.forEach(servico ->
+        agendamentos.forEach(servico ->
                 listaDeHorarios.add(servico.getHorarioAgendamento().toString())
         );
 
@@ -57,7 +55,7 @@ public class AgendamentoServiceImpl implements AgendamentoService {
     @Override
     public ReturnData<Object> buscarTodosAgendamentoPorDiaUsuario(String dataAgendamento, String email) {
         Optional<Usuario> usuario = usuarioRepository.findByEmail(email);
-        List<Agendamento> servicosAgendados;
+        List<Agendamento> agendamentos;
 
         Role role = new Role();
 
@@ -67,19 +65,19 @@ public class AgendamentoServiceImpl implements AgendamentoService {
         });
 
         if (Objects.equals(role.getName(), "CLIENTE")) {
-            servicosAgendados = agendamentoRepository
+            agendamentos = agendamentoRepository
                     .findByDataAgendamentoAndClienteOrderByHorarioAgendamento(dataAgendamento, usuario.get());
 
         } else if (Objects.equals(role.getName(), "FUNCIONARIO")) {
-            servicosAgendados = agendamentoRepository
+            agendamentos = agendamentoRepository
                     .findByDataAgendamentoAndFuncionarioOrderByHorarioAgendamento(dataAgendamento, usuario.get());
 
         } else {
-            servicosAgendados = agendamentoRepository
+            agendamentos = agendamentoRepository
                     .findByDataAgendamentoOrderByHorarioAgendamento(dataAgendamento);
         }
 
-        return new ReturnData<>(true, "", agendamentoMapper.toListDto(servicosAgendados));
+        return new ReturnData<>(true, "", agendamentoMapper.toListDto(agendamentos));
     }
 
     @Override

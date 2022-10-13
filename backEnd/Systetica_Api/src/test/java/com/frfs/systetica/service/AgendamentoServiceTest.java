@@ -21,9 +21,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -57,7 +55,7 @@ public class AgendamentoServiceTest {
     private ServicoMapper servicoMapper;
 
     @Autowired
-    private AgendamentoServiceImpl agendarServicoService;
+    private AgendamentoServiceImpl agendamentoService;
 
     public AgendamentoServiceTest() {
     }
@@ -125,46 +123,129 @@ public class AgendamentoServiceTest {
         Mockito.when(agendamentoRepository.saveAndFlush(agendarServico)).thenReturn(agendarServico);
 
         ReturnData<Object> returnData = new ReturnData<>(true, "Serviço agendado com sucesso.", "");
-        assertEquals(agendarServicoService.salvar(dadosAgendamentoDTO), returnData);
+        assertEquals(agendamentoService.salvar(dadosAgendamentoDTO), returnData);
     }
 
-//    @Test
-//    @DisplayName("Deve busca todos os agendamento por dia")
-//    public void deveBuscarTodosAgendamentoPorDia() {
-//        String dataAgendamento = "01-01-2022";
-//
-//        List<String> listaDeHorarios = new ArrayList<>();
-//        List<AgendarServico> servicosAgendados = new ArrayList<>();
-//
-//        AgendarServico agendarServico = Mockito.mock(AgendarServico.class);
-//        Mockito.when(agendarServico.getHorarioAgendamento()).thenReturn(LocalTime.now());
-//
-//        servicosAgendados.add(agendarServico);
-//        listaDeHorarios.add(agendarServico.getHorarioAgendamento().toString());
-//
-//        Mockito.when(agendarServicoRepository.findByDataAgendamento(dataAgendamento)).thenReturn(servicosAgendados);
-//
-//        ReturnData<Object> returnData = new ReturnData<>(true, "", listaDeHorarios);
-//        assertEquals(agendarServicoService.buscarTodosAgendamentoPorDia(dataAgendamento), returnData);
-//    }
-//
-//    // Testes para ReturnData false
-//    @Test
-//    @DisplayName("Deve retorna uma lista de horários vazio")
-//    public void deveRetornaUmaListaDeHorarioVazio() {
-//        String dataAgendamento = "01-01-2022";
-//
-//        List<String> listaDeHorarios = new ArrayList<>();
-//        List<AgendarServico> servicosAgendados = new ArrayList<>();
-//
-//        AgendarServico agendarServico = Mockito.mock(AgendarServico.class);
-//        Mockito.when(agendarServico.getHorarioAgendamento()).thenReturn(LocalTime.now());
-//
-//        Mockito.when(agendarServicoRepository.findByDataAgendamento(dataAgendamento)).thenReturn(servicosAgendados);
-//
-//        ReturnData<Object> returnData = new ReturnData<>(true, "", listaDeHorarios);
-//        assertEquals(agendarServicoService.buscarTodosAgendamentoPorDia(dataAgendamento), returnData);
-//    }
+    @Test
+    @DisplayName("Deve busca todos os agendamento por dia")
+    public void deveBuscarTodosAgendamentoPorDia() {
+        String dataAgendamento = "01-01-2022";
+
+        List<String> listaDeHorarios = new ArrayList<>();
+        List<Agendamento> agendamentos = new ArrayList<>();
+
+        Agendamento agendamento = Mockito.mock(Agendamento.class);
+        Mockito.when(agendamento.getHorarioAgendamento()).thenReturn(LocalTime.now());
+
+        agendamentos.add(agendamento);
+        listaDeHorarios.add(agendamento.getHorarioAgendamento().toString());
+
+        Mockito.when(agendamentoRepository.findByDataAgendamentoOrderByHorarioAgendamento(dataAgendamento))
+                .thenReturn(agendamentos);
+
+        ReturnData<Object> returnData = new ReturnData<>(true, "", listaDeHorarios);
+        assertEquals(agendamentoService.buscarTodosAgendamentoPorDia(dataAgendamento), returnData);
+    }
+
+    @Test
+    @DisplayName("Deve busca todos os agendamento por dia e por usuario cliente")
+    public void deveBuscarTodosAgendamentoPorDiaUsuarioCliente() {
+        String dataAgendamento = "01-01-2022";
+        String email = "systetica@gmail.com";
+        List<Agendamento> agendamentos = new ArrayList<>();
+        List<AgendamentoDTO> agendamentosDTO = new ArrayList<>();
+
+        Role role = Mockito.mock(Role.class);
+        Mockito.when(role.getId()).thenReturn(1L);
+        Mockito.when(role.getName()).thenReturn("CLIENTE");
+
+        Usuario cliente = Mockito.mock(Usuario.class);
+        Optional<Usuario> clienteOptional = Optional.of(cliente);
+        Mockito.when(clienteOptional.get().getRoles()).thenReturn((Collections.singletonList(role)));
+
+        Mockito.when(usuarioRepository.findByEmail(email)).thenReturn(clienteOptional);
+        Mockito.when(agendamentoRepository
+                        .findByDataAgendamentoAndClienteOrderByHorarioAgendamento(dataAgendamento, clienteOptional.get()))
+                .thenReturn(agendamentos);
+
+        Mockito.when(agendamentoMapper.toListDto(agendamentos)).thenReturn(agendamentosDTO);
+
+        ReturnData<Object> returnData = new ReturnData<>(true, "", agendamentosDTO);
+        assertEquals(agendamentoService.buscarTodosAgendamentoPorDiaUsuario(dataAgendamento, email), returnData);
+    }
+
+    @Test
+    @DisplayName("Deve busca todos os agendamento por dia e por usuario funcionario")
+    public void deveBuscarTodosAgendamentoPorDiaUsuarioFuncionario() {
+        String dataAgendamento = "01-01-2022";
+        String email = "systetica@gmail.com";
+        List<Agendamento> agendamentos = new ArrayList<>();
+        List<AgendamentoDTO> agendamentosDTO = new ArrayList<>();
+
+        Role role = Mockito.mock(Role.class);
+        Mockito.when(role.getId()).thenReturn(1L);
+        Mockito.when(role.getName()).thenReturn("CLIENTE");
+
+        Usuario cliente = Mockito.mock(Usuario.class);
+        Optional<Usuario> clienteOptional = Optional.of(cliente);
+        Mockito.when(clienteOptional.get().getRoles()).thenReturn((Collections.singletonList(role)));
+
+        Mockito.when(usuarioRepository.findByEmail(email)).thenReturn(clienteOptional);
+        Mockito.when(agendamentoRepository
+                        .findByDataAgendamentoAndClienteOrderByHorarioAgendamento(dataAgendamento, clienteOptional.get()))
+                .thenReturn(agendamentos);
+
+        Mockito.when(agendamentoMapper.toListDto(agendamentos)).thenReturn(agendamentosDTO);
+
+        ReturnData<Object> returnData = new ReturnData<>(true, "", agendamentosDTO);
+        assertEquals(agendamentoService.buscarTodosAgendamentoPorDiaUsuario(dataAgendamento, email), returnData);
+    }
+
+    @Test
+    @DisplayName("Deve busca todos os agendamento por dia da empresa para administrador")
+    public void deveBuscarTodosAgendamentoPorDiaDaEmpresa() {
+        String dataAgendamento = "01-01-2022";
+        String email = "systetica@gmail.com";
+        List<Agendamento> agendamentos = new ArrayList<>();
+        List<AgendamentoDTO> agendamentosDTO = new ArrayList<>();
+
+        Role role = Mockito.mock(Role.class);
+        Mockito.when(role.getId()).thenReturn(1L);
+        Mockito.when(role.getName()).thenReturn("ADMINISTRADOR");
+
+        Usuario cliente = Mockito.mock(Usuario.class);
+        Optional<Usuario> clienteOptional = Optional.of(cliente);
+        Mockito.when(clienteOptional.get().getRoles()).thenReturn((Collections.singletonList(role)));
+
+        Mockito.when(usuarioRepository.findByEmail(email)).thenReturn(clienteOptional);
+        Mockito.when(agendamentoRepository
+                        .findByDataAgendamentoAndClienteOrderByHorarioAgendamento(dataAgendamento, clienteOptional.get()))
+                .thenReturn(agendamentos);
+
+        Mockito.when(agendamentoMapper.toListDto(agendamentos)).thenReturn(agendamentosDTO);
+
+        ReturnData<Object> returnData = new ReturnData<>(true, "", agendamentosDTO);
+        assertEquals(agendamentoService.buscarTodosAgendamentoPorDiaUsuario(dataAgendamento, email), returnData);
+    }
+
+    //    // Testes para ReturnData false
+    @Test
+    @DisplayName("Deve retorna uma lista de horários vazio")
+    public void deveRetornaUmaListaDeHorarioVazio() {
+        String dataAgendamento = "01-01-2022";
+
+        List<String> listaDeHorarios = new ArrayList<>();
+        List<Agendamento> agendamentos = new ArrayList<>();
+
+        Agendamento agendamento = Mockito.mock(Agendamento.class);
+        Mockito.when(agendamento.getHorarioAgendamento()).thenReturn(LocalTime.now());
+
+        Mockito.when(agendamentoRepository.findByDataAgendamentoOrderByHorarioAgendamento(dataAgendamento))
+                .thenReturn(agendamentos);
+
+        ReturnData<Object> returnData = new ReturnData<>(true, "", listaDeHorarios);
+        assertEquals(agendamentoService.buscarTodosAgendamentoPorDia(dataAgendamento), returnData);
+    }
 
     @Test
     @DisplayName("Deve informar que já foi agendado um serviço para aquele horário")
@@ -188,6 +269,6 @@ public class AgendamentoServiceTest {
                         horarioAgendamentoDTO.getHorarioAgendamento())).thenReturn(agendarServicoOptional);
 
         ReturnData<Object> returnData = new ReturnData<>(false, "Já foi agendado um serviço para o horário selecionado.", "");
-        assertEquals(agendarServicoService.salvar(dadosAgendamentoDTO), returnData);
+        assertEquals(agendamentoService.salvar(dadosAgendamentoDTO), returnData);
     }
 }
