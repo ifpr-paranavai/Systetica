@@ -1,22 +1,23 @@
 // ignore_for_file: avoid_function_literals_in_foreach_calls
 
+import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:brasil_fields/brasil_fields.dart';
 
 import '../../../../components/alert_dialog_widget.dart';
 import '../../../../components/horario_component.dart';
 import '../../../../components/icon_arrow_widget.dart';
+import '../../../../components/input/campo_pesquisa_pagamento_widget.dart';
+import '../../../../components/input/campo_texto_widget.dart';
+import '../../../../model/FormaPagamento.dart';
 import '../../../../style/app_colors..dart';
-import '../../../../utils/util.dart';
 import '../../../agendar/component/agendar_componente.dart';
-import '../../agendamento_controller.dart';
-import 'detalhes_agendamento_page.dart';
+import '../../pagamento_servico_controller.dart';
+import 'pagamento_servico_page.dart';
 
-class DetalhesAgendamentoWidget extends State<DetalhesAgendamentoPage> {
+class PagamentoServicoWidget extends State<PagamentoServicoPage> {
   final ScrollController _scrollController = ScrollController();
-  final AgendamentoController _controller = AgendamentoController();
-
+  final PagamentoServicoController _controller = PagamentoServicoController();
   double total = 0;
 
   @override
@@ -64,7 +65,7 @@ class DetalhesAgendamentoWidget extends State<DetalhesAgendamentoPage> {
                 largura: _controller.largura,
                 corBotao: Colors.black87.withOpacity(0.9),
                 overlayCorBotao: AppColors.blue5,
-                labelText: "DESMARCAR",
+                labelText: "CADASTRAR PAGAMENTO",
                 onPressed: () {
                   confirmaCancelamento();
                 })
@@ -113,31 +114,8 @@ class DetalhesAgendamentoWidget extends State<DetalhesAgendamentoPage> {
                 terSubTituulo: false,
                 icon: Icons.phone_android,
               ),
-              HorarioComponent().tituloDetalhes(texto: "Barbeiro"),
-              HorarioComponent().listSelecao(
-                largura: _controller.largura,
-                nome: widget.agendamento.funcionario!.nome!,
-                terSubTituulo: false,
-                icon: Icons.person,
-              ),
-              HorarioComponent().tituloDetalhes(texto: "Data e horário"),
-              HorarioComponent().listSelecao(
-                largura: _controller.largura,
-                nome: Util.dataEscrito(
-                  DateTime.parse(
-                    widget.agendamento.dataAgendamento!,
-                  ),
-                ),
-                subTitulo: widget.agendamento.horarioAgendamento!,
-                icon: Icons.calendar_month,
-              ),
-              HorarioComponent().tituloDetalhes(texto: "Status"),
-              HorarioComponent().listSelecao(
-                largura: _controller.largura,
-                nome: widget.agendamento.situacao!.name,
-                terSubTituulo: false,
-                icon: Icons.phone_android,
-              ),
+              inputDesconto(),
+              inputTipoPagamento()
             ],
           ),
         ),
@@ -151,22 +129,55 @@ class DetalhesAgendamentoWidget extends State<DetalhesAgendamentoPage> {
       showModalOk: false,
       context: context,
       titulo: "Atenção!",
-      descricao: "Tem certeza que dejesa cancelar o serviço?",
+      descricao: "Tem certeza que dejesa finalizar o serviço?",
       onPressedNao: () => Navigator.pop(context),
       onPressedOk: () async {
         Navigator.pop(context);
-        await _controller
-            .cancelarAgendamento(
-              agendamento: widget.agendamento,
-              context: context,
-            )
-            .then(
-              (value) => setState(
-                () {},
-              ),
-            );
+        // await _controller
+        //     .cancelarAgendamento(
+        //       agendamento: widget.agendamento,
+        //       context: context,
+        //     )
+        //     .then(
+        //       (value) => setState(
+        //         () {},
+        //       ),
+        //     );
         Navigator.pop(context);
       },
+    );
+  }
+
+  CampoTextoWidget inputDesconto() {
+    return CampoTextoWidget(
+      labelText: "Desconto",
+      paddingHorizontal: 20,
+      keyboardType: TextInputType.number,
+      paddingBottom: 0,
+      maxLength: 6,
+      paddingTop: 8,
+      isIconDate: true,
+      icon: const Icon(
+        CupertinoIcons.money_dollar,
+        color: Colors.black87,
+      ),
+      controller: _controller.descontoController,
+    );
+  }
+
+  CampoPesquisaPagamentoWidget inputTipoPagamento({
+    FormaPagamento? formaPagamento,
+  }) {
+    return CampoPesquisaPagamentoWidget(
+      paddingHorizontal: 20,
+      labelSeachTextPrincipal: "Forma pagamento",
+      labelSeachTextPesquisa: "Digite nome do pagamento",
+      compareFn: (formaPagamento, buscaFormaPagamento) => formaPagamento == buscaFormaPagamento,
+      asyncItems: (filtro) => _controller.buscarFormaPamento(filtro),
+      onChanged: (value) {
+        _controller.formaPagamento = value;
+      },
+      formaPagamento: formaPagamento,
     );
   }
 }

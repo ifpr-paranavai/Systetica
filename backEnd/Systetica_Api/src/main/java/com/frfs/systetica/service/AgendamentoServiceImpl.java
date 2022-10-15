@@ -3,10 +3,7 @@ package com.frfs.systetica.service;
 import com.frfs.systetica.dto.AgendamentoDTO;
 import com.frfs.systetica.dto.DadosAgendamentoDTO;
 import com.frfs.systetica.dto.response.ReturnData;
-import com.frfs.systetica.entity.Agendamento;
-import com.frfs.systetica.entity.Empresa;
-import com.frfs.systetica.entity.Role;
-import com.frfs.systetica.entity.Usuario;
+import com.frfs.systetica.entity.*;
 import com.frfs.systetica.exception.BusinessException;
 import com.frfs.systetica.mapper.AgendamentoMapper;
 import com.frfs.systetica.mapper.EmpresaMapper;
@@ -135,5 +132,15 @@ public class AgendamentoServiceImpl implements AgendamentoService {
             return new ReturnData<>(false, "Ocorreu um erro ao cancelar o um serviço",
                     ex.getMessage() + "\nMotivo: " + ex.getCause());
         }
+    }
+
+    @Override
+    public ReturnData<Object> buscarTodosAgendamentoPorDiaAgendados(String dia) {
+        Optional<Situacao> situacao = situacaoRepository.findByName("AGENDADO");
+
+        List<Agendamento> agendamentos = agendamentoRepository
+                .findByDataAgendamentoAndSituacaoOrderByHorarioAgendamento(dia, situacao.get());
+
+        return new ReturnData<>(true, "", agendamentoMapper.toListDto(agendamentos));
     }
 }

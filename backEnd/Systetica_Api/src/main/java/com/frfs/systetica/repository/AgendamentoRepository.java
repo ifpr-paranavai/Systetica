@@ -1,6 +1,7 @@
 package com.frfs.systetica.repository;
 
 import com.frfs.systetica.entity.Agendamento;
+import com.frfs.systetica.entity.Situacao;
 import com.frfs.systetica.entity.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -21,4 +22,7 @@ public interface AgendamentoRepository extends JpaRepository<Agendamento, Long> 
 
     List<Agendamento> findByDataAgendamentoAndFuncionarioOrderByHorarioAgendamento(String dataAgendamento,
                                                                                    Usuario funcionario);
+
+    List<Agendamento> findByDataAgendamentoAndSituacaoOrderByHorarioAgendamento(String dataAgendamento,
+                                                                                Situacao situacao);
 }

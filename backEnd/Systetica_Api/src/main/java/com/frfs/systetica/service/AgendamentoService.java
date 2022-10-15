@@ -13,4 +13,6 @@ public interface AgendamentoService {
     ReturnData<String> salvar(DadosAgendamentoDTO dadosAgendamentoDTO);
 
     ReturnData<String> cancelar(AgendamentoDTO agendamentoDTO);
+
+    ReturnData<Object> buscarTodosAgendamentoPorDiaAgendados(String dia);
 }

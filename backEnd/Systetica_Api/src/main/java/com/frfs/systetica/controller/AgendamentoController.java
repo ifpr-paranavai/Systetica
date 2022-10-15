@@ -47,4 +47,12 @@ public class AgendamentoController {
 
         return new ResponseEntity<>(result, result.getSuccess() ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
+    @PostMapping("/buscar-todos-por-dia-agendados")
+    @ResponseBody
+    public ResponseEntity<Object> buscarTodosAgendamentoPorDiaAgendados(@RequestParam String dia) {
+        ReturnData<Object> result = agendarServicoService.buscarTodosAgendamentoPorDiaAgendados(dia);
+
+        return new ResponseEntity<>(result, result.getSuccess() ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 }

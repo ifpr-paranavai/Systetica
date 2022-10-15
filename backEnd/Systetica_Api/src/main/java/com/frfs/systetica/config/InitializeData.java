@@ -30,9 +30,14 @@ public class InitializeData {
                 new ResourceDatabasePopulator(true, false, "UTF-8",
                         new ClassPathResource("/db/insert_situacao_schema.sql"));
 
+        ResourceDatabasePopulator resourceDatabasePopulatorFormaPagamento =
+                new ResourceDatabasePopulator(true, false, "UTF-8",
+                        new ClassPathResource("/db/insert_forma_pagamento_schema.sql"));
+
         resourceDatabasePopulatorEstado.execute(dataSource);
         resourceDatabasePopulatorCidade.execute(dataSource);
         resourceDatabasePopulatorRole.execute(dataSource);
         resourceDatabasePopulatorSituacao.execute(dataSource);
+        resourceDatabasePopulatorFormaPagamento.execute(dataSource);
     }
 }

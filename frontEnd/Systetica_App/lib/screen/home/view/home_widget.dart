@@ -6,7 +6,7 @@ import '../../../style/app_colors..dart';
 import '../../administrador/view/administrador_page.dart';
 import '../../agendamentos/view/agendamento/agendamento_page.dart';
 import '../../agendar/view/empresas/empresa_agendar_page.dart';
-import '../../pagamentos/view/pagamento_page.dart';
+import '../../pagamento/view/pagamento_page.dart';
 import '../../perfil/view/perfil_page.dart';
 import 'home_page.dart';
 

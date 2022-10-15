@@ -1,15 +1,16 @@
 import 'package:calendar_timeline/calendar_timeline.dart';
 import 'package:flutter/material.dart';
+import 'package:systetica/components/horario_component.dart';
+import 'package:systetica/screen/pagamento_servico/pagamento_servico_controller.dart';
 
-import '../../../../components/horario_component.dart';
+import '../../../../components/icon_arrow_widget.dart';
 import '../../../../components/loading/loading_animation.dart';
 import '../../../../style/app_colors..dart';
-import '../../agendamento_controller.dart';
-import '../detalhes_agendamento/detalhes_agendamento_page.dart';
-import 'agendamento_page.dart';
+import '../pagamento_servico/pagamento_servico_page.dart';
+import 'servicos_page.dart';
 
-class AgendamentolWidget extends State<AgendamentoPage> {
-  final AgendamentoController _controller = AgendamentoController();
+class ServicosWidget extends State<ServicosPage> {
+  final PagamentoServicoController _controller = PagamentoServicoController();
 
   bool agendamentoVazio = false;
   bool loading = true;
@@ -20,12 +21,14 @@ class AgendamentolWidget extends State<AgendamentoPage> {
     super.initState();
     _controller.agendamentos = [];
     dateTime = DateTime.now();
-    _buscarTodosAgendamentoPorDia(dateTime!);
+    _buscarTodosAgendamentoPorDiaStatusAgendados(dateTime!);
   }
 
-  Future<void> _buscarTodosAgendamentoPorDia(DateTime data) async {
+  Future<void> _buscarTodosAgendamentoPorDiaStatusAgendados(
+    DateTime data,
+  ) async {
     await _controller
-        .buscarTodosAgendamentoPorDia(
+        .buscarTodosAgendamentoPorDiaStatusAgendados(
           dataSelecionada: data,
         )
         .then(
@@ -49,6 +52,11 @@ class AgendamentolWidget extends State<AgendamentoPage> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: AppColors.branco,
+        floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
+        floatingActionButton: IconArrowWidget(
+          paddingTop: _controller.altura * 0.011,
+          onPressed: () => Navigator.pop(context),
+        ),
         body: _body(),
       ),
     );
@@ -65,7 +73,7 @@ class AgendamentolWidget extends State<AgendamentoPage> {
           Column(
             children: [
               HorarioComponent().titulo(
-                largura: _controller.largura * 0.1,
+                largura: _controller.largura * 0.2,
                 altura: _controller.altura * 0.019,
               ),
               HorarioComponent().cardHorario(children: [
@@ -102,7 +110,7 @@ class AgendamentolWidget extends State<AgendamentoPage> {
       dotsColor: Colors.white,
       onDateSelected: (dataSelecionada) {
         loading = true;
-        _buscarTodosAgendamentoPorDia(
+        _buscarTodosAgendamentoPorDiaStatusAgendados(
           dataSelecionada,
         );
       },
@@ -168,22 +176,16 @@ class AgendamentolWidget extends State<AgendamentoPage> {
           situacao: _controller.agendamentos[index].situacao!.name,
         ),
       ),
-      onTap: () {
-        Navigator.of(context)
-            .push(
-              _controller.myPageTransition.pageTransition(
-                child: DetalhesAgendamentoPage(
-                    agendamento: _controller.agendamentos[index]),
-                childCurrent: widget,
-                buttoToTop: true,
-              ),
-            )
-            .then(
-              (value) => setState(() {
-                _buscarTodosAgendamentoPorDia(dateTime!);
-              }),
-            );
-      },
+      onTap: () => Navigator.of(context)
+          .push(_controller.myPageTransition.pageTransition(
+            child: PagamentoServicoPage(
+                agendamento: _controller.agendamentos[index]),
+            childCurrent: widget,
+            buttoToTop: true,
+          ))
+          .then((value) => setState(() {
+                _buscarTodosAgendamentoPorDiaStatusAgendados(dateTime!);
+              })),
     );
   }
 }
