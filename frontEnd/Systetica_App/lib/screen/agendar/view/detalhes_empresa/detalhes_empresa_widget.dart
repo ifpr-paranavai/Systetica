@@ -7,79 +7,95 @@ import '../../../../components/foto/foto_widget.dart';
 import '../../../../components/icon_arrow_widget.dart';
 import '../../../../components/item_list.dart';
 import '../../../../components/list_view/list_view_horarios_component.dart';
+import '../../../../components/loading/loading_animation.dart';
 import '../../../../components/page_transition.dart';
 import '../../../../components/single_child_scroll_component.dart';
 import '../../../../components/text_autenticacoes_widget.dart';
 import '../../../../model/Empresa.dart';
+import '../../../../model/Info.dart';
 import '../../../../style/app_colors..dart';
 import '../../../../utils/util.dart';
 import '../../../empresa/empresa_controller.dart';
+import '../../agendar_controller.dart';
 import '../selecionar_servico/selecionar_servico_page.dart';
 import 'detalhes_empresa_page.dart';
 
 class DetalhaEmpresaWidget extends State<DetalhaEmpresaPage> {
+  final AgendarController _controller = AgendarController();
   late ScrollController _scrollController;
   late Map<String, String> diasTrabalhoEmpresa;
-  var myPageTransition = MyPageTransition();
+
+  Info? info = Info(success: true);
+  bool loading = true;
+  MyPageTransition myPageTransition = MyPageTransition();
 
   @override
   void initState() {
     super.initState();
     _scrollController = ScrollController();
-    diasTrabalhoEmpresa = Util.diasHorarioFuncionamento(
-      widget.empresa.horarioAbertura!,
-      widget.empresa.horarioFechamento!,
-    );
+    buscarEmpresas();
   }
 
-  double _altura = 0;
-  double _largura = 0;
+  Future<void> buscarEmpresas() async {
+    await _controller.buscarEmpresas(context: context, nomeEmpresa: "").then(
+          (value) => setState(
+            () {
+              info = value;
+              _controller.empresa = value!.object;
+              loading = false;
+              diasTrabalhoEmpresa = Util.diasHorarioFuncionamento(
+                _controller.empresa.horarioAbertura!,
+                _controller.empresa.horarioFechamento!,
+              );
+            },
+          ),
+        );
+  }
 
   @override
   Widget build(BuildContext context) {
-    _altura = MediaQuery.of(context).size.height;
-    _largura = MediaQuery.of(context).size.width;
+    _controller.altura = MediaQuery.of(context).size.height;
+    _controller.largura = MediaQuery.of(context).size.width;
     return SafeArea(
       child: Scaffold(
-        backgroundColor: AppColors.redPrincipal,
-        floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
-        floatingActionButton: IconArrowWidget(
-          paddingTop: _altura * 0.01,
-          onPressed: () => Navigator.pop(context),
-        ),
-        body: NotificationListener<OverscrollIndicatorNotification>(
-          onNotification: (overScroll) {
-            overScroll.disallowIndicator();
-            return false;
-          },
-          child: Stack(
-            children: [
-              SingleChildScrollComponent(
-                widgetComponent: Center(
-                  child: Column(
-                    children: [
-                      _sizedBox(height: _altura * 0.08),
-                      FotoWidget().boxFoto(
-                        imagemUsuario: widget.empresa.logoBase64,
-                      ),
-                      _sizedBox(height: _altura * 0.04),
-                      _infoEmpresa(),
-                      _cardInfoEmpresa(empresa: widget.empresa),
-                      _sizedBox(height: _altura * 0.02),
-                      _infoEnderecoEmpresa(),
-                      _cardInfoEnderecoEmpresa(empresa: widget.empresa),
-                      _sizedBox(height: _altura * 0.02),
-                      _infoHorariosEmpresa(),
-                      _cardHorarioEmpresa(),
-                      _sizedBox(height: _altura * 0.12),
-                    ],
+        backgroundColor: AppColors.branco,
+        body: loading ? const LoadingAnimation() : _body(),
+      ),
+    );
+  }
+
+  Widget _body() {
+    return NotificationListener<OverscrollIndicatorNotification>(
+      onNotification: (overScroll) {
+        overScroll.disallowIndicator();
+        return false;
+      },
+      child: Stack(
+        children: [
+          SingleChildScrollComponent(
+            widgetComponent: Center(
+              child: Column(
+                children: [
+                  _sizedBox(height: _controller.altura * 0.08),
+                  FotoWidget().boxFoto(
+                    imagemUsuario: _controller.empresa.logoBase64,
                   ),
-                ),
+                  _sizedBox(height: _controller.altura * 0.04),
+                  _infoEmpresa(),
+                  _cardInfoEmpresa(empresa: _controller.empresa),
+                  _sizedBox(height: _controller.altura * 0.02),
+                  _infoEnderecoEmpresa(),
+                  _cardInfoEnderecoEmpresa(empresa: _controller.empresa),
+                  _sizedBox(height: _controller.altura * 0.02),
+                  _infoHorariosEmpresa(),
+                  _cardHorarioEmpresa(),
+                  _sizedBox(height: _controller.altura * 0.12),
+                ],
               ),
-              _botaoAgendar(),
-            ],
+            ),
           ),
-        ),
+          _botaoAgendar(),
+        ],
       ),
     );
   }
@@ -162,7 +178,7 @@ class DetalhaEmpresaWidget extends State<DetalhaEmpresaPage> {
   }) {
     return Container(
       padding: const EdgeInsets.only(left: 14, right: 18),
-      width: _largura,
+      width: _controller.largura,
       child: TextButton(
         style: ButtonStyle(
           overlayColor: MaterialStateProperty.all(Colors.grey.withOpacity(0.2)),
@@ -231,20 +247,20 @@ class DetalhaEmpresaWidget extends State<DetalhaEmpresaPage> {
   Widget _botaoAgendar() {
     return Container(
       padding: EdgeInsets.only(
-        bottom: _altura * 0.03,
+        bottom: _controller.altura * 0.03,
       ),
       alignment: Alignment.bottomCenter,
       child: BotaoWidget(
         paddingTop: 10,
         paddingBottom: 0,
         labelText: "AGENDAR",
-        largura: _largura * 0.6,
+        largura: _controller.largura * 0.6,
         corBotao: Colors.black87.withOpacity(0.9),
         corTexto: Colors.white,
         onPressed: () => Navigator.of(context).push(
           myPageTransition.pageTransition(
             child: SelecionarServicoPage(
-              empresa: widget.empresa,
+              empresa: _controller.empresa,
             ),
             buttoToTop: true,
             childCurrent: widget,

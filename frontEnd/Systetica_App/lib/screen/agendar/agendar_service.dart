@@ -25,7 +25,7 @@ class AgendarService {
     Info info = Info();
 
     info.success = true;
-    info.object = Empresa.fromJsonList(response.data['response']);
+    info.object = Empresa.fromJson(response.data['response']);
 
     return info;
   }

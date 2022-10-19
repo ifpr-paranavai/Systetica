@@ -5,7 +5,7 @@ import '../../../database/repository/token_repository.dart';
 import '../../../style/app_colors..dart';
 import '../../administrador/view/administrador_page.dart';
 import '../../agendamentos/view/agendamento/agendamento_page.dart';
-import '../../agendar/view/empresas/empresa_agendar_page.dart';
+import '../../agendar/view/detalhes_empresa/detalhes_empresa_page.dart';
 import '../../pagamento/view/pagamento_page.dart';
 import '../../perfil/view/perfil_page.dart';
 import 'home_page.dart';
@@ -14,7 +14,8 @@ class HomeWidget extends State<HomePage> {
   late int _selectedIndex = 0;
 
   List<Widget> _widgetOpcoes = <Widget>[];
-  List<BottomNavigationBarItem> _bottomNavigations = <BottomNavigationBarItem>[];
+  List<BottomNavigationBarItem> _bottomNavigations =
+      <BottomNavigationBarItem>[];
 
   @override
   void initState() {
@@ -73,7 +74,7 @@ class HomeWidget extends State<HomePage> {
     await TokenRepository.findToken().then((value) {
       setState(() {
         Map<String, dynamic> tokenDecodificado =
-        JwtDecoder.decode(value.accessToken!);
+            JwtDecoder.decode(value.accessToken!);
         if (tokenDecodificado['roles'][0] == "ADMINISTRADOR") {
           _widgetOpcoes = _widgetOpcoesAdministrador;
           _bottomNavigations = _bottomNavigationAdministrador;
@@ -87,7 +88,7 @@ class HomeWidget extends State<HomePage> {
 
   void _onItemTapped(int index) {
     setState(
-          () {
+      () {
         _selectedIndex = index;
       },
     );
@@ -95,7 +96,7 @@ class HomeWidget extends State<HomePage> {
 
   List<Widget> get _widgetOpcoesCliente {
     List<Widget> widgets = <Widget>[
-      const EmpresaAgendarPage(),
+      const DetalhaEmpresaPage(),
       const AgendamentoPage(),
       const PerfilPage(),
     ];
@@ -104,9 +105,8 @@ class HomeWidget extends State<HomePage> {
 
   List<Widget> get _widgetOpcoesFuncionario {
     List<Widget> widgets = <Widget>[
-      const EmpresaAgendarPage(),
-      const PagamentoPage(),
       const AgendamentoPage(),
+      const PagamentoPage(),
       const PerfilPage(),
     ];
     return widgets;
@@ -114,9 +114,8 @@ class HomeWidget extends State<HomePage> {
 
   List<Widget> get _widgetOpcoesAdministrador {
     List<Widget> widgets = <Widget>[
-      const EmpresaAgendarPage(),
-      const PagamentoPage(),
       const AgendamentoPage(),
+      const PagamentoPage(),
       const CadastroAdministradorPage(),
       const PerfilPage(),
     ];
@@ -134,9 +133,8 @@ class HomeWidget extends State<HomePage> {
 
   List<BottomNavigationBarItem> get _bottomNavigationFuncionario {
     List<BottomNavigationBarItem> bottomNavigatrion = <BottomNavigationBarItem>[
-      _bottomAgendar(),
-      _bottomPagamentos(),
       _bottomAgendamentos(),
+      _bottomPagamentos(),
       _bottomPerfil(),
     ];
     return bottomNavigatrion;
@@ -144,9 +142,8 @@ class HomeWidget extends State<HomePage> {
 
   List<BottomNavigationBarItem> get _bottomNavigationAdministrador {
     List<BottomNavigationBarItem> bottomNavigatrion = <BottomNavigationBarItem>[
-      _bottomAgendar(),
-      _bottomPagamentos(),
       _bottomAgendamentos(),
+      _bottomPagamentos(),
       _bottomCadastros(),
       _bottomPerfil(),
     ];

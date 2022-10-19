@@ -18,8 +18,7 @@ import 'agendar_service.dart';
 class AgendarController {
   final myPageTransition = MyPageTransition();
   final formKey = GlobalKey<FormState>();
-  late List<Empresa> empresas = [];
-  late Empresa empresa;
+  Empresa empresa = Empresa();
   Color corBotao = Colors.grey.withOpacity(0.9);
   Color overlayCorBotao = Colors.transparent;
   double largura = 0;

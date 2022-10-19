@@ -101,11 +101,13 @@ public class EmpresaServiceImpl implements EmpresaService {
 
     @Override
     public ReturnData<Object> buscarTodasEmpresasPaginado(String search, Pageable page) {
-        return new ReturnData<>(true, "", empresaMapper.toListDto(empresaRepository.findAllFields(search, page).getContent()));
+        return new ReturnData<>(true, "", empresaMapper
+                .toListDto(empresaRepository.findAllFields(search, page).getContent()));
     }
 
     @Override
     public ReturnData<Object> buscarTodasEmpresas(Pageable page) {
-        return new ReturnData<>(true, "", empresaMapper.toListDto(empresaRepository.findAll(page).getContent()));
+        return new ReturnData<>(true, "", empresaMapper
+                .toDto(empresaRepository.findAll(page).getContent().get(0)));
     }
 }
