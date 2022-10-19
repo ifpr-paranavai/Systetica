@@ -119,15 +119,19 @@ class AgendamentolWidget extends State<AgendamentoPage> {
           right: 20,
         ),
         child: agendamentoVazio
-            ? Column(
-                children: [
-                  HorarioComponent().imagemErro(),
-                  HorarioComponent().textoErro(),
-                ],
+            ? SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    HorarioComponent().imagemErro(altura: _controller.altura),
+                    HorarioComponent().textoErro(),
+                  ],
+                ),
               )
             : GridView.count(
                 crossAxisCount: 1,
-                childAspectRatio: _controller.altura * 0.002,
+                childAspectRatio: 1.7, // TODO - teste em outros dispositivos
                 mainAxisSpacing: 18,
                 crossAxisSpacing: 0,
                 shrinkWrap: true,

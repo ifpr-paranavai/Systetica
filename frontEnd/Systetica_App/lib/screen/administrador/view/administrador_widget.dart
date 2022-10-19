@@ -79,51 +79,57 @@ class CadastroAdministradorWidget extends State<CadastroAdministradorPage>
     String? empresa,
     String? nomeUsuario,
   }) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          _infoGerais(
-            titulo: empresa ?? "Por favor, cadastre sua empresa.",
-            descricao: _bemVindo +
-                (nomeUsuario == null ? "!" : " " + nomeUsuario + "!"),
-            widthSize: largura,
-          ),
-          SizedBox(
-            height: altura * 0.70,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                _grupoCards(
-                  title: "Empresa",
-                  icon: Icons.account_balance,
-                  color: AppColors.bluePrincipal,
-                  route: const EmpresaPage(),
-                  title2: 'Serviços',
-                  icon2: Icons.construction,
-                  color2: Colors.lightGreen,
-                  route2: const ServicoPage(),
-                  largura: largura,
-                  altura: altura,
-                  context: context,
-                ),
-                _grupoCards(
-                  title: "Produtos",
-                  icon: Icons.add_shopping_cart,
-                  color: AppColors.redPrincipal,
-                  route: const ProdutoPage(),
-                  title2: 'Ativar Funcionário',
-                  icon2: Icons.person,
-                  color2: Colors.black,
-                  route2: const AtivarFuncionarioPage(),
-                  largura: largura,
-                  altura: altura,
-                  context: context,
-                ),
-              ],
+    return NotificationListener<OverscrollIndicatorNotification>(
+      onNotification: (overScroll) {
+        overScroll.disallowIndicator();
+        return false;
+      },
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            _infoGerais(
+              titulo: empresa ?? "Por favor, cadastre sua empresa.",
+              descricao: _bemVindo +
+                  (nomeUsuario == null ? "!" : " " + nomeUsuario + "!"),
+              widthSize: largura,
             ),
-          )
-        ],
+            SizedBox(
+              height: altura * 0.70,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  _grupoCards(
+                    title: "Empresa",
+                    icon: Icons.account_balance,
+                    color: AppColors.bluePrincipal,
+                    route: const EmpresaPage(),
+                    title2: 'Serviços',
+                    icon2: Icons.construction,
+                    color2: Colors.lightGreen,
+                    route2: const ServicoPage(),
+                    largura: largura,
+                    altura: altura,
+                    context: context,
+                  ),
+                  _grupoCards(
+                    title: "Produtos",
+                    icon: Icons.add_shopping_cart,
+                    color: AppColors.redPrincipal,
+                    route: const ProdutoPage(),
+                    title2: 'Ativar Funcionário',
+                    icon2: Icons.person,
+                    color2: Colors.black,
+                    route2: const AtivarFuncionarioPage(),
+                    largura: largura,
+                    altura: altura,
+                    context: context,
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

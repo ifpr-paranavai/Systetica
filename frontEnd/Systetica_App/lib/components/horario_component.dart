@@ -106,8 +106,11 @@ class HorarioComponent {
     );
   }
 
-  ImagensWidget imagemErro() {
+  ImagensWidget imagemErro({
+  required double altura,
+}) {
     return ImagensWidget(
+      paddingTop: altura * 0.1,
       image: "calendario.png",
       widthImagem: 300,
     );
@@ -116,7 +119,7 @@ class HorarioComponent {
   TextAutenticacoesWidget textoErro() {
     return TextAutenticacoesWidget(
       alignment: Alignment.center,
-      paddingTop: 0,
+      paddingTop: 10,
       fontSize: 30,
       text: "Nenhum agendamento encontrado.",
     );
