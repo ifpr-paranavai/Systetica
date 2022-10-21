@@ -203,7 +203,9 @@ class AgendamentolWidget extends State<AgendamentoPage> {
         ),
         child: HorarioComponent().cardInformacoes(
           largura: _controller.largura * 0.74,
-          nome: _controller.agendamentos[index].cliente!.nome!,
+          nome: _controller.agendamentos[index].cliente != null
+              ? _controller.agendamentos[index].cliente!.nome!
+              : _controller.agendamentos[index].nomeCliente!,
           dataAgendamento: _controller.agendamentos[index].dataAgendamento!,
           horarioAgendamento:
               _controller.agendamentos[index].horarioAgendamento!,

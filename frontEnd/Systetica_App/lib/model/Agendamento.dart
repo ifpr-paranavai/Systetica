@@ -35,7 +35,8 @@ class Agendamento {
             .map<Servico>((e) => Servico.fromJson(e))).toList()
         : [];
     situacao = Situacao.fromJson(json['situacao']);
-    cliente = Usuario.fromJson(json['cliente']);
+    cliente =
+        json['cliente'] != null ? Usuario.fromJson(json['cliente']) : null;
     funcionario = Usuario.fromJson(json['funcionario']);
   }
 

@@ -31,4 +31,7 @@ public class DadosAgendamentoDTO implements Serializable {
 
     @JsonProperty("servicos_selecionados")
     private List<ServicoDTO> servicosSelecionados;
+
+    @JsonProperty("nome_cliente")
+    private String nomeCliente;
 }

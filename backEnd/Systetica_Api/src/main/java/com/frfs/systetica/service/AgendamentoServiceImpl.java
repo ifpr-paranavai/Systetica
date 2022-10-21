@@ -86,20 +86,24 @@ public class AgendamentoServiceImpl implements AgendamentoService {
                             dadosAgendamentoDTO.getHorarioAgendamento().getHorarioAgendamento());
 
             if (agendarServicoBancoDeDados.isEmpty()) {
-                Optional<Empresa> empresa = empresaRepository.findById(dadosAgendamentoDTO.getEmpresaId());
-                Optional<Usuario> cliente = usuarioRepository.findByEmail(dadosAgendamentoDTO.getClienteEmail());
-                Optional<Usuario> funcionario = usuarioRepository.findById(dadosAgendamentoDTO.getFuncionarioId());
-
                 AgendamentoDTO agendamentoDTO = new AgendamentoDTO();
+                if (dadosAgendamentoDTO.getClienteEmail() != null && !dadosAgendamentoDTO.getClienteEmail().isEmpty()) {
+                    Optional<Usuario> cliente = usuarioRepository.findByEmail(dadosAgendamentoDTO.getClienteEmail());
+                    agendamentoDTO.setCliente(usuarioMapper.toDto(cliente.get()));
+                }
+
+                Optional<Empresa> empresa = empresaRepository.findById(dadosAgendamentoDTO.getEmpresaId());
+                Optional<Usuario> funcionario = usuarioRepository.findById(dadosAgendamentoDTO.getFuncionarioId());
 
                 agendamentoDTO.setDataCadastro(new Date());
                 agendamentoDTO.setDataAgendamento(dadosAgendamentoDTO.getHorarioAgendamento().getDataAgendamento());
                 agendamentoDTO.setHorarioAgendamento(dadosAgendamentoDTO.getHorarioAgendamento().getHorarioAgendamento());
                 agendamentoDTO.setServicos(dadosAgendamentoDTO.getServicosSelecionados());
                 agendamentoDTO.setSituacao(situacaoRepository.findByName("AGENDADO").get());
-                agendamentoDTO.setCliente(usuarioMapper.toDto(cliente.get()));
+
                 agendamentoDTO.setFuncionario(usuarioMapper.toDto(funcionario.get()));
                 agendamentoDTO.setEmpresa(empresaMapper.toDto(empresa.get()));
+                agendamentoDTO.setNomeCliente(dadosAgendamentoDTO.getNomeCliente());
 
                 agendamentoRepository.saveAndFlush(agendamentoMapper.toEntity(agendamentoDTO));
 
