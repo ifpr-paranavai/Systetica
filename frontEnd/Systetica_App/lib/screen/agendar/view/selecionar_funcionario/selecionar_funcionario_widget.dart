@@ -6,7 +6,7 @@ import '../../../../components/gesture_detector_foto_component.dart';
 import '../../../../components/icon_arrow_widget.dart';
 import '../../../../components/page_transition.dart';
 import '../../../../model/Usuario.dart';
-import '../../../../style/app_colors..dart';
+import '../../../../style/app_colors.dart';
 import '../../agendar_controller.dart';
 import '../../component/agendar_componente.dart';
 import '../selecionar_horario/selecionar_horario_page.dart';

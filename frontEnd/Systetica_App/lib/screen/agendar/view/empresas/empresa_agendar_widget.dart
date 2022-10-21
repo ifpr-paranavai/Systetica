@@ -7,7 +7,7 @@
 // import '../../../../model/Empresa.dart';
 // import '../../../../model/Info.dart';
 // import '../../../../model/Usuario.dart';
-// import '../../../../style/app_colors..dart';
+// import '../../../../style/app_colors.dart';
 // import '../../../../utils/util.dart';
 // import '../../../perfil/perfil_controller.dart';
 // import '../../agendar_controller.dart';

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:systetica/style/app_colors..dart';
+import 'package:systetica/style/app_colors.dart';
 
 class BotaoWidget extends StatefulWidget {
   const BotaoWidget({
@@ -8,7 +8,7 @@ class BotaoWidget extends StatefulWidget {
     this.onPressed,
     this.largura,
     required this.paddingTop,
-    required this.paddingBottom,
+    this.paddingBottom = 0,
     required this.corBotao,
     required this.corTexto,
     this.corBorda = Colors.transparent,

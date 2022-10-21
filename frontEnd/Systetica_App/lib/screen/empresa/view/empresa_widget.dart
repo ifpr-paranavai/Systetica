@@ -16,7 +16,7 @@ import '../../../model/Empresa.dart';
 import '../../../model/Info.dart';
 import '../../../model/MenuItem.dart';
 import '../../../model/validator/MultiValidatorEmpresa.dart';
-import '../../../style/app_colors..dart';
+import '../../../style/app_colors.dart';
 import '../../../utils/util.dart';
 import '../component/input_empresa.dart';
 import '../empresa_controller.dart';

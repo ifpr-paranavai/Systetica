@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../style/app_colors..dart';
+import '../style/app_colors.dart';
 import '../utils/util.dart';
 import 'imagens_widget.dart';
 import 'text_autenticacoes_widget.dart';
@@ -107,8 +107,8 @@ class HorarioComponent {
   }
 
   ImagensWidget imagemErro({
-  required double altura,
-}) {
+    required double altura,
+  }) {
     return ImagensWidget(
       paddingTop: altura * 0.1,
       image: "calendario.png",
@@ -127,10 +127,11 @@ class HorarioComponent {
 
   Widget tituloDetalhes({
     required String texto,
+    Color corFornte = Colors.black87,
   }) {
     return Container(
       padding: const EdgeInsets.only(
-        left: 20,
+        left: 22,
         bottom: 8,
       ),
       alignment: Alignment.centerLeft,
@@ -139,7 +140,7 @@ class HorarioComponent {
         maxLines: 1,
         style: TextStyle(
           fontSize: 16,
-          color: Colors.black87.withOpacity(0.6),
+          color: corFornte.withOpacity(0.6),
           fontWeight: FontWeight.bold,
         ),
       ),
@@ -153,6 +154,7 @@ class HorarioComponent {
     String subTitulo = '',
     int maxLines = 1,
     bool terSubTituulo = true,
+    Color colorIcon = AppColors.bluePrincipal,
   }) {
     return Container(
       margin: EdgeInsets.only(
@@ -184,7 +186,7 @@ class HorarioComponent {
                 alignment: Alignment.centerRight,
                 child: Icon(
                   icon,
-                  color: AppColors.bluePrincipal,
+                  color: colorIcon,
                 ),
               ),
             ),
@@ -192,9 +194,12 @@ class HorarioComponent {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                info(
-                  maxLines: maxLines,
-                  informacao: nome,
+                SizedBox(
+                  width: largura * 0.67,
+                  child: info(
+                    maxLines: maxLines,
+                    informacao: nome,
+                  ),
                 ),
                 terSubTituulo == true
                     ? info(
@@ -219,6 +224,7 @@ class HorarioComponent {
     return Text(
       informacao,
       maxLines: maxLines,
+      textAlign: TextAlign.justify,
       style: TextStyle(
         fontWeight: FontWeight.normal,
         fontSize: fontSize,

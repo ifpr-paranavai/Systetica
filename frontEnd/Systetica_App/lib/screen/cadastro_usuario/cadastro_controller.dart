@@ -8,7 +8,7 @@ import '../../components/page_transition.dart';
 import '../../model/Usuario.dart';
 import '../../request/dio_config.dart';
 import '../../screen/cadastro_usuario/view/ativar_usuario/ativar_usuario_page.dart';
-import '../../style/app_colors..dart';
+import '../../style/app_colors.dart';
 import '../inicio/view/inicio_page.dart';
 import 'cadastro_service.dart';
 

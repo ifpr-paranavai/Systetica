@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:systetica/screen/inicio/view/inicio_page.dart';
 
 import '../../database/repository/token_repository.dart';
 import '../../model/Token.dart';
@@ -19,13 +18,7 @@ class InicioController {
       if (dataToken.day < dataAtual.day ||
           dataToken.month < dataAtual.month ||
           dataToken.year < dataAtual.year) {
-        Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const InicioPage(),
-          ),
-          (route) => false,
-        );
+        return;
       } else {
         Navigator.pushAndRemoveUntil(
           context,

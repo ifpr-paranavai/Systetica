@@ -128,4 +128,28 @@ class Util {
       dateTime,
     );
   }
+
+  static bool podeCancelarServico({
+    required String situacao,
+    required String dataAgendamento,
+    required String horarioAgendamento,
+  }) {
+    // Realiza-se essas transformações na data para ambas ficarem com a hora, minuto
+    DateTime dataHora = DateTime.now();
+    DateTime dataAgora = DateTime.parse(
+      DateFormat('yyyy-MM-dd').format(dataHora),
+    );
+    DateTime dataAendamento2 = DateTime.parse(dataAgendamento);
+
+    if (situacao != "AGENDADO") {
+      return false;
+    } else if (dataAendamento2.isBefore(dataAgora)) {
+      return false;
+    } else if (!dataAendamento2.isAfter(dataAgora) &&
+        toIntHorario(horario: horarioAgendamento) < dataHora.hour) {
+      return false;
+    } else {
+      return true;
+    }
+  }
 }

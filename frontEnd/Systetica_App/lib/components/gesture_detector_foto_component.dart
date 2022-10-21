@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:systetica/components/foto/foto_widget.dart';
-import 'package:systetica/style/app_colors..dart';
+import 'package:systetica/style/app_colors.dart';
 
 class GestureDetectorFotoComponent extends StatefulWidget {
   const GestureDetectorFotoComponent({

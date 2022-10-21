@@ -10,7 +10,7 @@ import '../../../../components/icon_arrow_widget.dart';
 import '../../../../components/input/campo_pesquisa_pagamento_widget.dart';
 import '../../../../components/input/campo_texto_widget.dart';
 import '../../../../model/FormaPagamento.dart';
-import '../../../../style/app_colors..dart';
+import '../../../../style/app_colors.dart';
 import '../../../agendar/component/agendar_componente.dart';
 import '../../pagamento_servico_controller.dart';
 import 'pagamento_servico_page.dart';

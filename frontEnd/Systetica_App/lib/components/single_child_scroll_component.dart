@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:systetica/style/app_colors..dart';
+import 'package:systetica/style/app_colors.dart';
 
 class SingleChildScrollComponent extends StatefulWidget {
   const SingleChildScrollComponent({

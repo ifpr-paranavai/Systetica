@@ -8,7 +8,7 @@ import '../../../components/loading/loading_animation.dart';
 import '../../../components/pesquisa_widget.dart';
 import '../../../model/Info.dart';
 import '../../../model/Produto.dart';
-import '../../../style/app_colors..dart';
+import '../../../style/app_colors.dart';
 import '../produto_controller.dart';
 import 'form/produto_form_page.dart';
 import 'produto_page.dart';
@@ -88,7 +88,7 @@ class ProdutoWidget extends State<ProdutoPage> {
                   ),
           ],
         ),
-        buttonIcon(
+        buttonIconAdd(
           altura: altura,
           largura: largura,
         ),
@@ -166,7 +166,7 @@ class ProdutoWidget extends State<ProdutoPage> {
     );
   }
 
-  Widget buttonIcon({
+  Widget buttonIconAdd({
     required double altura,
     required double largura,
   }) {

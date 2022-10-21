@@ -5,7 +5,7 @@ import 'package:systetica/screen/pagamento_servico/pagamento_servico_controller.
 
 import '../../../../components/icon_arrow_widget.dart';
 import '../../../../components/loading/loading_animation.dart';
-import '../../../../style/app_colors..dart';
+import '../../../../style/app_colors.dart';
 import '../pagamento_servico/pagamento_servico_page.dart';
 import 'servicos_page.dart';
 

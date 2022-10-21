@@ -9,7 +9,7 @@ import 'package:image_picker/image_picker.dart';
 import '../../../../components/icon_arrow_widget.dart';
 import '../../../../components/text_autenticacoes_widget.dart';
 import '../../../../model/validator/MultiValidatorEmpresa.dart';
-import '../../../../style/app_colors..dart';
+import '../../../../style/app_colors.dart';
 import '../../component/input_empresa.dart';
 import '../../empresa_controller.dart';
 import 'empresa_form_page.dart';

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../components/botoes/botao_widget.dart';
 import '../../../components/text_autenticacoes_widget.dart';
-import '../../../style/app_colors..dart';
+import '../../../style/app_colors.dart';
 
 class AgendarComponente {
   static Widget containerGeral({required Widget widget}) {

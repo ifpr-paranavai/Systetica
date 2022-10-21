@@ -11,7 +11,7 @@ import '../../../../components/icon_arrow_widget.dart';
 import '../../../../components/input/campo_texto_widget.dart';
 import '../../../../components/text_autenticacoes_widget.dart';
 import '../../../../model/validator/MultiValidatorUsuario.dart';
-import '../../../../style/app_colors..dart';
+import '../../../../style/app_colors.dart';
 import '../../perfil_controller.dart';
 import 'perfil_form_page.dart';
 

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../../components/icon_arrow_widget.dart';
 import '../../../../model/Produto.dart';
 import '../../../../model/validator/MultiValidatorProduto.dart';
-import '../../../../style/app_colors..dart';
+import '../../../../style/app_colors.dart';
 import '../../component/input_produto.dart';
 import '../../produto_controller.dart';
 import 'produto_form_page.dart';

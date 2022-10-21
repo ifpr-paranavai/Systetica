@@ -5,7 +5,7 @@ import 'package:systetica/screen/perfil/perfil_controller.dart';
 import '../../../components/loading/loading_animation.dart';
 import '../../../components/page_transition.dart';
 import '../../../model/Info.dart';
-import '../../../style/app_colors..dart';
+import '../../../style/app_colors.dart';
 import '../../pagamento_servico/view/servicos/servicos_page.dart';
 import '../../servico/view/servico_page.dart';
 import 'pagamento_page.dart';

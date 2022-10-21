@@ -9,7 +9,7 @@ import '../../../components/loading/loading_animation.dart';
 import '../../../components/pesquisa_widget.dart';
 import '../../../model/Info.dart';
 import '../../../model/Servico.dart';
-import '../../../style/app_colors..dart';
+import '../../../style/app_colors.dart';
 import '../servico_controller.dart';
 import 'form/servico_form_page.dart';
 

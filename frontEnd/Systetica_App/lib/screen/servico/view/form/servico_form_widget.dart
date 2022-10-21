@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../../components/icon_arrow_widget.dart';
 import '../../../../model/Servico.dart';
 import '../../../../model/validator/MultiValidatorServico.dart';
-import '../../../../style/app_colors..dart';
+import '../../../../style/app_colors.dart';
 import '../../component/input_servico.dart';
 import '../../servico_controller.dart';
 import 'servico_form_page.dart';

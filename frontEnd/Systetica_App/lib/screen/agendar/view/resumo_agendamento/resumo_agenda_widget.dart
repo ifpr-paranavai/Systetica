@@ -2,8 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../components/icon_arrow_widget.dart';
+import '../../../../components/input/campo_texto_widget.dart';
 import '../../../../components/page_transition.dart';
-import '../../../../style/app_colors..dart';
+import '../../../../model/validator/MultiValidatorUsuario.dart';
+import '../../../../style/app_colors.dart';
 import '../../../../utils/util.dart';
 import '../../agendar_controller.dart';
 import '../../component/agendar_componente.dart';
@@ -12,7 +14,9 @@ import 'resumo_agenda_page.dart';
 class ResumoAgendaWidget extends State<ResumoAgendaPage> {
   final ScrollController _scrollController = ScrollController();
   final AgendarController _controller = AgendarController();
+  final MultiValidatorUsuario _validatorUsuario = MultiValidatorUsuario();
   var myPageTransition = MyPageTransition();
+  bool agendamentoPorCliente = true;
 
   @override
   void initState() {
@@ -84,6 +88,13 @@ class ResumoAgendaWidget extends State<ResumoAgendaPage> {
           controller: _scrollController,
           child: Column(
             children: [
+              widget.dadosAgendamento.agendamentoCliente == false
+                  ? Form(
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      key: _controller.formKey,
+                      child: _inputNome(paddingHorizontal: _controller.largura),
+                    )
+                  : const SizedBox(),
               _titulo(
                 texto: itemCount > 1 ? "Serviços" : "Serviço",
               ),
@@ -132,6 +143,7 @@ class ResumoAgendaWidget extends State<ResumoAgendaPage> {
   }) {
     return Container(
       padding: const EdgeInsets.only(
+        top: 10,
         left: 20,
         bottom: 8,
       ),
@@ -234,6 +246,23 @@ class ResumoAgendaWidget extends State<ResumoAgendaPage> {
     return SizedBox(
       height: height,
       width: width,
+    );
+  }
+
+  CampoTextoWidget _inputNome({required double paddingHorizontal}) {
+    return CampoTextoWidget(
+      labelText: "Nome cliente",
+      paddingHorizontal: paddingHorizontal * 0.05,
+      paddingBottom: 0,
+      maxLength: 100,
+      paddingTop: 14,
+      isIconDate: true,
+      icon: const Icon(
+        Icons.face_rounded,
+        color: Colors.black87,
+      ),
+      controller: _controller.nomeController,
+      validator: _validatorUsuario.nomeValidator,
     );
   }
 }

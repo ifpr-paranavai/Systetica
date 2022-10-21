@@ -6,7 +6,7 @@ import '../../../../components/imagens_widget.dart';
 import '../../../../components/input/campo_texto_widget.dart';
 import '../../../../components/text_autenticacoes_widget.dart';
 import '../../../../model/validator/MultiValidatorUsuario.dart';
-import '../../../../style/app_colors..dart';
+import '../../../../style/app_colors.dart';
 import '../../login_controller.dart';
 import 'gerar_codigo_page.dart';
 

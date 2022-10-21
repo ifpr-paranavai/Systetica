@@ -7,7 +7,7 @@ import '../../../../components/input/campo_texto_widget.dart';
 import '../../../../components/page_transition.dart';
 import '../../../../components/text_autenticacoes_widget.dart';
 import '../../../../model/validator/MultiValidatorUsuario.dart';
-import '../../../../style/app_colors..dart';
+import '../../../../style/app_colors.dart';
 import '../../cadastro_controller.dart';
 import '../ativar_usuario/ativar_usuario_page.dart';
 import 'cadastro_page.dart';

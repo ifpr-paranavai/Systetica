@@ -14,7 +14,7 @@ import '../../../model/Info.dart';
 import '../../../model/MenuItem.dart';
 import '../../../model/Token.dart';
 import '../../../model/Usuario.dart';
-import '../../../style/app_colors..dart';
+import '../../../style/app_colors.dart';
 import '../../inicio/view/inicio_page.dart';
 import '../perfil_controller.dart';
 import 'form/perfil_form_page.dart';

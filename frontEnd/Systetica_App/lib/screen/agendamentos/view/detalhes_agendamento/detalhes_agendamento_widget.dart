@@ -7,7 +7,7 @@ import 'package:brasil_fields/brasil_fields.dart';
 import '../../../../components/alert_dialog_widget.dart';
 import '../../../../components/horario_component.dart';
 import '../../../../components/icon_arrow_widget.dart';
-import '../../../../style/app_colors..dart';
+import '../../../../style/app_colors.dart';
 import '../../../../utils/util.dart';
 import '../../../agendar/component/agendar_componente.dart';
 import '../../agendamento_controller.dart';
@@ -58,7 +58,11 @@ class DetalhesAgendamentoWidget extends State<DetalhesAgendamentoPage> {
             HorarioComponent().sizedBox(height: _controller.altura * 0.08),
           ],
         ),
-        widget.agendamento.situacao!.name == "AGENDADO"
+        Util.podeCancelarServico(
+          situacao: widget.agendamento.situacao!.name,
+          dataAgendamento: widget.agendamento.dataAgendamento!,
+          horarioAgendamento: widget.agendamento.horarioAgendamento!,
+        )
             ? AgendarComponente.botaoSelecinar(
                 altura: _controller.altura,
                 largura: _controller.largura,
@@ -137,6 +141,19 @@ class DetalhesAgendamentoWidget extends State<DetalhesAgendamentoPage> {
                 nome: widget.agendamento.situacao!.name,
                 terSubTituulo: false,
                 icon: Icons.phone_android,
+              ),
+              HorarioComponent().tituloDetalhes(
+                texto: "ATENÇÂO",
+                corFornte: AppColors.redPrincipal,
+              ),
+              HorarioComponent().listSelecao(
+                maxLines: 3,
+                largura: _controller.largura,
+                nome:
+                    "Só é permitido cancelar serviço com uma hora de atencedência.",
+                terSubTituulo: false,
+                icon: Icons.add_alert,
+                colorIcon: AppColors.redPrincipal,
               ),
             ],
           ),

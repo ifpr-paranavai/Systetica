@@ -1,15 +1,23 @@
 import 'package:calendar_timeline/calendar_timeline.dart';
 import 'package:flutter/material.dart';
+import 'package:systetica/model/Empresa.dart';
 
+import '../../../../components/botoes/botao_widget.dart';
 import '../../../../components/horario_component.dart';
 import '../../../../components/loading/loading_animation.dart';
-import '../../../../style/app_colors..dart';
+import '../../../../components/page_transition.dart';
+import '../../../../model/Info.dart';
+import '../../../../style/app_colors.dart';
+import '../../../agendar/view/selecionar_servico/selecionar_servico_page.dart';
+import '../../../empresa/empresa_controller.dart';
 import '../../agendamento_controller.dart';
 import '../detalhes_agendamento/detalhes_agendamento_page.dart';
 import 'agendamento_page.dart';
 
 class AgendamentolWidget extends State<AgendamentoPage> {
   final AgendamentoController _controller = AgendamentoController();
+  final EmpresaController _empresaController = EmpresaController();
+  final MyPageTransition myPageTransition = MyPageTransition();
 
   bool agendamentoVazio = false;
   bool loading = true;
@@ -76,7 +84,37 @@ class AgendamentolWidget extends State<AgendamentoPage> {
               ]),
             ],
           ),
+          buttonAdd(),
         ],
+      ),
+    );
+  }
+
+  Widget buttonAdd() {
+    return Container(
+      padding: const EdgeInsets.only(right: 15),
+      alignment: Alignment.topRight,
+      child: BotaoWidget(
+        paddingTop: 15,
+        labelText: "ADICIONAR",
+        largura: _controller.largura * 0.25,
+        corBotao: Colors.black87.withOpacity(0.9),
+        corTexto: Colors.white,
+        overlayColor: AppColors.blue5,
+        onPressed: () async {
+          Info? info = await _empresaController.buscarEmpresaEmail(context);
+          Empresa empresa = info!.object;
+          Navigator.of(context).push(
+            myPageTransition.pageTransition(
+              child: SelecionarServicoPage(
+                empresa: empresa,
+                agendamentoCliente: false,
+              ),
+              buttoToTop: true,
+              childCurrent: widget,
+            ),
+          );
+        },
       ),
     );
   }
@@ -131,7 +169,7 @@ class AgendamentolWidget extends State<AgendamentoPage> {
               )
             : GridView.count(
                 crossAxisCount: 1,
-                childAspectRatio: 1.7, // TODO - teste em outros dispositivos
+                childAspectRatio: _controller.altura >= 752.00 ? 1.5 : 1.8,
                 mainAxisSpacing: 18,
                 crossAxisSpacing: 0,
                 shrinkWrap: true,

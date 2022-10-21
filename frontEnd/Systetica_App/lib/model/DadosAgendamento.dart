@@ -12,6 +12,8 @@ class DadosAgendamento {
     required this.empresa,
     required this.horarioAgendamento,
     required this.servicosSelecionados,
+    this.agendamentoCliente = true,
+    this.nomeCliente,
   });
 
   Usuario cliente;
@@ -19,6 +21,8 @@ class DadosAgendamento {
   Empresa empresa;
   HorarioAgendamento horarioAgendamento;
   List<Servico> servicosSelecionados;
+  bool agendamentoCliente;
+  String? nomeCliente;
 
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};
@@ -28,6 +32,7 @@ class DadosAgendamento {
     _data['horario_agendamento'] = horarioAgendamento.toJson();
     _data['servicos_selecionados'] =
         servicosSelecionados.map((i) => i.toJson()).toList();
+    _data['nome_cliente'] = nomeCliente;
     return _data;
   }
 }

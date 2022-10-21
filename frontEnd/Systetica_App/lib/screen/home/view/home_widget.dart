@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 
 import '../../../database/repository/token_repository.dart';
-import '../../../style/app_colors..dart';
+import '../../../style/app_colors.dart';
 import '../../administrador/view/administrador_page.dart';
 import '../../agendamentos/view/agendamento/agendamento_page.dart';
 import '../../agendar/view/detalhes_empresa/detalhes_empresa_page.dart';

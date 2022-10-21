@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:systetica/style/app_colors..dart';
+import 'package:systetica/style/app_colors.dart';
 
 class FotoWidget {
   Container boxFoto({

@@ -7,7 +7,7 @@ import '../../../components/loading/loading_animation.dart';
 import '../../../components/pesquisa_widget.dart';
 import '../../../model/Info.dart';
 import '../../../model/Usuario.dart';
-import '../../../style/app_colors..dart';
+import '../../../style/app_colors.dart';
 import '../ativar_funcionario_controller.dart';
 import 'ativar_funcionario_page.dart';
 import 'form/ativar_funcionario_form_page.dart';

@@ -16,9 +16,11 @@ import '../home/view/home_page.dart';
 import 'agendar_service.dart';
 
 class AgendarController {
+  final nomeController = TextEditingController();
   final myPageTransition = MyPageTransition();
   final formKey = GlobalKey<FormState>();
-  Empresa empresa = Empresa();
+  late Empresa empresa;
+
   Color corBotao = Colors.grey.withOpacity(0.9);
   Color overlayCorBotao = Colors.transparent;
   double largura = 0;
@@ -26,7 +28,6 @@ class AgendarController {
 
   Future<Info?> buscarEmpresas({
     required BuildContext context,
-    required String nomeEmpresa,
   }) async {
     Info info = Info(success: true);
 
@@ -34,7 +35,6 @@ class AgendarController {
       Token _token = await TokenRepository.findToken();
       info = await AgendarService.buscarEmpresas(
         token: _token,
-        nomeEmpresa: nomeEmpresa,
       );
     } catch (e) {
       info.success = false;
@@ -76,23 +76,47 @@ class AgendarController {
     var connected = await ConnectionCheck.check();
     if (connected) {
       try {
-        // Loading apresentado na tela
-        var contextLoading = context;
-        var loading = ShowLoadingWidget.showLoadingLabel(
-          contextLoading,
-          "Aguarde...",
-        );
-
         Token _token = await TokenRepository.findToken();
-        dadosAgendamento.cliente.email = _token.email;
 
-        info = await AgendarService.agendarHorario(
-          token: _token,
-          dadosAgendamento: dadosAgendamento,
-        );
+        // Validar se é agendamento com usuário cliente ou não
+        if (dadosAgendamento.agendamentoCliente == false) {
+          if (formKey.currentState != null) {
+            if (formKey.currentState?.validate() ?? true) {
+              dadosAgendamento.nomeCliente = nomeController.text;
+              // Loading apresentado na tela
+              var contextLoading = context;
+              var loading = ShowLoadingWidget.showLoadingLabel(
+                contextLoading,
+                "Aguarde...",
+              );
 
-        // Finaliza o loading na tela
-        Navigator.pop(contextLoading, loading);
+              info = await AgendarService.agendarHorario(
+                token: _token,
+                dadosAgendamento: dadosAgendamento,
+              );
+
+              // Finaliza o loading na tela
+              Navigator.pop(contextLoading, loading);
+            }
+          }
+        } else {
+          dadosAgendamento.cliente.email = _token.email;
+
+          // Loading apresentado na tela
+          var contextLoading = context;
+          var loading = ShowLoadingWidget.showLoadingLabel(
+            contextLoading,
+            "Aguarde...",
+          );
+
+          info = await AgendarService.agendarHorario(
+            token: _token,
+            dadosAgendamento: dadosAgendamento,
+          );
+
+          // Finaliza o loading na tela
+          Navigator.pop(contextLoading, loading);
+        }
 
         var alertDialog = AlertDialogWidget();
         if (info.success!) {

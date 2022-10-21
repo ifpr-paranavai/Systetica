@@ -11,7 +11,7 @@ import '../../../../model/HorarioAgendamento.dart';
 import '../../../../model/Servico.dart';
 import '../../../../model/Usuario.dart';
 import '../../../../model/DadosAgendamento.dart';
-import '../../../../style/app_colors..dart';
+import '../../../../style/app_colors.dart';
 import '../../../servico/servico_controller.dart';
 import '../../agendar_controller.dart';
 import '../../component/agendar_componente.dart';
@@ -39,6 +39,7 @@ class SelecionarServicoWidget extends State<SelecionarServicoPage> {
       empresa: widget.empresa,
       horarioAgendamento: HorarioAgendamento(),
       servicosSelecionados: [],
+      agendamentoCliente: widget.agendamentoCliente,
     );
   }
 

@@ -8,7 +8,7 @@ import '../../../../components/imagens_widget.dart';
 import '../../../../components/page_transition.dart';
 import '../../../../components/text_autenticacoes_widget.dart';
 import '../../../../model/HorarioAgendamento.dart';
-import '../../../../style/app_colors..dart';
+import '../../../../style/app_colors.dart';
 import '../../agendar_controller.dart';
 import '../../component/agendar_componente.dart';
 import '../resumo_agendamento/resumo_agenda_page.dart';

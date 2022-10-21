@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:systetica/components/foto/foto_widget.dart';
-import 'package:systetica/style/app_colors..dart';
+import 'package:systetica/style/app_colors.dart';
 
 class ListViewFotoOrNumeroComponent extends StatefulWidget {
   const ListViewFotoOrNumeroComponent({
@@ -23,7 +23,8 @@ class ListViewFotoOrNumeroComponent extends StatefulWidget {
   final GestureTapCallback onTap;
 
   @override
-  State<ListViewFotoOrNumeroComponent> createState() => _ListViewFotooComponent();
+  State<ListViewFotoOrNumeroComponent> createState() =>
+      _ListViewFotooComponent();
 }
 
 class _ListViewFotooComponent extends State<ListViewFotoOrNumeroComponent> {

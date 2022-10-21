@@ -5,7 +5,7 @@ import '../../../components/loading/loading_animation.dart';
 import '../../../components/page_transition.dart';
 import '../../../model/Empresa.dart';
 import '../../../model/Info.dart';
-import '../../../style/app_colors..dart';
+import '../../../style/app_colors.dart';
 import '../../ativar_funcionario/view/ativar_funcionario_page.dart';
 import '../../empresa/empresa_controller.dart';
 import '../../empresa/view/empresa_page.dart';
@@ -267,16 +267,12 @@ class CadastroAdministradorWidget extends State<CadastroAdministradorPage>
       onTap: () {
         HapticFeedback.lightImpact();
         Navigator.of(context)
-            .push(
-              _myPageTransition.pageTransition(
-                child: route,
-                childCurrent: widget,
-                buttoToTop: true,
-              ),
-            )
-            .then(
-              (value) => setState(() {}),
-            );
+            .push(_myPageTransition.pageTransition(
+              child: route,
+              childCurrent: widget,
+              buttoToTop: true,
+            ))
+            .then((value) => setState(() {}));
       },
     );
   }

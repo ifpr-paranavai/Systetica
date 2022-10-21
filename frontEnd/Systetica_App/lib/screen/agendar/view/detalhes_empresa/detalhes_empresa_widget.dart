@@ -4,7 +4,6 @@ import 'package:maps_launcher/maps_launcher.dart';
 import '../../../../components/botoes/botao_widget.dart';
 import '../../../../components/card_component.dart';
 import '../../../../components/foto/foto_widget.dart';
-import '../../../../components/icon_arrow_widget.dart';
 import '../../../../components/item_list.dart';
 import '../../../../components/list_view/list_view_horarios_component.dart';
 import '../../../../components/loading/loading_animation.dart';
@@ -13,7 +12,7 @@ import '../../../../components/single_child_scroll_component.dart';
 import '../../../../components/text_autenticacoes_widget.dart';
 import '../../../../model/Empresa.dart';
 import '../../../../model/Info.dart';
-import '../../../../style/app_colors..dart';
+import '../../../../style/app_colors.dart';
 import '../../../../utils/util.dart';
 import '../../../empresa/empresa_controller.dart';
 import '../../agendar_controller.dart';
@@ -21,35 +20,18 @@ import '../selecionar_servico/selecionar_servico_page.dart';
 import 'detalhes_empresa_page.dart';
 
 class DetalhaEmpresaWidget extends State<DetalhaEmpresaPage> {
+  final ScrollController _scrollController = ScrollController();
   final AgendarController _controller = AgendarController();
-  late ScrollController _scrollController;
-  late Map<String, String> diasTrabalhoEmpresa;
+  late Info? info;
+  Map<String, String> diasTrabalhoEmpresa = {};
 
-  Info? info = Info(success: true);
   bool loading = true;
   MyPageTransition myPageTransition = MyPageTransition();
 
   @override
   void initState() {
     super.initState();
-    _scrollController = ScrollController();
-    buscarEmpresas();
-  }
-
-  Future<void> buscarEmpresas() async {
-    await _controller.buscarEmpresas(context: context, nomeEmpresa: "").then(
-          (value) => setState(
-            () {
-              info = value;
-              _controller.empresa = value!.object;
-              loading = false;
-              diasTrabalhoEmpresa = Util.diasHorarioFuncionamento(
-                _controller.empresa.horarioAbertura!,
-                _controller.empresa.horarioFechamento!,
-              );
-            },
-          ),
-        );
+    _controller.empresa = Empresa();
   }
 
   @override
@@ -59,7 +41,21 @@ class DetalhaEmpresaWidget extends State<DetalhaEmpresaPage> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: AppColors.branco,
-        body: loading ? const LoadingAnimation() : _body(),
+        body: FutureBuilder<Info?>(
+          future: _controller.buscarEmpresas(context: context),
+          builder: (context, snapShot) {
+            if (!snapShot.hasData) {
+              return const LoadingAnimation();
+            } else {
+              _controller.empresa = snapShot.data!.object;
+              diasTrabalhoEmpresa = Util.diasHorarioFuncionamento(
+                _controller.empresa.horarioAbertura!,
+                _controller.empresa.horarioFechamento!,
+              );
+              return _body();
+            }
+          },
+        ),
       ),
     );
   }
@@ -261,6 +257,7 @@ class DetalhaEmpresaWidget extends State<DetalhaEmpresaPage> {
           myPageTransition.pageTransition(
             child: SelecionarServicoPage(
               empresa: _controller.empresa,
+              agendamentoCliente: true,
             ),
             buttoToTop: true,
             childCurrent: widget,
