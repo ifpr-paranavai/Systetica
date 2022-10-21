@@ -45,6 +45,11 @@ class DetalhesAgendamentoWidget extends State<DetalhesAgendamentoPage> {
   }
 
   Widget _body() {
+    bool podeCancelarServico = Util.podeCancelarServico(
+      situacao: widget.agendamento.situacao!.name,
+      dataAgendamento: widget.agendamento.dataAgendamento!,
+      horarioAgendamento: widget.agendamento.horarioAgendamento!,
+    );
     return Stack(
       children: [
         Column(
@@ -54,15 +59,11 @@ class DetalhesAgendamentoWidget extends State<DetalhesAgendamentoPage> {
               largura: _controller.largura,
               text: "RESUMO DO AGENDAMENTO",
             ),
-            _checkboxSelect(),
+            _checkboxSelect(podeCancelarServico),
             HorarioComponent().sizedBox(height: _controller.altura * 0.08),
           ],
         ),
-        Util.podeCancelarServico(
-          situacao: widget.agendamento.situacao!.name,
-          dataAgendamento: widget.agendamento.dataAgendamento!,
-          horarioAgendamento: widget.agendamento.horarioAgendamento!,
-        )
+        podeCancelarServico
             ? AgendarComponente.botaoSelecinar(
                 altura: _controller.altura,
                 largura: _controller.largura,
@@ -77,7 +78,7 @@ class DetalhesAgendamentoWidget extends State<DetalhesAgendamentoPage> {
     );
   }
 
-  Widget _checkboxSelect() {
+  Widget _checkboxSelect(bool podeCancelarServico) {
     int itemCount = widget.agendamento.servicos!.length;
     String titulo;
     itemCount > 1 ? titulo = "Serviços" : titulo = "Serviço";
@@ -142,19 +143,23 @@ class DetalhesAgendamentoWidget extends State<DetalhesAgendamentoPage> {
                 terSubTituulo: false,
                 icon: Icons.phone_android,
               ),
-              HorarioComponent().tituloDetalhes(
-                texto: "ATENÇÂO",
-                corFornte: AppColors.redPrincipal,
-              ),
-              HorarioComponent().listSelecao(
-                maxLines: 3,
-                largura: _controller.largura,
-                nome:
-                    "Só é permitido cancelar serviço com uma hora de atencedência.",
-                terSubTituulo: false,
-                icon: Icons.add_alert,
-                colorIcon: AppColors.redPrincipal,
-              ),
+              podeCancelarServico
+                  ? const SizedBox()
+                  : HorarioComponent().tituloDetalhes(
+                      texto: "ATENÇÂO",
+                      corFornte: AppColors.redPrincipal,
+                    ),
+              podeCancelarServico
+                  ? const SizedBox()
+                  : HorarioComponent().listSelecao(
+                      maxLines: 3,
+                      largura: _controller.largura,
+                      nome:
+                          "Só é permitido cancelar serviço com uma hora de atencedência.",
+                      terSubTituulo: false,
+                      icon: Icons.add_alert,
+                      colorIcon: AppColors.redPrincipal,
+                    ),
             ],
           ),
         ),
