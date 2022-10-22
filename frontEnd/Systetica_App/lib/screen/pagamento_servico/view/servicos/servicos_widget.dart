@@ -135,7 +135,7 @@ class ServicosWidget extends State<ServicosPage> {
               )
             : GridView.count(
                 crossAxisCount: 1,
-                childAspectRatio: 1.7,
+                childAspectRatio: _controller.altura >= 752.00 ? 1.5 : 1.8,
                 mainAxisSpacing: 18,
                 crossAxisSpacing: 0,
                 shrinkWrap: true,
@@ -169,7 +169,9 @@ class ServicosWidget extends State<ServicosPage> {
         ),
         child: HorarioComponent().cardInformacoes(
           largura: _controller.largura * 0.74,
-          nome: _controller.agendamentos[index].cliente!.nome!,
+          nome: _controller.agendamentos[index].cliente != null
+              ? _controller.agendamentos[index].cliente!.nome!
+              : _controller.agendamentos[index].nomeCliente!,
           dataAgendamento: _controller.agendamentos[index].dataAgendamento!,
           horarioAgendamento:
               _controller.agendamentos[index].horarioAgendamento!,

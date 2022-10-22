@@ -8,24 +8,17 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.util.Date;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class VendaPagamentoDTO implements Serializable {
+public class PagamentoServicoPKDTO implements Serializable {
 
-    @JsonProperty("venda_pagamento_PK_DTO")
-    private VendaPagamentoPKDTO vendaPagamentoPKDTO;
+    @JsonProperty("id_pagamento")
+    private PagamentoDTO idPagamento;
 
-    @JsonProperty("tipo_pagamento")
-    private String tipoPagamento;
-
-    @JsonProperty("observacao")
-    private String observacao;
-
-    @JsonProperty("data_cadastro")
-    private Date dataCadastro;
+    @JsonProperty("id_produto")
+    private ServicoDTO idServico;
 }

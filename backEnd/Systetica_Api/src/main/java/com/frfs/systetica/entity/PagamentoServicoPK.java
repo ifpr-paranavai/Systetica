@@ -15,15 +15,15 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Embeddable
 @EqualsAndHashCode
-public class VendaPagamentoPK implements Serializable {
+public class PagamentoServicoPK implements Serializable {
     private static final long serialVersionUID = 1L;
-
-    @ManyToOne
-    @JoinColumn(name = "id_venda")
-    private Venda idVenda;
 
     @ManyToOne
     @JoinColumn(name = "id_pagamento")
     private Pagamento idPagamento;
+
+    @ManyToOne
+    @JoinColumn(name = "id_servico")
+    private Servico idServico;
 
 }

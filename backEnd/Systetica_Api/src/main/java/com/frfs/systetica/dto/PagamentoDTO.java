@@ -20,18 +20,13 @@ public class PagamentoDTO implements Serializable {
     @JsonProperty("name")
     private Long id;
 
+    @JsonProperty("valor_total")
+    private Double valorTotal;
+
     @JsonProperty("desconto")
     private Double desconto;
-
-    @JsonProperty("total")
-    private Double total;
-
-    @JsonProperty("observacao")
-    private String observacao;
 
     @JsonProperty("data_cadastro")
     private Date dataCadastro;
 
-    @JsonProperty("status")
-    private String status = String.valueOf('A');
 }

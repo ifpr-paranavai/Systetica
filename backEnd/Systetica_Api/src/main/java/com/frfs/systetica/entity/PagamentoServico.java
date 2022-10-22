@@ -17,21 +17,19 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "ass_venda_pagamento")
+@Table(name = "ass_pagamento_servico")
 @EqualsAndHashCode
-public class VendaPagamento implements Serializable {
+public class PagamentoServico implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @NotNull
     @EmbeddedId
-    private VendaPagamentoPK id_venda_pagemento = new VendaPagamentoPK();
+    @Column(name = "id_pagamento_servico")
+    private PagamentoServicoPK idPagamentoServico = new PagamentoServicoPK();
 
     @NotNull
-    @Column(name = "tipo_pagamento", length = 50)
-    private String tipoPagamento;
-
-    @Column(name = "observacao", length = 300)
-    private String observacao;
+    @Column(name = "valor")
+    private Double valor;
 
     @NotNull
     @Column(name = "data_cadastro")

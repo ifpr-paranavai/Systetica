@@ -24,22 +24,15 @@ public class Pagamento implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull
+    @Column(name = "valor_total")
+    private Double valorTotal;
+
     @Column(name = "desconto")
     private Double desconto;
 
     @NotNull
-    @Column(name = "total")
-    private Double total;
-
-    @Column(name = "observacao", length = 300)
-    private String observacao;
-
-    @NotNull
     @Column(name = "data_cadastro")
     private Date dataCadastro;
-
-    @NotNull
-    @Column(name = "status", length = 1)
-    private String status = String.valueOf('A');
 
 }

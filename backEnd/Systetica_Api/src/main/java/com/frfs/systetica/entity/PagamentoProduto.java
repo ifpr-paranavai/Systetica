@@ -14,14 +14,15 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "ass_venda_produto")
+@Table(name = "ass_pagamento_produto")
 @EqualsAndHashCode
-public class VendaProduto implements Serializable {
+public class PagamentoProduto implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @NotNull
     @EmbeddedId
-    private VendaProdutoPK id_venda_produto = new VendaProdutoPK();
+    @Column(name = "id_pagamento_produto")
+    private PagamentoProdutoPK idPagamentoProduto = new PagamentoProdutoPK();
 
     @NotNull
     @Column(name = "quantidade")
@@ -35,11 +36,7 @@ public class VendaProduto implements Serializable {
     @Column(name = "valor_total")
     private Double valorTotal;
 
-    @Column(name = "observacao", length = 300)
-    private String observacao;
-
     @NotNull
     @Column(name = "data_cadastro")
     private Date dataCadastro;
-
 }

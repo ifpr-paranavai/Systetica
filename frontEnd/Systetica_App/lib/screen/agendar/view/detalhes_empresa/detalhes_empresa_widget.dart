@@ -243,7 +243,7 @@ class DetalhaEmpresaWidget extends State<DetalhaEmpresaPage> {
   Widget _botaoAgendar() {
     return Container(
       padding: EdgeInsets.only(
-        bottom: _controller.altura * 0.03,
+        bottom: _controller.altura * 0.01,
       ),
       alignment: Alignment.bottomCenter,
       child: BotaoWidget(

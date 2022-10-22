@@ -5,7 +5,9 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.persistence.Embeddable;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import java.io.Serializable;
 
 @Data
@@ -13,12 +15,12 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Embeddable
 @EqualsAndHashCode
-public class VendaProdutoPK implements Serializable {
+public class PagamentoProdutoPK implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @ManyToOne
-    @JoinColumn(name = "id_venda")
-    private Venda idVenda;
+    @JoinColumn(name = "id_pagamento")
+    private Pagamento idPagamento;
 
     @ManyToOne
     @JoinColumn(name = "id_produto")

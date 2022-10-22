@@ -2,7 +2,6 @@ package com.frfs.systetica.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,11 +14,11 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class VendaProdutoPKDTO implements Serializable {
+public class PagamentoProdutoPKDTO implements Serializable {
 
-    @JsonProperty("venda_DTO")
-    private VendaDTO vendaDTO;
+    @JsonProperty("id_pagamento")
+    private PagamentoDTO idPagamento;
 
-    @JsonProperty("produto_DTO")
-    private ProdutoDTO produtoDTO;
+    @JsonProperty("id_produto")
+    private ProdutoDTO idProduto;
 }
