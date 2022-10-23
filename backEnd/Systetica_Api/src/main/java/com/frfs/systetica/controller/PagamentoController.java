@@ -26,5 +26,11 @@ public class PagamentoController {
         return new ResponseEntity<>(result, result.getSuccess() ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    @PostMapping(value = "/produto")
+    @ResponseBody
+    public ResponseEntity<Object> pagamentoProduto(@Validated @RequestBody PagamentoServicoDTO pagamentoServicoDTO) {
+        ReturnData<String> result = pagamentoService.pagamentoServico(pagamentoServicoDTO);
 
+        return new ResponseEntity<>(result, result.getSuccess() ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 }

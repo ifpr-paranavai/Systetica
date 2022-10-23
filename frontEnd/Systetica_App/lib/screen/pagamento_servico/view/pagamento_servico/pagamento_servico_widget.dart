@@ -3,8 +3,8 @@
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:systetica/model/PagamentoServico.dart';
 
-import '../../../../components/alert_dialog_widget.dart';
 import '../../../../components/horario_component.dart';
 import '../../../../components/icon_arrow_widget.dart';
 import '../../../../components/input/campo_pesquisa_pagamento_widget.dart';
@@ -18,13 +18,14 @@ import 'pagamento_servico_page.dart';
 class PagamentoServicoWidget extends State<PagamentoServicoPage> {
   final ScrollController _scrollController = ScrollController();
   final PagamentoServicoController _controller = PagamentoServicoController();
-  double total = 0;
+  double valorTotal = 0;
 
   @override
   void initState() {
     super.initState();
+    _controller.pagamentoServico = PagamentoServico();
     widget.agendamento.servicos!.forEach((element) {
-      total += element.preco!;
+      valorTotal += element.preco!;
     });
   }
 
@@ -67,8 +68,19 @@ class PagamentoServicoWidget extends State<PagamentoServicoPage> {
                 overlayCorBotao: AppColors.blue5,
                 labelText: "CADASTRAR PAGAMENTO",
                 onPressed: () {
-                  confirmaCancelamento();
-                })
+                  _controller
+                      .cadastrarPagamentoServico(
+                        context: context,
+                        agendamento: widget.agendamento,
+                        valorTotal: valorTotal,
+                      )
+                      .then(
+                        (value) => setState(
+                          () {},
+                        ),
+                      );
+                },
+              )
             : const SizedBox(),
       ],
     );
@@ -109,7 +121,7 @@ class PagamentoServicoWidget extends State<PagamentoServicoPage> {
               HorarioComponent().listSelecao(
                 largura: _controller.largura,
                 nome: UtilBrasilFields.obterReal(
-                  total,
+                  valorTotal,
                 ),
                 terSubTituulo: false,
                 icon: Icons.phone_android,
@@ -120,31 +132,6 @@ class PagamentoServicoWidget extends State<PagamentoServicoPage> {
           ),
         ),
       ),
-    );
-  }
-
-  void confirmaCancelamento() {
-    var alertDialog = AlertDialogWidget();
-    alertDialog.alertDialog(
-      showModalOk: false,
-      context: context,
-      titulo: "Atenção!",
-      descricao: "Tem certeza que dejesa finalizar o serviço?",
-      onPressedNao: () => Navigator.pop(context),
-      onPressedOk: () async {
-        Navigator.pop(context);
-        // await _controller
-        //     .cancelarAgendamento(
-        //       agendamento: widget.agendamento,
-        //       context: context,
-        //     )
-        //     .then(
-        //       (value) => setState(
-        //         () {},
-        //       ),
-        //     );
-        Navigator.pop(context);
-      },
     );
   }
 
@@ -172,7 +159,8 @@ class PagamentoServicoWidget extends State<PagamentoServicoPage> {
       paddingHorizontal: 20,
       labelSeachTextPrincipal: "Forma pagamento",
       labelSeachTextPesquisa: "Digite nome do pagamento",
-      compareFn: (formaPagamento, buscaFormaPagamento) => formaPagamento == buscaFormaPagamento,
+      compareFn: (formaPagamento, buscaFormaPagamento) =>
+          formaPagamento == buscaFormaPagamento,
       asyncItems: (filtro) => _controller.buscarFormaPamento(filtro),
       onChanged: (value) {
         _controller.formaPagamento = value;

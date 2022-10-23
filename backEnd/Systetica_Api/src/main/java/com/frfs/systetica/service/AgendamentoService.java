@@ -15,4 +15,6 @@ public interface AgendamentoService {
     ReturnData<String> cancelar(AgendamentoDTO agendamentoDTO);
 
     ReturnData<Object> buscarTodosAgendamentoPorDiaAgendados(String dia);
+
+    void alterarStatusAgendamento(AgendamentoDTO agendamentoDTO, String status);
 }

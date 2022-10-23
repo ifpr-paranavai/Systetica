@@ -57,6 +57,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers(
                         "*",
                         "/forma-pagamento/**",
+                        "/pagamento/servico/**",
+                        "/pagamento/produto/**",
                         "/agendamento/buscar-todos-por-dia-agendados/**")
                 .hasAnyAuthority("ADMINISTRADOR, FUNCIONARIO");
 

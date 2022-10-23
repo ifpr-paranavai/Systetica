@@ -123,13 +123,10 @@ public class AgendamentoServiceImpl implements AgendamentoService {
     @Override
     public ReturnData<String> cancelar(AgendamentoDTO agendamentoDTO) {
         try {
-            Optional<Agendamento> agendarServico = agendamentoRepository.findById(agendamentoDTO.getId());
 
-            agendarServico.get().setSituacao(situacaoRepository.findByName("CANCELADO").get());
+            alterarStatusAgendamento(agendamentoDTO, "CANCELADO");
 
-            agendamentoRepository.saveAndFlush(agendarServico.get());
-
-            return new ReturnData<>(false, "Serviço cancelado com sucesso.", "");
+            return new ReturnData<>(true, "Serviço cancelado com sucesso.", "");
         } catch (BusinessException busEx) {
             return new ReturnData<>(false, "Ocorreu um erro ao cancelar o serviço", busEx.getMessage());
         } catch (Exception ex) {
@@ -146,5 +143,15 @@ public class AgendamentoServiceImpl implements AgendamentoService {
                 .findByDataAgendamentoAndSituacaoOrderByHorarioAgendamento(dia, situacao.get());
 
         return new ReturnData<>(true, "", agendamentoMapper.toListDto(agendamentos));
+    }
+
+    @Override
+    public void alterarStatusAgendamento(AgendamentoDTO agendamentoDTO, String status) {
+
+        Optional<Agendamento> agendarServico = agendamentoRepository.findById(agendamentoDTO.getId());
+
+        agendarServico.get().setSituacao(situacaoRepository.findByName(status).get());
+
+        agendamentoRepository.saveAndFlush(agendarServico.get());
     }
 }

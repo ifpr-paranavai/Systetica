@@ -1,21 +1,20 @@
 // ignore_for_file: file_names
 
-import 'package:systetica/model/Servico.dart';
-
+import 'Agendamento.dart';
 import 'Pagamento.dart';
 
 class PagamentoServico {
   PagamentoServico({
     this.pagamento,
-    this.servicos,
+    this.agendamento,
   });
 
   Pagamento? pagamento;
-  List<Servico>? servicos;
+  Agendamento? agendamento;
 
   PagamentoServico.fromJson(Map<String, dynamic> json) {
     pagamento = json['pagamento'];
-    servicos = Servico.fromJsonList(json['desconto']);
+    agendamento = Agendamento.fromJson(json['agendamento']);
   }
 
   static List<PagamentoServico> fromJsonList(List json) {
@@ -25,7 +24,7 @@ class PagamentoServico {
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};
     _data['pagamento'] = pagamento;
-    _data['servicos'] = servicos;
+    _data['agendamento'] = agendamento;
     return _data;
   }
 }

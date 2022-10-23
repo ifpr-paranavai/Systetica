@@ -4,8 +4,8 @@ import 'package:systetica/model/Produto.dart';
 
 import 'Pagamento.dart';
 
-class PagamentoServico {
-  PagamentoServico({
+class PagamentoProduto {
+  PagamentoProduto({
     this.pagamento,
     this.produtos,
   });
@@ -13,13 +13,13 @@ class PagamentoServico {
   Pagamento? pagamento;
   List<Produto>? produtos;
 
-  PagamentoServico.fromJson(Map<String, dynamic> json) {
+  PagamentoProduto.fromJson(Map<String, dynamic> json) {
     pagamento = json['pagamento'];
     produtos = Produto.fromJsonList(json['produtos']);
   }
 
-  static List<PagamentoServico> fromJsonList(List json) {
-    return json.map((item) => PagamentoServico.fromJson(item)).toList();
+  static List<PagamentoProduto> fromJsonList(List json) {
+    return json.map((item) => PagamentoProduto.fromJson(item)).toList();
   }
 
   Map<String, dynamic> toJson() {
