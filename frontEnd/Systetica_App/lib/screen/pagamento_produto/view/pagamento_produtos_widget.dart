@@ -1,34 +1,29 @@
-// ignore_for_file: avoid_function_literals_in_foreach_calls
-
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:systetica/screen/pagamento/pagamento_controller.dart';
+import 'package:systetica/model/PagamentoProduto.dart';
+import 'package:systetica/screen/pagamento_produto/view/pagamento_produtos_page.dart';
 
-import '../../../../components/horario_component.dart';
 import '../../../../components/icon_arrow_widget.dart';
-import '../../../../components/input/campo_pesquisa_pagamento_widget.dart';
-import '../../../../components/input/campo_texto_widget.dart';
-import '../../../../model/FormaPagamento.dart';
-import '../../../../model/PagamentoServico.dart';
 import '../../../../style/app_colors.dart';
-import '../../../agendar/component/agendar_componente.dart';
-import '../../pagamento_servico_controller.dart';
-import 'pagamento_servico_page.dart';
+import '../../../components/horario_component.dart';
+import '../../../components/input/campo_pesquisa_pagamento_widget.dart';
+import '../../../components/input/campo_texto_widget.dart';
+import '../../../model/FormaPagamento.dart';
+import '../../agendar/component/agendar_componente.dart';
+import '../../pagamento/pagamento_controller.dart';
+import '../pagamento_produto_controller.dart';
 
-class PagamentoServicoWidget extends State<PagamentoServicoPage> {
+class PagamentoProdutosWidget extends State<PagamentoProdutosPage> {
   final ScrollController _scrollController = ScrollController();
-  final PagamentoServicoController _controller = PagamentoServicoController();
+  final PagamentoProdutoController _controller = PagamentoProdutoController();
   final PagamentoController _pagamentoController = PagamentoController();
   double valorTotal = 0;
 
   @override
   void initState() {
     super.initState();
-    _controller.pagamentoServico = PagamentoServico();
-    widget.agendamento.servicos!.forEach((element) {
-      valorTotal += element.preco!;
-    });
+    _controller.pagamentoProduto = PagamentoProduto();
   }
 
   @override
@@ -56,7 +51,7 @@ class PagamentoServicoWidget extends State<PagamentoServicoPage> {
             AgendarComponente.info(
               altura: _controller.altura,
               largura: _controller.largura,
-              text: "RESUMO DO AGENDAMENTO",
+              text: "CADASTRAR PAGAMENTO PRODUTO",
             ),
             _checkboxSelect(),
             HorarioComponent().sizedBox(
@@ -64,34 +59,12 @@ class PagamentoServicoWidget extends State<PagamentoServicoPage> {
             ),
           ],
         ),
-        widget.agendamento.situacao!.name == "AGENDADO"
-            ? _botaoCadastrarPagamento()
-            : const SizedBox(),
+        _botaoCadastrarPagamento()
       ],
     );
   }
 
-  Widget _botaoCadastrarPagamento() {
-    return AgendarComponente.botaoSelecinar(
-      altura: _controller.altura,
-      largura: _controller.largura,
-      corBotao: Colors.black87.withOpacity(0.9),
-      overlayCorBotao: AppColors.blue5,
-      labelText: "CADASTRAR PAGAMENTO",
-      onPressed: () async {
-        await _controller.cadastrarPagamentoServico(
-          context: context,
-          agendamento: widget.agendamento,
-          valorTotal: valorTotal,
-        );
-      },
-    );
-  }
-
   Widget _checkboxSelect() {
-    int itemCount = widget.agendamento.servicos!.length;
-    String titulo;
-    itemCount > 1 ? titulo = "Serviços" : titulo = "Serviço";
     return NotificationListener<OverscrollIndicatorNotification>(
       onNotification: (overScroll) {
         overScroll.disallowIndicator();
@@ -102,23 +75,6 @@ class PagamentoServicoWidget extends State<PagamentoServicoPage> {
           controller: _scrollController,
           child: Column(
             children: [
-              HorarioComponent().tituloDetalhes(texto: titulo),
-              ListView.builder(
-                controller: _scrollController,
-                shrinkWrap: true,
-                itemCount: itemCount,
-                itemBuilder: (BuildContext context, int index) {
-                  return HorarioComponent().listSelecao(
-                    largura: _controller.largura,
-                    nome: widget.agendamento.servicos![index].nome!,
-                    subTitulo: widget.agendamento.servicos![index].tempoServico
-                            .toString() +
-                        ' min',
-                    icon: CupertinoIcons.scissors_alt,
-                    maxLines: widget.agendamento.servicos!.length,
-                  );
-                },
-              ),
               HorarioComponent().tituloDetalhes(texto: "Total"),
               HorarioComponent().listSelecao(
                 largura: _controller.largura,
@@ -169,6 +125,17 @@ class PagamentoServicoWidget extends State<PagamentoServicoPage> {
       asyncItems: (filtro) => _pagamentoController.buscarFormaPagamento(filtro),
       onChanged: (value) => _controller.formaPagamento = value,
       formaPagamento: formaPagamento,
+    );
+  }
+
+  Widget _botaoCadastrarPagamento() {
+    return AgendarComponente.botaoSelecinar(
+      altura: _controller.altura,
+      largura: _controller.largura,
+      corBotao: Colors.black87.withOpacity(0.9),
+      overlayCorBotao: AppColors.blue5,
+      labelText: "CADASTRAR PAGAMENTO",
+      onPressed: () async {},
     );
   }
 }

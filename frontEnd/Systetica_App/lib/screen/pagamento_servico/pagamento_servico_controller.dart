@@ -46,19 +46,6 @@ class PagamentoServicoController {
     return info;
   }
 
-  Future<List<FormaPagamento>> buscarFormaPagamento(String? nome) async {
-    try {
-      Token _token = await TokenRepository.findToken();
-      Info info = await PagamentoServicoService.buscarFormaPagamento(
-        token: _token,
-        nome: nome,
-      );
-      return info.object;
-    } catch (e) {
-      return [];
-    }
-  }
-
   Future<void> cadastrarPagamentoServico({
     required BuildContext context,
     required Agendamento agendamento,
