@@ -40,7 +40,7 @@ class SelecionarProdutoWidget extends State<SelecionarProdutoPage> {
     await _produtoController
         .buscarProdutosPorIdEmpresa(
           context: context,
-          id: 1, // TODO
+          id: 1,
         )
         .then(
           (value) => setState(
