@@ -78,6 +78,14 @@ class PerfilController {
 
         if (_info.success!) {
           Navigator.pop(context);
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              backgroundColor: Colors.blueGrey,
+              content: TextoErroWidget(
+                mensagem: _info.message!,
+              ),
+            ),
+          );
         } else {
           var alertDialogOk = AlertDialogWidget();
           alertDialogOk.alertDialog(

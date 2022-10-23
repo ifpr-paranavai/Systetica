@@ -7,6 +7,7 @@ import com.frfs.systetica.entity.*;
 import com.frfs.systetica.exception.BusinessException;
 import com.frfs.systetica.mapper.AgendamentoMapper;
 import com.frfs.systetica.mapper.EmpresaMapper;
+import com.frfs.systetica.mapper.SituacaoMapper;
 import com.frfs.systetica.mapper.UsuarioMapper;
 import com.frfs.systetica.repository.AgendamentoRepository;
 import com.frfs.systetica.repository.EmpresaRepository;
@@ -31,6 +32,7 @@ public class AgendamentoServiceImpl implements AgendamentoService {
     private final AgendamentoMapper agendamentoMapper;
     private final UsuarioMapper usuarioMapper;
     private final EmpresaMapper empresaMapper;
+    private final SituacaoMapper situacaoMapper;
 
     @Override
     public ReturnData<Object> buscarTodosAgendamentoPorDia(String dataAgendamento) {
@@ -99,7 +101,7 @@ public class AgendamentoServiceImpl implements AgendamentoService {
                 agendamentoDTO.setDataAgendamento(dadosAgendamentoDTO.getHorarioAgendamento().getDataAgendamento());
                 agendamentoDTO.setHorarioAgendamento(dadosAgendamentoDTO.getHorarioAgendamento().getHorarioAgendamento());
                 agendamentoDTO.setServicos(dadosAgendamentoDTO.getServicosSelecionados());
-                agendamentoDTO.setSituacao(situacaoRepository.findByName("AGENDADO").get());
+                agendamentoDTO.setSituacao(situacaoMapper.toDto(situacaoRepository.findByNome("AGENDADO").get()));
 
                 agendamentoDTO.setFuncionario(usuarioMapper.toDto(funcionario.get()));
                 agendamentoDTO.setEmpresa(empresaMapper.toDto(empresa.get()));
@@ -137,7 +139,7 @@ public class AgendamentoServiceImpl implements AgendamentoService {
 
     @Override
     public ReturnData<Object> buscarTodosAgendamentoPorDiaAgendados(String dia) {
-        Optional<Situacao> situacao = situacaoRepository.findByName("AGENDADO");
+        Optional<Situacao> situacao = situacaoRepository.findByNome("AGENDADO");
 
         List<Agendamento> agendamentos = agendamentoRepository
                 .findByDataAgendamentoAndSituacaoOrderByHorarioAgendamento(dia, situacao.get());
@@ -150,7 +152,7 @@ public class AgendamentoServiceImpl implements AgendamentoService {
 
         Optional<Agendamento> agendarServico = agendamentoRepository.findById(agendamentoDTO.getId());
 
-        agendarServico.get().setSituacao(situacaoRepository.findByName(status).get());
+        agendarServico.get().setSituacao(situacaoRepository.findByNome(status).get());
 
         agendamentoRepository.saveAndFlush(agendarServico.get());
     }

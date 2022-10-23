@@ -111,7 +111,7 @@ public class AgendamentoServiceTest {
         Mockito.when(empresaRepository.findById(dadosAgendamentoDTO.getEmpresaId())).thenReturn(empresaOptional);
         Mockito.when(usuarioRepository.findByEmail(dadosAgendamentoDTO.getClienteEmail())).thenReturn(clienteOptional);
         Mockito.when(usuarioRepository.findById(dadosAgendamentoDTO.getFuncionarioId())).thenReturn(funcionarioOptional);
-        Mockito.when(situacaoRepository.findByName("AGENDADO")).thenReturn(situacaoOptional);
+        Mockito.when(situacaoRepository.findByNome("AGENDADO")).thenReturn(situacaoOptional);
 
         Mockito.when(empresaMapper.toDto(empresa)).thenReturn(empresaDTO);
         Mockito.when(usuarioMapper.toDto(cliente)).thenReturn(clienteDto);

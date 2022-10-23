@@ -3,7 +3,6 @@ package com.frfs.systetica.dto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.frfs.systetica.entity.Situacao;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -39,7 +38,7 @@ public class AgendamentoDTO implements Serializable {
     private Date dataCadastro;
 
     @JsonProperty("situacao")
-    private Situacao situacao;
+    private SituacaoDTO situacao;
 
     @JsonProperty("cliente")
     private UsuarioDTO cliente;

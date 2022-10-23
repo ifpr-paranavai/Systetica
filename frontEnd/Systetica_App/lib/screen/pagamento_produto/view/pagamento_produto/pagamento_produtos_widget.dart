@@ -9,9 +9,12 @@ import '../../../../components/horario_component.dart';
 import '../../../../components/icon_arrow_widget.dart';
 import '../../../../components/input/campo_pesquisa_pagamento_widget.dart';
 import '../../../../components/input/campo_texto_widget.dart';
+import '../../../../components/texto_erro_widget.dart';
 import '../../../../model/FormaPagamento.dart';
+import '../../../../model/Info.dart';
 import '../../../../model/validator/MultiValidatorProduto.dart';
 import '../../../../style/app_colors.dart';
+import '../../../../utils/util.dart';
 import '../../../agendar/component/agendar_componente.dart';
 import '../../../pagamento/pagamento_controller.dart';
 import '../../pagamento_produto_controller.dart';
@@ -47,14 +50,22 @@ class PagamentoProdutosWidget extends State<PagamentoProdutosPage> {
   }
 
   Widget _body() {
-    return Column(
+    return Stack(
       children: [
-        AgendarComponente.info(
-          altura: _controller.altura,
-          largura: _controller.largura,
-          text: "CADASTRAR PAGAMENTO PRODUTO",
+        Column(
+          children: [
+            AgendarComponente.info(
+              altura: _controller.altura,
+              largura: _controller.largura,
+              text: "CADASTRAR PAGAMENTO PRODUTO",
+            ),
+            _checkboxSelect(),
+            HorarioComponent().sizedBox(
+              height: _controller.altura * 0.08,
+            ),
+          ],
         ),
-        _checkboxSelect(),
+        _botaoCadastrarPagamento()
       ],
     );
   }
@@ -115,7 +126,6 @@ class PagamentoProdutosWidget extends State<PagamentoProdutosPage> {
                 ),
                 inputTipoPagamento(),
                 inputDesconto(),
-                _botaoCadastrarPagamento(),
               ],
             ),
           ),
@@ -154,11 +164,12 @@ class PagamentoProdutosWidget extends State<PagamentoProdutosPage> {
   CampoTextoWidget inputDesconto() {
     return CampoTextoWidget(
       labelText: "Desconto",
+      mask: "##.##",
       paddingHorizontal: 20,
       paddingTop: 20,
       paddingBottom: 25,
       keyboardType: TextInputType.number,
-      maxLength: 6,
+      maxLength: 5,
       isIconDate: true,
       icon: const Icon(
         CupertinoIcons.money_dollar,
@@ -195,10 +206,25 @@ class PagamentoProdutosWidget extends State<PagamentoProdutosPage> {
       overlayCorBotao: AppColors.blue5,
       labelText: "CADASTRAR PAGAMENTO",
       onPressed: () async {
-        await _controller.cadastrarPagamentoProduto(
+        if (Util.validarQuantidadeVendidaMaiorQueEstoque(
+            widget.pagamentoProduto.produtos!)) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              backgroundColor: Colors.blueGrey,
+              padding: EdgeInsets.all(18),
+              content: TextoErroWidget(
+                mensagem:
+                    "Quantidade vendidade deve ser menor que a quantidade em estoque",
+              ),
+            ),
+          );
+          return;
+        }
+        Info info = await _controller.cadastrarPagamentoProduto(
           context: context,
           pagamentoProduto: widget.pagamentoProduto,
         );
+        info.success == true ? Navigator.pop(context) : null;
       },
     );
   }

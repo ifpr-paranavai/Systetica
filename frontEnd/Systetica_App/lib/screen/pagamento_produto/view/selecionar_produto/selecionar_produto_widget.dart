@@ -87,18 +87,22 @@ class SelecionarProdutoWidget extends State<SelecionarProdutoPage> {
           largura: _controller.largura,
           corBotao: _controller.corBotao,
           overlayCorBotao: _controller.overlayCorBotao,
-          onPressed: () => {
+          onPressed: () {
             produtoSelecionado == true
-                ? Navigator.of(context).push(
-                    myPageTransition.pageTransition(
-                      child: PagamentoProdutosPage(
-                        pagamentoProduto: pagamentoProduto,
+                ? Navigator.of(context)
+                    .push(
+                      myPageTransition.pageTransition(
+                        child: PagamentoProdutosPage(
+                          pagamentoProduto: pagamentoProduto,
+                        ),
+                        childCurrent: widget,
+                        buttoToTop: true,
                       ),
-                      childCurrent: widget,
-                      buttoToTop: true,
-                    ),
-                  )
-                : null,
+                    )
+                    .then(
+                      (value) => setState(() {}),
+                    )
+                : null;
           },
         ),
       ],

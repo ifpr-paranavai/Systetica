@@ -46,7 +46,7 @@ class DetalhesAgendamentoWidget extends State<DetalhesAgendamentoPage> {
 
   Widget _body() {
     bool podeCancelarServico = Util.podeCancelarServico(
-      situacao: widget.agendamento.situacao!.name,
+      situacao: widget.agendamento.situacao!.nome,
       dataAgendamento: widget.agendamento.dataAgendamento!,
       horarioAgendamento: widget.agendamento.horarioAgendamento!,
     );
@@ -139,7 +139,7 @@ class DetalhesAgendamentoWidget extends State<DetalhesAgendamentoPage> {
               HorarioComponent().tituloDetalhes(texto: "Status"),
               HorarioComponent().listSelecao(
                 largura: _controller.largura,
-                nome: widget.agendamento.situacao!.name,
+                nome: widget.agendamento.situacao!.nome,
                 terSubTituulo: false,
                 icon: Icons.phone_android,
               ),

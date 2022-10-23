@@ -74,7 +74,14 @@ class AtivarFuncionarController {
 
         var alertDialogOk = AlertDialogWidget();
         if (_info.success!) {
-          return;
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              backgroundColor: Colors.blueGrey,
+              content: TextoErroWidget(
+                mensagem: _info.message!,
+              ),
+            ),
+          );
         } else {
           alertDialogOk.alertDialog(
             showModalOk: true,

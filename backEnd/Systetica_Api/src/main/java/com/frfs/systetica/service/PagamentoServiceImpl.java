@@ -3,8 +3,6 @@ package com.frfs.systetica.service;
 import com.frfs.systetica.dto.*;
 import com.frfs.systetica.dto.response.ReturnData;
 import com.frfs.systetica.entity.Pagamento;
-import com.frfs.systetica.entity.PagamentoProduto;
-import com.frfs.systetica.entity.PagamentoProdutoPK;
 import com.frfs.systetica.entity.Produto;
 import com.frfs.systetica.exception.BusinessException;
 import com.frfs.systetica.mapper.*;
@@ -29,7 +27,6 @@ public class PagamentoServiceImpl implements PagamentoService {
     private final PagamentoMapper pagamentoMapper;
     private final PagamentoServicoMapper pagamentoServicoMapper;
     private final AgendamentoMapper agendamentoMapper;
-    private final ProdutoMapper produtoMapper;
     private final PagamentoProdutoMapper pagamentoProdutoMapper;
 
     private final AgendamentoService agendarServicoService;
@@ -84,7 +81,7 @@ public class PagamentoServiceImpl implements PagamentoService {
                 idPagamentoProduto.setIdProduto(produtoDTO);
 
                 pagamentoProdutoDTO.setIdPagamentoProduto(idPagamentoProduto);
-                pagamentoProdutoDTO.setQuantidade(produtoDTO.getQuantidadeVendida());
+                pagamentoProdutoDTO.setQuantidadeVendida(produtoDTO.getQuantidadeVendida());
                 pagamentoProdutoDTO.setValorUnitario(produtoDTO.getPrecoVenda());
                 pagamentoProdutoDTO.setValorTotal(produtoDTO.getPrecoVenda() * produtoDTO.getQuantidadeVendida());
                 pagamentoProdutoDTO.setDataCadastro(new Date());

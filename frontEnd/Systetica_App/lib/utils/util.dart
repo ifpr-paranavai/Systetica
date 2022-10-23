@@ -1,7 +1,7 @@
 // ignore_for_file: avoid_function_literals_in_foreach_calls
 
-import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:intl/intl.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 
 import '../model/Empresa.dart';
 import '../model/HorarioAgendamento.dart';
@@ -154,11 +154,23 @@ class Util {
     }
   }
 
+  static bool validarQuantidadeVendidaMaiorQueEstoque(List<Produto> produtos) {
+    bool maior = false;
+
+    produtos.forEach((produto) {
+      produto.quantidadeVendida > produto.quantEstoque!
+          ? maior = true
+          : maior = false;
+    });
+
+    return maior;
+  }
+
   static double calcularValorTotal(List<Produto> produtos, double desconto) {
     double valorTotal = 0;
 
-    produtos.forEach((element) {
-      valorTotal += element.precoVenda! * element.quantidadeVendida;
+    produtos.forEach((produto) {
+      valorTotal += produto.precoVenda! * produto.quantidadeVendida;
     });
 
     return valorTotal - desconto;

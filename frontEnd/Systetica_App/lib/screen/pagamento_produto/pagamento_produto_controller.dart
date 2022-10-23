@@ -27,15 +27,15 @@ class PagamentoProdutoController {
   double altura = 0;
   FormaPagamento? formaPagamento;
 
-  Future<void> cadastrarPagamentoProduto({
+  Future<Info> cadastrarPagamentoProduto({
     required BuildContext context,
     required PagamentoProduto pagamentoProduto,
   }) async {
+    Info info = Info(success: true);
     var connected = await ConnectionCheck.check();
     if (connected) {
       if (formKey.currentState != null) {
         if (formKey.currentState?.validate() ?? true) {
-          Info info = Info(success: true);
           try {
             var contextLoading = context;
             var loading = ShowLoadingWidget.showLoadingLabel(
@@ -74,6 +74,7 @@ class PagamentoProdutoController {
                   ),
                 ),
               );
+              return info;
             } else {
               await alertDialog.alertDialog(
                 showModalOk: true,
@@ -83,6 +84,8 @@ class PagamentoProdutoController {
                 buttonText: "OK",
                 onPressedOk: () => Navigator.pop(context),
               );
+              info.success = false;
+              return info;
             }
           } catch (e) {
             ScaffoldMessenger.of(context).showSnackBar(
@@ -93,6 +96,8 @@ class PagamentoProdutoController {
                 ),
               ),
             );
+            info.success = false;
+            return info;
           }
         }
       }
@@ -106,6 +111,10 @@ class PagamentoProdutoController {
           ),
         ),
       );
+      info.success = false;
+      return info;
     }
+    info.success = false;
+    return info;
   }
 }

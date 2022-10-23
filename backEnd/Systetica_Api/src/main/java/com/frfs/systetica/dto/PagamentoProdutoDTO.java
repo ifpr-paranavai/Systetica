@@ -24,8 +24,8 @@ public class PagamentoProdutoDTO implements Serializable {
     @JsonProperty("id_pagamento_produto")
     private PagamentoProdutoPKDTO idPagamentoProduto;
 
-    @JsonProperty("quantidade")
-    private Integer quantidade;
+    @JsonProperty("quantidade_vendida")
+    private Integer quantidadeVendida;
 
     @JsonProperty("valor_unitario")
     private Double valorUnitario;

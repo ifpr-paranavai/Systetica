@@ -64,7 +64,7 @@ class PagamentoServicoWidget extends State<PagamentoServicoPage> {
             ),
           ],
         ),
-        widget.agendamento.situacao!.name == "AGENDADO"
+        widget.agendamento.situacao!.nome == "AGENDADO"
             ? _botaoCadastrarPagamento()
             : const SizedBox(),
       ],
@@ -100,37 +100,41 @@ class PagamentoServicoWidget extends State<PagamentoServicoPage> {
       child: AgendarComponente.containerGeral(
         widget: SingleChildScrollView(
           controller: _scrollController,
-          child: Column(
-            children: [
-              HorarioComponent().tituloDetalhes(texto: titulo),
-              ListView.builder(
-                controller: _scrollController,
-                shrinkWrap: true,
-                itemCount: itemCount,
-                itemBuilder: (BuildContext context, int index) {
-                  return HorarioComponent().listSelecao(
-                    largura: _controller.largura,
-                    nome: widget.agendamento.servicos![index].nome!,
-                    subTitulo: widget.agendamento.servicos![index].tempoServico
-                            .toString() +
-                        ' min',
-                    icon: CupertinoIcons.scissors_alt,
-                    maxLines: widget.agendamento.servicos!.length,
-                  );
-                },
-              ),
-              HorarioComponent().tituloDetalhes(texto: "Total"),
-              HorarioComponent().listSelecao(
-                largura: _controller.largura,
-                nome: UtilBrasilFields.obterReal(
-                  valorTotal,
+          child: Form(
+            autovalidateMode: AutovalidateMode.onUserInteraction,
+            key: _controller.formKey,
+            child: Column(
+              children: [
+                HorarioComponent().tituloDetalhes(texto: titulo),
+                ListView.builder(
+                  controller: _scrollController,
+                  shrinkWrap: true,
+                  itemCount: itemCount,
+                  itemBuilder: (BuildContext context, int index) {
+                    return HorarioComponent().listSelecao(
+                      largura: _controller.largura,
+                      nome: widget.agendamento.servicos![index].nome!,
+                      subTitulo: widget.agendamento.servicos![index].tempoServico
+                              .toString() +
+                          ' min',
+                      icon: CupertinoIcons.scissors_alt,
+                      maxLines: widget.agendamento.servicos!.length,
+                    );
+                  },
                 ),
-                terSubTituulo: false,
-                icon: Icons.phone_android,
-              ),
-              inputTipoPagamento(),
-              inputDesconto(),
-            ],
+                HorarioComponent().tituloDetalhes(texto: "Total"),
+                HorarioComponent().listSelecao(
+                  largura: _controller.largura,
+                  nome: UtilBrasilFields.obterReal(
+                    valorTotal,
+                  ),
+                  terSubTituulo: false,
+                  icon: Icons.phone_android,
+                ),
+                inputTipoPagamento(),
+                inputDesconto(),
+              ],
+            ),
           ),
         ),
       ),
@@ -140,10 +144,11 @@ class PagamentoServicoWidget extends State<PagamentoServicoPage> {
   CampoTextoWidget inputDesconto() {
     return CampoTextoWidget(
       labelText: "Desconto",
+      mask: "##.##",
       paddingHorizontal: 20,
       keyboardType: TextInputType.number,
       paddingBottom: 0,
-      maxLength: 6,
+      maxLength: 5,
       paddingTop: 20,
       isIconDate: true,
       icon: const Icon(

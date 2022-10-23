@@ -19,6 +19,6 @@ public class Situacao {
     private Long id;
 
     @NotNull
-    @JoinColumn(name = "name")
-    private String name;
+    @JoinColumn(name = "nome")
+    private String nome;
 }

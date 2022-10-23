@@ -209,7 +209,7 @@ class AgendamentolWidget extends State<AgendamentoPage> {
           dataAgendamento: _controller.agendamentos[index].dataAgendamento!,
           horarioAgendamento:
               _controller.agendamentos[index].horarioAgendamento!,
-          situacao: _controller.agendamentos[index].situacao!.name,
+          situacao: _controller.agendamentos[index].situacao!.nome,
         ),
       ),
       onTap: () {
