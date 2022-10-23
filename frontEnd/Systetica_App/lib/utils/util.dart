@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 
 import '../model/Empresa.dart';
 import '../model/HorarioAgendamento.dart';
+import '../model/Produto.dart';
 
 class Util {
   static bool isEmptOrNull(String? obj) {
@@ -151,5 +152,15 @@ class Util {
     } else {
       return true;
     }
+  }
+
+  static double calcularValorTotal(List<Produto> produtos, double desconto) {
+    double valorTotal = 0;
+
+    produtos.forEach((element) {
+      valorTotal += element.precoVenda! * element.quantidadeVendida;
+    });
+
+    return valorTotal - desconto;
   }
 }

@@ -22,15 +22,11 @@ class PagamentoProdutosWidget extends State<PagamentoProdutosPage> {
   final PagamentoProdutoController _controller = PagamentoProdutoController();
   final PagamentoController _pagamentoController = PagamentoController();
   final MultiValidatorProduto _validatorProduto = MultiValidatorProduto();
-  double valorTotal = 0;
 
   @override
   void initState() {
     super.initState();
     _controller.pagamentoProduto = PagamentoProduto();
-    widget.pagamentoProduto.produtos!.forEach((element) {
-      valorTotal += element.precoVenda!;
-    });
   }
 
   @override
@@ -90,7 +86,12 @@ class PagamentoProdutosWidget extends State<PagamentoProdutosPage> {
                   itemBuilder: (BuildContext context, int index) {
                     return HorarioComponent().listSelecao(
                       largura: _controller.largura,
-                      nome: widget.pagamentoProduto.produtos![index].nome!,
+                      nome: widget.pagamentoProduto.produtos![index].nome! +
+                          " - " +
+                          UtilBrasilFields.obterReal(
+                            widget
+                                .pagamentoProduto.produtos![index].precoVenda!,
+                          ),
                       subTitulo: widget
                               .pagamentoProduto.produtos![index].quantEstoque
                               .toString() +
@@ -99,13 +100,6 @@ class PagamentoProdutosWidget extends State<PagamentoProdutosPage> {
                       maxLines: widget.pagamentoProduto.produtos!.length,
                     );
                   },
-                ),
-                HorarioComponent().tituloDetalhes(texto: "Total"),
-                HorarioComponent().listSelecao(
-                  largura: _controller.largura,
-                  nome: UtilBrasilFields.obterReal(valorTotal),
-                  terSubTituulo: false,
-                  icon: Icons.phone_android,
                 ),
                 ListView.builder(
                   controller: _scrollController,
@@ -204,7 +198,6 @@ class PagamentoProdutosWidget extends State<PagamentoProdutosPage> {
         await _controller.cadastrarPagamentoProduto(
           context: context,
           pagamentoProduto: widget.pagamentoProduto,
-          valorTotal: valorTotal,
         );
       },
     );

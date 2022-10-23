@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:systetica/screen/pagamento_produto/pagamento_produto_service.dart';
+import 'package:systetica/utils/util.dart';
 
 import '../../components/alert_dialog_widget.dart';
 import '../../components/loading/show_loading_widget.dart';
@@ -29,7 +30,6 @@ class PagamentoProdutoController {
   Future<void> cadastrarPagamentoProduto({
     required BuildContext context,
     required PagamentoProduto pagamentoProduto,
-    required double valorTotal,
   }) async {
     var connected = await ConnectionCheck.check();
     if (connected) {
@@ -50,7 +50,8 @@ class PagamentoProdutoController {
             pagamentoProduto.pagamento = Pagamento(
               formaPagamento: formaPagamento,
               desconto: desconto,
-              valorTotal: valorTotal - desconto,
+              valorTotal:
+                  Util.calcularValorTotal(pagamentoProduto.produtos!, desconto),
             );
 
             Token _token = await TokenRepository.findToken();
@@ -58,7 +59,7 @@ class PagamentoProdutoController {
             info = await PagamentoProdutoService.cadastrarPagamentoProduto(
               token: _token,
               pagamentoProduto: pagamentoProduto,
-            ); // service
+            );
 
             // Finaliza o loading na tela
             Navigator.pop(contextLoading, loading);
@@ -95,7 +96,6 @@ class PagamentoProdutoController {
           }
         }
       }
-
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
