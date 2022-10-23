@@ -85,4 +85,24 @@ class ProdutoService {
 
     return info;
   }
+
+  static Future<Info> buscarProdutosPorIdEmpresa({
+    required int id,
+    required Token token,
+  }) async {
+    String path = "produto/buscar-por-empresa/$id";
+
+    Dio dio = DioConfigApi.builderConfig();
+
+    dio.options.headers["Authorization"] = "Bearer ${token.accessToken}";
+
+    var response = await dio.post(path);
+
+    Info info = Info();
+
+    info.success = true;
+    info.object = Produto.fromJsonList(response.data['response']);
+
+    return info;
+  }
 }

@@ -59,7 +59,7 @@ class _CampoPesquisaPagamentoWidget
           ),
           emptyBuilder: (context, erro) => const Center(
             child: Text(
-              'Nenhuma forma de pagamento encontrada',
+              'Nenhuma forma de pagamento_produto encontrada',
               overflow: TextOverflow.ellipsis,
               maxLines: 1,
               style: TextStyle(fontSize: 18),

@@ -79,4 +79,10 @@ public class ProdutoServiceImpl implements ProdutoService {
         return new ReturnData<>(true, "", produtoMapper.toListDto(produtoRepository
                 .findAll(page, emailAdministrativo).getContent()));
     }
+
+    @Override
+    public ReturnData<Object> buscarTodosPorIdEmpresa(long id) {
+        return new ReturnData<>(true, "", produtoMapper.toListDto(produtoRepository
+                .findAllByEmpresaId(id)));
+    }
 }

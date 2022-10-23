@@ -41,7 +41,7 @@ class PagamentoServicoService {
       dio.options.headers["Authorization"] = "Bearer ${token.accessToken}";
 
       var response = await dio.post(
-        "pagamento/servico",
+        "pagamento_produto/servico",
         data: pagamentoServico.toJson(),
       );
 
@@ -54,7 +54,7 @@ class PagamentoServicoService {
           throw Exception("Erro de requisição: ${e.message}");
         }
         info.success = false;
-        info.message = "Ocorreu algum erro ao tentar cadastrar pagamento";
+        info.message = "Ocorreu algum erro ao tentar cadastrar pagamento_produto";
         return info;
       } catch (e) {
         throw Exception(e.runtimeType);

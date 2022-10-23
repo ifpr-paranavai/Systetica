@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:systetica/screen/pagamento_produto/view/selecionar_produto/selecionar_produto_page.dart';
 
 import '../../../components/loading/loading_animation.dart';
 import '../../../components/page_transition.dart';
 import '../../../model/Info.dart';
 import '../../../style/app_colors.dart';
-import '../../pagamento_produto/view/pagamento_produtos_page.dart';
 import '../../pagamento_servico/view/servicos/servicos_page.dart';
 import '../../perfil/perfil_controller.dart';
 import 'pagamento_page.dart';
@@ -90,7 +90,7 @@ class PagamentoWidget extends State<PagamentoPage>
                   title2: 'Produtos',
                   icon2: Icons.construction,
                   color2: Colors.lightGreen,
-                  route2: const PagamentoProdutosPage(),
+                  route2: const SelecionarProdutoPage(),
                   largura: largura,
                   altura: altura,
                   context: context,

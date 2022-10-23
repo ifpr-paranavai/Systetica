@@ -1,5 +1,7 @@
 // ignore_for_file: file_names
 
+import 'package:flutter/cupertino.dart';
+
 class Produto {
   Produto({
     this.id,
@@ -10,6 +12,7 @@ class Produto {
     this.quantEstoque,
     this.status,
     this.emailAdministrativo,
+    this.quantidadeVendidaController,
   });
 
   int? id;
@@ -20,6 +23,9 @@ class Produto {
   int? quantEstoque;
   bool? status;
   String? emailAdministrativo;
+  bool produtoSelecionado = false;
+  TextEditingController? quantidadeVendidaController;
+
 
   Produto.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -46,6 +52,7 @@ class Produto {
     _data['quant_estoque'] = quantEstoque;
     _data['status'] = status;
     _data['email_administrativo'] = emailAdministrativo;
+    _data['quantidade_vendida'] = quantidadeVendidaController;
     return _data;
   }
 }

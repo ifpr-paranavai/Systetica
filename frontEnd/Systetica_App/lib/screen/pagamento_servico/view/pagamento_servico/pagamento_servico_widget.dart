@@ -128,8 +128,8 @@ class PagamentoServicoWidget extends State<PagamentoServicoPage> {
                 terSubTituulo: false,
                 icon: Icons.phone_android,
               ),
+              inputTipoPagamento(),
               inputDesconto(),
-              inputTipoPagamento()
             ],
           ),
         ),
@@ -144,7 +144,7 @@ class PagamentoServicoWidget extends State<PagamentoServicoPage> {
       keyboardType: TextInputType.number,
       paddingBottom: 0,
       maxLength: 6,
-      paddingTop: 8,
+      paddingTop: 20,
       isIconDate: true,
       icon: const Icon(
         CupertinoIcons.money_dollar,

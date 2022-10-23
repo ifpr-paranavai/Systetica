@@ -49,4 +49,12 @@ public class ProdutoController {
         }
         return new ResponseEntity<>(result, result.getSuccess() ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
+    @PostMapping("/buscar-por-empresa/{id}")
+    @ResponseBody
+    public ResponseEntity<Object> buscarTodosPorIdEmpresa(@PathVariable long id) {
+        ReturnData<Object> result = produtoService.buscarTodosPorIdEmpresa(id);
+
+        return new ResponseEntity<>(result, result.getSuccess() ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 }

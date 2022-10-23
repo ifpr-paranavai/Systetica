@@ -12,7 +12,7 @@ class PagamentoProdutoService {
     int? size = 9,
     String? nome,
   }) async {
-    String path = "forma-pagamento/buscar-todos?search=$nome&size=$size";
+    String path = "forma-pagamento_produto/buscar-todos?search=$nome&size=$size";
 
     Dio dio = DioConfigApi.builderConfig();
 

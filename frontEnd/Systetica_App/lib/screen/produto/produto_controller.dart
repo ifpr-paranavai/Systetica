@@ -168,4 +168,23 @@ class ProdutoController {
     }
     return info;
   }
+
+  Future<Info?> buscarProdutosPorIdEmpresa({
+    required BuildContext context,
+    required int id,
+  }) async {
+    Info info = Info(success: true);
+
+    try {
+      Token _token = await TokenRepository.findToken();
+      info = await ProdutoService.buscarProdutosPorIdEmpresa(
+        id: id,
+        token: _token,
+      );
+    } catch (e) {
+      info.success = false;
+      return info;
+    }
+    return info;
+  }
 }

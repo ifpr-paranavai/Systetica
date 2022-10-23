@@ -13,4 +13,5 @@ public interface ProdutoService {
 
     ReturnData<Object> buscarTodos(Pageable page, String emailAdministrativo);
 
+    ReturnData<Object> buscarTodosPorIdEmpresa(long id);
 }

@@ -59,6 +59,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/forma-pagamento/**",
                         "/pagamento/servico/**",
                         "/pagamento/produto/**",
+                        "/produto/buscar-por-empresa/{id}**",
                         "/agendamento/buscar-todos-por-dia-agendados/**")
                 .hasAnyAuthority("ADMINISTRADOR, FUNCIONARIO");
 
