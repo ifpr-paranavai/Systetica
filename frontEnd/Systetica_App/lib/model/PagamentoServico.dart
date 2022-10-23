@@ -13,7 +13,7 @@ class PagamentoServico {
   Agendamento? agendamento;
 
   PagamentoServico.fromJson(Map<String, dynamic> json) {
-    pagamento = json['pagamento_produto'];
+    pagamento = json['pagamento'];
     agendamento = Agendamento.fromJson(json['agendamento']);
   }
 
@@ -23,7 +23,7 @@ class PagamentoServico {
 
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};
-    _data['pagamento_produto'] = pagamento;
+    _data['pagamento'] = pagamento;
     _data['agendamento'] = agendamento;
     return _data;
   }

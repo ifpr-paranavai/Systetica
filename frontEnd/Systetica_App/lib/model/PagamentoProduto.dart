@@ -14,7 +14,7 @@ class PagamentoProduto {
   List<Produto>? produtos;
 
   PagamentoProduto.fromJson(Map<String, dynamic> json) {
-    pagamento = json['pagamento_produto'];
+    pagamento = json['pagamento'];
     produtos = Produto.fromJsonList(json['produtos']);
   }
 
@@ -24,7 +24,7 @@ class PagamentoProduto {
 
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};
-    _data['pagamento_produto'] = pagamento;
+    _data['pagamento'] = pagamento;
     _data['produtos'] = produtos;
     return _data;
   }

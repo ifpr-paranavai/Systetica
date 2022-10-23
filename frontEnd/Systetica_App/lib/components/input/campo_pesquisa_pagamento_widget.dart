@@ -14,6 +14,7 @@ class CampoPesquisaPagamentoWidget extends StatefulWidget {
     required this.labelSeachTextPrincipal,
     required this.labelSeachTextPesquisa,
     required this.paddingHorizontal,
+    this.paddingTop = 9,
     this.formaPagamento,
   }) : super(key: key);
   final myKey = GlobalKey<DropdownSearchState<dynamic>>();
@@ -26,6 +27,7 @@ class CampoPesquisaPagamentoWidget extends StatefulWidget {
   FormaPagamento? formaPagamento;
 
   double paddingHorizontal;
+  double paddingTop;
 
   @override
   _CampoPesquisaPagamentoWidget createState() =>
@@ -38,7 +40,7 @@ class _CampoPesquisaPagamentoWidget
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(
-        top: 9,
+        top: widget.paddingTop,
         left: widget.paddingHorizontal,
         right: widget.paddingHorizontal,
       ),
@@ -59,7 +61,7 @@ class _CampoPesquisaPagamentoWidget
           ),
           emptyBuilder: (context, erro) => const Center(
             child: Text(
-              'Nenhuma forma de pagamento_produto encontrada',
+              'Nenhuma forma de pagamento encontrada',
               overflow: TextOverflow.ellipsis,
               maxLines: 1,
               style: TextStyle(fontSize: 18),

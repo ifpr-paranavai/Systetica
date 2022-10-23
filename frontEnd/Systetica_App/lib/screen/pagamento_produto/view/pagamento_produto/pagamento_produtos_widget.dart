@@ -51,22 +51,14 @@ class PagamentoProdutosWidget extends State<PagamentoProdutosPage> {
   }
 
   Widget _body() {
-    return Stack(
+    return Column(
       children: [
-        Column(
-          children: [
-            AgendarComponente.info(
-              altura: _controller.altura,
-              largura: _controller.largura,
-              text: "CADASTRAR PAGAMENTO PRODUTO",
-            ),
-            _checkboxSelect(),
-            HorarioComponent().sizedBox(
-              height: _controller.altura * 0.08,
-            ),
-          ],
+        AgendarComponente.info(
+          altura: _controller.altura,
+          largura: _controller.largura,
+          text: "CADASTRAR PAGAMENTO PRODUTO",
         ),
-        _botaoCadastrarPagamento()
+        _checkboxSelect(),
       ],
     );
   }
@@ -85,64 +77,69 @@ class PagamentoProdutosWidget extends State<PagamentoProdutosPage> {
       child: AgendarComponente.containerGeral(
         widget: SingleChildScrollView(
           controller: _scrollController,
-          child: Column(
-            children: [
-              HorarioComponent().tituloDetalhes(texto: titulo),
-              ListView.builder(
-                controller: _scrollController,
-                shrinkWrap: true,
-                itemCount: itemCount,
-                itemBuilder: (BuildContext context, int index) {
-                  return HorarioComponent().listSelecao(
-                    largura: _controller.largura,
-                    nome: widget.pagamentoProduto.produtos![index].nome!,
-                    subTitulo: widget
-                            .pagamentoProduto.produtos![index].quantEstoque
-                            .toString() +
-                        ' em estoque',
-                    icon: CupertinoIcons.scissors_alt,
-                    maxLines: widget.pagamentoProduto.produtos!.length,
-                  );
-                },
-              ),
-              HorarioComponent().tituloDetalhes(texto: "Total"),
-              HorarioComponent().listSelecao(
-                largura: _controller.largura,
-                nome: UtilBrasilFields.obterReal(
-                  valorTotal,
+          child: Form(
+            autovalidateMode: AutovalidateMode.onUserInteraction,
+            key: _controller.formKey,
+            child: Column(
+              children: [
+                HorarioComponent().tituloDetalhes(texto: titulo),
+                ListView.builder(
+                  controller: _scrollController,
+                  shrinkWrap: true,
+                  itemCount: itemCount,
+                  itemBuilder: (BuildContext context, int index) {
+                    return HorarioComponent().listSelecao(
+                      largura: _controller.largura,
+                      nome: widget.pagamentoProduto.produtos![index].nome!,
+                      subTitulo: widget
+                              .pagamentoProduto.produtos![index].quantEstoque
+                              .toString() +
+                          ' em estoque',
+                      icon: CupertinoIcons.scissors_alt,
+                      maxLines: widget.pagamentoProduto.produtos!.length,
+                    );
+                  },
                 ),
-                terSubTituulo: false,
-                icon: Icons.phone_android,
-              ),
-              ListView.builder(
-                controller: _scrollController,
-                shrinkWrap: true,
-                itemCount: itemCount,
-                itemBuilder: (BuildContext context, int index) {
-                  return inputQuantidadeEstoqueProduto(
-                    widget.pagamentoProduto.produtos![index]
-                        .quantidadeVendidaController,
-                    widget.pagamentoProduto.produtos![index].nome!,
-                  );
-                },
-              ),
-              inputTipoPagamento(),
-              inputDesconto(),
-            ],
+                HorarioComponent().tituloDetalhes(texto: "Total"),
+                HorarioComponent().listSelecao(
+                  largura: _controller.largura,
+                  nome: UtilBrasilFields.obterReal(valorTotal),
+                  terSubTituulo: false,
+                  icon: Icons.phone_android,
+                ),
+                ListView.builder(
+                  controller: _scrollController,
+                  shrinkWrap: true,
+                  itemCount: itemCount,
+                  itemBuilder: (BuildContext context, int index) {
+                    return inputQuantidadeProdutoVendido(
+                      controller: widget.pagamentoProduto.produtos![index]
+                          .quantidadeVendidaController,
+                      index: index,
+                    );
+                  },
+                ),
+                inputTipoPagamento(),
+                inputDesconto(),
+                _botaoCadastrarPagamento(),
+              ],
+            ),
           ),
         ),
       ),
     );
   }
 
-  CampoTextoWidget inputQuantidadeEstoqueProduto(
-    TextEditingController? controller,
-    String nomeProduto,
-  ) {
+  CampoTextoWidget inputQuantidadeProdutoVendido({
+    required TextEditingController? controller,
+    required int index,
+  }) {
     return CampoTextoWidget(
-      labelText: "Quant. de " + nomeProduto + " vendido",
+      labelText: "Quant. de " +
+          widget.pagamentoProduto.produtos![index].nome! +
+          " vendido",
       paddingHorizontal: 20,
-      paddingTop: 15,
+      paddingTop: 14,
       paddingBottom: 0,
       keyboardType: TextInputType.number,
       maxLength: 4,
@@ -153,6 +150,10 @@ class PagamentoProdutosWidget extends State<PagamentoProdutosPage> {
       ),
       controller: controller,
       validator: _validatorProduto.quantEstoqueValidator,
+      onChanged: (value) async {
+        widget.pagamentoProduto.produtos![index].quantidadeVendida =
+            int.parse(value);
+      },
     );
   }
 
@@ -160,7 +161,7 @@ class PagamentoProdutosWidget extends State<PagamentoProdutosPage> {
     return CampoTextoWidget(
       labelText: "Desconto",
       paddingHorizontal: 20,
-      paddingTop: 25,
+      paddingTop: 20,
       paddingBottom: 25,
       keyboardType: TextInputType.number,
       maxLength: 6,
@@ -178,6 +179,7 @@ class PagamentoProdutosWidget extends State<PagamentoProdutosPage> {
   }) {
     return CampoPesquisaPagamentoWidget(
       paddingHorizontal: 20,
+      paddingTop: 14,
       labelSeachTextPrincipal: "Forma pagamento",
       labelSeachTextPesquisa: "Digite nome do pagamento",
       compareFn: (
@@ -198,7 +200,13 @@ class PagamentoProdutosWidget extends State<PagamentoProdutosPage> {
       corBotao: Colors.black87.withOpacity(0.9),
       overlayCorBotao: AppColors.blue5,
       labelText: "CADASTRAR PAGAMENTO",
-      onPressed: () async {},
+      onPressed: () async {
+        await _controller.cadastrarPagamentoProduto(
+          context: context,
+          pagamentoProduto: widget.pagamentoProduto,
+          valorTotal: valorTotal,
+        );
+      },
     );
   }
 }

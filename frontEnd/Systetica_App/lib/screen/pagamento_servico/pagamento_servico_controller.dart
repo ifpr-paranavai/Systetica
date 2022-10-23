@@ -58,7 +58,7 @@ class PagamentoServicoController {
             backgroundColor: Colors.blueGrey,
             padding: EdgeInsets.all(18),
             content: TextoErroWidget(
-              mensagem: "Por favor, adicione forma de pagamento_produto",
+              mensagem: "Por favor, adicione forma de pagamento",
             ),
           ),
         );
@@ -129,7 +129,7 @@ class PagamentoServicoController {
           padding: EdgeInsets.all(12),
           content: TextoErroWidget(
             mensagem:
-                "Por Favor, conecte-se a rede para cadastrar um pagamento_produto",
+                "Por Favor, conecte-se a rede para cadastrar um pagamento",
           ),
         ),
       );

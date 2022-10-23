@@ -46,4 +46,7 @@ public class ProdutoDTO implements Serializable {
 
     @JsonProperty("email_administrativo")
     private String emailAdministrativo;
+
+    @JsonProperty("quantidade_vendida")
+    private int quantidadeVendida;
 }

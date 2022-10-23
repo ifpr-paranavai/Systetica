@@ -24,8 +24,8 @@ class Produto {
   bool? status;
   String? emailAdministrativo;
   bool produtoSelecionado = false;
+  int quantidadeVendida = 0;
   TextEditingController? quantidadeVendidaController;
-
 
   Produto.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -52,7 +52,7 @@ class Produto {
     _data['quant_estoque'] = quantEstoque;
     _data['status'] = status;
     _data['email_administrativo'] = emailAdministrativo;
-    _data['quantidade_vendida'] = quantidadeVendidaController;
+    _data['quantidade_vendida'] = quantidadeVendida;
     return _data;
   }
 }

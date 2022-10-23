@@ -22,7 +22,7 @@ import java.util.List;
 public class PagamentoProdutoDTO implements Serializable {
 
     @JsonProperty("id_pagamento_produto")
-    private PagamentoProdutoPK idPagamentoProduto;
+    private PagamentoProdutoPKDTO idPagamentoProduto;
 
     @JsonProperty("quantidade")
     private Integer quantidade;
@@ -40,5 +40,5 @@ public class PagamentoProdutoDTO implements Serializable {
     private PagamentoDTO pagamento;
 
     @JsonProperty("produtos")
-    private List<Produto> produtos;
+    private List<ProdutoDTO> produtos;
 }
