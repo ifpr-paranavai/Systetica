@@ -73,6 +73,7 @@ class ServicosWidget extends State<ServicosPage> {
           Column(
             children: [
               HorarioComponent().titulo(
+                text: "AGENDAMENTOS NÃO FINALIZADOS",
                 largura: _controller.largura * 0.2,
                 altura: _controller.altura * 0.019,
               ),
@@ -178,16 +179,24 @@ class ServicosWidget extends State<ServicosPage> {
           situacao: _controller.agendamentos[index].situacao!.name,
         ),
       ),
-      onTap: () => Navigator.of(context)
-          .push(_controller.myPageTransition.pageTransition(
-            child: PagamentoServicoPage(
-                agendamento: _controller.agendamentos[index]),
-            childCurrent: widget,
-            buttoToTop: true,
-          ))
-          .then((value) => setState(() {
-                _buscarTodosAgendamentoPorDiaStatusAgendados(dateTime!);
-              })),
+      onTap: () {
+        Navigator.of(context)
+            .push(
+              _controller.myPageTransition.pageTransition(
+                child: PagamentoServicoPage(
+                    agendamento: _controller.agendamentos[index]),
+                childCurrent: widget,
+                buttoToTop: true,
+              ),
+            )
+            .then(
+              (value) => setState(
+                () {
+                  _buscarTodosAgendamentoPorDiaStatusAgendados(dateTime!);
+                },
+              ),
+            );
+      },
     );
   }
 }

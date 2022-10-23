@@ -3,13 +3,13 @@
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:systetica/model/PagamentoServico.dart';
 
 import '../../../../components/horario_component.dart';
 import '../../../../components/icon_arrow_widget.dart';
 import '../../../../components/input/campo_pesquisa_pagamento_widget.dart';
 import '../../../../components/input/campo_texto_widget.dart';
 import '../../../../model/FormaPagamento.dart';
+import '../../../../model/PagamentoServico.dart';
 import '../../../../style/app_colors.dart';
 import '../../../agendar/component/agendar_componente.dart';
 import '../../pagamento_servico_controller.dart';
@@ -61,28 +61,26 @@ class PagamentoServicoWidget extends State<PagamentoServicoPage> {
           ],
         ),
         widget.agendamento.situacao!.name == "AGENDADO"
-            ? AgendarComponente.botaoSelecinar(
-                altura: _controller.altura,
-                largura: _controller.largura,
-                corBotao: Colors.black87.withOpacity(0.9),
-                overlayCorBotao: AppColors.blue5,
-                labelText: "CADASTRAR PAGAMENTO",
-                onPressed: () {
-                  _controller
-                      .cadastrarPagamentoServico(
-                        context: context,
-                        agendamento: widget.agendamento,
-                        valorTotal: valorTotal,
-                      )
-                      .then(
-                        (value) => setState(
-                          () {},
-                        ),
-                      );
-                },
-              )
+            ? _botaoCadastrarPagamento()
             : const SizedBox(),
       ],
+    );
+  }
+
+  Widget _botaoCadastrarPagamento() {
+    return AgendarComponente.botaoSelecinar(
+      altura: _controller.altura,
+      largura: _controller.largura,
+      corBotao: Colors.black87.withOpacity(0.9),
+      overlayCorBotao: AppColors.blue5,
+      labelText: "CADASTRAR PAGAMENTO",
+      onPressed: () async {
+        await _controller.cadastrarPagamentoServico(
+          context: context,
+          agendamento: widget.agendamento,
+          valorTotal: valorTotal,
+        );
+      },
     );
   }
 
@@ -159,12 +157,13 @@ class PagamentoServicoWidget extends State<PagamentoServicoPage> {
       paddingHorizontal: 20,
       labelSeachTextPrincipal: "Forma pagamento",
       labelSeachTextPesquisa: "Digite nome do pagamento",
-      compareFn: (formaPagamento, buscaFormaPagamento) =>
-          formaPagamento == buscaFormaPagamento,
-      asyncItems: (filtro) => _controller.buscarFormaPamento(filtro),
-      onChanged: (value) {
-        _controller.formaPagamento = value;
-      },
+      compareFn: (
+        formaPagamento,
+        buscarFormaPagamento,
+      ) =>
+          formaPagamento == buscarFormaPagamento,
+      asyncItems: (filtro) => _controller.buscarFormaPagamento(filtro),
+      onChanged: (value) => _controller.formaPagamento = value,
       formaPagamento: formaPagamento,
     );
   }

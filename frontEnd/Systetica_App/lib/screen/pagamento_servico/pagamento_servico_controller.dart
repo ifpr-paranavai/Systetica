@@ -46,7 +46,7 @@ class PagamentoServicoController {
     return info;
   }
 
-  Future<List<FormaPagamento>> buscarFormaPamento(String? nome) async {
+  Future<List<FormaPagamento>> buscarFormaPagamento(String? nome) async {
     try {
       Token _token = await TokenRepository.findToken();
       Info info = await PagamentoServicoService.buscarFormaPagamento(
@@ -77,8 +77,64 @@ class PagamentoServicoController {
         );
         return;
       }
-      await confirmaPagamento(
-          context: context, valorTotal: valorTotal, agendamento: agendamento);
+      Info info = Info(success: true);
+      try {
+        var contextLoading = context;
+        var loading = ShowLoadingWidget.showLoadingLabel(
+          contextLoading,
+          "Aguarde...",
+        );
+
+        double desconto = descontoController.text.isEmpty
+            ? 0
+            : double.parse(descontoController.text);
+        pagamentoServico.agendamento = agendamento;
+        pagamentoServico.pagamento = Pagamento(
+          formaPagamento: formaPagamento,
+          desconto: desconto,
+          valorTotal: valorTotal - desconto,
+        );
+
+        Token _token = await TokenRepository.findToken();
+
+        info = await PagamentoServicoService.cadastrarPagamentoServico(
+          token: _token,
+          pagamentoServico: pagamentoServico,
+        ); // service
+
+        // Finaliza o loading na tela
+        Navigator.pop(contextLoading, loading);
+
+        var alertDialog = AlertDialogWidget();
+        if (info.success!) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              backgroundColor: Colors.blueGrey,
+              content: TextoErroWidget(
+                mensagem: info.message!,
+              ),
+            ),
+          );
+        } else {
+          await alertDialog.alertDialog(
+            showModalOk: true,
+            context: context,
+            titulo: "Erro",
+            descricao: info.message!,
+            buttonText: "OK",
+            onPressedOk: () => Navigator.pop(context),
+          );
+        }
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            backgroundColor: Colors.blueGrey,
+            content: TextoErroWidget(
+              mensagem: "Ocorreu algum erro de comunicação com o servidor",
+            ),
+          ),
+        );
+      }
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -87,91 +143,6 @@ class PagamentoServicoController {
           content: TextoErroWidget(
             mensagem:
                 "Por Favor, conecte-se a rede para cadastrar um pagamento",
-          ),
-        ),
-      );
-    }
-  }
-
-  Future<void> confirmaPagamento({
-    required BuildContext context,
-    required Agendamento agendamento,
-    required double valorTotal,
-  }) async {
-    var alertDialog = AlertDialogWidget();
-    alertDialog.alertDialog(
-      showModalOk: false,
-      context: context,
-      titulo: "Atenção!",
-      descricao: "Tem certeza que dejesa cadastrar pagamento do serviço?",
-      onPressedNao: () => Navigator.pop(context),
-      onPressedOk: () async {
-        Navigator.pop(context);
-        cadastrarPagamentoServicoChamadaService(
-          context: context,
-          agendamento: agendamento,
-          valorTotal: valorTotal,
-        );
-      },
-    );
-  }
-
-  Future<void> cadastrarPagamentoServicoChamadaService({
-    required BuildContext context,
-    required Agendamento agendamento,
-    required double valorTotal,
-  }) async {
-    try {
-      double desconto = descontoController.text.isEmpty
-          ? 0
-          : double.parse(descontoController.text);
-      pagamentoServico.agendamento = agendamento;
-      pagamentoServico.pagamento = Pagamento(
-        formaPagamento: formaPagamento,
-        desconto: desconto,
-        valorTotal: valorTotal - desconto,
-      );
-
-      var contextLoading = context;
-      var loading = ShowLoadingWidget.showLoadingLabel(
-        contextLoading,
-        "Aguarde...",
-      );
-
-      Info _info = await PagamentoServicoService.cadastrarPagamentoServico(
-        token: await TokenRepository.findToken(),
-        pagamentoServico: pagamentoServico,
-      ); // service
-
-      // Finaliza o loading na tela
-      Navigator.pop(contextLoading, loading);
-
-      var alertDialog = AlertDialogWidget();
-      if (_info.success!) {
-        alertDialog.alertDialog(
-          showModalOk: true,
-          context: context,
-          titulo: "Sucesso",
-          descricao: _info.message!,
-          buttonText: "OK",
-          onPressedOk: () => Navigator.pop(context),
-        );
-      } else {
-        alertDialog.alertDialog(
-          showModalOk: true,
-          context: context,
-          titulo: "Erro",
-          descricao: _info.message!,
-          buttonText: "OK",
-          onPressedOk: () => Navigator.pop(context),
-        );
-      }
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          backgroundColor: Colors.blueGrey,
-          content: TextoErroWidget(
-            mensagem: "Ocorreu algum erro de comunicação com o servidor",
           ),
         ),
       );

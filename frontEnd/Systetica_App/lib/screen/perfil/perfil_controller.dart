@@ -76,9 +76,9 @@ class PerfilController {
         // Finaliza o loading na tela
         Navigator.pop(contextLoading, loading);
 
-        if(_info.success! ){
+        if (_info.success!) {
           Navigator.pop(context);
-        } else  {
+        } else {
           var alertDialogOk = AlertDialogWidget();
           alertDialogOk.alertDialog(
             showModalOk: true,

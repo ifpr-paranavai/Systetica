@@ -45,8 +45,7 @@ class AgendamentoController {
     required BuildContext context,
   }) async {
     Info info = Info(success: true);
-    var connected = await ConnectionCheck.check();
-    if (connected) {
+    if (await ConnectionCheck.check()) {
       try {
         // Loading apresentado na tela
         var contextLoading = context;
@@ -55,11 +54,9 @@ class AgendamentoController {
           "Aguarde...",
         );
 
-        Token _token = await TokenRepository.findToken();
-
         info = await AgendamentoService.cancelarAgendamento(
           agendamento: agendamento,
-          token: _token,
+          token: await TokenRepository.findToken(),
         );
 
         // Finaliza o loading na tela
@@ -67,13 +64,13 @@ class AgendamentoController {
 
         var alertDialog = AlertDialogWidget();
         if (info.success!) {
-          alertDialog.alertDialog(
-            showModalOk: true,
-            context: context,
-            titulo: "Sucesso",
-            descricao: info.message!,
-            buttonText: "OK",
-            onPressedOk: () => Navigator.pop(context),
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              backgroundColor: Colors.blueGrey,
+              content: TextoErroWidget(
+                mensagem: info.message!,
+              ),
+            ),
           );
         } else {
           await alertDialog.alertDialog(

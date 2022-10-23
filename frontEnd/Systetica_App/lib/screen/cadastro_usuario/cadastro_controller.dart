@@ -95,7 +95,7 @@ class CadastroController {
                 },
               );
             } else {
-              alertDialog.alertDialog(
+              await alertDialog.alertDialog(
                 showModalOk: true,
                 context: context,
                 titulo: "Erro",

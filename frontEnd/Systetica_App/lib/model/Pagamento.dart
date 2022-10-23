@@ -6,7 +6,7 @@ class Pagamento {
   Pagamento({
     this.id,
     this.valorTotal,
-    this.desconto,
+    this.desconto = 0,
     this.formaPagamento,
   });
 

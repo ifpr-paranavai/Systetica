@@ -10,6 +10,7 @@ class HorarioComponent {
   Widget titulo({
     required double largura,
     required double altura,
+    String text = "AGENDAMENTOS"
   }) {
     return Container(
       padding: EdgeInsets.only(
@@ -18,7 +19,7 @@ class HorarioComponent {
       ),
       color: AppColors.branco,
       child: TextAutenticacoesWidget(
-        text: "AGENDAMENTOS",
+        text: text,
         fontSize: 30,
         paddingBottom: 6,
         paddingLeft: 0,

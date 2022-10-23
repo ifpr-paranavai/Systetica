@@ -5,7 +5,7 @@ class TextoErroWidget extends StatefulWidget {
     Key? key,
     required this.mensagem,
   }) : super(key: key);
-  final String mensagem;
+  final String? mensagem;
 
   @override
   _TextoErroWidget createState() => _TextoErroWidget();
@@ -15,7 +15,7 @@ class _TextoErroWidget extends State<TextoErroWidget> {
   @override
   Widget build(BuildContext context) {
     return Text(
-      widget.mensagem,
+      widget.mensagem!,
       style: const TextStyle(
         color: Colors.black,
         fontSize: 16,
