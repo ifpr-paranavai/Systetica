@@ -95,7 +95,7 @@ class SelecionarHorarioWidget extends State<SelecionarHorarioPage> {
             largura: _controller.largura,
             corBotao: _controller.corBotao,
             overlayCorBotao: _controller.overlayCorBotao,
-            labelText: "AGENDAR",
+            labelText: "CONTINUAR",
             onPressed: () => {
               horarioSelecionado == true
                   ? Navigator.of(context).push(
