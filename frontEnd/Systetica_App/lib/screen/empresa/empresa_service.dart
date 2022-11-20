@@ -134,7 +134,7 @@ class EmpresaService {
 
     Dio dio = DioConfigApi.builderConfig();
 
-    var response = await dio.post(path);
+    var response = await dio.get(path);
 
     Info info = Info();
 

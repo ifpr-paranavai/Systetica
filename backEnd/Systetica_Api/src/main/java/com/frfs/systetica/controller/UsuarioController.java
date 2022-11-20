@@ -75,7 +75,7 @@ public class UsuarioController {
         return new ResponseEntity<>(result, result.getSuccess() ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @PostMapping("/buscar-nome-email")
+    @GetMapping("/buscar-nome-email")
     @ResponseBody
     public ResponseEntity<Object> buscarPorNomeEmail(@RequestParam String search, Pageable page) {
         ReturnData<Object> result = usuarioService.buscarPorNomeEmail(search, page);

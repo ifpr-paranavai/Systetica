@@ -121,7 +121,7 @@ class LoginWidget extends State<LoginPage> {
     return BotaoWidget(
       paddingTop: 18,
       paddingBottom: 30,
-      labelText: "ESQUECI SENHA",
+      labelText: "ESQUECI MINHA SENHA",
       largura: 190,
       corBotao: Colors.black87.withOpacity(0.9),
       corTexto: Colors.white,

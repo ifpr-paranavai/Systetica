@@ -43,7 +43,7 @@ public class EmpresaController {
         return new ResponseEntity<>(result, result.getSuccess() ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @PostMapping("/buscar-todos")
+    @GetMapping("/buscar-todos")
     @ResponseBody
     public ResponseEntity<Object> buscarTodos(@RequestParam String search, Pageable page){
         ReturnData<Object> result;

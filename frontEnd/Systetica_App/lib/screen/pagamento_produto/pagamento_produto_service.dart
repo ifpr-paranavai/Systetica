@@ -19,7 +19,7 @@ class PagamentoProdutoService {
 
     dio.options.headers["Authorization"] = "Bearer ${token.accessToken}";
 
-    var response = await dio.post(path);
+    var response = await dio.get(path);
 
     Info info = Info();
 

@@ -3,7 +3,6 @@ package com.frfs.systetica.controller;
 import com.frfs.systetica.dto.PagamentoProdutoDTO;
 import com.frfs.systetica.dto.PagamentoServicoDTO;
 import com.frfs.systetica.dto.response.ReturnData;
-import com.frfs.systetica.entity.PagamentoProduto;
 import com.frfs.systetica.service.PagamentoService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

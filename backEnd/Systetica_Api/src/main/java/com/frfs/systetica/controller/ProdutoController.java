@@ -38,7 +38,7 @@ public class ProdutoController {
         return new ResponseEntity<>(result, result.getSuccess() ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @PostMapping("/buscar-todos")
+    @GetMapping("/buscar-todos")
     @ResponseBody
     public ResponseEntity<Object> buscarTodos(@RequestParam String search, Pageable page, String email) {
         ReturnData<Object> result;
@@ -50,7 +50,7 @@ public class ProdutoController {
         return new ResponseEntity<>(result, result.getSuccess() ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @PostMapping("/buscar-por-empresa/{id}")
+    @GetMapping("/buscar-por-empresa/{id}")
     @ResponseBody
     public ResponseEntity<Object> buscarTodosPorIdEmpresa(@PathVariable long id) {
         ReturnData<Object> result = produtoService.buscarTodosPorIdEmpresa(id);

@@ -17,7 +17,7 @@ public class FormaPagamentoController {
 
     private final FormaPagamentoService formaPagamentoService;
 
-    @PostMapping("/buscar-todos")
+    @GetMapping("/buscar-todos")
     @ResponseBody
     public ResponseEntity<Object> buscarTodos(@RequestParam String search, Pageable page) {
         ReturnData<Object> result;

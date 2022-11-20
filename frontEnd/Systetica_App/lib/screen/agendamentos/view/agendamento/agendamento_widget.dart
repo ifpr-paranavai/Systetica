@@ -1,11 +1,13 @@
 import 'package:calendar_timeline/calendar_timeline.dart';
 import 'package:flutter/material.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:systetica/model/Empresa.dart';
 
 import '../../../../components/botoes/botao_widget.dart';
 import '../../../../components/horario_component.dart';
 import '../../../../components/loading/loading_animation.dart';
 import '../../../../components/page_transition.dart';
+import '../../../../database/repository/token_repository.dart';
 import '../../../../model/Info.dart';
 import '../../../../style/app_colors.dart';
 import '../../../agendar/view/selecionar_servico/selecionar_servico_page.dart';
@@ -22,13 +24,25 @@ class AgendamentolWidget extends State<AgendamentoPage> {
   bool agendamentoVazio = false;
   bool loading = true;
   DateTime? dateTime;
+  bool cliente = true;
 
   @override
   void initState() {
     super.initState();
     _controller.agendamentos = [];
     dateTime = DateTime.now();
+    _buscarTokenLocal();
     _buscarTodosAgendamentoPorDia(dateTime!);
+  }
+
+  Future<void> _buscarTokenLocal() async {
+    await TokenRepository.findToken().then((value) {
+      setState(() {
+        Map<String, dynamic> tokenDecodificado =
+            JwtDecoder.decode(value.accessToken!);
+        cliente = tokenDecodificado['roles'][0] == "CLIENTE";
+      });
+    });
   }
 
   Future<void> _buscarTodosAgendamentoPorDia(DateTime data) async {
@@ -84,7 +98,7 @@ class AgendamentolWidget extends State<AgendamentoPage> {
               ]),
             ],
           ),
-          buttonAdd(),
+          cliente == true ? const SizedBox() : buttonAdd(),
         ],
       ),
     );

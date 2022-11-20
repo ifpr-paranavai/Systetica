@@ -87,7 +87,7 @@ class GerarCodigoWidget extends State<GerarCodigoPage> {
     return BotaoWidget(
       paddingTop: 70,
       paddingBottom: 30,
-      labelText: "Gerar Codigo",
+      labelText: "GERAR CÓDIGO",
       largura: 190,
       corBotao: Colors.black87.withOpacity(0.9),
       corTexto: Colors.white,
